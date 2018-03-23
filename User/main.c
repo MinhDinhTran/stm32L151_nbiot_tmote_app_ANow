@@ -77,44 +77,44 @@ int DebugMain(void);
 **********************************************************************************************************/
 int main(void)
 {
-	HAL_Init();																//HAL¿â³õÊ¼»¯
+	HAL_Init();																//HALåº“åˆå§‹åŒ–
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
 #if (SYSTEMCLOCK == 4194000)
-	Stm32_MSIClock_Init(RCC_MSIRANGE_6);											//ÉèÖÃÊ±ÖÓMSI->4.194MHz
-	Delay_Init(4194);															//ÑÓÊ±³õÊ¼»¯4.194MHzÏµÍ³Ê±ÖÓ
+	Stm32_MSIClock_Init(RCC_MSIRANGE_6);											//è®¾ç½®æ—¶é’ŸMSI->4.194MHz
+	Delay_Init(4194);															//å»¶æ—¶åˆå§‹åŒ–4.194MHzç³»ç»Ÿæ—¶é’Ÿ
 #elif (SYSTEMCLOCK == 32000000)
-	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);									//ÉèÖÃÊ±ÖÓHSI->32MHz
-	Delay_Init(32000);															//ÑÓÊ±³õÊ¼»¯32MHzÏµÍ³Ê±ÖÓ
+	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);									//è®¾ç½®æ—¶é’ŸHSI->32MHz
+	Delay_Init(32000);															//å»¶æ—¶åˆå§‹åŒ–32MHzç³»ç»Ÿæ—¶é’Ÿ
 #else
 	#error SYSTEMCLOCK Define Error
 #endif
 #endif
 	
 #if OTDEBUG
-	ResetStatus = RCC_ResetFlag_GetStatus();										//¸´Î»±êÖ¾Î»
+	ResetStatus = RCC_ResetFlag_GetStatus();										//å¤ä½æ ‡å¿—ä½
 #endif
 	
-	IWDG_Init(IWDG_PRESCALER_256, 0x0FFF);											//¿´ÃÅ¹·³õÊ¼»¯,·ÖÆµÏµÊı256,ÖØÔØÖµ0x0FFF,Òç³öÊ±¼ä28s
-	RTC_Init();																//RTC³õÊ¼»¯
+	IWDG_Init(IWDG_PRESCALER_256, 0x0FFF);											//çœ‹é—¨ç‹—åˆå§‹åŒ–,åˆ†é¢‘ç³»æ•°256,é‡è½½å€¼0x0FFF,æº¢å‡ºæ—¶é—´28s
+	RTC_Init();																//RTCåˆå§‹åŒ–
 	
-	LowPowerCtrlIO_Init();														//µÍ¹¦ºÄ¿ØÖÆIO³õÊ¼»¯
-	PowerCtrlIO_Init();															//µçÔ´¿ØÖÆIO³õÊ¼»¯
+	LowPowerCtrlIO_Init();														//ä½åŠŸè€—æ§åˆ¶IOåˆå§‹åŒ–
+	PowerCtrlIO_Init();															//ç”µæºæ§åˆ¶IOåˆå§‹åŒ–
 	
-	Uart1_Init(9600);															//´®¿Ú1³õÊ¼»¯
-	Uart2_Init(9600);															//´®¿Ú2³õÊ¼»¯
+	Uart1_Init(9600);															//ä¸²å£1åˆå§‹åŒ–
+	Uart2_Init(9600);															//ä¸²å£2åˆå§‹åŒ–
 	
 #if OTDEBUG
-	QMC5883L_Init();															//QMC³õÊ¼»¯
+	QMC5883L_Init();															//QMCåˆå§‹åŒ–
 	
-	Radar_Init();																//À×´ï³õÊ¼»¯
-	if (Radar_InitBackGround() != TRADAR_OK) {										//À×´ï±³¾°³õÊ¼»¯
+	Radar_Init();																//é›·è¾¾åˆå§‹åŒ–
+	if (Radar_InitBackGround() != TRADAR_OK) {										//é›·è¾¾èƒŒæ™¯åˆå§‹åŒ–
 		printf("No Radar!!\n");
 	}
 #endif
 	
-	BEEP_CtrlRepeat(2, 50);														//·äÃùÆ÷
+	BEEP_CtrlRepeat(2, 50);														//èœ‚é¸£å™¨
 	
 	CoapLongStructure.HeadPacket.DataLen = 0x00;
 	CoapLongStructure.HeadPacket.ProtocolType = 0x00;
@@ -147,12 +147,12 @@ int main(void)
 	MqttSNStatusExtendStructure.RadarDiff = 20;
 
 #if NBIOTDEBUG
-	NBIOT_Transport_Init(&NbiotATCmdHandler);												//NBIOTÊı¾İ´«Êä½Ó¿Ú³õÊ¼»¯
-	NBIOT_Client_Init(&NbiotClientHandler, &NbiotATCmdHandler);									//NBIOT¿Í»§¶Ë³õÊ¼»¯
+	NBIOT_Transport_Init(&NbiotATCmdHandler);												//NBIOTæ•°æ®ä¼ è¾“æ¥å£åˆå§‹åŒ–
+	NBIOT_Client_Init(&NbiotClientHandler, &NbiotATCmdHandler);									//NBIOTå®¢æˆ·ç«¯åˆå§‹åŒ–
 	
-	MQTTSN_Transport_Init(&MqttSNSocketNetHandler, &NbiotClientHandler, 4000, "106.14.142.169", 1884);	//MqttSNÊı¾İ´«Êä½Ó¿Ú³õÊ¼»¯
-//	MQTTSN_Transport_Init(&MqttSNSocketNetHadnler, &NbiotClientHandler, 4000, "120.78.66.248", 1884);	//MqttSNÊı¾İ´«Êä½Ó¿Ú³õÊ¼»¯
-	MQTTSN_Client_Init(&MqttSNClientHandler, &MqttSNSocketNetHandler);							//MQTTSN¿Í»§¶Ë³õÊ¼»¯
+	MQTTSN_Transport_Init(&MqttSNSocketNetHandler, &NbiotClientHandler, 4000, "106.14.142.169", 1884);	//MqttSNæ•°æ®ä¼ è¾“æ¥å£åˆå§‹åŒ–
+//	MQTTSN_Transport_Init(&MqttSNSocketNetHadnler, &NbiotClientHandler, 4000, "120.78.66.248", 1884);	//MqttSNæ•°æ®ä¼ è¾“æ¥å£åˆå§‹åŒ–
+	MQTTSN_Client_Init(&MqttSNClientHandler, &MqttSNSocketNetHandler);							//MQTTSNå®¢æˆ·ç«¯åˆå§‹åŒ–
 #endif
 	
 	while (1) {
@@ -199,10 +199,10 @@ int main(void)
 #endif
 		
 #if OTDEBUG
-		if (Radar_GetDataPack(10) != TRADAR_OK) {									//»ñÈ¡À×´ïÊı¾İ°ü
+		if (Radar_GetDataPack(10) != TRADAR_OK) {									//è·å–é›·è¾¾æ•°æ®åŒ…
 			printf("No Radar!!\n");
 		}
-		Radar_DataPackToDataStruct();												//½«À×´ïÊı¾İÌáÈ¡µ½À×´ï½á¹¹Ìå
+		Radar_DataPackToDataStruct();												//å°†é›·è¾¾æ•°æ®æå–åˆ°é›·è¾¾ç»“æ„ä½“
 		printf("NotargetNum : %d\n", radarDataStruct.NotargetNum);
 		printf("CoverNum : %d\n", radarDataStruct.CoverNum);
 		printf("DismagNum : %d\n", radarDataStruct.DismagNum);
