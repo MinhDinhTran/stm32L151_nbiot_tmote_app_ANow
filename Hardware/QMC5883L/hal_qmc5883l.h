@@ -9,64 +9,64 @@
 #define QMC_DRDY_RCC_GPIO_CLK_DISABLE()		__HAL_RCC_GPIOA_CLK_DISABLE()
 #define QMC_DRDY_READ()					HAL_GPIO_ReadPin(QMC_DRDY_GPIOx, QMC_DRDY_PIN)
 
-#define QMC5883L_SLAVE_ADDRESS_W	0x1A										//I2C´Ó»úµØÖ·Ğ´
-#define QMC5883L_SLAVE_ADDRESS_R	0x1B										//I2C´Ó»úµØÖ·¶Á
+#define QMC5883L_SLAVE_ADDRESS_W	0x1A										//I2Cä»æœºåœ°å€å†™
+#define QMC5883L_SLAVE_ADDRESS_R	0x1B										//I2Cä»æœºåœ°å€è¯»
 
-/* QMCÄÚ²¿µØÖ· */
-#define QMC_DATA_OUT_X_L			0x00										//XÖáÊı¾İµÍ8Î»
-#define QMC_DATA_OUT_X_H			0x01										//XÖáÊı¾İ¸ß8Î»
-#define QMC_DATA_OUT_Y_L			0x02										//YÖáÊı¾İµÍ8Î»
-#define QMC_DATA_OUT_Y_H			0x03										//YÖáÊı¾İ¸ß8Î»
-#define QMC_DATA_OUT_Z_L			0x04										//ZÖáÊı¾İµÍ8Î»
-#define QMC_DATA_OUT_Z_H			0x05										//ZÖáÊı¾İ¸ß8Î»
+/* QMCå†…éƒ¨åœ°å€ */
+#define QMC_DATA_OUT_X_L			0x00										//Xè½´æ•°æ®ä½8ä½
+#define QMC_DATA_OUT_X_H			0x01										//Xè½´æ•°æ®é«˜8ä½
+#define QMC_DATA_OUT_Y_L			0x02										//Yè½´æ•°æ®ä½8ä½
+#define QMC_DATA_OUT_Y_H			0x03										//Yè½´æ•°æ®é«˜8ä½
+#define QMC_DATA_OUT_Z_L			0x04										//Zè½´æ•°æ®ä½8ä½
+#define QMC_DATA_OUT_Z_H			0x05										//Zè½´æ•°æ®é«˜8ä½
 
 #define QMC_READY_BIT			0x06										//bit0 = 0 : No new data; bit0 = 1 : have new data.
 
-#define QMC_TEMPERATURE_L		0x07										//ÄÚ²¿ÎÂ¶ÈÊı¾İµÍ8Î»
-#define QMC_TEMPERATURE_H		0x08										//ÄÚ²¿ÎÂ¶ÈÊı¾İ¸ß8Î»
+#define QMC_TEMPERATURE_L		0x07										//å†…éƒ¨æ¸©åº¦æ•°æ®ä½8ä½
+#define QMC_TEMPERATURE_H		0x08										//å†…éƒ¨æ¸©åº¦æ•°æ®é«˜8ä½
 
-#define QMC5883L_CR1			0x09										//QMC5883L¿ØÖÆ¼Ä´æÆ÷1
-#define QMC_MODE_STANDBY			(0<<0)									//ĞİÃß
-#define QMC_MODE_CONTINOUS		(1<<0)									//Á¬Ğø²âÁ¿
-#define QMC_RATES_10HZ			(0<<2)									//Êı¾İÊä³öËÙÂÊ10Hz
-#define QMC_RATES_50HZ			(1<<2)									//Êı¾İÊä³öËÙÂÊ50Hz
-#define QMC_RATES_100HZ			(2<<2)									//Êı¾İÊä³öËÙÂÊ100Hz
-#define QMC_RATES_200HZ			(3<<2)									//Êı¾İÊä³öËÙÂÊ200Hz
-#define QMC_RANGE_2G			(0<<4)									//²âÁ¿·¶Î§ +-2¸ßË¹
-#define QMC_RANGE_8G			(1<<4)									//²âÁ¿·¶Î§ +-8¸ßË¹
-#define QMC_OSR_512				(0<<6)									//ÄÚÖÃÂË²¨Æ÷´ø¿í,´óµÄ´ø¿íÄÜÈÃÔëÒô¸üĞ¡,µ«ÊÇÏàÓ¦¹¦ºÄ¸ü´ó
+#define QMC5883L_CR1			0x09										//QMC5883Læ§åˆ¶å¯„å­˜å™¨1
+#define QMC_MODE_STANDBY			(0<<0)									//ä¼‘çœ 
+#define QMC_MODE_CONTINOUS		(1<<0)									//è¿ç»­æµ‹é‡
+#define QMC_RATES_10HZ			(0<<2)									//æ•°æ®è¾“å‡ºé€Ÿç‡10Hz
+#define QMC_RATES_50HZ			(1<<2)									//æ•°æ®è¾“å‡ºé€Ÿç‡50Hz
+#define QMC_RATES_100HZ			(2<<2)									//æ•°æ®è¾“å‡ºé€Ÿç‡100Hz
+#define QMC_RATES_200HZ			(3<<2)									//æ•°æ®è¾“å‡ºé€Ÿç‡200Hz
+#define QMC_RANGE_2G			(0<<4)									//æµ‹é‡èŒƒå›´ +-2é«˜æ–¯
+#define QMC_RANGE_8G			(1<<4)									//æµ‹é‡èŒƒå›´ +-8é«˜æ–¯
+#define QMC_OSR_512				(0<<6)									//å†…ç½®æ»¤æ³¢å™¨å¸¦å®½,å¤§çš„å¸¦å®½èƒ½è®©å™ªéŸ³æ›´å°,ä½†æ˜¯ç›¸åº”åŠŸè€—æ›´å¤§
 #define QMC_OSR_256				(1<<6)
 #define QMC_OSR_128				(2<<6)
 #define QMC_OSR_64				(3<<6)
 
-#define QMC5883L_CR2			0x0A										//QMC5883L¿ØÖÆ¼Ä´æÆ÷2
-#define QMC_INT_ENABLE			(0<<0)									//Òı½ÅÖĞ¶ÏÊ¹ÄÜ
-#define QMC_INT_DISABLE			(1<<0)									//Òı½ÅÖĞ¶ÏÊ§ÄÜ
-#define QMC_POINT_ROLL_ENABLE		(1<<6)									//Êı¾İ¶ÁÈ¡ÍêÖ¸Õë×Ô¶¯Æ«×ªÊ¹ÄÜ
-#define QMC_POINT_ROLL_DISABLE	(0<<6)									//Êı¾İ¶ÁÈ¡ÍêÖ¸Õë×Ô¶¯Æ«×ªÊ§ÄÜ
-#define QMC_SOFT_REST			(1<<7)									//Èí¼ş¸´Î»
+#define QMC5883L_CR2			0x0A										//QMC5883Læ§åˆ¶å¯„å­˜å™¨2
+#define QMC_INT_ENABLE			(0<<0)									//å¼•è„šä¸­æ–­ä½¿èƒ½
+#define QMC_INT_DISABLE			(1<<0)									//å¼•è„šä¸­æ–­å¤±èƒ½
+#define QMC_POINT_ROLL_ENABLE		(1<<6)									//æ•°æ®è¯»å–å®ŒæŒ‡é’ˆè‡ªåŠ¨åè½¬ä½¿èƒ½
+#define QMC_POINT_ROLL_DISABLE	(0<<6)									//æ•°æ®è¯»å–å®ŒæŒ‡é’ˆè‡ªåŠ¨åè½¬å¤±èƒ½
+#define QMC_SOFT_REST			(1<<7)									//è½¯ä»¶å¤ä½
 
-#define QMC_DEVIATION_MAX		100										//×î´óÌø±äÖµ
-#define QMC_SAMPLE_TIMES			5										//²ÉÑù´ÎÊı
+#define QMC_DEVIATION_MAX		100										//æœ€å¤§è·³å˜å€¼
+#define QMC_SAMPLE_TIMES			5										//é‡‡æ ·æ¬¡æ•°
 
 typedef struct
 {
-	int16_t X_Now;														//µ±Ç°´Å³¡Öµ
+	int16_t X_Now;														//å½“å‰ç£åœºå€¼
 	int16_t Y_Now;
 	int16_t Z_Now;
 }QMC5883L_TypeDef;
-extern QMC5883L_TypeDef			Qmc5883lData;								//QMC5883LÊı¾İ´æ´¢Çø
+extern QMC5883L_TypeDef			Qmc5883lData;								//QMC5883Læ•°æ®å­˜å‚¨åŒº
 
-void QMC5883L_Init(void);												//QMC5883L³õÊ¼»¯
-void QMC5883L_Drdy_Init(void);											//QMC5883LÒı½ÅÅäÖÃPA11¸ßµçÆ½¶ÁÈ¡
-void QMC5883L_Drdy_DeInit(void);											//QMC5883LÒı½ÅÅäÖÃPA11·´³õÊ¼»¯
-void QMC5883L_ReadData(void);												//QMC5883L¶ÁÈ¡Êı¾İ
-void QMC5883L_ClearInsideData(void);										//QMC5883LÇå³ıÄÚ²¿´ı¶ÁÈ¡Êı¾İ»º´æ
-void QMC5883L_Mode_Selection(u8 mode);										//QMC5883L¹¤×÷Ä£Ê½Ñ¡Ôñ
-void QMC5883L_Rates_Selection(u8 rates);									//QMC5883LÊı¾İÊä³öËÙÂÊÑ¡Ôñ
-void QMC5883L_Range_Selection(u8 range);									//QMC5883L²âÁ¿·¶Î§Ñ¡Ôñ
-void QMC5883L_Osr_Selection(u8 osr);										//QMC5883LÄÚÖÃÂË²¨Æ÷´ø¿íÑ¡Ôñ
-void QMC5883L_Interrupt_Selection(u8 interrupt);								//QMC5883LÒı½ÅÖĞ¶ÏÑ¡Ôñ
-void QMC5883L_Softwart_Reset(void);										//QMC5883L¸´Î»
+void QMC5883L_Init(void);												//QMC5883Låˆå§‹åŒ–
+void QMC5883L_Drdy_Init(void);											//QMC5883Lå¼•è„šé…ç½®PA11é«˜ç”µå¹³è¯»å–
+void QMC5883L_Drdy_DeInit(void);											//QMC5883Lå¼•è„šé…ç½®PA11ååˆå§‹åŒ–
+void QMC5883L_ReadData(void);												//QMC5883Lè¯»å–æ•°æ®
+void QMC5883L_ClearInsideData(void);										//QMC5883Læ¸…é™¤å†…éƒ¨å¾…è¯»å–æ•°æ®ç¼“å­˜
+void QMC5883L_Mode_Selection(u8 mode);										//QMC5883Lå·¥ä½œæ¨¡å¼é€‰æ‹©
+void QMC5883L_Rates_Selection(u8 rates);									//QMC5883Læ•°æ®è¾“å‡ºé€Ÿç‡é€‰æ‹©
+void QMC5883L_Range_Selection(u8 range);									//QMC5883Læµ‹é‡èŒƒå›´é€‰æ‹©
+void QMC5883L_Osr_Selection(u8 osr);										//QMC5883Lå†…ç½®æ»¤æ³¢å™¨å¸¦å®½é€‰æ‹©
+void QMC5883L_Interrupt_Selection(u8 interrupt);								//QMC5883Lå¼•è„šä¸­æ–­é€‰æ‹©
+void QMC5883L_Softwart_Reset(void);										//QMC5883Lå¤ä½
 
 #endif

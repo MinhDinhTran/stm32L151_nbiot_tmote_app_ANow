@@ -11,7 +11,7 @@
 #define MQTTSN_COMMAND_TIMEOUT_SEC			30
 #define MQTTSN_COMMAND_FAILURE_CNT			3
 
-/* MQTTSN Ğ­ÒéÕ»¿ª±Ù»º´æ´óĞ¡ */
+/* MQTTSN åè®®æ ˆå¼€è¾Ÿç¼“å­˜å¤§å° */
 #define MQTTSN_BUFFER_SIZE				256
 #define MQTTSN_DATASTACK_SIZE				512
 
@@ -135,8 +135,8 @@ struct MQTTSN_ClientsTypeDef
 typedef MQTTSN_StatusTypeDef (*messageHandlerFp)(MQTTSN_ClientsTypeDef*, MQTTSN_MessageDataTypeDef*);
 
 /* Application Programming Interface */
-void MQTTSN_WaitforCallback(MQTTSN_ClientsTypeDef* pClient);									//MQTTSNÊı¾İµÈ´ı½ÓÊÕ»Øµ÷º¯Êı
-void MQTTSN_Client_Init(MQTTSN_ClientsTypeDef* pClient, MQTTSN_SocketNetTypeDef* NetSock);			//MQTTSN¿Í»§¶Ë³õÊ¼»¯
+void MQTTSN_WaitforCallback(MQTTSN_ClientsTypeDef* pClient);									//MQTTSNæ•°æ®ç­‰å¾…æ¥æ”¶å›è°ƒå‡½æ•°
+void MQTTSN_Client_Init(MQTTSN_ClientsTypeDef* pClient, MQTTSN_SocketNetTypeDef* NetSock);			//MQTTSNå®¢æˆ·ç«¯åˆå§‹åŒ–
 
 
 

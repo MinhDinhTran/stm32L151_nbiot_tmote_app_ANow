@@ -15,35 +15,35 @@
 
 #include "hal_iwdg.h"
 
-IWDG_HandleTypeDef		IWDG_Handler;										//¶ÀÁ¢¿´ÃÅ¹·¾ä±ú
+IWDG_HandleTypeDef		IWDG_Handler;										//ç‹¬ç«‹çœ‹é—¨ç‹—å¥æŸ„
 
 /**********************************************************************************************************
  @Function			void IWDG_Init(u8 prer, u16 rlr)
- @Description			³õÊ¼»¯¶ÀÁ¢¿´ÃÅ¹·
- @Input				prer			: ·ÖÆµÊı:0~7(Ö»ÓĞµÍ3Î»ÓĞĞ§!)
-					rlr			: ×Ô¶¯ÖØ×°ÔØÖµ, 0~0xFFF, MAX = 30s
- @Other				·ÖÆµÒò×Ó 		: 4*2^prer.µ«×î´óÖµÖ»ÄÜÊÇ256!
-					rlr			: ÖØ×°ÔØ¼Ä´æÆ÷Öµ(µÍ11Î»ÓĞĞ§)
-					Ê±¼ä¼ÆËã(´ó¸Å) : Tout = ((4 * 2^prer) * rlr) / 32 (ms)
+ @Description			åˆå§‹åŒ–ç‹¬ç«‹çœ‹é—¨ç‹—
+ @Input				prer			: åˆ†é¢‘æ•°:0~7(åªæœ‰ä½3ä½æœ‰æ•ˆ!)
+					rlr			: è‡ªåŠ¨é‡è£…è½½å€¼, 0~0xFFF, MAX = 30s
+ @Other				åˆ†é¢‘å› å­ 		: 4*2^prer.ä½†æœ€å¤§å€¼åªèƒ½æ˜¯256!
+					rlr			: é‡è£…è½½å¯„å­˜å™¨å€¼(ä½11ä½æœ‰æ•ˆ)
+					æ—¶é—´è®¡ç®—(å¤§æ¦‚) : Tout = ((4 * 2^prer) * rlr) / 32 (ms)
  @Return				void
 **********************************************************************************************************/
 void IWDG_Init(u8 prer, u16 rlr)
 {
 	IWDG_Handler.Instance = IWDG;
-	IWDG_Handler.Init.Prescaler = prer;									//ÉèÖÃIWDG·ÖÆµÏµÊı
-	IWDG_Handler.Init.Reload = rlr;										//ÖØ×°Öµ
+	IWDG_Handler.Init.Prescaler = prer;									//è®¾ç½®IWDGåˆ†é¢‘ç³»æ•°
+	IWDG_Handler.Init.Reload = rlr;										//é‡è£…å€¼
 	HAL_IWDG_Init(&IWDG_Handler);
 }
 
 /**********************************************************************************************************
  @Function			void IWDG_Feed(void)
- @Description			Î¹¶ÀÁ¢¿´ÃÅ¹·
+ @Description			å–‚ç‹¬ç«‹çœ‹é—¨ç‹—
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void IWDG_Feed(void)
 {
-	HAL_IWDG_Refresh(&IWDG_Handler);										//ÖØ×°ÔØ
+	HAL_IWDG_Refresh(&IWDG_Handler);										//é‡è£…è½½
 }
 
 /********************************************** END OF FLEE **********************************************/

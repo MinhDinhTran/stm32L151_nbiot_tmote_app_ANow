@@ -18,64 +18,64 @@
 #include "delay.h"
 #include <stdlib.h>
 
-QMC5883L_TypeDef		Qmc5883lData;										//QMC5883LÊı¾İ´æ´¢Çø
+QMC5883L_TypeDef		Qmc5883lData;										//QMC5883Læ•°æ®å­˜å‚¨åŒº
 
 /**********************************************************************************************************
  @Function			static void QMC5883L_WriteByte(u8 ucRegAddr, u8 ucRegData)
- @Description			QMC5883LĞ´Èë1ByteÊı¾İµ½¼Ä´æÆ÷( ÄÚ²¿µ÷ÓÃ )
- @Input				ucRegAddr : Ğ´ÈëµØÖ·
-					ucRegData : Ğ´ÈëÊı¾İ
+ @Description			QMC5883Lå†™å…¥1Byteæ•°æ®åˆ°å¯„å­˜å™¨( å†…éƒ¨è°ƒç”¨ )
+ @Input				ucRegAddr : å†™å…¥åœ°å€
+					ucRegData : å†™å…¥æ•°æ®
  @Return				void
 **********************************************************************************************************/
 static void QMC5883L_WriteByte(u8 ucRegAddr, u8 ucRegData)
 {
-	IIC_Start();														//·¢ËÍÆğÊ¼ĞÅºÅ
+	IIC_Start();														//å‘é€èµ·å§‹ä¿¡å·
 	
-	IIC_Send_Byte(QMC5883L_SLAVE_ADDRESS_W);								//·¢ËÍI2C´Ó»úµØÖ·Ğ´
-	IIC_Wait_Ack();													//µÈ´ıÓ¦´ğ
+	IIC_Send_Byte(QMC5883L_SLAVE_ADDRESS_W);								//å‘é€I2Cä»æœºåœ°å€å†™
+	IIC_Wait_Ack();													//ç­‰å¾…åº”ç­”
 	
-	IIC_Send_Byte(ucRegAddr);											//·¢ËÍ´ıĞ´ÈëÊı¾İµØÖ·
-	IIC_Wait_Ack();													//µÈ´ıÓ¦´ğ
+	IIC_Send_Byte(ucRegAddr);											//å‘é€å¾…å†™å…¥æ•°æ®åœ°å€
+	IIC_Wait_Ack();													//ç­‰å¾…åº”ç­”
 	
-	IIC_Send_Byte(ucRegData);											//·¢ËÍĞèĞ´ÈëÊı¾İ
-	IIC_Wait_Ack();													//µÈ´ıÓ¦´ğ
+	IIC_Send_Byte(ucRegData);											//å‘é€éœ€å†™å…¥æ•°æ®
+	IIC_Wait_Ack();													//ç­‰å¾…åº”ç­”
 	
-	IIC_Stop();														//·¢ËÍÍ£Ö¹ĞÅºÅ
+	IIC_Stop();														//å‘é€åœæ­¢ä¿¡å·
 }
 
 /**********************************************************************************************************
  @Function			static u8 QMC5883L_ReadByte(u8 ucRegAddr)
- @Description			QMC5883L¶ÁÈ¡1ByteÊı¾İ( ÄÚ²¿µ÷ÓÃ )
- @Input				ucRegAddr : ¶ÁÈ¡Êı¾İµØÖ·
- @Return				ucRegAddr : ¶ÁÈ¡Êı¾İ
+ @Description			QMC5883Lè¯»å–1Byteæ•°æ®( å†…éƒ¨è°ƒç”¨ )
+ @Input				ucRegAddr : è¯»å–æ•°æ®åœ°å€
+ @Return				ucRegAddr : è¯»å–æ•°æ®
 **********************************************************************************************************/
 static u8 QMC5883L_ReadByte(u8 ucRegAddr)
 {
 	u8 ucData;
 	
-	IIC_Start();														//·¢ËÍÆğÊ¼ĞÅºÅ
+	IIC_Start();														//å‘é€èµ·å§‹ä¿¡å·
 	
-	IIC_Send_Byte(QMC5883L_SLAVE_ADDRESS_W);								//·¢ËÍI2C´Ó»úµØÖ·Ğ´
-	IIC_Wait_Ack();													//µÈ´ıÓ¦´ğ
+	IIC_Send_Byte(QMC5883L_SLAVE_ADDRESS_W);								//å‘é€I2Cä»æœºåœ°å€å†™
+	IIC_Wait_Ack();													//ç­‰å¾…åº”ç­”
 	
-	IIC_Send_Byte(ucRegAddr);											//·¢ËÍ´ı¶ÁÈ¡Êı¾İµØÖ·
-	IIC_Wait_Ack();													//µÈ´ıÓ¦´ğ
+	IIC_Send_Byte(ucRegAddr);											//å‘é€å¾…è¯»å–æ•°æ®åœ°å€
+	IIC_Wait_Ack();													//ç­‰å¾…åº”ç­”
 	
-	IIC_Start();														//·¢ËÍÆğÊ¼ĞÅºÅ
+	IIC_Start();														//å‘é€èµ·å§‹ä¿¡å·
 	
-	IIC_Send_Byte(QMC5883L_SLAVE_ADDRESS_R);								//·¢ËÍI2C´Ó»úµØÖ·¶Á
-	IIC_Wait_Ack();													//µÈ´ıÓ¦´ğ
+	IIC_Send_Byte(QMC5883L_SLAVE_ADDRESS_R);								//å‘é€I2Cä»æœºåœ°å€è¯»
+	IIC_Wait_Ack();													//ç­‰å¾…åº”ç­”
 	
-	ucData = IIC_Read_Byte(0);											//¶ÁÈ¡Êı¾İ
+	ucData = IIC_Read_Byte(0);											//è¯»å–æ•°æ®
 	
-	IIC_Stop();														//·¢ËÍÍ£Ö¹ĞÅºÅ
+	IIC_Stop();														//å‘é€åœæ­¢ä¿¡å·
 	
 	return ucData;
 }
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Drdy_Init(void)
- @Description			QMC5883LÒı½ÅÅäÖÃPA11¸ßµçÆ½¶ÁÈ¡
+ @Description			QMC5883Lå¼•è„šé…ç½®PA11é«˜ç”µå¹³è¯»å–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -83,18 +83,18 @@ void QMC5883L_Drdy_Init(void)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	QMC_DRDY_RCC_GPIO_CLK_ENABLE();										//Ê¹ÄÜQMC DRDY GPIO Ê±ÖÓ
+	QMC_DRDY_RCC_GPIO_CLK_ENABLE();										//ä½¿èƒ½QMC DRDY GPIO æ—¶é’Ÿ
 	
 	GPIO_Initure.Pin = QMC_DRDY_PIN;										//PA11
-	GPIO_Initure.Mode = GPIO_MODE_INPUT;									//ÊäÈë
-	GPIO_Initure.Pull = GPIO_PULLDOWN;										//ÏÂÀ­
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
+	GPIO_Initure.Mode = GPIO_MODE_INPUT;									//è¾“å…¥
+	GPIO_Initure.Pull = GPIO_PULLDOWN;										//ä¸‹æ‹‰
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
 	HAL_GPIO_Init(QMC_DRDY_GPIOx, &GPIO_Initure);
 }
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Drdy_DeInit(void)
- @Description			QMC5883LÒı½ÅÅäÖÃPA11·´³õÊ¼»¯
+ @Description			QMC5883Lå¼•è„šé…ç½®PA11ååˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -102,7 +102,7 @@ void QMC5883L_Drdy_DeInit(void)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	QMC_DRDY_RCC_GPIO_CLK_ENABLE();										//Ê¹ÄÜQMC DRDY GPIO Ê±ÖÓ
+	QMC_DRDY_RCC_GPIO_CLK_ENABLE();										//ä½¿èƒ½QMC DRDY GPIO æ—¶é’Ÿ
 	
 	GPIO_Initure.Pin = QMC_DRDY_PIN;										//PA11
 	GPIO_Initure.Mode = GPIO_MODE_ANALOG;
@@ -113,31 +113,31 @@ void QMC5883L_Drdy_DeInit(void)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Init(void)
- @Description			QMC5883L³õÊ¼»¯
+ @Description			QMC5883Låˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void QMC5883L_Init(void)
 {
-	IIC_Init();														//IIC³õÊ¼»¯
+	IIC_Init();														//IICåˆå§‹åŒ–
 	
-	QMC5883L_WriteByte(QMC5883L_CR2, QMC_SOFT_REST);							//¸´Î»QMC5883L
+	QMC5883L_WriteByte(QMC5883L_CR2, QMC_SOFT_REST);							//å¤ä½QMC5883L
 	
 	QMC5883L_WriteByte(0x0B, 0x01);
 	QMC5883L_WriteByte(0x20, 0x40);
 	QMC5883L_WriteByte(0x21, 0x01);
 	
-	/* 64ÂË²¨, 8¸ßË¹·¶Î§, 200HzÊä³ö, ³õÊ¼»¯ÎªStandBy */
+	/* 64æ»¤æ³¢, 8é«˜æ–¯èŒƒå›´, 200Hzè¾“å‡º, åˆå§‹åŒ–ä¸ºStandBy */
 	QMC5883L_WriteByte(QMC5883L_CR1, QMC_OSR_64 | QMC_RANGE_8G | QMC_RATES_200HZ | QMC_MODE_STANDBY);
-	/* Òı½ÅÖĞ¶ÏÊ¹ÄÜ, Êı¾İ¶ÁÈ¡ÍêÖ¸Õë×Ô¶¯Æ«×ªÊ§ÄÜ */
+	/* å¼•è„šä¸­æ–­ä½¿èƒ½, æ•°æ®è¯»å–å®ŒæŒ‡é’ˆè‡ªåŠ¨åè½¬å¤±èƒ½ */
 	QMC5883L_WriteByte(QMC5883L_CR2, QMC_INT_ENABLE | QMC_POINT_ROLL_DISABLE);
 	
-	QMC5883L_Drdy_Init();												//QMC5883LÒı½ÅÅäÖÃPA11¸ßµçÆ½¶ÁÈ¡
+	QMC5883L_Drdy_Init();												//QMC5883Lå¼•è„šé…ç½®PA11é«˜ç”µå¹³è¯»å–
 }
 
 /**********************************************************************************************************
  @Function			void QMC5883L_ReadData(void)
- @Description			QMC5883L¶ÁÈ¡Êı¾İ
+ @Description			QMC5883Lè¯»å–æ•°æ®
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -159,7 +159,7 @@ void QMC5883L_ReadData(void)
 		}
 		else {
 			timeover++;
-			if (timeover >= 1000) {										//³¬Ê±´¦Àí
+			if (timeover >= 1000) {										//è¶…æ—¶å¤„ç†
 				break;
 			}
 		}
@@ -205,7 +205,7 @@ void QMC5883L_ReadData(void)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_ClearInsideData(void)
- @Description			QMC5883LÇå³ıÄÚ²¿´ı¶ÁÈ¡Êı¾İ»º´æ
+ @Description			QMC5883Læ¸…é™¤å†…éƒ¨å¾…è¯»å–æ•°æ®ç¼“å­˜
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -222,7 +222,7 @@ void QMC5883L_ClearInsideData(void)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Mode_Selection(u8 mode)
- @Description			QMC5883L¹¤×÷Ä£Ê½Ñ¡Ôñ
+ @Description			QMC5883Lå·¥ä½œæ¨¡å¼é€‰æ‹©
  @Input				mode : QMC_MODE_STANDBY/QMC_MODE_CONTINOUS
  @Return				void
 **********************************************************************************************************/
@@ -232,7 +232,7 @@ void QMC5883L_Mode_Selection(u8 mode)
 	
 	reg = QMC5883L_ReadByte(QMC5883L_CR1);
 	if (mode == QMC_MODE_STANDBY) {
-		QMC5883L_ClearInsideData();										//StadbyÄ£Ê½½øÈëÇå³ıQMC´ı¶ÁÈ¡Êı¾İ
+		QMC5883L_ClearInsideData();										//Stadbyæ¨¡å¼è¿›å…¥æ¸…é™¤QMCå¾…è¯»å–æ•°æ®
 		QMC5883L_WriteByte(QMC5883L_CR1, (reg & 0xFC) | QMC_MODE_STANDBY);
 	}
 	else if (mode == QMC_MODE_CONTINOUS) {
@@ -242,7 +242,7 @@ void QMC5883L_Mode_Selection(u8 mode)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Rates_Selection(u8 rates)
- @Description			QMC5883LÊı¾İÊä³öËÙÂÊÑ¡Ôñ
+ @Description			QMC5883Læ•°æ®è¾“å‡ºé€Ÿç‡é€‰æ‹©
  @Input				rates : QMC_RATES_10HZ/QMC_RATES_50HZ/QMC_RATES_100HZ/QMC_RATES_200HZ
  @Return				void
 **********************************************************************************************************/
@@ -267,7 +267,7 @@ void QMC5883L_Rates_Selection(u8 rates)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Range_Selection(u8 range)
- @Description			QMC5883L²âÁ¿·¶Î§Ñ¡Ôñ
+ @Description			QMC5883Læµ‹é‡èŒƒå›´é€‰æ‹©
  @Input				range : QMC_RANGE_2G/QMC_RANGE_8G
  @Return				void
 **********************************************************************************************************/
@@ -286,7 +286,7 @@ void QMC5883L_Range_Selection(u8 range)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Osr_Selection(u8 osr)
- @Description			QMC5883LÄÚÖÃÂË²¨Æ÷´ø¿íÑ¡Ôñ
+ @Description			QMC5883Lå†…ç½®æ»¤æ³¢å™¨å¸¦å®½é€‰æ‹©
  @Input				osr : QMC_OSR_512/QMC_OSR_256/QMC_OSR_128/QMC_OSR_64
  @Return				void
 **********************************************************************************************************/
@@ -311,7 +311,7 @@ void QMC5883L_Osr_Selection(u8 osr)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Interrupt_Selection(u8 interrupt)
- @Description			QMC5883LÒı½ÅÖĞ¶ÏÑ¡Ôñ
+ @Description			QMC5883Lå¼•è„šä¸­æ–­é€‰æ‹©
  @Input				interrupt : QMC_INT_ENABLE/QMC_INT_DISABLE
  @Return				void
 **********************************************************************************************************/
@@ -330,21 +330,21 @@ void QMC5883L_Interrupt_Selection(u8 interrupt)
 
 /**********************************************************************************************************
  @Function			void QMC5883L_Softwart_Reset(void)
- @Description			QMC5883L¸´Î»
+ @Description			QMC5883Lå¤ä½
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void QMC5883L_Softwart_Reset(void)
 {
-	QMC5883L_WriteByte(QMC5883L_CR2, QMC_SOFT_REST);							//¸´Î»QMC5883L
+	QMC5883L_WriteByte(QMC5883L_CR2, QMC_SOFT_REST);							//å¤ä½QMC5883L
 	
 	QMC5883L_WriteByte(0x0B, 0x01);
 	QMC5883L_WriteByte(0x20, 0x40);
 	QMC5883L_WriteByte(0x21, 0x01);
 	
-	/* 64ÂË²¨, 8¸ßË¹·¶Î§, 10HzÊä³ö, ³õÊ¼»¯ÎªStandBy */
+	/* 64æ»¤æ³¢, 8é«˜æ–¯èŒƒå›´, 10Hzè¾“å‡º, åˆå§‹åŒ–ä¸ºStandBy */
 	QMC5883L_WriteByte(QMC5883L_CR1, QMC_OSR_64 | QMC_RANGE_8G | QMC_RATES_10HZ | QMC_MODE_STANDBY);
-	/* Òı½ÅÖĞ¶ÏÊ¹ÄÜ, Êı¾İ¶ÁÈ¡ÍêÖ¸Õë×Ô¶¯Æ«×ªÊ§ÄÜ */
+	/* å¼•è„šä¸­æ–­ä½¿èƒ½, æ•°æ®è¯»å–å®ŒæŒ‡é’ˆè‡ªåŠ¨åè½¬å¤±èƒ½ */
 	QMC5883L_WriteByte(QMC5883L_CR2, QMC_INT_ENABLE | QMC_POINT_ROLL_DISABLE);
 }
 

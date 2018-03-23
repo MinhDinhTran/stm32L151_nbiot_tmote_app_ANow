@@ -58,9 +58,9 @@ typedef enum
 	RCC_RESET_FLAG_WWDGRST				= 0x07							/*!< Window Watchdog Reset Flag		*/
 }RCC_RESET_FLAG_TypeDef;
 
-RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void);							//»ñÈ¡¸´Î»±êÖ¾Î»
+RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void);							//èŽ·å–å¤ä½æ ‡å¿—ä½
 
-void LowPowerCtrlIO_Init(void);											//µÍ¹¦ºÄ¿ØÖÆIO³õÊ¼»¯
-void PowerCtrlIO_Init(void);												//µçÔ´¿ØÖÆIO³õÊ¼»¯
+void LowPowerCtrlIO_Init(void);											//ä½ŽåŠŸè€—æŽ§åˆ¶IOåˆå§‹åŒ–
+void PowerCtrlIO_Init(void);												//ç”µæºæŽ§åˆ¶IOåˆå§‹åŒ–
 
 #endif

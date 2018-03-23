@@ -17,11 +17,11 @@
 #include "stm32l1xx_config.h"
 #include "delay.h"
 
-ADC_HandleTypeDef		VBAT_ADC_Handler;									//µç³ØµçÑ¹ADC¾ä±ú
+ADC_HandleTypeDef		VBAT_ADC_Handler;									//ç”µæ± ç”µå‹ADCå¥æŸ„
 
 /**********************************************************************************************************
  @Function			void VBAT_ADC_Init(void)
- @Description			µçÑ¹ADC³õÊ¼»¯
+ @Description			ç”µå‹ADCåˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -62,9 +62,9 @@ void VBAT_ADC_Init(void)
 
 /**********************************************************************************************************
  @Function			u16 VBAT_ADC_Read(u32 timeout)
- @Description			µçÔ´µçÑ¹ADC¶ÁÈ¡
- @Input				¶Á³öµÈ´ı³¬Ê±Ê±¼ä
- @Return				µçÑ¹Öµ
+ @Description			ç”µæºç”µå‹ADCè¯»å–
+ @Input				è¯»å‡ºç­‰å¾…è¶…æ—¶æ—¶é—´
+ @Return				ç”µå‹å€¼
 **********************************************************************************************************/
 u16 VBAT_ADC_Read(u32 timeout)
 {
@@ -85,9 +85,9 @@ u16 VBAT_ADC_Read(u32 timeout)
 	GPIO_Initure.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(VBAT_ADC_GPIOx, &GPIO_Initure);
 	
-	VBAT_ADC_Init();													//µçÑ¹ADC³õÊ¼»¯
+	VBAT_ADC_Init();													//ç”µå‹ADCåˆå§‹åŒ–
 	
-	VBATPOWER(ON);														//¿ªÆôVBATµçÔ´µçÑ¹
+	VBATPOWER(ON);														//å¼€å¯VBATç”µæºç”µå‹
 	Delay_MS(5);
 	
 	HAL_ADC_Start(&VBAT_ADC_Handler);
@@ -98,7 +98,7 @@ u16 VBAT_ADC_Read(u32 timeout)
 	
 	HAL_ADC_Stop(&VBAT_ADC_Handler);
 	
-	VBATPOWER(OFF);													//¹Ø±ÕVBATµçÔ´µçÑ¹
+	VBATPOWER(OFF);													//å…³é—­VBATç”µæºç”µå‹
 	
 	VBAT_POWER_RCC_GPIO_CLK_ENABLE();
 	VBAT_ADC_RCC_GPIO_CLK_ENABLE();

@@ -21,9 +21,9 @@ unsigned char NBIOT_ATRecvBuf[NBIOT_ATBUFFER_SIZE];
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd)
- @Description			NBIOT_Transport_SendATCmd 				: ·¢ËÍATÖ¸ÁîµÈ´ıÓ¦´ğ
- @Input				ATCmd		 						: ATÖ¸Áî½á¹¹Ìå
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Transport_SendATCmd 				: å‘é€ATæŒ‡ä»¤ç­‰å¾…åº”ç­”
+ @Input				ATCmd		 						: ATæŒ‡ä»¤ç»“æ„ä½“
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 {
@@ -31,28 +31,28 @@ NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 	char *str = NULL;
 	u16 ReceiveLength = 0;
 	
-	if (ATCmd->ATSendlen > ATCmd->ATSendbuf_size) {														//·¢ËÍÊı¾İ³¤¶È¼ì²â
+	if (ATCmd->ATSendlen > ATCmd->ATSendbuf_size) {														//å‘é€æ•°æ®é•¿åº¦æ£€æµ‹
 		NBStatus = NBIOT_ERROR;
 		goto exit;
 	}
 	
-	Uart1_PortSerialEnable(ENABLE, DISABLE);															//¿ªÆô½ÓÊÕÖĞ¶Ï
-	USART1_RX_STA = 0;																				//½ÓÊÕ×´Ì¬¸´Î»
-	memset((void *)USART1_RX_BUF, 0x0, sizeof(USART1_RX_BUF));												//Çå¿Õ»º´æ¿Õ¼ä
+	Uart1_PortSerialEnable(ENABLE, DISABLE);															//å¼€å¯æ¥æ”¶ä¸­æ–­
+	USART1_RX_STA = 0;																				//æ¥æ”¶çŠ¶æ€å¤ä½
+	memset((void *)USART1_RX_BUF, 0x0, sizeof(USART1_RX_BUF));												//æ¸…ç©ºç¼“å­˜ç©ºé—´
 	
-	if (HAL_OK != HAL_UART_Transmit(&UART1_Handler, ATCmd->ATSendbuf, ATCmd->ATSendlen, 0xFFFF)) {					//·¢ËÍÃüÁî
+	if (HAL_OK != HAL_UART_Transmit(&UART1_Handler, ATCmd->ATSendbuf, ATCmd->ATSendlen, 0xFFFF)) {					//å‘é€å‘½ä»¤
 		NBStatus = NBIOT_ERROR;
 		Uart1_PortSerialEnable(DISABLE, DISABLE);
 		goto exit;
 	}
 	
-	if ((ATCmd->ATack && ATCmd->CmdWaitTime.xTicksToWait) || (ATCmd->ATNack && ATCmd->CmdWaitTime.xTicksToWait)) {	//ĞèÒªµÈ´ıÓ¦´ğ
-		while (Stm32_Calculagraph_IsExpiredMS(&ATCmd->CmdWaitTime) != true) {									//µÈ´ıµ¹¼ÆÊ±
-			if (USART1_RX_STA & 0x8000) {																//½ÓÊÕµ½ÆÚ´ıµÄÓ¦´ğ½á¹û
-				USART1_RX_BUF[USART1_RX_STA & 0x3FFF] = 0;												//Ìí¼Ó½áÊø·û
+	if ((ATCmd->ATack && ATCmd->CmdWaitTime.xTicksToWait) || (ATCmd->ATNack && ATCmd->CmdWaitTime.xTicksToWait)) {	//éœ€è¦ç­‰å¾…åº”ç­”
+		while (Stm32_Calculagraph_IsExpiredMS(&ATCmd->CmdWaitTime) != true) {									//ç­‰å¾…å€’è®¡æ—¶
+			if (USART1_RX_STA & 0x8000) {																//æ¥æ”¶åˆ°æœŸå¾…çš„åº”ç­”ç»“æœ
+				USART1_RX_BUF[USART1_RX_STA & 0x3FFF] = 0;												//æ·»åŠ ç»“æŸç¬¦
 				if (ATCmd->ATack && ((str = strstr((const char*)USART1_RX_BUF, (const char*)ATCmd->ATack)) != NULL)) {			//Found! OK
-					if (ATCmd->ATRecvbuf) {															//»ñÈ¡Ó¦´ğÊı¾İ
-						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//½ÓÊÕATÊı¾İ³¤¶È¼ì²â
+					if (ATCmd->ATRecvbuf) {															//è·å–åº”ç­”æ•°æ®
+						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//æ¥æ”¶ATæ•°æ®é•¿åº¦æ£€æµ‹
 							NBStatus = NBIOT_ERROR;
 							goto exit;
 						}
@@ -65,8 +65,8 @@ NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 					break;
 				}
 				else if (ATCmd->ATNack && ((str = strstr((const char*)USART1_RX_BUF, (const char*)ATCmd->ATNack)) != NULL)) {		//Found! Err
-					if (ATCmd->ATRecvbuf) {															//»ñÈ¡Ó¦´ğÊı¾İ
-						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//½ÓÊÕATÊı¾İ³¤¶È¼ì²â
+					if (ATCmd->ATRecvbuf) {															//è·å–åº”ç­”æ•°æ®
+						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//æ¥æ”¶ATæ•°æ®é•¿åº¦æ£€æµ‹
 							NBStatus = NBIOT_ERROR;
 							goto exit;
 						}
@@ -79,7 +79,7 @@ NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 					break;
 				}
 				else if (ATCmd->ATRecvbuf) {																		//No Found!
-					if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {					//½ÓÊÕATÊı¾İ³¤¶È¼ì²â
+					if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {					//æ¥æ”¶ATæ•°æ®é•¿åº¦æ£€æµ‹
 						NBStatus = NBIOT_ERROR;
 						goto exit;
 					}
@@ -105,9 +105,9 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd)
- @Description			NBIOT_Transport_RecvATCmd 				: ½ÓÊÕATÖ¸ÁîÓ¦´ğ
- @Input				ATCmd		 						: ATÖ¸Áî½á¹¹Ìå
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Transport_RecvATCmd 				: æ¥æ”¶ATæŒ‡ä»¤åº”ç­”
+ @Input				ATCmd		 						: ATæŒ‡ä»¤ç»“æ„ä½“
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 {
@@ -115,17 +115,17 @@ NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 	char *str = NULL;
 	u16 ReceiveLength = 0;
 	
-	Uart1_PortSerialEnable(ENABLE, DISABLE);															//¿ªÆô½ÓÊÕÖĞ¶Ï
-	USART1_RX_STA = 0;																				//½ÓÊÕ×´Ì¬¸´Î»
-	memset((void *)USART1_RX_BUF, 0x0, sizeof(USART1_RX_BUF));												//Çå¿Õ»º´æ¿Õ¼ä
+	Uart1_PortSerialEnable(ENABLE, DISABLE);															//å¼€å¯æ¥æ”¶ä¸­æ–­
+	USART1_RX_STA = 0;																				//æ¥æ”¶çŠ¶æ€å¤ä½
+	memset((void *)USART1_RX_BUF, 0x0, sizeof(USART1_RX_BUF));												//æ¸…ç©ºç¼“å­˜ç©ºé—´
 	
-	if ((ATCmd->ATack && ATCmd->CmdWaitTime.xTicksToWait) || (ATCmd->ATNack && ATCmd->CmdWaitTime.xTicksToWait)) {	//ĞèÒªµÈ´ıÓ¦´ğ
-		while (Stm32_Calculagraph_IsExpiredMS(&ATCmd->CmdWaitTime) != true) {									//µÈ´ıµ¹¼ÆÊ±
-			if (USART1_RX_STA & 0x8000) {																//½ÓÊÕµ½ÆÚ´ıµÄÓ¦´ğ½á¹û
-				USART1_RX_BUF[USART1_RX_STA & 0x3FFF] = 0;												//Ìí¼Ó½áÊø·û
+	if ((ATCmd->ATack && ATCmd->CmdWaitTime.xTicksToWait) || (ATCmd->ATNack && ATCmd->CmdWaitTime.xTicksToWait)) {	//éœ€è¦ç­‰å¾…åº”ç­”
+		while (Stm32_Calculagraph_IsExpiredMS(&ATCmd->CmdWaitTime) != true) {									//ç­‰å¾…å€’è®¡æ—¶
+			if (USART1_RX_STA & 0x8000) {																//æ¥æ”¶åˆ°æœŸå¾…çš„åº”ç­”ç»“æœ
+				USART1_RX_BUF[USART1_RX_STA & 0x3FFF] = 0;												//æ·»åŠ ç»“æŸç¬¦
 				if (ATCmd->ATack && ((str = strstr((const char*)USART1_RX_BUF, (const char*)ATCmd->ATack)) != NULL)) {			//Found! OK
-					if (ATCmd->ATRecvbuf) {															//»ñÈ¡Ó¦´ğÊı¾İ
-						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//½ÓÊÕATÊı¾İ³¤¶È¼ì²â
+					if (ATCmd->ATRecvbuf) {															//è·å–åº”ç­”æ•°æ®
+						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//æ¥æ”¶ATæ•°æ®é•¿åº¦æ£€æµ‹
 							NBStatus = NBIOT_ERROR;
 							goto exit;
 						}
@@ -138,8 +138,8 @@ NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 					break;
 				}
 				else if (ATCmd->ATNack && ((str = strstr((const char*)USART1_RX_BUF, (const char*)ATCmd->ATNack)) != NULL)) {		//Found! Err
-					if (ATCmd->ATRecvbuf) {															//»ñÈ¡Ó¦´ğÊı¾İ
-						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//½ÓÊÕATÊı¾İ³¤¶È¼ì²â
+					if (ATCmd->ATRecvbuf) {															//è·å–åº”ç­”æ•°æ®
+						if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {				//æ¥æ”¶ATæ•°æ®é•¿åº¦æ£€æµ‹
 							NBStatus = NBIOT_ERROR;
 							goto exit;
 						}
@@ -152,7 +152,7 @@ NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 					break;
 				}
 				else if (ATCmd->ATRecvbuf) {																		//No Found!
-					if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {					//½ÓÊÕATÊı¾İ³¤¶È¼ì²â
+					if ((ReceiveLength + (USART1_RX_STA & 0x3FFF)) >= ATCmd->ATRecvbuf_size) {					//æ¥æ”¶ATæ•°æ®é•¿åº¦æ£€æµ‹
 						NBStatus = NBIOT_ERROR;
 						goto exit;
 					}
@@ -178,9 +178,9 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Transport_Init(NBIOT_ATCmdTypeDef* ATCmd)
- @Description			NBIOT_Transport_Init					: Initiative³õÊ¼»¯NBIOTÊı¾İ´«Êä½Ó¿Ú
- @Input				TCmd		 							: ATÖ¸Áî½á¹¹Ìå
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Transport_Init					: Initiativeåˆå§‹åŒ–NBIOTæ•°æ®ä¼ è¾“æ¥å£
+ @Input				TCmd		 							: ATæŒ‡ä»¤ç»“æ„ä½“
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Transport_Init(NBIOT_ATCmdTypeDef* ATCmd)
 {

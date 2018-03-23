@@ -12,25 +12,25 @@
 #define IIC_SDA_RCC_GPIO_CLK_ENABLE()	__HAL_RCC_GPIOB_CLK_ENABLE()
 #define IIC_SDA_RCC_GPIO_CLK_DISABLE()	__HAL_RCC_GPIOB_CLK_DISABLE()
 
-/* ¸ßµÍµçÆ½ */
+/* é«˜ä½Žç”µå¹³ */
 #define HIGH		1
 #define LOW		0
 
-/* IO·½ÏòÉèÖÃ */
-#define SDA_IN()	{IIC_SDA_GPIOx->MODER&=~(3<<(7*2));IIC_SDA_GPIOx->MODER|=0<<7*2;}				//PB7ÊäÈëÄ£Ê½
-#define SDA_OUT()	{IIC_SDA_GPIOx->MODER&=~(3<<(7*2));IIC_SDA_GPIOx->MODER|=1<<7*2;}				//PB7Êä³öÄ£Ê½
-/* IO²Ù×÷ */
+/* IOæ–¹å‘è®¾ç½® */
+#define SDA_IN()	{IIC_SDA_GPIOx->MODER&=~(3<<(7*2));IIC_SDA_GPIOx->MODER|=0<<7*2;}				//PB7è¾“å…¥æ¨¡å¼
+#define SDA_OUT()	{IIC_SDA_GPIOx->MODER&=~(3<<(7*2));IIC_SDA_GPIOx->MODER|=1<<7*2;}				//PB7è¾“å‡ºæ¨¡å¼
+/* IOæ“ä½œ */
 #define IIC_SCL(n)	(n?HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_SET):HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_RESET))	//SCL
 #define IIC_SDA(n)	(n?HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_SET):HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_RESET))	//SDA
-#define READ_SDA	HAL_GPIO_ReadPin(IIC_SDA_GPIOx, IIC_SDA_PIN)									//ÊäÈëSDA
+#define READ_SDA	HAL_GPIO_ReadPin(IIC_SDA_GPIOx, IIC_SDA_PIN)									//è¾“å…¥SDA
 
-void IIC_Init(void);													//IIC³õÊ¼»¯
-void IIC_Start(void);													//²úÉúIICÆðÊ¼ÐÅºÅ
-void IIC_Stop(void);													//²úÉúIICÍ£Ö¹ÐÅºÅ
-u8   IIC_Wait_Ack(void);													//µÈ´ýACKÐÅºÅµ½À´
-void IIC_Ack(void);														//²úÉúACKÓ¦´ð
-void IIC_NAck(void);													//²»²úÉúACKÓ¦´ð
-void IIC_Send_Byte(u8 txd);												//IIC·¢ËÍÒ»¸ö×Ö½Ú
-u8   IIC_Read_Byte(unsigned char ack);										//IIC¶ÁÈ¡Ò»¸ö×Ö½Ú
+void IIC_Init(void);													//IICåˆå§‹åŒ–
+void IIC_Start(void);													//äº§ç”ŸIICèµ·å§‹ä¿¡å·
+void IIC_Stop(void);													//äº§ç”ŸIICåœæ­¢ä¿¡å·
+u8   IIC_Wait_Ack(void);													//ç­‰å¾…ACKä¿¡å·åˆ°æ¥
+void IIC_Ack(void);														//äº§ç”ŸACKåº”ç­”
+void IIC_NAck(void);													//ä¸äº§ç”ŸACKåº”ç­”
+void IIC_Send_Byte(u8 txd);												//IICå‘é€ä¸€ä¸ªå­—èŠ‚
+u8   IIC_Read_Byte(unsigned char ack);										//IICè¯»å–ä¸€ä¸ªå­—èŠ‚
 
 #endif

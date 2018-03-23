@@ -5,36 +5,36 @@
 #include "stdio.h"
 #include "string.h"
 
-#define PRINTF_USART			USART2									//PrintfÊ¹ÓÃ´®¿Ú
+#define PRINTF_USART			USART2									//Printfä½¿ç”¨ä¸²å£
 
 #define ENTER_CRITICAL_SECTION()	Uart_EnterCriticalSection();
 #define EXIT_CRITICAL_SECTION()	Uart_ExitCriticalSection();
 
-#define USART1_REC_LEN			1024										//´®¿Ú1×î´ó½ÓÊÕ×Ö½ÚÊı
-#define USART2_REC_LEN			1024										//´®¿Ú2×î´ó½ÓÊÕ×Ö½ÚÊı
+#define USART1_REC_LEN			1024										//ä¸²å£1æœ€å¤§æ¥æ”¶å­—èŠ‚æ•°
+#define USART2_REC_LEN			1024										//ä¸²å£2æœ€å¤§æ¥æ”¶å­—èŠ‚æ•°
 
-#define USART1_RXBUFFERSIZE   	1 										//HAL¿âÊ¹ÓÃµÄ´®¿Ú½ÓÊÕ»º´æ´óĞ¡
-#define USART2_RXBUFFERSIZE   	1 										//HAL¿âÊ¹ÓÃµÄ´®¿Ú½ÓÊÕ»º´æ´óĞ¡
+#define USART1_RXBUFFERSIZE   	1 										//HALåº“ä½¿ç”¨çš„ä¸²å£æ¥æ”¶ç¼“å­˜å¤§å°
+#define USART2_RXBUFFERSIZE   	1 										//HALåº“ä½¿ç”¨çš„ä¸²å£æ¥æ”¶ç¼“å­˜å¤§å°
 
-extern u8 USART1_RX_BUF[USART1_REC_LEN];    									//USART1½ÓÊÕ»º³å,×î´óUSART1_REC_LEN¸ö×Ö½Ú
-extern u8 USART2_RX_BUF[USART2_REC_LEN];    									//USART2½ÓÊÕ»º³å,×î´óUSART1_REC_LEN¸ö×Ö½Ú
+extern u8 USART1_RX_BUF[USART1_REC_LEN];    									//USART1æ¥æ”¶ç¼“å†²,æœ€å¤§USART1_REC_LENä¸ªå­—èŠ‚
+extern u8 USART2_RX_BUF[USART2_REC_LEN];    									//USART2æ¥æ”¶ç¼“å†²,æœ€å¤§USART1_REC_LENä¸ªå­—èŠ‚
 
-extern u16 USART1_RX_STA;												//USART1½ÓÊÕ×´Ì¬±ê¼Ç bit15,½ÓÊÕÍê³É±êÖ¾ bit14,½ÓÊÕµ½0x0d(\n)
-extern u16 USART2_RX_STA;												//USART2½ÓÊÕ×´Ì¬±ê¼Ç bit15,½ÓÊÕÍê³É±êÖ¾ bit14,½ÓÊÕµ½0x0d(\n)
+extern u16 USART1_RX_STA;												//USART1æ¥æ”¶çŠ¶æ€æ ‡è®° bit15,æ¥æ”¶å®Œæˆæ ‡å¿— bit14,æ¥æ”¶åˆ°0x0d(\n)
+extern u16 USART2_RX_STA;												//USART2æ¥æ”¶çŠ¶æ€æ ‡è®° bit15,æ¥æ”¶å®Œæˆæ ‡å¿— bit14,æ¥æ”¶åˆ°0x0d(\n)
 
-extern u8 USART1_aRxBuffer[USART1_RXBUFFERSIZE];								//HAL¿âÊ¹ÓÃµÄ´®¿Ú½ÓÊÕ»º³å
-extern u8 USART2_aRxBuffer[USART2_RXBUFFERSIZE];								//HAL¿âÊ¹ÓÃµÄ´®¿Ú½ÓÊÕ»º³å
+extern u8 USART1_aRxBuffer[USART1_RXBUFFERSIZE];								//HALåº“ä½¿ç”¨çš„ä¸²å£æ¥æ”¶ç¼“å†²
+extern u8 USART2_aRxBuffer[USART2_RXBUFFERSIZE];								//HALåº“ä½¿ç”¨çš„ä¸²å£æ¥æ”¶ç¼“å†²
 
-extern UART_HandleTypeDef UART1_Handler;									//UART1¾ä±ú
-extern UART_HandleTypeDef UART2_Handler;									//UART2¾ä±ú
+extern UART_HandleTypeDef UART1_Handler;									//UART1å¥æŸ„
+extern UART_HandleTypeDef UART2_Handler;									//UART2å¥æŸ„
 
 
-void Uart1_Init(u32 bound);												//´®¿Ú1³õÊ¼»¯
-void Uart2_Init(u32 bound);												//´®¿Ú2³õÊ¼»¯
-void Uart1_PortSerialEnable(u8 xRxEnable, u8 xTxEnable);						//Ê¹ÄÜ/Ê§ÄÜ ·¢ËÍ/½ÓÊÕ ´®¿ÚÖĞ¶Ï
-void Uart2_PortSerialEnable(u8 xRxEnable, u8 xTxEnable);						//Ê¹ÄÜ/Ê§ÄÜ ·¢ËÍ/½ÓÊÕ ´®¿ÚÖĞ¶Ï
+void Uart1_Init(u32 bound);												//ä¸²å£1åˆå§‹åŒ–
+void Uart2_Init(u32 bound);												//ä¸²å£2åˆå§‹åŒ–
+void Uart1_PortSerialEnable(u8 xRxEnable, u8 xTxEnable);						//ä½¿èƒ½/å¤±èƒ½ å‘é€/æ¥æ”¶ ä¸²å£ä¸­æ–­
+void Uart2_PortSerialEnable(u8 xRxEnable, u8 xTxEnable);						//ä½¿èƒ½/å¤±èƒ½ å‘é€/æ¥æ”¶ ä¸²å£ä¸­æ–­
 
-void Uart_EnterCriticalSection(void);										//½øÈë¹Ø¼ü²Ù×÷,¹Ø±ÕÖĞ¶Ï,µÈ´ıÖĞ¶Ï½áÊø·µ»Ø
-void Uart_ExitCriticalSection(void);										//ÍË³ö¹Ø¼ü²Ù×÷,¿ªÆôÖĞ¶Ï
+void Uart_EnterCriticalSection(void);										//è¿›å…¥å…³é”®æ“ä½œ,å…³é—­ä¸­æ–­,ç­‰å¾…ä¸­æ–­ç»“æŸè¿”å›
+void Uart_ExitCriticalSection(void);										//é€€å‡ºå…³é”®æ“ä½œ,å¼€å¯ä¸­æ–­
 
 #endif

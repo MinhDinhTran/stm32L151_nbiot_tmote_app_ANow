@@ -7,27 +7,27 @@
 #include "nbiottransport.h"
 #include "net_coap_message_operate.h"
 
-#define COAPCDPADDR						"117.60.157.137"					//µçĞÅÉú²ú : "117.60.157.137", µçĞÅ²âÊÔ : "180.101.147.115"
+#define COAPCDPADDR						"117.60.157.137"					//ç”µä¿¡ç”Ÿäº§ : "117.60.157.137", ç”µä¿¡æµ‹è¯• : "180.101.147.115"
 #define COAPCDPPORT						5683
 
-void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient);					//COAPÂß¼­´¦Àí
-void NET_COAP_NBIOT_Event_StopMode(NBIOT_ClientsTypeDef* pClient);				//Í£Ö¹Ä£Ê½
-void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient);			//Ó²¼şÖØÆô
-void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient);				//Ä£¿é¼ì²â
-void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient);			//²ÎÊıÅäÖÃ
-void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient);			//Sim¿¨¼ì²â
-void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient);		//ÍêÕû¹¦ÄÜ
-void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient);		//×îĞ¡¹¦ÄÜ
-void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient);			//CDP·şÎñÆ÷²éÑ¯
-void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient);			//CDP·şÎñÆ÷ÅäÖÃ
-void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient);			//ÆäËûÅäÖÃ
-void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient);				//×¢Íø¼ì²é
-void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient);			//×¢Íø½øĞĞ
-void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient);			//×¢Íø²éÑ¯
-void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient);		//²ÎÊı¼ì³ö
-void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient);				//·¢ËÍÊı¾İ
-void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient);				//½ÓÊÕÊı¾İ
-void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient);		//ÏÂĞĞÊı¾İ´¦Àí
+void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient);					//COAPé€»è¾‘å¤„ç†
+void NET_COAP_NBIOT_Event_StopMode(NBIOT_ClientsTypeDef* pClient);				//åœæ­¢æ¨¡å¼
+void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient);			//ç¡¬ä»¶é‡å¯
+void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient);				//æ¨¡å—æ£€æµ‹
+void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient);			//å‚æ•°é…ç½®
+void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient);			//Simå¡æ£€æµ‹
+void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient);		//å®Œæ•´åŠŸèƒ½
+void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient);		//æœ€å°åŠŸèƒ½
+void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient);			//CDPæœåŠ¡å™¨æŸ¥è¯¢
+void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient);			//CDPæœåŠ¡å™¨é…ç½®
+void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient);			//å…¶ä»–é…ç½®
+void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient);				//æ³¨ç½‘æ£€æŸ¥
+void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient);			//æ³¨ç½‘è¿›è¡Œ
+void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient);			//æ³¨ç½‘æŸ¥è¯¢
+void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient);		//å‚æ•°æ£€å‡º
+void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient);				//å‘é€æ•°æ®
+void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient);				//æ¥æ”¶æ•°æ®
+void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient);		//ä¸‹è¡Œæ•°æ®å¤„ç†
 
 
 

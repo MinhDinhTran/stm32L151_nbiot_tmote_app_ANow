@@ -24,9 +24,9 @@ unsigned char NBIOT_DataStack[NBIOT_DATASTACK_SIZE];
 
 /**********************************************************************************************************
  @Function			void NBIOT_Client_Init(NBIOT_ClientsTypeDef* pClient, NBIOT_ATCmdTypeDef* ATCmdStack)
- @Description			NBIOT_Client_Init						: ³õÊ¼»¯NBIOT¿Í»§¶Ë
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
-					ATCmdStack							: NBIOT AT Ğ­ÒéÕ»
+ @Description			NBIOT_Client_Init						: åˆå§‹åŒ–NBIOTå®¢æˆ·ç«¯
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+					ATCmdStack							: NBIOT AT åè®®æ ˆ
  @Return				void
 **********************************************************************************************************/
 void NBIOT_Client_Init(NBIOT_ClientsTypeDef* pClient, NBIOT_ATCmdTypeDef* ATCmdStack)

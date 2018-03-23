@@ -4,7 +4,7 @@
   * @author  Movebroad -- KK
   * @version V1.0
   * @date    2017-11-01
-  * @brief   ªÿµ˜∫Ø ˝
+  * @brief   ÂõûË∞ÉÂáΩÊï∞
   *********************************************************************************************************
   * @attention
   *			
@@ -46,58 +46,58 @@ void HAL_MspDeInit(void)
 
 /**********************************************************************************************************
  @Function			void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
- @Description			∂® ±∆˜µ◊≤„«˝∂Ø, ø™∆Ù ±÷”, …Ë÷√÷–∂œ”≈œ»º∂
-					¥À∫Ø ˝ª·±ªHAL_TIM_Base_Init()∫Ø ˝µ˜”√
- @Input				htim : TIMæ‰±˙
+ @Description			ÂÆöÊó∂Âô®Â∫ïÂ±ÇÈ©±Âä®, ÂºÄÂêØÊó∂Èíü, ËÆæÁΩÆ‰∏≠Êñ≠‰ºòÂÖàÁ∫ß
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_TIM_Base_Init()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				htim : TIMÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
 {
 	if (htim->Instance == TIM2) {
-		__HAL_RCC_TIM2_CLK_ENABLE();										// πƒ‹TIM2 ±÷”
-		HAL_NVIC_SetPriority(TIM2_IRQn, 2, 1);								//…Ë÷√÷–∂œ”≈œ»º∂, «ø’º”≈œ»º∂2, ¥Œ”≈œ»º∂1
-		HAL_NVIC_EnableIRQ(TIM2_IRQn);									//ø™∆ÙTIM2÷–∂œ
+		__HAL_RCC_TIM2_CLK_ENABLE();										//‰ΩøËÉΩTIM2Êó∂Èíü
+		HAL_NVIC_SetPriority(TIM2_IRQn, 2, 1);								//ËÆæÁΩÆ‰∏≠Êñ≠‰ºòÂÖàÁ∫ß, Âº∫Âç†‰ºòÂÖàÁ∫ß2, Ê¨°‰ºòÂÖàÁ∫ß1
+		HAL_NVIC_EnableIRQ(TIM2_IRQn);									//ÂºÄÂêØTIM2‰∏≠Êñ≠
 	}
 }
 
 /**********************************************************************************************************
  @Function			void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef *htim)
- @Description			∂® ±∆˜µ◊≤„«˝∂Ø, πÿ±’ ±÷”
-					¥À∫Ø ˝ª·±ªHAL_TIM_Base_DeInit()∫Ø ˝µ˜”√
- @Input				htim : TIMæ‰±˙
+ @Description			ÂÆöÊó∂Âô®Â∫ïÂ±ÇÈ©±Âä®, ÂÖ≥Èó≠Êó∂Èíü
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_TIM_Base_DeInit()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				htim : TIMÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef *htim)
 {
 	if (htim->Instance == TIM2) {
-		__HAL_RCC_TIM2_CLK_DISABLE();										// ßƒ‹TIM2 ±÷”
-		HAL_NVIC_DisableIRQ(TIM2_IRQn);									//πÿ±’TIM2÷–∂œ
+		__HAL_RCC_TIM2_CLK_DISABLE();										//Â§±ËÉΩTIM2Êó∂Èíü
+		HAL_NVIC_DisableIRQ(TIM2_IRQn);									//ÂÖ≥Èó≠TIM2‰∏≠Êñ≠
 	}
 }
 
 
 /**********************************************************************************************************
  @Function			void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
- @Description			ADCµ◊≤„«˝∂Ø
-					¥À∫Ø ˝ª·±ªHAL_ADC_Init()∫Ø ˝µ˜”√
- @Input				hadc : ADCæ‰±˙
+ @Description			ADCÂ∫ïÂ±ÇÈ©±Âä®
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_ADC_Init()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				hadc : ADCÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	if (hadc == &RADAR_ADC_Handler) {										//¿◊¥ÔADC
-		/* ADCÕ‚…Ë ±÷” πƒ‹ */
+	if (hadc == &RADAR_ADC_Handler) {										//Èõ∑ËææADC
+		/* ADCÂ§ñËÆæÊó∂Èíü‰ΩøËÉΩ */
 		RADAR_ADCx_CLK_ENABLE();
 		
-		/* ¿◊¥ÔAD◊™ªªÕ®µ¿“˝Ω≈ ±÷” πƒ‹ */
+		/* Èõ∑ËææADËΩ¨Êç¢ÈÄöÈÅìÂºïËÑöÊó∂Èíü‰ΩøËÉΩ */
 		RADAR_ADCx_CHANNEL_GPIO_CLK_ENABLE();
 		
-		/* ¿◊¥ÔDMA ±÷” πƒ‹ */
+		/* Èõ∑ËææDMAÊó∂Èíü‰ΩøËÉΩ */
 		__HAL_RCC_DMA1_CLK_ENABLE();
 		
-		/* ¿◊¥ÔADC“˝Ω≈≈‰÷√ */
+		/* Èõ∑ËææADCÂºïËÑöÈÖçÁΩÆ */
 		GPIO_Initure.Pin = RADAR_ADCx_CHANNEL_PIN;
 		GPIO_Initure.Mode = GPIO_MODE_ANALOG;
 		GPIO_Initure.Pull = GPIO_NOPULL;
@@ -117,7 +117,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 		__HAL_LINKDMA(hadc, DMA_Handle, RADAR_ADC_DMA_Handler);
 	}
 	
-	if (hadc == &VBAT_ADC_Handler) {										//µÁ≥ÿµÁ—πADC
+	if (hadc == &VBAT_ADC_Handler) {										//ÁîµÊ±†ÁîµÂéãADC
 		/* Enable ADC */
 		VBAT_ADC_RCC_ADC1_CLK_ENABLE();
 		
@@ -139,14 +139,14 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 
 /**********************************************************************************************************
  @Function			void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
- @Description			ADCµ◊≤„«˝∂Ø
-					¥À∫Ø ˝ª·±ªHAL_ADC_DeInit()∫Ø ˝µ˜”√
- @Input				hadc : ADCæ‰±˙
+ @Description			ADCÂ∫ïÂ±ÇÈ©±Âä®
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_ADC_DeInit()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				hadc : ADCÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 {
-	if (hadc == &RADAR_ADC_Handler) {										//¿◊¥ÔADC
+	if (hadc == &RADAR_ADC_Handler) {										//Èõ∑ËææADC
 		/* Disable ADC */
 		RADAR_ADCx_CLK_DISABLE();
 		
@@ -157,7 +157,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 		HAL_DMA_DeInit(hadc->DMA_Handle);
 	}
 	
-	if (hadc == &VBAT_ADC_Handler) {										//µÁ≥ÿµÁ—πADC
+	if (hadc == &VBAT_ADC_Handler) {										//ÁîµÊ±†ÁîµÂéãADC
 		/* Disable ADC */
 		VBAT_ADC_RCC_ADC1_CLK_DISABLE();
 		
@@ -177,23 +177,23 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 
 /**********************************************************************************************************
  @Function			void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
- @Description			DACµ◊≤„«˝∂Ø
-					¥À∫Ø ˝ª·±ªHAL_DAC_Init()∫Ø ˝µ˜”√
- @Input				hdac : DACæ‰±˙
+ @Description			DACÂ∫ïÂ±ÇÈ©±Âä®
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_DAC_Init()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				hdac : DACÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	if (hdac == &RADAR_DAC_Handler) {										//¿◊¥ÔDAC
-		/* DACÕ‚…Ë ±÷” πƒ‹ */
+	if (hdac == &RADAR_DAC_Handler) {										//Èõ∑ËææDAC
+		/* DACÂ§ñËÆæÊó∂Èíü‰ΩøËÉΩ */
 		RADAR_DACx_CLK_ENABLE();
 		
-		/* DACÕ®µ¿“˝Ω≈∂Àø⁄ ±÷” πƒ‹ */
+		/* DACÈÄöÈÅìÂºïËÑöÁ´ØÂè£Êó∂Èíü‰ΩøËÉΩ */
 		RADAR_DACx_CHANNEL_GPIO_CLK_ENABLE();
 		
-		/* DACÕ®µ¿“˝Ω≈≈‰÷√ */
+		/* DACÈÄöÈÅìÂºïËÑöÈÖçÁΩÆ */
 		GPIO_Initure.Pin = RADAR_DACx_CHANNEL_PIN;
 		GPIO_Initure.Mode = GPIO_MODE_ANALOG;
 		GPIO_Initure.Pull = GPIO_NOPULL;
@@ -203,25 +203,25 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
 
 /**********************************************************************************************************
  @Function			void HAL_DAC_MspDeInit(DAC_HandleTypeDef* hdac)
- @Description			DACµ◊≤„«˝∂Ø
-					¥À∫Ø ˝ª·±ªHAL_DAC_DeInit()∫Ø ˝µ˜”√
- @Input				hdac : DACæ‰±˙
+ @Description			DACÂ∫ïÂ±ÇÈ©±Âä®
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_DAC_DeInit()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				hdac : DACÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_DAC_MspDeInit(DAC_HandleTypeDef* hdac)
 {
-	if (hdac == &RADAR_DAC_Handler) {										//¿◊¥ÔDAC
-		/* ∏¥ŒªDAC */
+	if (hdac == &RADAR_DAC_Handler) {										//Èõ∑ËææDAC
+		/* Â§ç‰ΩçDAC */
 		RADAR_DACx_FORCE_RESET();
 		RADAR_DACx_RELEASE_RESET();
 		
-		/* Ω˚”√DACÕ‚…Ë ±÷” */
+		/* Á¶ÅÁî®DACÂ§ñËÆæÊó∂Èíü */
 		RADAR_DACx_CLK_DISABLE();
 		
-		/* ∑¥≥ı ºªØDACÕ®µ¿“˝Ω≈ */
+		/* ÂèçÂàùÂßãÂåñDACÈÄöÈÅìÂºïËÑö */
 		HAL_GPIO_DeInit(RADAR_DACx_CHANNEL_GPIO_PORT, RADAR_DACx_CHANNEL_PIN);
 		
-		/* DMAøÿ÷∆∆˜∑¥≥ı ºªØ */
+		/* DMAÊéßÂà∂Âô®ÂèçÂàùÂßãÂåñ */
 		HAL_DMA_DeInit(hdac->DMA_Handle2);
 	}
 }
@@ -229,9 +229,9 @@ void HAL_DAC_MspDeInit(DAC_HandleTypeDef* hdac)
 
 /**********************************************************************************************************
  @Function			void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
- @Description			RTCµ◊≤„«˝∂Ø,  ±÷”≈‰÷√
-					¥À∫Ø ˝ª·±ªHAL_RTC_Init()∫Ø ˝µ˜”√
- @Input				hrtc : RTCæ‰±˙
+ @Description			RTCÂ∫ïÂ±ÇÈ©±Âä®, Êó∂ÈíüÈÖçÁΩÆ
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_RTC_Init()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				hrtc : RTCÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
@@ -240,19 +240,19 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
 		RCC_OscInitTypeDef RCC_OscInitStruct;
 		RCC_PeriphCLKInitTypeDef PeriphCLKInitStruct;
 		
-		__HAL_RCC_PWR_CLK_ENABLE();										// πƒ‹µÁ‘¥ ±÷”PWR
-		HAL_PWR_EnableBkUpAccess();										//»°œ˚±∏∑›«¯”Ú–¥±£ª§
+		__HAL_RCC_PWR_CLK_ENABLE();										//‰ΩøËÉΩÁîµÊ∫êÊó∂ÈíüPWR
+		HAL_PWR_EnableBkUpAccess();										//ÂèñÊ∂àÂ§á‰ªΩÂå∫ÂüüÂÜô‰øùÊä§
 		
-		RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE;				//LSE≈‰÷√
+		RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE;				//LSEÈÖçÁΩÆ
 		RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;						//DISABLE PLL
-		RCC_OscInitStruct.LSEState = RCC_LSE_ON;							//RTC π”√LSE
+		RCC_OscInitStruct.LSEState = RCC_LSE_ON;							//RTC‰ΩøÁî®LSE
 		HAL_RCC_OscConfig(&RCC_OscInitStruct);
 		
-		PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;			//Õ‚…ËŒ™RTC
-		PeriphCLKInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;			//RTC ±÷”‘¥Œ™LSE
+		PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;			//Â§ñËÆæ‰∏∫RTC
+		PeriphCLKInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;			//RTCÊó∂ÈíüÊ∫ê‰∏∫LSE
 		HAL_RCCEx_PeriphCLKConfig(&PeriphCLKInitStruct);
 		
-		__HAL_RCC_RTC_ENABLE();											//RTC ±÷” πƒ‹
+		__HAL_RCC_RTC_ENABLE();											//RTCÊó∂Èíü‰ΩøËÉΩ
 		
 		HAL_NVIC_SetPriority(RTC_WKUP_IRQn, 2, 0);
 		HAL_NVIC_EnableIRQ(RTC_WKUP_IRQn);
@@ -261,16 +261,16 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
 
 /**********************************************************************************************************
  @Function			void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
- @Description			RTCµ◊≤„«˝∂Ø,  ±÷”πÿ±’
-					¥À∫Ø ˝ª·±ªHAL_RTC_DeInit()∫Ø ˝µ˜”√
- @Input				hrtc : RTCæ‰±˙
+ @Description			RTCÂ∫ïÂ±ÇÈ©±Âä®, Êó∂ÈíüÂÖ≥Èó≠
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_RTC_DeInit()ÂáΩÊï∞Ë∞ÉÁî®
+ @Input				hrtc : RTCÂè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
 {
 	if (hrtc->Instance == RTC) {
-		__HAL_RCC_PWR_CLK_DISABLE();										// ßƒ‹µÁ‘¥ ±÷”PWR
-		__HAL_RCC_RTC_DISABLE();											//RTC ±÷” ßƒ‹
+		__HAL_RCC_PWR_CLK_DISABLE();										//Â§±ËÉΩÁîµÊ∫êÊó∂ÈíüPWR
+		__HAL_RCC_RTC_DISABLE();											//RTCÊó∂ÈíüÂ§±ËÉΩ
 		HAL_NVIC_DisableIRQ(RTC_WKUP_IRQn);
 	}
 }
@@ -278,13 +278,13 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
 
 /**********************************************************************************************************
  @Function			void HAL_UART_MspInit(UART_HandleTypeDef *huart)
- @Description			UARTµ◊≤„≥ı ºªØ,  ±÷” πƒ‹, “˝Ω≈≈‰÷√, ÷–∂œ≈‰÷√
-					¥À∫Ø ˝ª·±ªHAL_UART_Init()µ˜”√
+ @Description			UARTÂ∫ïÂ±ÇÂàùÂßãÂåñ, Êó∂Èíü‰ΩøËÉΩ, ÂºïËÑöÈÖçÁΩÆ, ‰∏≠Êñ≠ÈÖçÁΩÆ
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_UART_Init()Ë∞ÉÁî®
 					USART1_TX : PA9
 					USART1_RX : PA10
 					USART2_TX : PA2
 					USART2_RX : PA3
- @Input				huart:¥Æø⁄æ‰±˙
+ @Input				huart:‰∏≤Âè£Âè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_UART_MspInit(UART_HandleTypeDef *huart)
@@ -293,46 +293,46 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 	
 	if (huart->Instance == USART1)
 	{
-		__HAL_RCC_GPIOA_CLK_ENABLE();										// πƒ‹GPIOA ±÷”
-		__HAL_RCC_USART1_CLK_ENABLE();									// πƒ‹USART1 ±÷”
+		__HAL_RCC_GPIOA_CLK_ENABLE();										//‰ΩøËÉΩGPIOAÊó∂Èíü
+		__HAL_RCC_USART1_CLK_ENABLE();									//‰ΩøËÉΩUSART1Êó∂Èíü
 		
 		GPIO_Initure.Pin = GPIO_PIN_9 | GPIO_PIN_10;							//PA9|PA10
-		GPIO_Initure.Mode = GPIO_MODE_AF_PP;								//∏¥”√Õ∆ÕÏ ‰≥ˆ
-		GPIO_Initure.Pull = GPIO_PULLUP;									//…œ¿≠
-		GPIO_Initure.Speed = GPIO_SPEED_FREQ_HIGH;							//∏ﬂÀŸ
-		GPIO_Initure.Alternate = GPIO_AF7_USART1;							//∏¥”√Œ™¥Æø⁄1
-		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//≥ı ºªØPA9|PA10
+		GPIO_Initure.Mode = GPIO_MODE_AF_PP;								//Â§çÁî®Êé®ÊåΩËæìÂá∫
+		GPIO_Initure.Pull = GPIO_PULLUP;									//‰∏äÊãâ
+		GPIO_Initure.Speed = GPIO_SPEED_FREQ_HIGH;							//È´òÈÄü
+		GPIO_Initure.Alternate = GPIO_AF7_USART1;							//Â§çÁî®‰∏∫‰∏≤Âè£1
+		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//ÂàùÂßãÂåñPA9|PA10
 		
-		HAL_NVIC_SetPriority(USART1_IRQn, 1, 0);							//«¿’º”≈œ»º∂1, ◊””≈œ»º∂0
-		HAL_NVIC_EnableIRQ(USART1_IRQn);									// πƒ‹USART1÷–∂œÕ®µ¿
+		HAL_NVIC_SetPriority(USART1_IRQn, 1, 0);							//Êä¢Âç†‰ºòÂÖàÁ∫ß1, Â≠ê‰ºòÂÖàÁ∫ß0
+		HAL_NVIC_EnableIRQ(USART1_IRQn);									//‰ΩøËÉΩUSART1‰∏≠Êñ≠ÈÄöÈÅì
 	}
 	
 	if (huart->Instance == USART2)
 	{
-		__HAL_RCC_GPIOA_CLK_ENABLE();										// πƒ‹GPIOA ±÷”
-		__HAL_RCC_USART2_CLK_ENABLE();									// πƒ‹USART2 ±÷”
+		__HAL_RCC_GPIOA_CLK_ENABLE();										//‰ΩøËÉΩGPIOAÊó∂Èíü
+		__HAL_RCC_USART2_CLK_ENABLE();									//‰ΩøËÉΩUSART2Êó∂Èíü
 		
 		GPIO_Initure.Pin = GPIO_PIN_2 | GPIO_PIN_3;							//PA2|PA3
-		GPIO_Initure.Mode = GPIO_MODE_AF_PP;								//∏¥”√Õ∆ÕÏ ‰≥ˆ
-		GPIO_Initure.Pull = GPIO_PULLUP;									//…œ¿≠
-		GPIO_Initure.Speed = GPIO_SPEED_FREQ_HIGH;							//∏ﬂÀŸ
-		GPIO_Initure.Alternate = GPIO_AF7_USART2;							//∏¥”√Œ™¥Æø⁄2
-		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//≥ı ºªØPA2|PA3
+		GPIO_Initure.Mode = GPIO_MODE_AF_PP;								//Â§çÁî®Êé®ÊåΩËæìÂá∫
+		GPIO_Initure.Pull = GPIO_PULLUP;									//‰∏äÊãâ
+		GPIO_Initure.Speed = GPIO_SPEED_FREQ_HIGH;							//È´òÈÄü
+		GPIO_Initure.Alternate = GPIO_AF7_USART2;							//Â§çÁî®‰∏∫‰∏≤Âè£2
+		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//ÂàùÂßãÂåñPA2|PA3
 		
-		HAL_NVIC_SetPriority(USART2_IRQn, 1, 1);							//«¿’º”≈œ»º∂1, ◊””≈œ»º∂1
-		HAL_NVIC_EnableIRQ(USART2_IRQn);									// πƒ‹USART2÷–∂œÕ®µ¿
+		HAL_NVIC_SetPriority(USART2_IRQn, 1, 1);							//Êä¢Âç†‰ºòÂÖàÁ∫ß1, Â≠ê‰ºòÂÖàÁ∫ß1
+		HAL_NVIC_EnableIRQ(USART2_IRQn);									//‰ΩøËÉΩUSART2‰∏≠Êñ≠ÈÄöÈÅì
 	}
 }
 
 /**********************************************************************************************************
  @Function			void HAL_UART_MspInit(UART_HandleTypeDef *huart)
- @Description			UARTµ◊≤„ª÷∏¥≥ı ºªØ,  ±÷” ßƒ‹, “˝Ω≈∏¥Œª, ÷–∂œπÿ±’
-					¥À∫Ø ˝ª·±ªHAL_UART_DeInit()µ˜”√
+ @Description			UARTÂ∫ïÂ±ÇÊÅ¢Â§çÂàùÂßãÂåñ, Êó∂ÈíüÂ§±ËÉΩ, ÂºïËÑöÂ§ç‰Ωç, ‰∏≠Êñ≠ÂÖ≥Èó≠
+					Ê≠§ÂáΩÊï∞‰ºöË¢´HAL_UART_DeInit()Ë∞ÉÁî®
 					USART1_TX : PA9
 					USART1_RX : PA10
 					USART2_TX : PA2
 					USART2_RX : PA3
- @Input				huart:¥Æø⁄æ‰±˙
+ @Input				huart:‰∏≤Âè£Âè•ÊüÑ
  @Return				void
 **********************************************************************************************************/
 void HAL_UART_MspDeInit(UART_HandleTypeDef *huart)
@@ -341,28 +341,28 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *huart)
 	
 	if (huart->Instance == USART1)
 	{
-		__HAL_RCC_USART1_CLK_DISABLE();									// ßƒ‹USART1 ±÷”
+		__HAL_RCC_USART1_CLK_DISABLE();									//Â§±ËÉΩUSART1Êó∂Èíü
 		
 		GPIO_Initure.Pin = GPIO_PIN_9 | GPIO_PIN_10;							//PA9|PA10
 		GPIO_Initure.Mode = GPIO_MODE_ANALOG;
 		GPIO_Initure.Pull = GPIO_NOPULL;
 		GPIO_Initure.Speed = GPIO_SPEED_VERY_LOW;
-		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//≥ı ºªØPA9|PA10
+		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//ÂàùÂßãÂåñPA9|PA10
 		
-		HAL_NVIC_DisableIRQ(USART1_IRQn);									// ßƒ‹USART1÷–∂œÕ®µ¿
+		HAL_NVIC_DisableIRQ(USART1_IRQn);									//Â§±ËÉΩUSART1‰∏≠Êñ≠ÈÄöÈÅì
 	}
 	
 	if (huart->Instance == USART2)
 	{
-		__HAL_RCC_USART2_CLK_DISABLE();									// ßƒ‹USART2 ±÷”
+		__HAL_RCC_USART2_CLK_DISABLE();									//Â§±ËÉΩUSART2Êó∂Èíü
 		
 		GPIO_Initure.Pin = GPIO_PIN_2 | GPIO_PIN_3;							//PA2|PA3
 		GPIO_Initure.Mode = GPIO_MODE_ANALOG;
 		GPIO_Initure.Pull = GPIO_NOPULL;
 		GPIO_Initure.Speed = GPIO_SPEED_VERY_LOW;
-		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//≥ı ºªØPA2|PA3
+		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//ÂàùÂßãÂåñPA2|PA3
 		
-		HAL_NVIC_DisableIRQ(USART2_IRQn);									// ßƒ‹USART2÷–∂œÕ®µ¿
+		HAL_NVIC_DisableIRQ(USART2_IRQn);									//Â§±ËÉΩUSART2‰∏≠Êñ≠ÈÄöÈÅì
 	}
 }
 

@@ -11,12 +11,12 @@
 #define NBIOT_COMMAND_TIMEOUT_MSEC			8000
 #define NBIOT_COMMAND_FAILURE_CNT			3
 
-/* NBIOT Ð­ÒéÕ»¿ª±Ù»º´æ´óÐ¡ */
+/* NBIOT åè®®æ ˆå¼€è¾Ÿç¼“å­˜å¤§å° */
 #define NBIOT_BUFFER_SIZE				256
 #define NBIOT_ATBUFFER_SIZE				512
 #define NBIOT_DATASTACK_SIZE				512
 
-/* NCONFIGÅäÖÃ²ÎÊý */
+/* NCONFIGé…ç½®å‚æ•° */
 #define AutoConnect						"AUTOCONNECT"
 #define CrScrambling					"CR_0354_0338_SCRAMBLING"
 #define CrSiAvoid						"CR_0859_SI_AVOID"
@@ -76,24 +76,24 @@ typedef enum
 /* NBIOT Dictate Event */
 typedef enum
 {
-	STOP_MODE							= 0x00,											//Í£Ö¹Ä£Ê½
-	HARDWARE_REBOOT					= 0x01,											//Ó²¼þÖØÆô
-	MODULE_CHECK						= 0x02,											//Ä£¿é¼ì²é
-	PARAMETER_CONFIG					= 0x03,											//²ÎÊýÅäÖÃ
-	ICCID_CHECK						= 0x04,											//¼ì²âSIM¿¨
-	MISC_EQUIP_CONFIG					= 0x05,											//ÆäËûÅäÖÃ
-	ATTACH_CHECK						= 0x06,											//×¢Íø¼ì²é
-	ATTACH_EXECUTE						= 0x07,											//×¢Íø½øÐÐ
-	ATTACH_INQUIRE						= 0x08,											//×¢Íø²éÑ¯
-	PARAMETER_CHECKOUT					= 0x09,											//²ÎÊý¼ì³ö
-	MINIMUM_FUNCTIONALITY				= 0x0A,											//×îÐ¡¹¦ÄÜ
-	FULL_FUNCTIONALITY					= 0x0B,											//ÍêÕû¹¦ÄÜ
-	CDP_SERVER_CHECK					= 0x0C,											//CDP·þÎñÆ÷²éÑ¯
-	CDP_SERVER_CONFIG					= 0x0D,											//CDP·þÎñÆ÷ÅäÖÃ
-	SEND_DATA							= 0x0E,											//·¢ËÍÊý¾Ý
-	RECV_DATA							= 0x0F,											//½ÓÊÕÊý¾Ý
-	EXECUT_DOWNLINK_DATA				= 0x10,											//Ö´ÐÐÏÂÐÐÊý¾Ý
-	MQTTSN_PROCESS_STACK				= 0x11											//MQTTSNÖ´ÐÐÕ»
+	STOP_MODE							= 0x00,											//åœæ­¢æ¨¡å¼
+	HARDWARE_REBOOT					= 0x01,											//ç¡¬ä»¶é‡å¯
+	MODULE_CHECK						= 0x02,											//æ¨¡å—æ£€æŸ¥
+	PARAMETER_CONFIG					= 0x03,											//å‚æ•°é…ç½®
+	ICCID_CHECK						= 0x04,											//æ£€æµ‹SIMå¡
+	MISC_EQUIP_CONFIG					= 0x05,											//å…¶ä»–é…ç½®
+	ATTACH_CHECK						= 0x06,											//æ³¨ç½‘æ£€æŸ¥
+	ATTACH_EXECUTE						= 0x07,											//æ³¨ç½‘è¿›è¡Œ
+	ATTACH_INQUIRE						= 0x08,											//æ³¨ç½‘æŸ¥è¯¢
+	PARAMETER_CHECKOUT					= 0x09,											//å‚æ•°æ£€å‡º
+	MINIMUM_FUNCTIONALITY				= 0x0A,											//æœ€å°åŠŸèƒ½
+	FULL_FUNCTIONALITY					= 0x0B,											//å®Œæ•´åŠŸèƒ½
+	CDP_SERVER_CHECK					= 0x0C,											//CDPæœåŠ¡å™¨æŸ¥è¯¢
+	CDP_SERVER_CONFIG					= 0x0D,											//CDPæœåŠ¡å™¨é…ç½®
+	SEND_DATA							= 0x0E,											//å‘é€æ•°æ®
+	RECV_DATA							= 0x0F,											//æŽ¥æ”¶æ•°æ®
+	EXECUT_DOWNLINK_DATA				= 0x10,											//æ‰§è¡Œä¸‹è¡Œæ•°æ®
+	MQTTSN_PROCESS_STACK				= 0x11											//MQTTSNæ‰§è¡Œæ ˆ
 }NBIOT_DictateEventTypeDef;
 
 /* NBIOT CDP Server Address */
@@ -227,7 +227,7 @@ struct NBIOT_ClientsTypeDef
 	NBIOT_ATCmdTypeDef*					ATCmdStack;
 };
 
-void NBIOT_Client_Init(NBIOT_ClientsTypeDef* pClient, NBIOT_ATCmdTypeDef* ATCmdStack);				//NBIOT¿Í»§¶Ë³õÊ¼»¯
+void NBIOT_Client_Init(NBIOT_ClientsTypeDef* pClient, NBIOT_ATCmdTypeDef* ATCmdStack);				//NBIOTå®¢æˆ·ç«¯åˆå§‹åŒ–
 
 
 

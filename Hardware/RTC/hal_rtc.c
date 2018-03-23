@@ -16,14 +16,14 @@
 #include "hal_rtc.h"
 #include "string.h"
 
-RTC_HandleTypeDef RTC_Handler;											//RTC¾ä±ú
+RTC_HandleTypeDef RTC_Handler;											//RTCå¥æŸ„
 
 /**********************************************************************************************************
  @Function			u8 RTC_Init(void)
- @Description			RTC³õÊ¼»¯
+ @Description			RTCåˆå§‹åŒ–
  @Input				void
- @Return				0 : ³õÊ¼»¯³É¹¦
-					2 : ½øÈë³õÊ¼»¯Ä£Ê½Ê§°Ü
+ @Return				0 : åˆå§‹åŒ–æˆåŠŸ
+					2 : è¿›å…¥åˆå§‹åŒ–æ¨¡å¼å¤±è´¥
 **********************************************************************************************************/
 u8 RTC_Init(void)
 {
@@ -32,25 +32,25 @@ u8 RTC_Init(void)
 #endif
 	
 	RTC_Handler.Instance = RTC;
-	RTC_Handler.Init.HourFormat = RTC_HOURFORMAT_24;							//RTCÉèÖÃÎª24Ğ¡Ê±¸ñÊ½
-	RTC_Handler.Init.AsynchPrediv = 0X7F;									//RTCÒì²½·ÖÆµÏµÊı(1~0X7F)
-	RTC_Handler.Init.SynchPrediv = 0XFF;									//RTCÍ¬²½·ÖÆµÏµÊı(0~7FFF)
+	RTC_Handler.Init.HourFormat = RTC_HOURFORMAT_24;							//RTCè®¾ç½®ä¸º24å°æ—¶æ ¼å¼
+	RTC_Handler.Init.AsynchPrediv = 0X7F;									//RTCå¼‚æ­¥åˆ†é¢‘ç³»æ•°(1~0X7F)
+	RTC_Handler.Init.SynchPrediv = 0XFF;									//RTCåŒæ­¥åˆ†é¢‘ç³»æ•°(0~7FFF)
 	RTC_Handler.Init.OutPut = RTC_OUTPUT_DISABLE;
 	RTC_Handler.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
 	RTC_Handler.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
 	if (HAL_RTC_Init(&RTC_Handler) != HAL_OK) return 2;
 	
-	if (HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR0) != 0X5050)				//ÊÇ·ñµÚÒ»´ÎÅäÖÃ
+	if (HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR0) != 0X5050)				//æ˜¯å¦ç¬¬ä¸€æ¬¡é…ç½®
 	{
 #if RTCBulidTime
-		datetime = RTC_ConvUnixToCalendar(RTC_BulidTimeToStamp());				//»ñÈ¡ÏµÍ³±àÒëÊ±¼ä
-		RTC_Set_Date(datetime.tm_year, datetime.tm_mon, datetime.tm_mday);		//ÉèÖÃÈÕÆÚ
-		RTC_Set_Time(datetime.tm_hour, datetime.tm_min, datetime.tm_sec);		//ÉèÖÃÊ±¼ä
+		datetime = RTC_ConvUnixToCalendar(RTC_BulidTimeToStamp());				//è·å–ç³»ç»Ÿç¼–è¯‘æ—¶é—´
+		RTC_Set_Date(datetime.tm_year, datetime.tm_mon, datetime.tm_mday);		//è®¾ç½®æ—¥æœŸ
+		RTC_Set_Time(datetime.tm_hour, datetime.tm_min, datetime.tm_sec);		//è®¾ç½®æ—¶é—´
 #else
-		RTC_Set_Date(18, 01, 01);										//ÉèÖÃÈÕÆÚ
-		RTC_Set_Time(12, 00, 00);										//ÉèÖÃÊ±¼ä
+		RTC_Set_Date(18, 01, 01);										//è®¾ç½®æ—¥æœŸ
+		RTC_Set_Time(12, 00, 00);										//è®¾ç½®æ—¶é—´
 #endif
-		HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR0, 0X5050);				//±ê¼ÇÒÑ¾­³õÊ¼»¯¹ıÁË
+		HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR0, 0X5050);				//æ ‡è®°å·²ç»åˆå§‹åŒ–è¿‡äº†
 	}
 	
 	return 0;
@@ -58,10 +58,10 @@ u8 RTC_Init(void)
 
 /**********************************************************************************************************
  @Function			HAL_StatusTypeDef RTC_Set_Time(u8 hour, u8 min, u8 sec)
- @Description			RTCÊ±¼äÉèÖÃ
- @Input				hour, min, sec : Ğ¡Ê±, ·ÖÖÓ, ÃëÖÓ
- @Return				SUCEE(1) : ³É¹¦
-					ERROR(0) : ½øÈë³õÊ¼»¯Ä£Ê½Ê§°Ü
+ @Description			RTCæ—¶é—´è®¾ç½®
+ @Input				hour, min, sec : å°æ—¶, åˆ†é’Ÿ, ç§’é’Ÿ
+ @Return				SUCEE(1) : æˆåŠŸ
+					ERROR(0) : è¿›å…¥åˆå§‹åŒ–æ¨¡å¼å¤±è´¥
 **********************************************************************************************************/
 HAL_StatusTypeDef RTC_Set_Time(u8 hour, u8 min, u8 sec)
 {
@@ -79,10 +79,10 @@ HAL_StatusTypeDef RTC_Set_Time(u8 hour, u8 min, u8 sec)
 
 /**********************************************************************************************************
  @Function			HAL_StatusTypeDef RTC_Set_Date(u8 year, u8 month, u8 date)
- @Description			RTCÈÕÆÚÉèÖÃ
- @Input				year, month, date 	: Äê(0~99), ÔÂ(1~12), ÈÕ(0~31)
- @Return				SUCEE(1) : ³É¹¦
-					ERROR(0) : ½øÈë³õÊ¼»¯Ä£Ê½Ê§°Ü
+ @Description			RTCæ—¥æœŸè®¾ç½®
+ @Input				year, month, date 	: å¹´(0~99), æœˆ(1~12), æ—¥(0~31)
+ @Return				SUCEE(1) : æˆåŠŸ
+					ERROR(0) : è¿›å…¥åˆå§‹åŒ–æ¨¡å¼å¤±è´¥
 **********************************************************************************************************/
 HAL_StatusTypeDef RTC_Set_Date(u8 year, u8 month, u8 date)
 {
@@ -104,17 +104,17 @@ HAL_StatusTypeDef RTC_Set_Date(u8 year, u8 month, u8 date)
 
 /**********************************************************************************************************
  @Function			time_t RTC_TimeToStamp(u8 year, u8 month, u8 date, u8 hour, u8 min, u8 sec)
- @Description			Ê±¼ä×ª»»ÎªUNIXÊ±¼ä´Á
- @Input				year, month, date 	: Äê(0~99), ÔÂ(1~12), ÈÕ(0~31)
-					hour, min, sec 	: Ğ¡Ê±, ·ÖÖÓ, ÃëÖÓ
- @Return				time_t			: Ê±¼ä´Á
+ @Description			æ—¶é—´è½¬æ¢ä¸ºUNIXæ—¶é—´æˆ³
+ @Input				year, month, date 	: å¹´(0~99), æœˆ(1~12), æ—¥(0~31)
+					hour, min, sec 	: å°æ—¶, åˆ†é’Ÿ, ç§’é’Ÿ
+ @Return				time_t			: æ—¶é—´æˆ³
 **********************************************************************************************************/
 time_t RTC_TimeToStamp(u8 year, u8 month, u8 date, u8 hour, u8 min, u8 sec)
 {
 	struct tm time;
 	
-	time.tm_year = 100 + year;											//1900Äêµ½µ±Ç°Äê·İ²î
-	time.tm_mon = month - 1;												//0~11 ±íÊ¾ 1~12ÔÂ
+	time.tm_year = 100 + year;											//1900å¹´åˆ°å½“å‰å¹´ä»½å·®
+	time.tm_mon = month - 1;												//0~11 è¡¨ç¤º 1~12æœˆ
 	time.tm_mday = date;
 	time.tm_hour = hour;
 	time.tm_min = min;
@@ -125,9 +125,9 @@ time_t RTC_TimeToStamp(u8 year, u8 month, u8 date, u8 hour, u8 min, u8 sec)
 
 /**********************************************************************************************************
  @Function			time_t RTC_BulidTimeToStamp(void)
- @Description			±àÒëÊ±¼ä×ª»»ÎªUNIXÊ±¼ä´Á
+ @Description			ç¼–è¯‘æ—¶é—´è½¬æ¢ä¸ºUNIXæ—¶é—´æˆ³
  @Input				void
- @Return				time_t			: Ê±¼ä´Á
+ @Return				time_t			: æ—¶é—´æˆ³
 **********************************************************************************************************/
 time_t RTC_BulidTimeToStamp(void)
 {
@@ -193,8 +193,8 @@ time_t RTC_BulidTimeToStamp(void)
 
 /**********************************************************************************************************
  @Function			struct tm RTC_ConvUnixToCalendar(time_t t)
- @Description			×ª»»UNIXÊ±¼ä´ÁÎªÈÕÀúÊ±¼ä
- @Input				UNIXÊ±¼ä´Á
+ @Description			è½¬æ¢UNIXæ—¶é—´æˆ³ä¸ºæ—¥å†æ—¶é—´
+ @Input				UNIXæ—¶é—´æˆ³
  @Return				struct tm
 **********************************************************************************************************/
 struct tm RTC_ConvUnixToCalendar(time_t t)
@@ -202,17 +202,17 @@ struct tm RTC_ConvUnixToCalendar(time_t t)
 	struct tm *t_time;
 	
 	t_time = localtime(&t);
-	t_time->tm_year -= 100;												//1900Äê±ê×¼×ª»»ÖÁ2000Äê±ê×¼
-	t_time->tm_mon += 1;												//0~11±ê×¼×ª»»ÖÁ1~12±ê×¼
+	t_time->tm_year -= 100;												//1900å¹´æ ‡å‡†è½¬æ¢è‡³2000å¹´æ ‡å‡†
+	t_time->tm_mon += 1;												//0~11æ ‡å‡†è½¬æ¢è‡³1~12æ ‡å‡†
 	
 	return *t_time;
 }
 
 /**********************************************************************************************************
  @Function			time_t RTC_GetUnixTimeToStamp(void)
- @Description			»ñÈ¡µ±Ç°UNIXÊ±¼ä´Á
+ @Description			è·å–å½“å‰UNIXæ—¶é—´æˆ³
  @Input				void
- @Return				time_t			: Ê±¼ä´Á
+ @Return				time_t			: æ—¶é—´æˆ³
 **********************************************************************************************************/
 time_t RTC_GetUnixTimeToStamp(void)
 {

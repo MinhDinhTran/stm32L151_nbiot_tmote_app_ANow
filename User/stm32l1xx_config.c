@@ -17,9 +17,9 @@
 
 /**********************************************************************************************************
  @Function			RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void)
- @Description			RCC_ResetFlag_GetStatus	: »ñÈ¡¸´Î»±êÖ¾Î»
+ @Description			RCC_ResetFlag_GetStatus	: è·å–å¤ä½æ ‡å¿—ä½
  @Input				void
- @Return				RCC_RESET_FLAG_TypeDef	: ±êÖ¾Î»
+ @Return				RCC_RESET_FLAG_TypeDef	: æ ‡å¿—ä½
 **********************************************************************************************************/
 RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void)
 {
@@ -59,7 +59,7 @@ RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void)
 
 /**********************************************************************************************************
  @Function			void PowerCtrlIO_Init(void)
- @Description			µÍ¹¦ºÄ¿ØÖÆIO³õÊ¼»¯
+ @Description			ä½åŠŸè€—æ§åˆ¶IOåˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -111,7 +111,7 @@ void LowPowerCtrlIO_Init(void)
 
 /**********************************************************************************************************
  @Function			static void ModelPower_Init(void)
- @Description			Model Power ³õÊ¼»¯ PA8 : 0 µ¼Í¨ 1 : ½ØÖ¹
+ @Description			Model Power åˆå§‹åŒ– PA8 : 0 å¯¼é€š 1 : æˆªæ­¢
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -122,17 +122,17 @@ static void ModelPower_Init(void)
 	MODEL_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = MODEL_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//ÍÆÍìÊä³ö
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//æ¨æŒ½è¾“å‡º
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-	HAL_GPIO_Init(MODEL_POWER_GPIOx, &GPIO_Initure);							//³õÊ¼»¯GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+	HAL_GPIO_Init(MODEL_POWER_GPIOx, &GPIO_Initure);							//åˆå§‹åŒ–GPIO
 	
-	MODELPOWER(OFF);													//³õÊ¼»¯¹Ø±ÕµçÔ´
+	MODELPOWER(OFF);													//åˆå§‹åŒ–å…³é—­ç”µæº
 }
 
 /**********************************************************************************************************
  @Function			static void RaderPower_Init(void)
- @Description			Rader Power ³õÊ¼»¯ PB3 : 1 µ¼Í¨ 0 : ½ØÖ¹
+ @Description			Rader Power åˆå§‹åŒ– PB3 : 1 å¯¼é€š 0 : æˆªæ­¢
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -143,17 +143,17 @@ static void RaderPower_Init(void)
 	RADER_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = RADER_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//ÍÆÍìÊä³ö
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//æ¨æŒ½è¾“å‡º
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-	HAL_GPIO_Init(RADER_POWER_GPIOx, &GPIO_Initure);							//³õÊ¼»¯GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+	HAL_GPIO_Init(RADER_POWER_GPIOx, &GPIO_Initure);							//åˆå§‹åŒ–GPIO
 	
 	RADERPOWER(OFF);
 }
 
 /**********************************************************************************************************
  @Function			static void NBIOTPower_Init(void)
- @Description			NBIOT Power ³õÊ¼»¯ PA0 : 1 µ¼Í¨ 0 : ½ØÖ¹
+ @Description			NBIOT Power åˆå§‹åŒ– PA0 : 1 å¯¼é€š 0 : æˆªæ­¢
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -164,17 +164,17 @@ static void NBIOTPower_Init(void)
 	NBIOT_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = NBIOT_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//ÍÆÍìÊä³ö
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//æ¨æŒ½è¾“å‡º
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-	HAL_GPIO_Init(NBIOT_POWER_GPIOx, &GPIO_Initure);							//³õÊ¼»¯GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+	HAL_GPIO_Init(NBIOT_POWER_GPIOx, &GPIO_Initure);							//åˆå§‹åŒ–GPIO
 	
 	NBIOTPOWER(OFF);
 }
 
 /**********************************************************************************************************
  @Function			static void VbatPower_Init(void)
- @Description			VBAT VOLTAGE Power ³õÊ¼»¯ PA12 : 0 µ¼Í¨ 1 : ½ØÖ¹
+ @Description			VBAT VOLTAGE Power åˆå§‹åŒ– PA12 : 0 å¯¼é€š 1 : æˆªæ­¢
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -185,31 +185,31 @@ static void VbatPower_Init(void)
 	VBAT_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = VBAT_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//ÍÆÍìÊä³ö
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//æ¨æŒ½è¾“å‡º
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-	HAL_GPIO_Init(VBAT_POWER_GPIOx, &GPIO_Initure);							//³õÊ¼»¯GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+	HAL_GPIO_Init(VBAT_POWER_GPIOx, &GPIO_Initure);							//åˆå§‹åŒ–GPIO
 	
 	VBATPOWER(OFF);
 }
 
 /**********************************************************************************************************
  @Function			void PowerCtrlIO_Init(void)
- @Description			µçÔ´¿ØÖÆIO³õÊ¼»¯
+ @Description			ç”µæºæ§åˆ¶IOåˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void PowerCtrlIO_Init(void)
 {
-	ModelPower_Init();													//Ä£¿éµçÔ´³õÊ¼»¯
-	RaderPower_Init();													//À×´ïµçÔ´³õÊ¼»¯
-	NBIOTPower_Init();													//NBIOTµçÔ´³õÊ¼»¯
-	VbatPower_Init();													//µçÑ¹¼ì²âµçÔ´³õÊ¼»¯
+	ModelPower_Init();													//æ¨¡å—ç”µæºåˆå§‹åŒ–
+	RaderPower_Init();													//é›·è¾¾ç”µæºåˆå§‹åŒ–
+	NBIOTPower_Init();													//NBIOTç”µæºåˆå§‹åŒ–
+	VbatPower_Init();													//ç”µå‹æ£€æµ‹ç”µæºåˆå§‹åŒ–
 	
-	MODELPOWER(OFF);													//¹Ø±ÕÄ£¿é×ÜµçÔ´
-	RADERPOWER(OFF);													//¹Ø±ÕÀ×´ïµçÔ´
-	NBIOTPOWER(OFF);													//¹Ø±ÕNBIOTµçÔ´
-	VBATPOWER(OFF);													//¹Ø±ÕµçÔ´µçÑ¹¼ì²âµçÔ´
+	MODELPOWER(OFF);													//å…³é—­æ¨¡å—æ€»ç”µæº
+	RADERPOWER(OFF);													//å…³é—­é›·è¾¾ç”µæº
+	NBIOTPOWER(OFF);													//å…³é—­NBIOTç”µæº
+	VBATPOWER(OFF);													//å…³é—­ç”µæºç”µå‹æ£€æµ‹ç”µæº
 }
 
 /********************************************** END OF FLEE **********************************************/

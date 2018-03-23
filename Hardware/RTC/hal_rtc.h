@@ -4,18 +4,18 @@
 #include "sys.h"
 #include <time.h>
 
-#define RTCBulidTime		0											//RTC±àÒëÊ±¼äĞ´ÈëÊ¹ÄÜ
+#define RTCBulidTime		0											//RTCç¼–è¯‘æ—¶é—´å†™å…¥ä½¿èƒ½
 
-extern RTC_HandleTypeDef	RTC_Handler;										//RTC¾ä±ú
+extern RTC_HandleTypeDef	RTC_Handler;										//RTCå¥æŸ„
 
-u8 RTC_Init(void);														//RTC³õÊ¼»¯
+u8 RTC_Init(void);														//RTCåˆå§‹åŒ–
 
-HAL_StatusTypeDef RTC_Set_Date(u8 year, u8 month, u8 date);						//RTCÈÕÆÚÉèÖÃ
-HAL_StatusTypeDef RTC_Set_Time(u8 hour, u8 min, u8 sec);						//RTCÊ±¼äÉèÖÃ
+HAL_StatusTypeDef RTC_Set_Date(u8 year, u8 month, u8 date);						//RTCæ—¥æœŸè®¾ç½®
+HAL_StatusTypeDef RTC_Set_Time(u8 hour, u8 min, u8 sec);						//RTCæ—¶é—´è®¾ç½®
 
-time_t RTC_TimeToStamp(u8 year, u8 month, u8 date, u8 hour, u8 min, u8 sec);		//Ê±¼ä×ª»»ÎªUNIXÊ±¼ä´Á
-time_t RTC_BulidTimeToStamp(void);											//±àÒëÊ±¼ä×ª»»ÎªUNIXÊ±¼ä´Á
-time_t RTC_GetUnixTimeToStamp(void);										//»ñÈ¡µ±Ç°UNIXÊ±¼ä´Á
-struct tm RTC_ConvUnixToCalendar(time_t t);									//×ª»»UNIXÊ±¼ä´ÁÎªÈÕÀúÊ±¼ä
+time_t RTC_TimeToStamp(u8 year, u8 month, u8 date, u8 hour, u8 min, u8 sec);		//æ—¶é—´è½¬æ¢ä¸ºUNIXæ—¶é—´æˆ³
+time_t RTC_BulidTimeToStamp(void);											//ç¼–è¯‘æ—¶é—´è½¬æ¢ä¸ºUNIXæ—¶é—´æˆ³
+time_t RTC_GetUnixTimeToStamp(void);										//è·å–å½“å‰UNIXæ—¶é—´æˆ³
+struct tm RTC_ConvUnixToCalendar(time_t t);									//è½¬æ¢UNIXæ—¶é—´æˆ³ä¸ºæ—¥å†æ—¶é—´
 
 #endif

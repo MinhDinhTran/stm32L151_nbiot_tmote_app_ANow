@@ -10,9 +10,9 @@
 #define VBAT_ADC_RCC_ADC1_CLK_ENABLE()		__HAL_RCC_ADC1_CLK_ENABLE()
 #define VBAT_ADC_RCC_ADC1_CLK_DISABLE()		__HAL_RCC_ADC1_CLK_DISABLE()
 
-extern ADC_HandleTypeDef		VBAT_ADC_Handler;								//µç³ØµçÑ¹ADC¾ä±ú
+extern ADC_HandleTypeDef		VBAT_ADC_Handler;								//ç”µæ± ç”µå‹ADCå¥æŸ„
 
-void VBAT_ADC_Init(void);												//µçÑ¹ADC³õÊ¼»¯
-u16  VBAT_ADC_Read(u32 timeout);											//µçÔ´µçÑ¹ADC¶ÁÈ¡
+void VBAT_ADC_Init(void);												//ç”µå‹ADCåˆå§‹åŒ–
+u16  VBAT_ADC_Read(u32 timeout);											//ç”µæºç”µå‹ADCè¯»å–
 
 #endif

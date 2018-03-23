@@ -18,9 +18,9 @@
 
 /**********************************************************************************************************
  @Function			static unsigned int MQTTSN_GetNextMsgId(MQTTSN_ClientsTypeDef* pClient)
- @Description			MQTTSN_GetNextMsgId		: »ñÈ¡ÏÂÒ»¸öÏûÏ¢ID
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MsgId				: ÏûÏ¢ID
+ @Description			MQTTSN_GetNextMsgId		: è·å–ä¸‹ä¸€ä¸ªæ¶ˆæ¯ID
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MsgId				: æ¶ˆæ¯ID
 **********************************************************************************************************/
 static unsigned int MQTTSN_GetNextMsgId(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -30,9 +30,9 @@ static unsigned int MQTTSN_GetNextMsgId(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			static void MQTTSN_NewMessageData(MQTTSN_MessageDataTypeDef* messageData, MQTTSNString* topicName, MQTTSN_MessageTypeDef* message)
- @Description			MQTTSN_NewMessageData	: »ñÈ¡ÏûÏ¢Êı¾İ
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MsgId				: ÏûÏ¢ID
+ @Description			MQTTSN_NewMessageData	: è·å–æ¶ˆæ¯æ•°æ®
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MsgId				: æ¶ˆæ¯ID
 **********************************************************************************************************/
 static void MQTTSN_NewMessageData(MQTTSN_MessageDataTypeDef* messageData, MQTTSNString* topicName, MQTTSN_MessageTypeDef* message)
 {
@@ -42,11 +42,11 @@ static void MQTTSN_NewMessageData(MQTTSN_MessageDataTypeDef* messageData, MQTTSN
 
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_DeliverMessage(MQTTSN_ClientsTypeDef* pClient, MQTTSN_topicid* topicId, MQTTSN_MessageTypeDef* message)
- @Description			MQTTSN_DeliverMessage	: ´«ÈëÏûÏ¢Êı¾İ
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					topicId				: ÏûÏ¢Ö÷Ìâ
-					message				: ÏûÏ¢
- @Return				MsgId				: ÏûÏ¢ID
+ @Description			MQTTSN_DeliverMessage	: ä¼ å…¥æ¶ˆæ¯æ•°æ®
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					topicId				: æ¶ˆæ¯ä¸»é¢˜
+					message				: æ¶ˆæ¯
+ @Return				MsgId				: æ¶ˆæ¯ID
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_DeliverMessage(MQTTSN_ClientsTypeDef* pClient, MQTTSN_topicid* topicId, MQTTSN_MessageTypeDef* message)
 {
@@ -81,22 +81,22 @@ static MQTTSN_StatusTypeDef MQTTSN_DeliverMessage(MQTTSN_ClientsTypeDef* pClient
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_ReadPacket(MQTTSN_ClientsTypeDef* pClient, int msgTypes)
- @Description			MQTTSN_ReadPacket		: MQTTSN»ñÈ¡Êı¾İ°üÊı¾İÓëÏûÏ¢ÀàĞÍ
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					msgTypes				: MqttSNÏûÏ¢ÀàĞÍµØÖ·
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
- @attention			MQTTSNÍ¨ÓÃÏûÏ¢¸ñÊ½		: ÏûÏ¢Í·(2/4Byte) + ÆäËû¿É±ä²¿·Ö(nByte)
-					MQTTSNÏûÏ¢Í·²¿			: ³¤¶È(1/3Byte) + ÏûÏ¢ÀàĞÍ(1Byte)
-					*ÏûÏ¢³¤¶ÈÒªÃ´ÊÇ1×Ö½ÚÒªÃ´ÊÇ3×Ö½Ú,²¢ÇÒ×ÔÉíÒ²»á°üº¬ÔÚÄÚ¡£
-					*1¸ö×Ö½Ú¿É±íÊ¾256³¤¶È
-					*µ±µÚÒ»×Ö½ÚÎª0x01,ÄÇÃ´³¤¶ÈÎª3×Ö½Ú±íÊ¾,Ê£ÏÂµÄÁ½¸ö×Ö½Ú»á±êÊ¶ÕæÕıµÄÏûÏ¢³¤¶È,×î´ó³¤¶ÈÎª65535
-					*´ó²¿·ÖÏûÏ¢³¤¶È¶¼ÊÇ1¸ö×Ö½Ú,³ı·ÇÌØ±ğÌáĞÑ
+ @Description			MQTTSN_ReadPacket		: MQTTSNè·å–æ•°æ®åŒ…æ•°æ®ä¸æ¶ˆæ¯ç±»å‹
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					msgTypes				: MqttSNæ¶ˆæ¯ç±»å‹åœ°å€
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
+ @attention			MQTTSNé€šç”¨æ¶ˆæ¯æ ¼å¼		: æ¶ˆæ¯å¤´(2/4Byte) + å…¶ä»–å¯å˜éƒ¨åˆ†(nByte)
+					MQTTSNæ¶ˆæ¯å¤´éƒ¨			: é•¿åº¦(1/3Byte) + æ¶ˆæ¯ç±»å‹(1Byte)
+					*æ¶ˆæ¯é•¿åº¦è¦ä¹ˆæ˜¯1å­—èŠ‚è¦ä¹ˆæ˜¯3å­—èŠ‚,å¹¶ä¸”è‡ªèº«ä¹Ÿä¼šåŒ…å«åœ¨å†…ã€‚
+					*1ä¸ªå­—èŠ‚å¯è¡¨ç¤º256é•¿åº¦
+					*å½“ç¬¬ä¸€å­—èŠ‚ä¸º0x01,é‚£ä¹ˆé•¿åº¦ä¸º3å­—èŠ‚è¡¨ç¤º,å‰©ä¸‹çš„ä¸¤ä¸ªå­—èŠ‚ä¼šæ ‡è¯†çœŸæ­£çš„æ¶ˆæ¯é•¿åº¦,æœ€å¤§é•¿åº¦ä¸º65535
+					*å¤§éƒ¨åˆ†æ¶ˆæ¯é•¿åº¦éƒ½æ˜¯1ä¸ªå­—èŠ‚,é™¤éç‰¹åˆ«æé†’
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_ReadPacket(MQTTSN_ClientsTypeDef* pClient, int *msgTypes)
 {
 	MQTTSN_StatusTypeDef MQTTSNStatus = MQTTSN_OK;
-	int Rlength = 0;													//¶ÁÈ¡Êı¾İ³¤¶È
-	int Rleftlength = 0;												//Ê£Óà¶ÁÈ¡Êı¾İ³¤¶È
+	int Rlength = 0;													//è¯»å–æ•°æ®é•¿åº¦
+	int Rleftlength = 0;												//å‰©ä½™è¯»å–æ•°æ®é•¿åº¦
 	int len = 0;
 	int rem_len = 0;
 	unsigned char* bufptr;
@@ -110,7 +110,7 @@ MQTTSN_StatusTypeDef MQTTSN_ReadPacket(MQTTSN_ClientsTypeDef* pClient, int *msgT
 	len = Rlength;
 	
 	/* 2. read the remaining length. This is variable in itself */
-	if (pClient->Recvbuf[0] == 0x01) {										//³¤¶ÈÎª3×Ö½Ú±íÊ¾
+	if (pClient->Recvbuf[0] == 0x01) {										//é•¿åº¦ä¸º3å­—èŠ‚è¡¨ç¤º
 		MQTTSNStatus = pClient->SocketStack->Read(pClient->SocketStack, (char *)pClient->Recvbuf + len, 2, &Rlength, &Rleftlength);
 		if ((MQTTSNStatus != MQTTSN_OK) || (Rlength != 2)) {
 			goto exit;
@@ -119,7 +119,7 @@ MQTTSN_StatusTypeDef MQTTSN_ReadPacket(MQTTSN_ClientsTypeDef* pClient, int *msgT
 		bufptr = &pClient->Recvbuf[1];
 		rem_len = readInt(&bufptr) - 3;
 	}
-	else {															//³¤¶ÈÎª1×Ö½Ú±íÊ¾
+	else {															//é•¿åº¦ä¸º1å­—èŠ‚è¡¨ç¤º
 		rem_len = pClient->Recvbuf[0] - 1;
 	}
 	
@@ -142,8 +142,8 @@ exit:
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_ConnectedAckEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_ConnectAckEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_ConnectAckEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -155,8 +155,8 @@ static MQTTSN_StatusTypeDef MQTTSN_ConnectAckEvent(MQTTSN_ClientsTypeDef* pClien
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_DisconnectEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_DisconnectEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_DisconnectEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -168,8 +168,8 @@ static MQTTSN_StatusTypeDef MQTTSN_DisconnectEvent(MQTTSN_ClientsTypeDef* pClien
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_RegisterAckEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_RegisterAckEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_RegisterAckEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -181,8 +181,8 @@ static MQTTSN_StatusTypeDef MQTTSN_RegisterAckEvent(MQTTSN_ClientsTypeDef* pClie
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_SubscribeAckEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_SubscribeAckEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_SubscribeAckEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -194,8 +194,8 @@ static MQTTSN_StatusTypeDef MQTTSN_SubscribeAckEvent(MQTTSN_ClientsTypeDef* pCli
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_PublishAckEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_PublishAckEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_PublishAckEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -207,8 +207,8 @@ static MQTTSN_StatusTypeDef MQTTSN_PublishAckEvent(MQTTSN_ClientsTypeDef* pClien
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_PublishCompEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_PublishCompEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_PublishCompEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -220,8 +220,8 @@ static MQTTSN_StatusTypeDef MQTTSN_PublishCompEvent(MQTTSN_ClientsTypeDef* pClie
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_PublishEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_PublishEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_PublishEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -285,8 +285,8 @@ exit:
 /**********************************************************************************************************
  @Function			static MQTTSN_StatusTypeDef MQTTSN_PingRespEvent(MQTTSN_ClientsTypeDef* pClient)
  @Description			MQTTSN_PingRespEvent
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 static MQTTSN_StatusTypeDef MQTTSN_PingRespEvent(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -297,23 +297,23 @@ static MQTTSN_StatusTypeDef MQTTSN_PingRespEvent(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_RecvPacketProcess(MQTTSN_ClientsTypeDef* pClient, int *msgTypes)
- @Description			MQTTSN_RecvPacketProcess	: MQTTSN½ÓÊÕÊı¾İ°ü´¦Àí
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					msgTypes				: MqttSNÏûÏ¢ÀàĞÍ
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_RecvPacketProcess	: MQTTSNæ¥æ”¶æ•°æ®åŒ…å¤„ç†
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					msgTypes				: MqttSNæ¶ˆæ¯ç±»å‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_RecvPacketProcess(MQTTSN_ClientsTypeDef* pClient, int *msgTypes)
 {
 	MQTTSN_StatusTypeDef MQTTSNStatus = MQTTSN_OK;
 	int packetType = -1;
 	
-	MQTTSNStatus = MQTTSN_ReadPacket(pClient, &packetType);					//»ñÈ¡MqttSNÊı¾İ²¢ÌáÈ¡ÏûÏ¢ÀàĞÍ
-	if (MQTTSNStatus != MQTTSN_OK) {										//Ã»ÓĞ»ñÈ¡µ½Êı¾İ
+	MQTTSNStatus = MQTTSN_ReadPacket(pClient, &packetType);					//è·å–MqttSNæ•°æ®å¹¶æå–æ¶ˆæ¯ç±»å‹
+	if (MQTTSNStatus != MQTTSN_OK) {										//æ²¡æœ‰è·å–åˆ°æ•°æ®
 		MQTTSNStatus = MQTTSN_RECVPACKET_NONE;
 		goto exit;
 	}
 	
-	switch (packetType)													//¸ù¾İÏûÏ¢ÀàĞÍÖ´ĞĞ²»Í¬´¦Àí
+	switch (packetType)													//æ ¹æ®æ¶ˆæ¯ç±»å‹æ‰§è¡Œä¸åŒå¤„ç†
 	{
 	case MQTTSN_CONNACK:
 		MQTTSNStatus = MQTTSN_ConnectAckEvent(pClient);
@@ -362,11 +362,11 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_WaitforRecvAck(MQTTSN_ClientsTypeDef* pClient, int msgType, Stm32_CalculagraphTypeDef* timerS)
- @Description			MQTTSN_WaitforRecvAck	: MQTTSNµÈ´ı½ÓÊÕµ½ÏàÓ¦Ó¦´ğÏûÏ¢ÀàĞÍ
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					msgType				: MqttSNÏûÏ¢ÀàĞÍ
-					timer				: ³¬Ê±¼ÆÊ±Æ÷
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_WaitforRecvAck	: MQTTSNç­‰å¾…æ¥æ”¶åˆ°ç›¸åº”åº”ç­”æ¶ˆæ¯ç±»å‹
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					msgType				: MqttSNæ¶ˆæ¯ç±»å‹
+					timer				: è¶…æ—¶è®¡æ—¶å™¨
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_WaitforRecvAck(MQTTSN_ClientsTypeDef* pClient, int msgType, Stm32_CalculagraphTypeDef* timerS)
 {
@@ -374,10 +374,10 @@ MQTTSN_StatusTypeDef MQTTSN_WaitforRecvAck(MQTTSN_ClientsTypeDef* pClient, int m
 	int packetType = -1;
 	
 	while (packetType != msgType) {
-		if ((MQTTSNStatus = MQTTSN_RecvPacketProcess(pClient, &packetType)) == MQTTSN_ERROR) {	//½ÓÊÕÊı¾İ´¦Àí
+		if ((MQTTSNStatus = MQTTSN_RecvPacketProcess(pClient, &packetType)) == MQTTSN_ERROR) {	//æ¥æ”¶æ•°æ®å¤„ç†
 			goto exit;
 		}
-		if (Stm32_Calculagraph_IsExpiredSec(timerS) == true) {								//µ½´ï³¬Ê±Ê±¼ä
+		if (Stm32_Calculagraph_IsExpiredSec(timerS) == true) {								//åˆ°è¾¾è¶…æ—¶æ—¶é—´
 			break;
 		}
 		
@@ -397,10 +397,10 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Connect(MQTTSN_ClientsTypeDef* pClient, MQTTSNPacket_connectData* options)
- @Description			MQTTSN_Connect			: MQTTSNÁ¬½ÓÍø¹Ø·şÎñÆ÷
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					options				: MqttSNÁ¬½ÓÑ¡Ïî
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_Connect			: MQTTSNè¿æ¥ç½‘å…³æœåŠ¡å™¨
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					options				: MqttSNè¿æ¥é€‰é¡¹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Connect(MQTTSN_ClientsTypeDef* pClient, MQTTSNPacket_connectData* options)
 {
@@ -452,10 +452,10 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_DisConnect(MQTTSN_ClientsTypeDef* pClient, int duration)
- @Description			MQTTSN_DisConnect		: MQTTSN¶ÏÁ¬Íø¹Ø·şÎñÆ÷
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					duration				: MqttSNĞİÃßÊ±¼ä
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_DisConnect		: MQTTSNæ–­è¿ç½‘å…³æœåŠ¡å™¨
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					duration				: MqttSNä¼‘çœ æ—¶é—´
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_DisConnect(MQTTSN_ClientsTypeDef* pClient, int duration)
 {
@@ -505,11 +505,11 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Register(MQTTSN_ClientsTypeDef* pClient, const char* topicName, unsigned short* topicid)
- @Description			MQTTSN_Register		: MQTTSN¸ù¾İTopicName¶¯Ì¬ÉêÇëTopicId
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					topicName				: MqttSNÖ÷ÌâÃû³Æ
-					topicid				: Ö÷ÌâID
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_Register		: MQTTSNæ ¹æ®TopicNameåŠ¨æ€ç”³è¯·TopicId
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					topicName				: MqttSNä¸»é¢˜åç§°
+					topicid				: ä¸»é¢˜ID
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Register(MQTTSN_ClientsTypeDef* pClient, const char* topicName, unsigned short* topicid)
 {
@@ -568,11 +568,11 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Publish(MQTTSN_ClientsTypeDef* pClient, MQTTSN_topicid topic, MQTTSN_MessageTypeDef* message)
- @Description			MQTTSN_Publish			: MQTTSN·¢²¼Ò»ÌõÏûÏ¢
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					topic				: MqttSNÖ÷ÌâId
-					message				: MqttSNÏûÏ¢
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_Publish			: MQTTSNå‘å¸ƒä¸€æ¡æ¶ˆæ¯
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					topic				: MqttSNä¸»é¢˜Id
+					message				: MqttSNæ¶ˆæ¯
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Publish(MQTTSN_ClientsTypeDef* pClient, MQTTSN_topicid topic, MQTTSN_MessageTypeDef* message)
 {
@@ -662,10 +662,10 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Pingreq(MQTTSN_ClientsTypeDef* pClient, MQTTSNString* clientid)
- @Description			MQTTSN_Pingreq			: MQTTSN·¢ËÍPingreq°ü
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					clientid				: 1~23×Ö·ûÊ¶±ğ¿Í»§¶ËID
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_Pingreq			: MQTTSNå‘é€PingreqåŒ…
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					clientid				: 1~23å­—ç¬¦è¯†åˆ«å®¢æˆ·ç«¯ID
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Pingreq(MQTTSN_ClientsTypeDef* pClient, MQTTSNString* clientid)
 {
@@ -709,12 +709,12 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Subscribe(MQTTSN_ClientsTypeDef* pClient, const char* topicFilter, enum QoS qos, messageHandlerFp messageHandler)
- @Description			MQTTSN_Subscribe		: MQTTSN¶©ÔÄÖ÷Ìâ
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
-					topicFilter			: MqttSNÖ÷ÌâÃû
+ @Description			MQTTSN_Subscribe		: MQTTSNè®¢é˜…ä¸»é¢˜
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					topicFilter			: MqttSNä¸»é¢˜å
 					qos					: QOS Level
-					messageHandler			: MqttSNÏûÏ¢´¦Àí»Øµ÷º¯Êı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+					messageHandler			: MqttSNæ¶ˆæ¯å¤„ç†å›è°ƒå‡½æ•°
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Subscribe(MQTTSN_ClientsTypeDef* pClient, const char* topicFilter, enum QoS qos, messageHandlerFp messageHandler)
 {
@@ -785,9 +785,9 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_RecvAck(MQTTSN_ClientsTypeDef* pClient)
- @Description			MQTTSN_RecvAck			: MQTTSN½ÓÊÕÏÂĞĞÏûÏ¢
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Description			MQTTSN_RecvAck			: MQTTSNæ¥æ”¶ä¸‹è¡Œæ¶ˆæ¯
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_RecvAck(MQTTSN_ClientsTypeDef* pClient)
 {

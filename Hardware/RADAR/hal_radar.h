@@ -4,35 +4,35 @@
 #include "sys.h"
 #include "radar_api.h"
 
-#define	RADAR_CACHE_SIZE		32										//À×´ïÊı¾İ°ü»º´æ´óĞ¡
-#define	RADAR_DATA_PACK		12										//À×´ïÊı¾İ°ü¸öÊı
+#define	RADAR_CACHE_SIZE		32										//é›·è¾¾æ•°æ®åŒ…ç¼“å­˜å¤§å°
+#define	RADAR_DATA_PACK		12										//é›·è¾¾æ•°æ®åŒ…ä¸ªæ•°
 
-/* À×´ïÊı¾İ½ÓÊÕ¶ÓÁĞ */
+/* é›·è¾¾æ•°æ®æ¥æ”¶é˜Ÿåˆ— */
 typedef struct
 {
-	u8 RADARData[RADAR_DATA_PACK][RADAR_CACHE_SIZE];							//¶ÓÖĞÊı¾İ
-	u8 front;															//¶ÓÍ·
-	u8 rear;															//¶ÓÎ²
+	u8 RADARData[RADAR_DATA_PACK][RADAR_CACHE_SIZE];							//é˜Ÿä¸­æ•°æ®
+	u8 front;															//é˜Ÿå¤´
+	u8 rear;															//é˜Ÿå°¾
 }RADAR_DataPack;
-extern RADAR_DataPack radarDataPack;										//À×´ïÊı¾İ½ÓÊÕ¶ÓÁĞ
+extern RADAR_DataPack radarDataPack;										//é›·è¾¾æ•°æ®æ¥æ”¶é˜Ÿåˆ—
 
-/* À×´ïÊı¾İÌáÈ¡½á¹¹Ìå */
+/* é›·è¾¾æ•°æ®æå–ç»“æ„ä½“ */
 typedef struct
 {
-	u8  NotargetNum;													//Notarget°üÊı
-	u8  CoverNum;														//COVER°üÊı
-	u8  DismagNum;														//Dismag°üÊı
-	u32 DisVal;														//Ä¿±ê¸ß¶ÈÖµ
-	u32 MagVal;														//Ä¿±ê·ù¶ÈÖµ
-	u32 Diff;															//±ä»¯Öµ
+	u8  NotargetNum;													//NotargetåŒ…æ•°
+	u8  CoverNum;														//COVERåŒ…æ•°
+	u8  DismagNum;														//DismagåŒ…æ•°
+	u32 DisVal;														//ç›®æ ‡é«˜åº¦å€¼
+	u32 MagVal;														//ç›®æ ‡å¹…åº¦å€¼
+	u32 Diff;															//å˜åŒ–å€¼
 }RADAR_DataStruct;
-extern RADAR_DataStruct radarDataStruct;									//À×´ïÊı¾İÌáÈ¡½á¹¹Ìå
+extern RADAR_DataStruct radarDataStruct;									//é›·è¾¾æ•°æ®æå–ç»“æ„ä½“
 
-void Radar_DataPackInit(void);											//³õÊ¼»¯À×´ï½ÓÊÕ¶ÓÁĞ
-u8   Radar_DataPackisFull(void);											//¼ì²éDataPack¶ÓÁĞÊÇ·ñÒÑÂú
-u8   Radar_DataPackisEmpty(void);											//¼ì²éDataPack¶ÓÁĞÊÇ·ñÒÑ¿Õ
-void Radar_DataPackEnqueue(u8 *buf, u16 length);								//À×´ïÊı¾İĞ´Èë¶ÓÁĞ
-u8   Radar_DataPackDequeue(u8 *buf);										//À×´ïÊı¾İ¶Á³ö¶ÓÁĞ(¶ÓÁĞÍ·Æ«ÒÆ1)
-void Radar_DataPackToDataStruct(void);										//½«À×´ïÊı¾İÌáÈ¡µ½À×´ï½á¹¹Ìå
+void Radar_DataPackInit(void);											//åˆå§‹åŒ–é›·è¾¾æ¥æ”¶é˜Ÿåˆ—
+u8   Radar_DataPackisFull(void);											//æ£€æŸ¥DataPacké˜Ÿåˆ—æ˜¯å¦å·²æ»¡
+u8   Radar_DataPackisEmpty(void);											//æ£€æŸ¥DataPacké˜Ÿåˆ—æ˜¯å¦å·²ç©º
+void Radar_DataPackEnqueue(u8 *buf, u16 length);								//é›·è¾¾æ•°æ®å†™å…¥é˜Ÿåˆ—
+u8   Radar_DataPackDequeue(u8 *buf);										//é›·è¾¾æ•°æ®è¯»å‡ºé˜Ÿåˆ—(é˜Ÿåˆ—å¤´åç§»1)
+void Radar_DataPackToDataStruct(void);										//å°†é›·è¾¾æ•°æ®æå–åˆ°é›·è¾¾ç»“æ„ä½“
 
 #endif

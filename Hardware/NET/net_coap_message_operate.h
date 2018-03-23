@@ -13,14 +13,14 @@ typedef __packed struct
 	u8	PacketType:4;
 	u8	PacketNumber;
 	u32	DeviceSN;
-}COAP_PacketHeadTypeDef;													//Êı¾İ°üÍ·8Byte
+}COAP_PacketHeadTypeDef;													//æ•°æ®åŒ…å¤´8Byte
 
 typedef __packed struct
 {
 	u32	DestSN;
 	u8	Version;
 	u8	Type;
-}COAP_PacketMsgTypeDef;													//ÏûÏ¢°üÍ·6Byte
+}COAP_PacketMsgTypeDef;													//æ¶ˆæ¯åŒ…å¤´6Byte
 
 typedef __packed struct
 {
@@ -29,7 +29,7 @@ typedef __packed struct
 	u32	DateTime;
 	u16	SpotCount;
 	u8	SpotStatus;
-}COAP_PacketShortTypeDef;												//¶Ì°ü21Byte
+}COAP_PacketShortTypeDef;												//çŸ­åŒ…21Byte
 
 typedef __packed struct
 {
@@ -46,21 +46,21 @@ typedef __packed struct
 	u8	RadarStrength;
 	u8	RadarCoverCount;
 	u8	RadarDiff;
-}COAP_PacketLongTypeDef;													//³¤°ü33Byte
+}COAP_PacketLongTypeDef;													//é•¿åŒ…33Byte
 
 typedef __packed struct
 {
 	COAP_PacketHeadTypeDef HeadPacket;
 	COAP_PacketMsgTypeDef MsgPacket;
 	u8	InfoData[100];
-}COAP_PacketInfoTypeDef;													//Info°ü114Byte
+}COAP_PacketInfoTypeDef;													//InfoåŒ…114Byte
 
 #define COAP_SEND_BUFFER_SIZE				128
 #define COAP_RECV_BUFFER_SIZE				64
 #define COAP_SEND_PARK_NUM				10
 #define COAP_RECV_PARK_NUM				5
 
-/* ·¢ËÍÊı¾İ¶ÓÁĞ */
+/* å‘é€æ•°æ®é˜Ÿåˆ— */
 typedef struct
 {
 	unsigned char						Front;
@@ -73,7 +73,7 @@ typedef struct
 	}Park[COAP_SEND_PARK_NUM];
 }COAP_SwapSendDataTypeDef;
 
-/* ½ÓÊÕÊı¾İ¶ÓÁĞ */
+/* æ¥æ”¶æ•°æ®é˜Ÿåˆ— */
 typedef struct
 {
 	unsigned char						Front;
@@ -86,14 +86,14 @@ typedef struct
 	}Park[COAP_RECV_PARK_NUM];
 }COAP_SwapRecvDataTypeDef;
 
-void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dataLength);							//·¢ËÍÊı¾İĞ´Èë¶ÓÁĞ
-void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dataLength);							//½ÓÊÕÊı¾İĞ´Èë¶ÓÁĞ
-bool NET_Coap_Message_SendDataDequeue(unsigned char* dataBuf, unsigned short* dataLength);						//·¢ËÍÊı¾İ¶Á³ö¶ÓÁĞ
-bool NET_Coap_Message_RecvDataDequeue(unsigned char* dataBuf, unsigned short* dataLength);						//½ÓÊÕÊı¾İ¶Á³ö¶ÓÁĞ
-bool NET_Coap_Message_SendDataOffSet(void);																//·¢ËÍÊı¾İ¶ÓÁĞ(¶ÓÁĞÍ·Æ«ÒÆ1)
-bool NET_Coap_Message_RecvDataOffSet(void);																//½ÓÊÕÊı¾İ¶ÓÁĞ(¶ÓÁĞÍ·Æ«ÒÆ1)
-unsigned char NET_Coap_Message_SendDataRear(void);														//·¢ËÍÊı¾İ¶ÓÎ²Öµ
-unsigned char NET_Coap_Message_RecvDataRear(void);														//½ÓÊÕÊı¾İ¶ÓÎ²Öµ
+void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dataLength);							//å‘é€æ•°æ®å†™å…¥é˜Ÿåˆ—
+void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dataLength);							//æ¥æ”¶æ•°æ®å†™å…¥é˜Ÿåˆ—
+bool NET_Coap_Message_SendDataDequeue(unsigned char* dataBuf, unsigned short* dataLength);						//å‘é€æ•°æ®è¯»å‡ºé˜Ÿåˆ—
+bool NET_Coap_Message_RecvDataDequeue(unsigned char* dataBuf, unsigned short* dataLength);						//æ¥æ”¶æ•°æ®è¯»å‡ºé˜Ÿåˆ—
+bool NET_Coap_Message_SendDataOffSet(void);																//å‘é€æ•°æ®é˜Ÿåˆ—(é˜Ÿåˆ—å¤´åç§»1)
+bool NET_Coap_Message_RecvDataOffSet(void);																//æ¥æ”¶æ•°æ®é˜Ÿåˆ—(é˜Ÿåˆ—å¤´åç§»1)
+unsigned char NET_Coap_Message_SendDataRear(void);														//å‘é€æ•°æ®é˜Ÿå°¾å€¼
+unsigned char NET_Coap_Message_RecvDataRear(void);														//æ¥æ”¶æ•°æ®é˜Ÿå°¾å€¼
 
 
 

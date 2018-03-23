@@ -17,7 +17,7 @@
 
 /**********************************************************************************************************
  @Function			u8 Mercury_Read(void)
- @Description			Ë®Òø¿ª¹Ø¶ÁÈ¡×´Ì¬ PH0
+ @Description			æ°´é“¶å¼€å…³è¯»å–çŠ¶æ€ PH0
  @Input				void
  @Return				GPIO_PinState
 **********************************************************************************************************/
@@ -31,14 +31,14 @@ u8 Mercury_Read(void)
 	
 	GPIO_Initure.Pin = MERCURY_PIN;
 	GPIO_Initure.Mode = GPIO_MODE_INPUT;
-	GPIO_Initure.Pull = GPIO_PULLUP;										//ÉÏÀ­
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//³õÊ¼»¯GPIO
+	GPIO_Initure.Pull = GPIO_PULLUP;										//ä¸Šæ‹‰
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//åˆå§‹åŒ–GPIO
 	
 	ret = MERCURY_READ();
 	
-	GPIO_Initure.Pull = GPIO_PULLDOWN;										//ÏÂÀ­
-	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//³õÊ¼»¯GPIO
+	GPIO_Initure.Pull = GPIO_PULLDOWN;										//ä¸‹æ‹‰
+	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//åˆå§‹åŒ–GPIO
 	
 	MERCURY_RCC_GPIO_CLK_DISABLE();
 
@@ -47,23 +47,23 @@ u8 Mercury_Read(void)
 //	
 //	GPIO_Initure.Pin = GPIO_PIN_9;
 //	GPIO_Initure.Mode = GPIO_MODE_INPUT;
-//	GPIO_Initure.Pull = GPIO_PULLUP;										//ÉÏÀ­
-//	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-//	HAL_GPIO_Init(GPIOB, &GPIO_Initure);									//³õÊ¼»¯GPIO
+//	GPIO_Initure.Pull = GPIO_PULLUP;										//ä¸Šæ‹‰
+//	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+//	HAL_GPIO_Init(GPIOB, &GPIO_Initure);									//åˆå§‹åŒ–GPIO
 //	
 //	GPIO_Initure.Pin = MERCURY_PIN;
 //	GPIO_Initure.Mode = GPIO_MODE_INPUT;
-//	GPIO_Initure.Pull = GPIO_PULLUP;										//ÉÏÀ­
-//	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-//	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//³õÊ¼»¯GPIO
+//	GPIO_Initure.Pull = GPIO_PULLUP;										//ä¸Šæ‹‰
+//	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+//	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//åˆå§‹åŒ–GPIO
 //	
 //	ret1 = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);
 //	ret2 = MERCURY_READ();
 //	ret = ret1 && ret2;
 //	
-//	GPIO_Initure.Pull = GPIO_PULLDOWN;										//ÏÂÀ­
-//	HAL_GPIO_Init(GPIOB, &GPIO_Initure);									//³õÊ¼»¯GPIO
-//	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//³õÊ¼»¯GPIO
+//	GPIO_Initure.Pull = GPIO_PULLDOWN;										//ä¸‹æ‹‰
+//	HAL_GPIO_Init(GPIOB, &GPIO_Initure);									//åˆå§‹åŒ–GPIO
+//	HAL_GPIO_Init(MERCURY_GPIOx, &GPIO_Initure);								//åˆå§‹åŒ–GPIO
 //	
 //	MERCURY_RCC_GPIO_CLK_DISABLE();
 	

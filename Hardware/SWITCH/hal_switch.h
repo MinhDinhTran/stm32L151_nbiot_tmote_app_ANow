@@ -9,6 +9,6 @@
 #define MERCURY_RCC_GPIO_CLK_DISABLE()		__HAL_RCC_GPIOH_CLK_DISABLE()
 #define MERCURY_READ()					HAL_GPIO_ReadPin(MERCURY_GPIOx, MERCURY_PIN)
 
-u8 Mercury_Read(void);													//ˮ�����ض�ȡ״̬
+u8 Mercury_Read(void);													//水银开关读取状态
 
 #endif

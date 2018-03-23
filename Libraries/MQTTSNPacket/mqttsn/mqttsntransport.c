@@ -19,9 +19,9 @@
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Transport_Open(MQTTSN_SocketNetTypeDef* NetSock)
- @Description			MQTTSN_Transport_Open	: ´´½¨Ò»¸öSocketÁ¬½Ó
+ @Description			MQTTSN_Transport_Open	: åˆ›å»ºä¸€ä¸ªSocketè¿æ¥
  @Input				NetSock				: SocketNet Struct*
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Transport_Open(MQTTSN_SocketNetTypeDef* NetSock)
 {
@@ -44,9 +44,9 @@ MQTTSN_StatusTypeDef MQTTSN_Transport_Open(MQTTSN_SocketNetTypeDef* NetSock)
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Transport_Close(MQTTSN_SocketNetTypeDef* NetSock)
- @Description			MQTTSN_Transport_Close	: ¹Ø±ÕÒ»¸öSocketÁ¬½Ó
+ @Description			MQTTSN_Transport_Close	: å…³é—­ä¸€ä¸ªSocketè¿æ¥
  @Input				NetSock				: SocketNet Struct*
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Transport_Close(MQTTSN_SocketNetTypeDef* NetSock)
 {
@@ -67,11 +67,11 @@ MQTTSN_StatusTypeDef MQTTSN_Transport_Close(MQTTSN_SocketNetTypeDef* NetSock)
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Transport_Write(MQTTSN_SocketNetTypeDef* NetSock, const char *buf, u16 sendlen)
- @Description			MQTTSN_Transport_Write	: SocketÁ¬½Ó·¢ËÍÒ»Ìõ¸ºÔØÊı¾İ
+ @Description			MQTTSN_Transport_Write	: Socketè¿æ¥å‘é€ä¸€æ¡è´Ÿè½½æ•°æ®
  @Input				NetSock				: SocketNet Struct*
-					buf					: ¸ºÔØÊı¾İ
-					sendlen 				: Êı¾İ³¤¶È
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+					buf					: è´Ÿè½½æ•°æ®
+					sendlen 				: æ•°æ®é•¿åº¦
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Transport_Write(MQTTSN_SocketNetTypeDef* NetSock, const char *buf, u16 sendlen)
 {
@@ -99,13 +99,13 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Transport_Read(MQTTSN_SocketNetTypeDef* NetSock, char *buf, u16 maxrlen, int *rlen, int *rleft)
- @Description			MQTTSN_Transport_Read	: SocketÁ¬½Ó¶ÁÈ¡Ò»Ìõ¸ºÔØÊı¾İ
+ @Description			MQTTSN_Transport_Read	: Socketè¿æ¥è¯»å–ä¸€æ¡è´Ÿè½½æ•°æ®
  @Input				NetSock				: SocketNet Struct*
-					buf					: ¶ÁÈ¡Êı¾İ»º´æ
-					maxrlen				: ×î´ó¶ÁÈ¡Êı¾İ´óĞ¡
-					rlen					: ¶ÁÈ¡Êı¾İ³¤¶ÈµØÖ·
-					rleft				: Ê£Óà¶ÁÈ¡Êı¾İ³¤¶ÈµØÖ·
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+					buf					: è¯»å–æ•°æ®ç¼“å­˜
+					maxrlen				: æœ€å¤§è¯»å–æ•°æ®å¤§å°
+					rlen					: è¯»å–æ•°æ®é•¿åº¦åœ°å€
+					rleft				: å‰©ä½™è¯»å–æ•°æ®é•¿åº¦åœ°å€
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Transport_Read(MQTTSN_SocketNetTypeDef* NetSock, char *buf, u16 maxrlen, int *rlen, int *rleft)
 {
@@ -141,13 +141,13 @@ exit:
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef MQTTSN_Transport_Init(MQTTSN_SocketNetTypeDef* NetSock, NBIOT_ClientsTypeDef* NBIotStack, u16 Localport, const char *Serverhost, u16 Serverport)
- @Description			MQTTSN_Transport_Init	: Initiative³õÊ¼»¯MqttSNÊı¾İ´«Êä½Ó¿Ú
+ @Description			MQTTSN_Transport_Init	: Initiativeåˆå§‹åŒ–MqttSNæ•°æ®ä¼ è¾“æ¥å£
  @Input				NetSock				: SocketNet Struct*
-					NBIotStack			: NBIotĞ­ÒéÕ»
-					Localport				: ±¾µØ¶Ë¿Ú
-					Serverhost			: ·şÎñÆ÷µØÖ·
-					Serverport			: ·şÎñÆ÷¶Ë¿Ú
- @Return				MQTTSN_StatusTypeDef	: MQTTSN´¦Àí×´Ì¬
+					NBIotStack			: NBIotåè®®æ ˆ
+					Localport				: æœ¬åœ°ç«¯å£
+					Serverhost			: æœåŠ¡å™¨åœ°å€
+					Serverport			: æœåŠ¡å™¨ç«¯å£
+ @Return				MQTTSN_StatusTypeDef	: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef MQTTSN_Transport_Init(MQTTSN_SocketNetTypeDef* NetSock, NBIOT_ClientsTypeDef* NBIotStack, u16 Localport, const char *Serverhost, u16 Serverport)
 {

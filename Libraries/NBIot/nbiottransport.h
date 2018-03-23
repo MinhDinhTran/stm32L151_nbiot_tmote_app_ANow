@@ -4,8 +4,8 @@
 #include "sys.h"
 #include "nbiotconfig.h"
 
-NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd);											//发送AT指令等待应答
-NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd);											//接收AT指令应答
-NBIOT_StatusTypeDef NBIOT_Transport_Init(NBIOT_ATCmdTypeDef* ATCmd);												//初始化NBIOT数据传输接口
+NBIOT_StatusTypeDef NBIOT_Transport_SendATCmd(NBIOT_ATCmdTypeDef* ATCmd);											//鍙戦�丄T鎸囦护绛夊緟搴旂瓟
+NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd);											//鎺ユ敹AT鎸囦护搴旂瓟
+NBIOT_StatusTypeDef NBIOT_Transport_Init(NBIOT_ATCmdTypeDef* ATCmd);												//鍒濆鍖朜BIOT鏁版嵁浼犺緭鎺ュ彛
 
 #endif

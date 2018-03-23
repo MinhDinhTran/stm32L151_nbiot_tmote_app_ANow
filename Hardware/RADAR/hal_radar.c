@@ -16,12 +16,12 @@
 #include "hal_radar.h"
 #include "string.h"
 
-RADAR_DataPack		radarDataPack;											//À×´ïÊı¾İ½ÓÊÕ¶ÓÁĞ
-RADAR_DataStruct	radarDataStruct;										//À×´ïÊı¾İÌáÈ¡½á¹¹Ìå
+RADAR_DataPack		radarDataPack;											//é›·è¾¾æ•°æ®æ¥æ”¶é˜Ÿåˆ—
+RADAR_DataStruct	radarDataStruct;										//é›·è¾¾æ•°æ®æå–ç»“æ„ä½“
 
 /**********************************************************************************************************
  @Function			void Radar_DataPackInit(void)
- @Description			³õÊ¼»¯À×´ï½ÓÊÕ¶ÓÁĞ
+ @Description			åˆå§‹åŒ–é›·è¾¾æ¥æ”¶é˜Ÿåˆ—
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -34,10 +34,10 @@ void Radar_DataPackInit(void)
 
 /**********************************************************************************************************
  @Function			u8 Radar_DataPackisFull(void)
- @Description			¼ì²éDataPack¶ÓÁĞÊÇ·ñÒÑÂú
+ @Description			æ£€æŸ¥DataPacké˜Ÿåˆ—æ˜¯å¦å·²æ»¡
  @Input				void
- @Return				0  : Ã»Âú
-					1  : ÒÑÂú
+ @Return				0  : æ²¡æ»¡
+					1  : å·²æ»¡
 **********************************************************************************************************/
 u8 Radar_DataPackisFull(void)
 {
@@ -51,10 +51,10 @@ u8 Radar_DataPackisFull(void)
 
 /**********************************************************************************************************
  @Function			u8 Radar_DataPackisEmpty(void)
- @Description			¼ì²éDataPack¶ÓÁĞÊÇ·ñÒÑ¿Õ
+ @Description			æ£€æŸ¥DataPacké˜Ÿåˆ—æ˜¯å¦å·²ç©º
  @Input				void
- @Return				0  : ¶ÓÁĞÓĞÊı¾İ
-					1  : ¶ÓÁĞ¿ÕÊı¾İ
+ @Return				0  : é˜Ÿåˆ—æœ‰æ•°æ®
+					1  : é˜Ÿåˆ—ç©ºæ•°æ®
 **********************************************************************************************************/
 u8 Radar_DataPackisEmpty(void)
 {
@@ -68,46 +68,46 @@ u8 Radar_DataPackisEmpty(void)
 
 /**********************************************************************************************************
  @Function			void Radar_DataPackEnqueue(u8 *buf, u16 length)
- @Description			À×´ïÊı¾İĞ´Èë¶ÓÁĞ
- @Input				buf 		 : Êı¾İ
-					length     : Êı¾İ³¤¶È
+ @Description			é›·è¾¾æ•°æ®å†™å…¥é˜Ÿåˆ—
+ @Input				buf 		 : æ•°æ®
+					length     : æ•°æ®é•¿åº¦
  @Return				void
 **********************************************************************************************************/
 void Radar_DataPackEnqueue(u8 *buf, u16 length)
 {
 	u8 i = 0;
 	
-	if (Radar_DataPackisFull()) {											//¶ÓÁĞÒÑÂú
-		radarDataPack.rear = (radarDataPack.rear + 1) % RADAR_DATA_PACK;			//¶ÓÎ²Æ«ÒÆ1
+	if (Radar_DataPackisFull()) {											//é˜Ÿåˆ—å·²æ»¡
+		radarDataPack.rear = (radarDataPack.rear + 1) % RADAR_DATA_PACK;			//é˜Ÿå°¾åç§»1
 		memset((u8 *)radarDataPack.RADARData[radarDataPack.rear], 0x0, sizeof(radarDataPack.RADARData[radarDataPack.rear]));
 		for (i = 0; i < length; i++) {
-			radarDataPack.RADARData[radarDataPack.rear][i] = buf[i];			//Ğ´Èë¶ÓÁĞÊı¾İ
+			radarDataPack.RADARData[radarDataPack.rear][i] = buf[i];			//å†™å…¥é˜Ÿåˆ—æ•°æ®
 		}
-		radarDataPack.front = (radarDataPack.front + 1) % RADAR_DATA_PACK;		//¶ÓÍ·Æ«ÒÆ1
+		radarDataPack.front = (radarDataPack.front + 1) % RADAR_DATA_PACK;		//é˜Ÿå¤´åç§»1
 	}
-	else {															//¶ÓÁĞÎ´Âú
-		radarDataPack.rear = (radarDataPack.rear + 1) % RADAR_DATA_PACK;			//¶ÓÎ²Æ«ÒÆ1
+	else {															//é˜Ÿåˆ—æœªæ»¡
+		radarDataPack.rear = (radarDataPack.rear + 1) % RADAR_DATA_PACK;			//é˜Ÿå°¾åç§»1
 		memset((u8 *)radarDataPack.RADARData[radarDataPack.rear], 0x0, sizeof(radarDataPack.RADARData[radarDataPack.rear]));
 		for (i = 0; i < length; i++) {
-			radarDataPack.RADARData[radarDataPack.rear][i] = buf[i];			//Ğ´Èë¶ÓÁĞÊı¾İ
+			radarDataPack.RADARData[radarDataPack.rear][i] = buf[i];			//å†™å…¥é˜Ÿåˆ—æ•°æ®
 		}
 	}
 }
 
 /**********************************************************************************************************
  @Function			u8 Radar_DataPackDequeue(u8 *buf)
- @Description			À×´ïÊı¾İ¶Á³ö¶ÓÁĞ(¶ÓÁĞÍ·Æ«ÒÆ1)
- @Input				&buf 	 : Êı¾İµØÖ·
- @Return				0 	 	 : ¶ÁÈ¡³É¹¦
-					1  		 : ¶ÓÁĞÒÑ¿Õ
+ @Description			é›·è¾¾æ•°æ®è¯»å‡ºé˜Ÿåˆ—(é˜Ÿåˆ—å¤´åç§»1)
+ @Input				&buf 	 : æ•°æ®åœ°å€
+ @Return				0 	 	 : è¯»å–æˆåŠŸ
+					1  		 : é˜Ÿåˆ—å·²ç©º
 **********************************************************************************************************/
 u8 Radar_DataPackDequeue(u8 *buf)
 {
-	if (Radar_DataPackisEmpty()) {										//¶ÓÁĞÒÑ¿Õ
+	if (Radar_DataPackisEmpty()) {										//é˜Ÿåˆ—å·²ç©º
 		return 1;
 	}
-	else {															//¶ÓÁĞÎ´¿Õ
-		radarDataPack.front = (radarDataPack.front + 1) % RADAR_DATA_PACK;		//¶ÓÍ·Æ«ÒÆ1
+	else {															//é˜Ÿåˆ—æœªç©º
+		radarDataPack.front = (radarDataPack.front + 1) % RADAR_DATA_PACK;		//é˜Ÿå¤´åç§»1
 		strcpy((char *)buf, (const char *)radarDataPack.RADARData[radarDataPack.front]);
 		return 0;
 	}
@@ -115,7 +115,7 @@ u8 Radar_DataPackDequeue(u8 *buf)
 
 /**********************************************************************************************************
  @Function			void Radar_DataPackToDataStruct(void)
- @Description			½«À×´ïÊı¾İÌáÈ¡µ½À×´ï½á¹¹Ìå
+ @Description			å°†é›·è¾¾æ•°æ®æå–åˆ°é›·è¾¾ç»“æ„ä½“
  @Input				void
  @Return				void
 **********************************************************************************************************/

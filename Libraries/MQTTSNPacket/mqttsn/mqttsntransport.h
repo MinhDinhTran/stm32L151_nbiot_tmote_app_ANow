@@ -4,11 +4,11 @@
 #include "sys.h"
 #include "mqttsnconfig.h"
 
-MQTTSN_StatusTypeDef MQTTSN_Transport_Open(MQTTSN_SocketNetTypeDef* NetSock);											//´´½¨Ò»¸öSocketÁ¬½Ó
-MQTTSN_StatusTypeDef MQTTSN_Transport_Close(MQTTSN_SocketNetTypeDef* NetSock);											//¹Ø±ÕÒ»¸öSocketÁ¬½Ó
-MQTTSN_StatusTypeDef MQTTSN_Transport_Write(MQTTSN_SocketNetTypeDef* NetSock, const char *buf, u16 sendlen);					//·¢ËÍÒ»Ìõ¸ºÔØÊı¾İ
-MQTTSN_StatusTypeDef MQTTSN_Transport_Read(MQTTSN_SocketNetTypeDef* NetSock, char *buf, u16 maxrlen, int *rlen, int *rleft);		//¶ÁÈ¡Ò»Ìõ¸ºÔØÊı¾İ
+MQTTSN_StatusTypeDef MQTTSN_Transport_Open(MQTTSN_SocketNetTypeDef* NetSock);											//åˆ›å»ºä¸€ä¸ªSocketè¿æ¥
+MQTTSN_StatusTypeDef MQTTSN_Transport_Close(MQTTSN_SocketNetTypeDef* NetSock);											//å…³é—­ä¸€ä¸ªSocketè¿æ¥
+MQTTSN_StatusTypeDef MQTTSN_Transport_Write(MQTTSN_SocketNetTypeDef* NetSock, const char *buf, u16 sendlen);					//å‘é€ä¸€æ¡è´Ÿè½½æ•°æ®
+MQTTSN_StatusTypeDef MQTTSN_Transport_Read(MQTTSN_SocketNetTypeDef* NetSock, char *buf, u16 maxrlen, int *rlen, int *rleft);		//è¯»å–ä¸€æ¡è´Ÿè½½æ•°æ®
 
-MQTTSN_StatusTypeDef MQTTSN_Transport_Init(MQTTSN_SocketNetTypeDef* , NBIOT_ClientsTypeDef* , u16 , const char *, u16 );		//³õÊ¼»¯
+MQTTSN_StatusTypeDef MQTTSN_Transport_Init(MQTTSN_SocketNetTypeDef* , NBIOT_ClientsTypeDef* , u16 , const char *, u16 );		//åˆå§‹åŒ–
 
 #endif

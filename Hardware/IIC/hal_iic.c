@@ -19,7 +19,7 @@
 
 /**********************************************************************************************************
  @Function			void IIC_Init(void)
- @Description			IIC³õÊ¼»¯
+ @Description			IICåˆå§‹åŒ–
  @Input				void
  @Return				void
  @attention			I2C1_SCL ----> PB6
@@ -29,20 +29,20 @@ void IIC_Init(void)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	IIC_SCL_RCC_GPIO_CLK_ENABLE();										//Ê¹ÄÜGPIOBÊ±ÖÓ
+	IIC_SCL_RCC_GPIO_CLK_ENABLE();										//ä½¿èƒ½GPIOBæ—¶é’Ÿ
 	IIC_SDA_RCC_GPIO_CLK_ENABLE();
 	
-	/* PB6,7³õÊ¼»¯ÉèÖÃ */
+	/* PB6,7åˆå§‹åŒ–è®¾ç½® */
 	GPIO_Initure.Pin = IIC_SCL_PIN;										//PB6
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//ÍÆÍìÊä³ö
-	GPIO_Initure.Pull = GPIO_PULLUP;										//ÉÏÀ­
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//æ¨æŒ½è¾“å‡º
+	GPIO_Initure.Pull = GPIO_PULLUP;										//ä¸Šæ‹‰
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
 	HAL_GPIO_Init(IIC_SCL_GPIOx, &GPIO_Initure);
 	
 	GPIO_Initure.Pin = IIC_SDA_PIN;										//PB7
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//ÍÆÍìÊä³ö
-	GPIO_Initure.Pull = GPIO_PULLUP;										//ÉÏÀ­
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//æ¨æŒ½è¾“å‡º
+	GPIO_Initure.Pull = GPIO_PULLUP;										//ä¸Šæ‹‰
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
 	HAL_GPIO_Init(IIC_SDA_GPIOx, &GPIO_Initure);
 	
 	IIC_SDA(HIGH);
@@ -51,7 +51,7 @@ void IIC_Init(void)
 
 /**********************************************************************************************************
  @Function			void IIC_Start(void)
- @Description			²úÉúIICÆğÊ¼ĞÅºÅ
+ @Description			äº§ç”ŸIICèµ·å§‹ä¿¡å·
  @Input				void
  @Return				void
  @attention			SCL : HIGH
@@ -59,7 +59,7 @@ void IIC_Init(void)
 **********************************************************************************************************/
 void IIC_Start(void)
 {
-	SDA_OUT();														//sdaÏßÊä³ö
+	SDA_OUT();														//sdaçº¿è¾“å‡º
 	IIC_SDA(HIGH);
 	IIC_SCL(HIGH);
 #ifndef SYSTEMCLOCK
@@ -85,12 +85,12 @@ void IIC_Start(void)
 	#error SYSTEMCLOCK Define Error
 #endif
 #endif
-	IIC_SCL(LOW);														//Ç¯×¡I2C×ÜÏß,×¼±¸·¢ËÍ»ò½ÓÊÕÊı¾İ 
+	IIC_SCL(LOW);														//é’³ä½I2Cæ€»çº¿,å‡†å¤‡å‘é€æˆ–æ¥æ”¶æ•°æ® 
 }
 
 /**********************************************************************************************************
  @Function			void IIC_Stop(void)
- @Description			²úÉúIICÍ£Ö¹ĞÅºÅ
+ @Description			äº§ç”ŸIICåœæ­¢ä¿¡å·
  @Input				void
  @Return				void
  @attention			SCL : HIGH
@@ -98,7 +98,7 @@ void IIC_Start(void)
 **********************************************************************************************************/
 void IIC_Stop(void)
 {
-	SDA_OUT();														//sdaÏßÊä³ö
+	SDA_OUT();														//sdaçº¿è¾“å‡º
 	IIC_SCL(LOW);
 	IIC_SDA(LOW);														//STOP:when CLK is high DATA change form low to high
 #ifndef SYSTEMCLOCK
@@ -113,7 +113,7 @@ void IIC_Stop(void)
 #endif
 #endif
 	IIC_SCL(HIGH); 
-	IIC_SDA(HIGH);														//·¢ËÍI2C×ÜÏß½áÊøĞÅºÅ
+	IIC_SDA(HIGH);														//å‘é€I2Cæ€»çº¿ç»“æŸä¿¡å·
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
@@ -129,16 +129,16 @@ void IIC_Stop(void)
 
 /**********************************************************************************************************
  @Function			u8 IIC_Wait_Ack(void)
- @Description			µÈ´ıACKĞÅºÅµ½À´
+ @Description			ç­‰å¾…ACKä¿¡å·åˆ°æ¥
  @Input				void
- @Return				1 : ½ÓÊÕÓ¦´ğÊ§°Ü
-					0 : ½ÓÊÕÓ¦´ğ³É¹¦
+ @Return				1 : æ¥æ”¶åº”ç­”å¤±è´¥
+					0 : æ¥æ”¶åº”ç­”æˆåŠŸ
 **********************************************************************************************************/
 u8 IIC_Wait_Ack(void)
 {
 	u8 ucErrTime = 0;
 	
-	SDA_IN();															//SDAÉèÖÃÎªÊäÈë
+	SDA_IN();															//SDAè®¾ç½®ä¸ºè¾“å…¥
 	IIC_SDA(HIGH);__NOP();
 	IIC_SCL(HIGH);__NOP();
 	while (READ_SDA) {
@@ -148,20 +148,20 @@ u8 IIC_Wait_Ack(void)
 			return 1;
 		}
 	}
-	IIC_SCL(LOW);														//Ê±ÖÓÊä³ö0
+	IIC_SCL(LOW);														//æ—¶é’Ÿè¾“å‡º0
 	return 0;
 }
 
 /**********************************************************************************************************
  @Function			void IIC_Ack(void)
- @Description			²úÉúACKÓ¦´ğ
+ @Description			äº§ç”ŸACKåº”ç­”
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void IIC_Ack(void)
 {
 	IIC_SCL(LOW);
-	SDA_OUT();														//sdaÏßÊä³ö
+	SDA_OUT();														//sdaçº¿è¾“å‡º
 	IIC_SDA(LOW);
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
@@ -191,13 +191,13 @@ void IIC_Ack(void)
 
 /**********************************************************************************************************
  @Function			void IIC_NAck(void)
- @Description			²»²úÉúACKÓ¦´ğ
+ @Description			ä¸äº§ç”ŸACKåº”ç­”
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void IIC_NAck(void)
 {
-	SDA_OUT();														//sdaÏßÊä³ö
+	SDA_OUT();														//sdaçº¿è¾“å‡º
 	IIC_SCL(LOW);
 	IIC_SDA(HIGH);
 #ifndef SYSTEMCLOCK
@@ -228,16 +228,16 @@ void IIC_NAck(void)
 
 /**********************************************************************************************************
  @Function			void IIC_Send_Byte(u8 txd)
- @Description			IIC·¢ËÍÒ»¸ö×Ö½Ú
- @Input				txd : ·¢ËÍÊı¾İ
+ @Description			IICå‘é€ä¸€ä¸ªå­—èŠ‚
+ @Input				txd : å‘é€æ•°æ®
  @Return				void
 **********************************************************************************************************/
 void IIC_Send_Byte(u8 txd)
 {
 	u8 t;
 	
-	SDA_OUT();														//sdaÏßÊä³ö
-	IIC_SCL(LOW);														//À­µÍÊ±ÖÓ¿ªÊ¼Êı¾İ´«Êä
+	SDA_OUT();														//sdaçº¿è¾“å‡º
+	IIC_SCL(LOW);														//æ‹‰ä½æ—¶é’Ÿå¼€å§‹æ•°æ®ä¼ è¾“
 	for (t = 0; t < 8; t++)
 	{
 		IIC_SDA((txd & 0x80) >> 7);
@@ -282,15 +282,15 @@ void IIC_Send_Byte(u8 txd)
 
 /**********************************************************************************************************
  @Function			u8 IIC_Read_Byte(unsigned char ack)
- @Description			¶Á1¸ö×Ö½Ú, ack=1,·¢ËÍACK, ack=0,·¢ËÍnACK
+ @Description			è¯»1ä¸ªå­—èŠ‚, ack=1,å‘é€ACK, ack=0,å‘é€nACK
  @Input				ack
- @Return				Ëù¶ÁÊı¾İ
+ @Return				æ‰€è¯»æ•°æ®
 **********************************************************************************************************/
 u8 IIC_Read_Byte(unsigned char ack)
 {
 	unsigned char i, receive = 0;
 	
-	SDA_IN();															//SDAÉèÖÃÎªÊäÈë
+	SDA_IN();															//SDAè®¾ç½®ä¸ºè¾“å…¥
 	for (i = 0; i < 8; i++)
 	{
 		IIC_SCL(LOW);
@@ -321,9 +321,9 @@ u8 IIC_Read_Byte(unsigned char ack)
 #endif
 	}
 	if (!ack)
-		IIC_NAck();													//·¢ËÍnACK
+		IIC_NAck();													//å‘é€nACK
 	else
-		IIC_Ack();													//·¢ËÍACK
+		IIC_Ack();													//å‘é€ACK
 	
 	return receive;
 }

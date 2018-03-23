@@ -28,7 +28,7 @@ void FLASH_EEPROM_WriteWord(unsigned int Address, unsigned int Data);
 void FLASH_EEPROM_ReadBuffer(unsigned int Address, unsigned char* buf, unsigned short length);
 void FLASH_EEPROM_WriteBuffer(unsigned int Address, unsigned char* buf, unsigned short length);
 
-void EEPROM_EnterCriticalSection(void);										//½øÈë¹Ø¼ü²Ù×÷,¹Ø±ÕÖĞ¶Ï,µÈ´ıÖĞ¶Ï½áÊø·µ»Ø
-void EEPROM_ExitCriticalSection(void);										//ÍË³ö¹Ø¼ü²Ù×÷,¿ªÆôÖĞ¶Ï
+void EEPROM_EnterCriticalSection(void);										//è¿›å…¥å…³é”®æ“ä½œ,å…³é—­ä¸­æ–­,ç­‰å¾…ä¸­æ–­ç»“æŸè¿”å›
+void EEPROM_ExitCriticalSection(void);										//é€€å‡ºå…³é”®æ“ä½œ,å¼€å¯ä¸­æ–­
 
 #endif

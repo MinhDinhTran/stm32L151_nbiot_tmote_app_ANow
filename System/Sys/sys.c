@@ -15,18 +15,18 @@
 
 #include "sys.h"
 
-__IO u32 SystemRunningTimesSecond = 0;										//ÏµÍ³ÔËĞĞÊ±¼ä(S)
+__IO u32 SystemRunningTimesSecond = 0;										//ç³»ç»Ÿè¿è¡Œæ—¶é—´(S)
 
 /**********************************************************************************************************
  @Function			void Stm32_Clock_Init(u32 pllmul, u32 plldiv)
- @Description			Ê±ÖÓÉèÖÃº¯Êı(MAX32MHz)
- @Input				pllmul	: Ö÷PLL±¶ÆµÏµÊı(PLL±¶Æµ),È¡Öµ·¶Î§:0 ~ 48
-					plldiv	: ÏµÍ³Ê±ÖÓµÄÖ÷PLL·ÖÆµÏµÊı(PLLÖ®ºóµÄ·ÖÆµ),È¡Öµ·¶Î§:2,3,4.(½öÏŞÕâ3¸öÖµ!)
+ @Description			æ—¶é’Ÿè®¾ç½®å‡½æ•°(MAX32MHz)
+ @Input				pllmul	: ä¸»PLLå€é¢‘ç³»æ•°(PLLå€é¢‘),å–å€¼èŒƒå›´:0 ~ 48
+					plldiv	: ç³»ç»Ÿæ—¶é’Ÿçš„ä¸»PLLåˆ†é¢‘ç³»æ•°(PLLä¹‹åçš„åˆ†é¢‘),å–å€¼èŒƒå›´:2,3,4.(ä»…é™è¿™3ä¸ªå€¼!)
  @Return				void
  @attention			Fsys = Fs*(pllmul/plldiv);
 
-					Fsys : ÏµÍ³Ê±ÖÓÆµÂÊ
-					Fs	: PLLÊäÈëÊ±ÖÓÆµÂÊ,¿ÉÒÔÊÇHSI,HSEµÈ
+					Fsys : ç³»ç»Ÿæ—¶é’Ÿé¢‘ç‡
+					Fs	: PLLè¾“å…¥æ—¶é’Ÿé¢‘ç‡,å¯ä»¥æ˜¯HSI,HSEç­‰
 **********************************************************************************************************/
 void Stm32_Clock_Init(u32 pllmul, u32 plldiv)
 {
@@ -36,34 +36,34 @@ void Stm32_Clock_Init(u32 pllmul, u32 plldiv)
 	
 	HAL_RCC_DeInit();
 
-	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_HSI;				//Ê±ÖÓÔ´ÎªHSI
-	RCC_OscInitStructure.HSIState = RCC_HSI_ON;								//´ò¿ªHSI
-	RCC_OscInitStructure.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;		//HSIÄ¬ÈÏĞ£×¼
-	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_ON;							//´ò¿ªPLL
-	RCC_OscInitStructure.PLL.PLLSource = RCC_PLLSOURCE_HSI;					//PLLÊ±ÖÓÔ´Ñ¡ÔñHSI
-	RCC_OscInitStructure.PLL.PLLMUL = pllmul;								//Ö÷PLL±¶ÆµÏµÊı(PLL±¶Æµ)
-	RCC_OscInitStructure.PLL.PLLDIV = plldiv;								//ÏµÍ³Ê±ÖÓµÄÖ÷PLL·ÖÆµÏµÊı(PLLÖ®ºóµÄ·ÖÆµ)
-	ret = HAL_RCC_OscConfig(&RCC_OscInitStructure);							//³õÊ¼»¯
+	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_HSI;				//æ—¶é’Ÿæºä¸ºHSI
+	RCC_OscInitStructure.HSIState = RCC_HSI_ON;								//æ‰“å¼€HSI
+	RCC_OscInitStructure.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;		//HSIé»˜è®¤æ ¡å‡†
+	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_ON;							//æ‰“å¼€PLL
+	RCC_OscInitStructure.PLL.PLLSource = RCC_PLLSOURCE_HSI;					//PLLæ—¶é’Ÿæºé€‰æ‹©HSI
+	RCC_OscInitStructure.PLL.PLLMUL = pllmul;								//ä¸»PLLå€é¢‘ç³»æ•°(PLLå€é¢‘)
+	RCC_OscInitStructure.PLL.PLLDIV = plldiv;								//ç³»ç»Ÿæ—¶é’Ÿçš„ä¸»PLLåˆ†é¢‘ç³»æ•°(PLLä¹‹åçš„åˆ†é¢‘)
+	ret = HAL_RCC_OscConfig(&RCC_OscInitStructure);							//åˆå§‹åŒ–
 	if (ret != HAL_OK) while(1);
 	
-	__HAL_RCC_PWR_CLK_ENABLE();											//Ê¹ÄÜPWRÊ±ÖÓ
-	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);				//ÉèÖÃµ÷Ñ¹Æ÷Êä³öµçÑ¹¼¶±ğ, ÒÔ±ãÔÚÆ÷¼şÎ´ÒÔ×î´óÆµÂÊ¹¤×÷
+	__HAL_RCC_PWR_CLK_ENABLE();											//ä½¿èƒ½PWRæ—¶é’Ÿ
+	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);				//è®¾ç½®è°ƒå‹å™¨è¾“å‡ºç”µå‹çº§åˆ«, ä»¥ä¾¿åœ¨å™¨ä»¶æœªä»¥æœ€å¤§é¢‘ç‡å·¥ä½œ
 	while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
 
-	/* Ñ¡ÖĞPLL×÷ÎªÏµÍ³Ê±ÖÓÔ´²¢ÇÒÅäÖÃHCLK, PCLK1 ºÍ PCLK2 */
+	/* é€‰ä¸­PLLä½œä¸ºç³»ç»Ÿæ—¶é’Ÿæºå¹¶ä¸”é…ç½®HCLK, PCLK1 å’Œ PCLK2 */
 	RCC_ClkInitStructure.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-	RCC_ClkInitStructure.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;				//ÉèÖÃÏµÍ³Ê±ÖÓÊ±ÖÓÔ´ÎªPLL
-	RCC_ClkInitStructure.AHBCLKDivider = RCC_SYSCLK_DIV1;						//AHB·ÖÆµÏµÊıÎª1
-	RCC_ClkInitStructure.APB1CLKDivider = RCC_HCLK_DIV1;						//APB1·ÖÆµÏµÊıÎª1
-	RCC_ClkInitStructure.APB2CLKDivider = RCC_HCLK_DIV1;						//APB2·ÖÆµÏµÊıÎª1
+	RCC_ClkInitStructure.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;				//è®¾ç½®ç³»ç»Ÿæ—¶é’Ÿæ—¶é’Ÿæºä¸ºPLL
+	RCC_ClkInitStructure.AHBCLKDivider = RCC_SYSCLK_DIV1;						//AHBåˆ†é¢‘ç³»æ•°ä¸º1
+	RCC_ClkInitStructure.APB1CLKDivider = RCC_HCLK_DIV1;						//APB1åˆ†é¢‘ç³»æ•°ä¸º1
+	RCC_ClkInitStructure.APB2CLKDivider = RCC_HCLK_DIV1;						//APB2åˆ†é¢‘ç³»æ•°ä¸º1
 
-	ret = HAL_RCC_ClockConfig(&RCC_ClkInitStructure, FLASH_LATENCY_1);			//Í¬Ê±ÉèÖÃFLASHÑÓÊ±ÖÜÆÚÎª1WS, Ò²¾ÍÊÇ2¸öCPUÖÜÆÚ
+	ret = HAL_RCC_ClockConfig(&RCC_ClkInitStructure, FLASH_LATENCY_1);			//åŒæ—¶è®¾ç½®FLASHå»¶æ—¶å‘¨æœŸä¸º1WS, ä¹Ÿå°±æ˜¯2ä¸ªCPUå‘¨æœŸ
 	if (ret != HAL_OK) while(1);
 }
 
 /**********************************************************************************************************
  @Function			void Stm32_MSIClock_Init(u32 msiClockRange)
- @Description			Ê±ÖÓÉèÖÃº¯Êı(MAX32MHz)
+ @Description			æ—¶é’Ÿè®¾ç½®å‡½æ•°(MAX32MHz)
  @Input				msiClockRange : 
  @attention			RCC_MSIRANGE_0				!< MSI = 65.536  KHz
 					RCC_MSIRANGE_1				!< MSI = 131.072 KHz
@@ -82,39 +82,39 @@ void Stm32_MSIClock_Init(u32 MsiClockRange)
 	
 	HAL_RCC_DeInit();
 	
-	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_MSI;				//Ê±ÖÓÔ´ÎªMSI
-	RCC_OscInitStructure.MSIState = RCC_MSI_ON;								//´ò¿ªMSI
-	RCC_OscInitStructure.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;		//MSIÄ¬ÈÏĞ£×¼
+	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_MSI;				//æ—¶é’Ÿæºä¸ºMSI
+	RCC_OscInitStructure.MSIState = RCC_MSI_ON;								//æ‰“å¼€MSI
+	RCC_OscInitStructure.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;		//MSIé»˜è®¤æ ¡å‡†
 	RCC_OscInitStructure.MSIClockRange = MsiClockRange;						//MSIValue
-	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_OFF;							//¹Ø±ÕPLL
-	ret = HAL_RCC_OscConfig(&RCC_OscInitStructure);							//³õÊ¼»¯
+	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_OFF;							//å…³é—­PLL
+	ret = HAL_RCC_OscConfig(&RCC_OscInitStructure);							//åˆå§‹åŒ–
 	if (ret != HAL_OK) while(1);
 	
-	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_HSI;				//Ê±ÖÓÔ´ÎªHSI --> ADC
-	RCC_OscInitStructure.HSIState = RCC_HSI_ON;								//´ò¿ªHSI
-	RCC_OscInitStructure.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;		//HSIÄ¬ÈÏĞ£×¼
-	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_OFF;							//¹Ø±ÕPLL
-	ret = HAL_RCC_OscConfig(&RCC_OscInitStructure);							//³õÊ¼»¯
+	RCC_OscInitStructure.OscillatorType = RCC_OSCILLATORTYPE_HSI;				//æ—¶é’Ÿæºä¸ºHSI --> ADC
+	RCC_OscInitStructure.HSIState = RCC_HSI_ON;								//æ‰“å¼€HSI
+	RCC_OscInitStructure.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;		//HSIé»˜è®¤æ ¡å‡†
+	RCC_OscInitStructure.PLL.PLLState = RCC_PLL_OFF;							//å…³é—­PLL
+	ret = HAL_RCC_OscConfig(&RCC_OscInitStructure);							//åˆå§‹åŒ–
 	if (ret != HAL_OK) while(1);
 	
-	__HAL_RCC_PWR_CLK_ENABLE();											//Ê¹ÄÜPWRÊ±ÖÓ
-	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);				//ÉèÖÃµ÷Ñ¹Æ÷Êä³öµçÑ¹¼¶±ğ, ÒÔ±ãÔÚÆ÷¼şÎ´ÒÔ×î´óÆµÂÊ¹¤×÷
+	__HAL_RCC_PWR_CLK_ENABLE();											//ä½¿èƒ½PWRæ—¶é’Ÿ
+	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);				//è®¾ç½®è°ƒå‹å™¨è¾“å‡ºç”µå‹çº§åˆ«, ä»¥ä¾¿åœ¨å™¨ä»¶æœªä»¥æœ€å¤§é¢‘ç‡å·¥ä½œ
 	while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
 	
-	/* Ñ¡ÖĞMSI×÷ÎªÏµÍ³Ê±ÖÓÔ´²¢ÇÒÅäÖÃHCLK, PCLK1 ºÍ PCLK2 */
+	/* é€‰ä¸­MSIä½œä¸ºç³»ç»Ÿæ—¶é’Ÿæºå¹¶ä¸”é…ç½®HCLK, PCLK1 å’Œ PCLK2 */
 	RCC_ClkInitStructure.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-	RCC_ClkInitStructure.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;					//ÉèÖÃÏµÍ³Ê±ÖÓÊ±ÖÓÔ´ÎªMSI
-	RCC_ClkInitStructure.AHBCLKDivider = RCC_SYSCLK_DIV1;						//AHB·ÖÆµÏµÊıÎª1
-	RCC_ClkInitStructure.APB1CLKDivider = RCC_HCLK_DIV1;						//APB1·ÖÆµÏµÊıÎª1
-	RCC_ClkInitStructure.APB2CLKDivider = RCC_HCLK_DIV1;						//APB2·ÖÆµÏµÊıÎª1
+	RCC_ClkInitStructure.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;					//è®¾ç½®ç³»ç»Ÿæ—¶é’Ÿæ—¶é’Ÿæºä¸ºMSI
+	RCC_ClkInitStructure.AHBCLKDivider = RCC_SYSCLK_DIV1;						//AHBåˆ†é¢‘ç³»æ•°ä¸º1
+	RCC_ClkInitStructure.APB1CLKDivider = RCC_HCLK_DIV1;						//APB1åˆ†é¢‘ç³»æ•°ä¸º1
+	RCC_ClkInitStructure.APB2CLKDivider = RCC_HCLK_DIV1;						//APB2åˆ†é¢‘ç³»æ•°ä¸º1
 	
-	ret = HAL_RCC_ClockConfig(&RCC_ClkInitStructure, FLASH_LATENCY_1);			//Í¬Ê±ÉèÖÃFLASHÑÓÊ±ÖÜÆÚÎª1WS, Ò²¾ÍÊÇ2¸öCPUÖÜÆÚ
+	ret = HAL_RCC_ClockConfig(&RCC_ClkInitStructure, FLASH_LATENCY_1);			//åŒæ—¶è®¾ç½®FLASHå»¶æ—¶å‘¨æœŸä¸º1WS, ä¹Ÿå°±æ˜¯2ä¸ªCPUå‘¨æœŸ
 	if (ret != HAL_OK) while(1);
 }
 
 /**********************************************************************************************************
  @Function			void Stm32_IncSecondTick(void)
- @Description			Stm32_IncSecondTick : ÔËĞĞÊ±¼ä¼Ó1Ãë
+ @Description			Stm32_IncSecondTick : è¿è¡Œæ—¶é—´åŠ 1ç§’
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -136,9 +136,9 @@ void Stm32_IncSecondTick(void)
 
 /**********************************************************************************************************
  @Function			u32 Stm32_GetSecondTick(void)
- @Description			Stm32_GetSecondTick 	: »ñÈ¡ÔËĞĞÃëÊı
+ @Description			Stm32_GetSecondTick 	: è·å–è¿è¡Œç§’æ•°
  @Input				void
- @Return				SystemRunningTimesSecond : ÔËĞĞÃëÊı
+ @Return				SystemRunningTimesSecond : è¿è¡Œç§’æ•°
 **********************************************************************************************************/
 u32 Stm32_GetSecondTick(void)
 {
@@ -147,8 +147,8 @@ u32 Stm32_GetSecondTick(void)
 
 /**********************************************************************************************************
  @Function			void Stm32_Calculagraph_Init(Stm32_CalculagraphTypeDef* timer)
- @Description			Stm32_Calculagraph_Init 			: ³õÊ¼»¯¼ÆÊ±Æ÷
- @Input				Stm32_CalculagraphTypeDef*		: ¼ÆÊ±Æ÷½á¹¹ÌåÖ¸Õë
+ @Description			Stm32_Calculagraph_Init 			: åˆå§‹åŒ–è®¡æ—¶å™¨
+ @Input				Stm32_CalculagraphTypeDef*		: è®¡æ—¶å™¨ç»“æ„ä½“æŒ‡é’ˆ
  @Return				void
 **********************************************************************************************************/
 void Stm32_Calculagraph_Init(Stm32_CalculagraphTypeDef* timer)
@@ -159,9 +159,9 @@ void Stm32_Calculagraph_Init(Stm32_CalculagraphTypeDef* timer)
 
 /**********************************************************************************************************
  @Function			void Stm32_Calculagraph_CountdownMS(Stm32_CalculagraphTypeDef* timer, u32 timeout_ms)
- @Description			Stm32_Calculagraph_CountdownMS	: ÅäÖÃ¼ÆÊ±Æ÷µ¹ÊıÊ±¼ä(MS)
- @Input				Stm32_CalculagraphTypeDef*		: ¼ÆÊ±Æ÷½á¹¹ÌåÖ¸Õë
-					timeout_ms					: µ¹¼ÆÊ±Ê±¼ä(MS)
+ @Description			Stm32_Calculagraph_CountdownMS	: é…ç½®è®¡æ—¶å™¨å€’æ•°æ—¶é—´(MS)
+ @Input				Stm32_CalculagraphTypeDef*		: è®¡æ—¶å™¨ç»“æ„ä½“æŒ‡é’ˆ
+					timeout_ms					: å€’è®¡æ—¶æ—¶é—´(MS)
  @Return				void
 **********************************************************************************************************/
 void Stm32_Calculagraph_CountdownMS(Stm32_CalculagraphTypeDef* timer, u32 timeout_ms)
@@ -172,10 +172,10 @@ void Stm32_Calculagraph_CountdownMS(Stm32_CalculagraphTypeDef* timer, u32 timeou
 
 /**********************************************************************************************************
  @Function			bool Stm32_Calculagraph_IsExpiredMS(Stm32_CalculagraphTypeDef* timer)
- @Description			Stm32_Calculagraph_IsExpiredMS	: ²éÑ¯ÊÇ·ñµ½´ï¼ÆÊ±Æ÷¼ÆÊ±Ê±¼ä(MS)
- @Input				Stm32_CalculagraphTypeDef*		: ¼ÆÊ±Æ÷½á¹¹ÌåÖ¸Õë
- @Return				true							: µ½´ï
-					false						: Î´µ½´ï
+ @Description			Stm32_Calculagraph_IsExpiredMS	: æŸ¥è¯¢æ˜¯å¦åˆ°è¾¾è®¡æ—¶å™¨è®¡æ—¶æ—¶é—´(MS)
+ @Input				Stm32_CalculagraphTypeDef*		: è®¡æ—¶å™¨ç»“æ„ä½“æŒ‡é’ˆ
+ @Return				true							: åˆ°è¾¾
+					false						: æœªåˆ°è¾¾
 **********************************************************************************************************/
 bool Stm32_Calculagraph_IsExpiredMS(Stm32_CalculagraphTypeDef* timer)
 {
@@ -196,9 +196,9 @@ bool Stm32_Calculagraph_IsExpiredMS(Stm32_CalculagraphTypeDef* timer)
 
 /**********************************************************************************************************
  @Function			void Stm32_Calculagraph_CountdownSec(Stm32_CalculagraphTypeDef* timer, u32 timeout_sec)
- @Description			Stm32_Calculagraph_CountdownSec	: ÅäÖÃ¼ÆÊ±Æ÷µ¹ÊıÊ±¼ä(S)
- @Input				Stm32_CalculagraphTypeDef*		: ¼ÆÊ±Æ÷½á¹¹ÌåÖ¸Õë
-					timeout_sec					: µ¹¼ÆÊ±Ê±¼ä(S)
+ @Description			Stm32_Calculagraph_CountdownSec	: é…ç½®è®¡æ—¶å™¨å€’æ•°æ—¶é—´(S)
+ @Input				Stm32_CalculagraphTypeDef*		: è®¡æ—¶å™¨ç»“æ„ä½“æŒ‡é’ˆ
+					timeout_sec					: å€’è®¡æ—¶æ—¶é—´(S)
  @Return				void
 **********************************************************************************************************/
 void Stm32_Calculagraph_CountdownSec(Stm32_CalculagraphTypeDef* timer, u32 timeout_sec)
@@ -209,10 +209,10 @@ void Stm32_Calculagraph_CountdownSec(Stm32_CalculagraphTypeDef* timer, u32 timeo
 
 /**********************************************************************************************************
  @Function			bool Stm32_Calculagraph_IsExpiredSec(Stm32_CalculagraphTypeDef* timer)
- @Description			Stm32_Calculagraph_IsExpiredSec	: ²éÑ¯ÊÇ·ñµ½´ï¼ÆÊ±Æ÷¼ÆÊ±Ê±¼ä(S)
- @Input				Stm32_CalculagraphTypeDef*		: ¼ÆÊ±Æ÷½á¹¹ÌåÖ¸Õë
- @Return				true							: µ½´ï
-					false						: Î´µ½´ï
+ @Description			Stm32_Calculagraph_IsExpiredSec	: æŸ¥è¯¢æ˜¯å¦åˆ°è¾¾è®¡æ—¶å™¨è®¡æ—¶æ—¶é—´(S)
+ @Input				Stm32_CalculagraphTypeDef*		: è®¡æ—¶å™¨ç»“æ„ä½“æŒ‡é’ˆ
+ @Return				true							: åˆ°è¾¾
+					false						: æœªåˆ°è¾¾
 **********************************************************************************************************/
 bool Stm32_Calculagraph_IsExpiredSec(Stm32_CalculagraphTypeDef* timer)
 {
@@ -235,9 +235,9 @@ bool Stm32_Calculagraph_IsExpiredSec(Stm32_CalculagraphTypeDef* timer)
 #ifdef  USE_FULL_ASSERT
 /**********************************************************************************************************
  @Function			void assert_failed(uint8_t* file, uint32_t line)
- @Description			µ±±àÒëÌáÊ¾³ö´íµÄÊ±ºò´Ëº¯ÊıÓÃÀ´±¨¸æ´íÎóµÄÎÄ¼şºÍËùÔÚĞĞ
- @Input				file		: Ö¸ÏòÔ´ÎÄ¼ş
-					line		: Ö¸ÏòÔÚÎÄ¼şÖĞµÄĞĞÊı
+ @Description			å½“ç¼–è¯‘æç¤ºå‡ºé”™çš„æ—¶å€™æ­¤å‡½æ•°ç”¨æ¥æŠ¥å‘Šé”™è¯¯çš„æ–‡ä»¶å’Œæ‰€åœ¨è¡Œ
+ @Input				file		: æŒ‡å‘æºæ–‡ä»¶
+					line		: æŒ‡å‘åœ¨æ–‡ä»¶ä¸­çš„è¡Œæ•°
  @Return				void
 **********************************************************************************************************/
 void assert_failed(uint8_t* file, uint32_t line)
@@ -248,26 +248,26 @@ void assert_failed(uint8_t* file, uint32_t line)
 }
 #endif
 
-//THUMBÖ¸Áî²»Ö§³Ö»ã±àÄÚÁª
-//²ÉÓÃÈçÏÂ·½·¨ÊµÏÖÖ´ĞĞ»ã±àÖ¸ÁîWFI  
+//THUMBæŒ‡ä»¤ä¸æ”¯æŒæ±‡ç¼–å†…è”
+//é‡‡ç”¨å¦‚ä¸‹æ–¹æ³•å®ç°æ‰§è¡Œæ±‡ç¼–æŒ‡ä»¤WFI  
 __asm void WFI_SET(void)
 {
 	WFI;		  
 }
-//¹Ø±ÕËùÓĞÖĞ¶Ï(µ«ÊÇ²»°üÀ¨faultºÍNMIÖĞ¶Ï)
+//å…³é—­æ‰€æœ‰ä¸­æ–­(ä½†æ˜¯ä¸åŒ…æ‹¬faultå’ŒNMIä¸­æ–­)
 __asm void INTX_DISABLE(void)
 {
 	CPSID   I
 	BX      LR	  
 }
-//¿ªÆôËùÓĞÖĞ¶Ï
+//å¼€å¯æ‰€æœ‰ä¸­æ–­
 __asm void INTX_ENABLE(void)
 {
 	CPSIE   I
 	BX      LR  
 }
-//ÉèÖÃÕ»¶¥µØÖ·
-//addr:Õ»¶¥µØÖ·
+//è®¾ç½®æ ˆé¡¶åœ°å€
+//addr:æ ˆé¡¶åœ°å€
 __asm void MSR_MSP(u32 addr) 
 {
 	MSR MSP, r0 			//set Main Stack value

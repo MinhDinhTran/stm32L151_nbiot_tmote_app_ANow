@@ -21,9 +21,9 @@
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwarePoweroff(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_HardwareReboot			: Ó²¼ş¶Ïµç
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_HardwareReboot			: ç¡¬ä»¶æ–­ç”µ
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwarePoweroff(NBIOT_ClientsTypeDef* pClient)
 {
@@ -44,10 +44,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwarePoweroff(NBIOT_ClientsTypeDef* pClie
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwareReboot(NBIOT_ClientsTypeDef* pClient, u32 rebootTimeoutMS)
- @Description			NBIOT_Neul_NBxx_HardwareReboot			: Ó²¼şÖØÆôNBÄ£¿é
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
-					rebootTimeoutMS						: ÖØÆôµÈ´ı³¬Ê±Ê±¼ä
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_HardwareReboot			: ç¡¬ä»¶é‡å¯NBæ¨¡å—
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+					rebootTimeoutMS						: é‡å¯ç­‰å¾…è¶…æ—¶æ—¶é—´
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwareReboot(NBIOT_ClientsTypeDef* pClient, u32 rebootTimeoutMS)
 {
@@ -82,10 +82,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwareReboot(NBIOT_ClientsTypeDef* pClient
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SoftwareReboot(NBIOT_ClientsTypeDef* pClient, u32 rebootTimeoutMS)
- @Description			NBIOT_Neul_NBxx_SoftwareReboot			: Èí¼şÖØÆôNBÄ£¿é
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
-					rebootTimeoutMS						: ÖØÆôµÈ´ı³¬Ê±Ê±¼ä
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_SoftwareReboot			: è½¯ä»¶é‡å¯NBæ¨¡å—
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+					rebootTimeoutMS						: é‡å¯ç­‰å¾…è¶…æ—¶æ—¶é—´
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SoftwareReboot(NBIOT_ClientsTypeDef* pClient, u32 rebootTimeoutMS)
 {
@@ -106,9 +106,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SoftwareReboot(NBIOT_ClientsTypeDef* pClient
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadManufacturer(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadManufacturer		: ¼ì³öÖÆÔìÉÌ±êÊ¶
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadManufacturer		: æ£€å‡ºåˆ¶é€ å•†æ ‡è¯†
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadManufacturer(NBIOT_ClientsTypeDef* pClient)
 {
@@ -134,9 +134,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadManufacturer(NBIOT_ClientsTypeDef* 
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadManufacturerModel(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadManufacturerModel	: ¼ì³öÖÆÔìÉÌĞÍºÅ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadManufacturerModel	: æ£€å‡ºåˆ¶é€ å•†å‹å·
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadManufacturerModel(NBIOT_ClientsTypeDef* pClient)
 {
@@ -162,9 +162,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadManufacturerModel(NBIOT_ClientsType
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMEI(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadIMEI				: ¼ì³öIMEIºÅ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadIMEI				: æ£€å‡ºIMEIå·
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMEI(NBIOT_ClientsTypeDef* pClient)
 {
@@ -190,9 +190,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMEI(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMEISV(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadIMEISV			: ¼ì³öIMEISVºÅ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadIMEISV			: æ£€å‡ºIMEISVå·
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMEISV(NBIOT_ClientsTypeDef* pClient)
 {
@@ -218,9 +218,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMEISV(NBIOT_ClientsTypeDef* pClien
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadRSSI(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadRSSI				: ¼ì³öRSSIºÅ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadRSSI				: æ£€å‡ºRSSIå·
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadRSSI(NBIOT_ClientsTypeDef* pClient)
 {
@@ -245,9 +245,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadRSSI(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadStatisticsCELL(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadStatisticsCELL		: ¼ì³ö»ùÕ¾Á¬½Ó²ÎÊı
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadStatisticsCELL		: æ£€å‡ºåŸºç«™è¿æ¥å‚æ•°
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadStatisticsCELL(NBIOT_ClientsTypeDef* pClient)
 {
@@ -280,9 +280,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadStatisticsCELL(NBIOT_ClientsTypeDef
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadICCID(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadICCID			: ¼ì³öICCID¿¨ºÅ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadICCID			: æ£€å‡ºICCIDå¡å·
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadICCID(NBIOT_ClientsTypeDef* pClient)
 {
@@ -308,9 +308,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadICCID(NBIOT_ClientsTypeDef* pClient
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMSI(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadIMSI				: ¼ì³öIMSIºÅ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadIMSI				: æ£€å‡ºIMSIå·
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMSI(NBIOT_ClientsTypeDef* pClient)
 {
@@ -336,9 +336,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadIMSI(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCGPADDR(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadCGPADDR			: ¼ì³öCGPADDRµØÖ·
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadCGPADDR			: æ£€å‡ºCGPADDRåœ°å€
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCGPADDR(NBIOT_ClientsTypeDef* pClient)
 {
@@ -372,9 +372,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCGPADDR(NBIOT_ClientsTypeDef* pClie
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCGDCONT(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadCGDCONT			: ¼ì³öCGDCONTÍøÖ·
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadCGDCONT			: æ£€å‡ºCGDCONTç½‘å€
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCGDCONT(NBIOT_ClientsTypeDef* pClient)
 {
@@ -408,9 +408,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCGDCONT(NBIOT_ClientsTypeDef* pClie
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadDateTime(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadDateTime			: ¼ì³öDateTime»ùÕ¾Ê±¼ä
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadDateTime			: æ£€å‡ºDateTimeåŸºç«™æ—¶é—´
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadDateTime(NBIOT_ClientsTypeDef* pClient)
 {
@@ -467,10 +467,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadDateTime(NBIOT_ClientsTypeDef* pCli
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetAttachOrDetach(NBIOT_ClientsTypeDef* pClient, NBIOT_NetstateTypeDef attdet)
- @Description			NBIOT_Neul_NBxx_SetAttachOrDetach			: ÉèÖÃÖÕ¶ËÈëÍøÍËÍø
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SetAttachOrDetach			: è®¾ç½®ç»ˆç«¯å…¥ç½‘é€€ç½‘
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					attdet								: Detach / Attach
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetAttachOrDetach(NBIOT_ClientsTypeDef* pClient, NBIOT_NetstateTypeDef attdet)
 {
@@ -480,11 +480,11 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetAttachOrDetach(NBIOT_ClientsTypeDef* pCli
 	Stm32_Calculagraph_CountdownMS(&ATCmd_timer_Ms, pClient->Command_Timeout_Msec);
 	pClient->ATCmdStack->CmdWaitTime = ATCmd_timer_Ms;
 	
-	if (attdet == Detach) {												//ÍËÍø
+	if (attdet == Detach) {												//é€€ç½‘
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+CGATT=0\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+CGATT=0\r");
 	}
-	else if (attdet == Attach) {											//ÈëÍø
+	else if (attdet == Attach) {											//å…¥ç½‘
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+CGATT=1\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+CGATT=1\r");
 	}
@@ -501,9 +501,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetAttachOrDetach(NBIOT_ClientsTypeDef* pCli
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadAttachOrDetach(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadAttachOrDetach		: ²éÑ¯ÖÕ¶ËÈëÍøÍËÍø
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadAttachOrDetach		: æŸ¥è¯¢ç»ˆç«¯å…¥ç½‘é€€ç½‘
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadAttachOrDetach(NBIOT_ClientsTypeDef* pClient)
 {
@@ -534,10 +534,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadAttachOrDetach(NBIOT_ClientsTypeDef
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetMinOrFullFunc(NBIOT_ClientsTypeDef* pClient, NBIOT_FunctionalityTypeDef minfull)
- @Description			NBIOT_Neul_NBxx_SetMinOrFullFunc			: ÉèÖÃÉè±¸¹¦ÄÜ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SetMinOrFullFunc			: è®¾ç½®è®¾å¤‡åŠŸèƒ½
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					minfull								: MinFunc / FullFunc
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetMinOrFullFunc(NBIOT_ClientsTypeDef* pClient, NBIOT_FunctionalityTypeDef minfull)
 {
@@ -547,11 +547,11 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetMinOrFullFunc(NBIOT_ClientsTypeDef* pClie
 	Stm32_Calculagraph_CountdownMS(&ATCmd_timer_Ms, pClient->Command_Timeout_Msec);
 	pClient->ATCmdStack->CmdWaitTime = ATCmd_timer_Ms;
 	
-	if (minfull == MinFunc) {											//×îĞ¡¹¦ÄÜ
+	if (minfull == MinFunc) {											//æœ€å°åŠŸèƒ½
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+CFUN=0\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+CFUN=0\r");
 	}
-	else if (minfull == FullFunc) {										//È«¹¦ÄÜ
+	else if (minfull == FullFunc) {										//å…¨åŠŸèƒ½
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+CFUN=1\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+CFUN=1\r");
 	}
@@ -568,9 +568,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetMinOrFullFunc(NBIOT_ClientsTypeDef* pClie
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadMinOrFullFunc(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadMinOrFullFunc		: ²éÑ¯Éè±¸¹¦ÄÜ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadMinOrFullFunc		: æŸ¥è¯¢è®¾å¤‡åŠŸèƒ½
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadMinOrFullFunc(NBIOT_ClientsTypeDef* pClient)
 {
@@ -601,10 +601,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadMinOrFullFunc(NBIOT_ClientsTypeDef*
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetNewMessageIndications(NBIOT_ClientsTypeDef* pClient, NBIOT_OpenOrCloseFuncTypeDef state)
- @Description			NBIOT_Neul_NBxx_SetNewMessageIndications	: ÉèÖÃNNMI¹¦ÄÜÊÇ·ñ¿ªÆô
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SetNewMessageIndications	: è®¾ç½®NNMIåŠŸèƒ½æ˜¯å¦å¼€å¯
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					state								: CloseFunc / OpenFunc
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetNewMessageIndications(NBIOT_ClientsTypeDef* pClient, NBIOT_OpenOrCloseFuncTypeDef state)
 {
@@ -614,11 +614,11 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetNewMessageIndications(NBIOT_ClientsTypeDe
 	Stm32_Calculagraph_CountdownMS(&ATCmd_timer_Ms, pClient->Command_Timeout_Msec);
 	pClient->ATCmdStack->CmdWaitTime = ATCmd_timer_Ms;
 	
-	if (state == CloseFunc) {											//¹Ø±Õ
+	if (state == CloseFunc) {											//å…³é—­
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+NNMI=0\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+NNMI=0\r");
 	}
-	else if (state == OpenFunc) {											//¿ªÆô
+	else if (state == OpenFunc) {											//å¼€å¯
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+NNMI=1\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+NNMI=1\r");
 	}
@@ -635,9 +635,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetNewMessageIndications(NBIOT_ClientsTypeDe
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadNewMessageIndications(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadNewMessageIndications	: ²éÑ¯NNMI¹¦ÄÜÊÇ·ñ¿ªÆô
- @Input				pClient									: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef							: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadNewMessageIndications	: æŸ¥è¯¢NNMIåŠŸèƒ½æ˜¯å¦å¼€å¯
+ @Input				pClient									: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef							: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadNewMessageIndications(NBIOT_ClientsTypeDef* pClient)
 {
@@ -668,10 +668,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadNewMessageIndications(NBIOT_Clients
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSentMessageIndications(NBIOT_ClientsTypeDef* pClient, NBIOT_OpenOrCloseFuncTypeDef state)
- @Description			NBIOT_Neul_NBxx_SetSentMessageIndications	: ÉèÖÃNSMI¹¦ÄÜÊÇ·ñ¿ªÆô
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SetSentMessageIndications	: è®¾ç½®NSMIåŠŸèƒ½æ˜¯å¦å¼€å¯
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					state								: CloseFunc / OpenFunc
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSentMessageIndications(NBIOT_ClientsTypeDef* pClient, NBIOT_OpenOrCloseFuncTypeDef state)
 {
@@ -681,11 +681,11 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSentMessageIndications(NBIOT_ClientsTypeD
 	Stm32_Calculagraph_CountdownMS(&ATCmd_timer_Ms, pClient->Command_Timeout_Msec);
 	pClient->ATCmdStack->CmdWaitTime = ATCmd_timer_Ms;
 	
-	if (state == CloseFunc) {											//¹Ø±Õ
+	if (state == CloseFunc) {											//å…³é—­
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+NSMI=0\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+NSMI=0\r");
 	}
-	else if (state == OpenFunc) {											//¿ªÆô
+	else if (state == OpenFunc) {											//å¼€å¯
 		sprintf((char *)pClient->ATCmdStack->ATSendbuf, "AT+NSMI=1\r");
 		pClient->ATCmdStack->ATSendlen = strlen("AT+NSMI=1\r");
 	}
@@ -702,9 +702,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSentMessageIndications(NBIOT_ClientsTypeD
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadSentMessageIndications(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadSentMessageIndications	: ²éÑ¯NSMI¹¦ÄÜÊÇ·ñ¿ªÆô
- @Input				pClient									: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef							: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadSentMessageIndications	: æŸ¥è¯¢NSMIåŠŸèƒ½æ˜¯å¦å¼€å¯
+ @Input				pClient									: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef							: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadSentMessageIndications(NBIOT_ClientsTypeDef* pClient)
 {
@@ -735,12 +735,12 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadSentMessageIndications(NBIOT_Client
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSupportedBands(NBIOT_ClientsTypeDef* pClient, NBIOT_BandTypeDef bands)
- @Description			NBIOT_Neul_NBxx_SetSupportedBands			: ÉèÖÃBand
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SetSupportedBands			: è®¾ç½®Band
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					bands								: ChinaTelecom						= 5
 														  ChinaMobile						= 8
 														  ChinaUnicom						= 20
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSupportedBands(NBIOT_ClientsTypeDef* pClient, NBIOT_BandTypeDef bands)
 {
@@ -764,9 +764,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetSupportedBands(NBIOT_ClientsTypeDef* pCli
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadSupportedBands(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadSupportedBands		: ²éÑ¯Band
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadSupportedBands		: æŸ¥è¯¢Band
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadSupportedBands(NBIOT_ClientsTypeDef* pClient)
 {
@@ -806,11 +806,11 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadSupportedBands(NBIOT_ClientsTypeDef
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetCDPServer(NBIOT_ClientsTypeDef* pClient, const char *host, unsigned short port)
- @Description			NBIOT_Neul_NBxx_SetCDPServer				: ÉèÖÃCDP·şÎñÆ÷
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SetCDPServer				: è®¾ç½®CDPæœåŠ¡å™¨
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					host									: CDP Server Address
 					port									: CDP Server Port
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetCDPServer(NBIOT_ClientsTypeDef* pClient, const char *host, unsigned short port)
 {
@@ -834,9 +834,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetCDPServer(NBIOT_ClientsTypeDef* pClient, 
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCDPServer(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadCDPServer			: ²éÑ¯CDP·şÎñÆ÷
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadCDPServer			: æŸ¥è¯¢CDPæœåŠ¡å™¨
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCDPServer(NBIOT_ClientsTypeDef* pClient)
 {
@@ -863,11 +863,11 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadCDPServer(NBIOT_ClientsTypeDef* pCl
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetConfigUE(NBIOT_ClientsTypeDef* pClient, const char *ncmd, NBIOT_NConfigTypeDef state)
- @Description			NBIOT_Neul_NBxx_SetConfigUE				: ÅäÖÃNCONFIGÄ£Ê½
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
-					ncmd									: NeulÅäÖÃÏî
-					state								: NeulÅäÖÃÄ£Ê½
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_SetConfigUE				: é…ç½®NCONFIGæ¨¡å¼
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+					ncmd									: Neulé…ç½®é¡¹
+					state								: Neulé…ç½®æ¨¡å¼
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetConfigUE(NBIOT_ClientsTypeDef* pClient, const char *ncmd, NBIOT_NConfigTypeDef state)
 {
@@ -891,9 +891,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetConfigUE(NBIOT_ClientsTypeDef* pClient, c
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadConfigUE(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadCDPServer			: ²éÑ¯NCONFIGÄ£Ê½
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_CheckReadCDPServer			: æŸ¥è¯¢NCONFIGæ¨¡å¼
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadConfigUE(NBIOT_ClientsTypeDef* pClient)
 {
@@ -981,9 +981,9 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_QuerySendMessageCOAPPayload(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_QuerySendMessageCOAPPayload	: COAP²éÑ¯ÏûÏ¢ÒÑËÍ´ïNB
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_QuerySendMessageCOAPPayload	: COAPæŸ¥è¯¢æ¶ˆæ¯å·²é€è¾¾NB
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_QuerySendMessageCOAPPayload(NBIOT_ClientsTypeDef* pClient)
 {
@@ -1010,9 +1010,9 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_QuerySendMessageCOAPPayload(NBIOT_ClientsTyp
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_QueryReadMessageCOAPPayload(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_QueryReadMessageCOAPPayload	: COAP²éÑ¯ÏûÏ¢ÊÇ·ñÏÂĞĞ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_QueryReadMessageCOAPPayload	: COAPæŸ¥è¯¢æ¶ˆæ¯æ˜¯å¦ä¸‹è¡Œ
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_QueryReadMessageCOAPPayload(NBIOT_ClientsTypeDef* pClient)
 {
@@ -1039,12 +1039,12 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_QueryReadMessageCOAPPayload(NBIOT_ClientsTyp
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SendCOAPPayload(NBIOT_ClientsTypeDef* pClient, const char *buf, u16 sendlen)
- @Description			NBIOT_Neul_NBxx_SendCOAPPayload			: COAP·¢ËÍÒ»Ìõ¸ºÔØÊı¾İ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
- @attention			±ØĞë×¢Íø³É¹¦²Å¿É·¢ËÍ¸ºÔØÊı¾İ
-					×î´óÓĞĞ§Êı¾İ³¤¶ÈÎª512×Ö½Ú
-					Ã¿´ÎÖ»ÄÜ»º´æÒ»ÌõÏûÏ¢
+ @Description			NBIOT_Neul_NBxx_SendCOAPPayload			: COAPå‘é€ä¸€æ¡è´Ÿè½½æ•°æ®
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
+ @attention			å¿…é¡»æ³¨ç½‘æˆåŠŸæ‰å¯å‘é€è´Ÿè½½æ•°æ®
+					æœ€å¤§æœ‰æ•ˆæ•°æ®é•¿åº¦ä¸º512å­—èŠ‚
+					æ¯æ¬¡åªèƒ½ç¼“å­˜ä¸€æ¡æ¶ˆæ¯
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SendCOAPPayload(NBIOT_ClientsTypeDef* pClient)
 {
@@ -1081,9 +1081,9 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_ReadCOAPPayload(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_ReadCOAPPayload			: COAP¶ÁÈ¡Ò»Ìõ¸ºÔØÊı¾İ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Description			NBIOT_Neul_NBxx_ReadCOAPPayload			: COAPè¯»å–ä¸€æ¡è´Ÿè½½æ•°æ®
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_ReadCOAPPayload(NBIOT_ClientsTypeDef* pClient)
 {
@@ -1117,12 +1117,12 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CreateUDPSocket(NBIOT_ClientsTypeDef* pClient, u16 localport, u8 receivectl, int *socket)
- @Description			NBIOT_Neul_NBxx_CreateUDPSocket			: ´´½¨UDPÁ´½Ó
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_CreateUDPSocket			: åˆ›å»ºUDPé“¾æ¥
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					localport								: 0 ~ 65535
 					receivectl							: 1 is Enable Receive 0 is Ignored Receive
 					socket								: Created Socket Num
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CreateUDPSocket(NBIOT_ClientsTypeDef* pClient, u16 localport, u8 receivectl, int *socket)
 {
@@ -1150,10 +1150,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CreateUDPSocket(NBIOT_ClientsTypeDef* pClien
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CloseUDPSocket(NBIOT_ClientsTypeDef* pClient, int socket)
- @Description			NBIOT_Neul_NBxx_CloseUDPSocket			: ¹Ø±ÕUDPÁ¬½Ó
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_CloseUDPSocket			: å…³é—­UDPè¿æ¥
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					socket								: Closeed Socket Num
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CloseUDPSocket(NBIOT_ClientsTypeDef* pClient, int socket)
 {
@@ -1177,12 +1177,12 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CloseUDPSocket(NBIOT_ClientsTypeDef* pClient
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SendUDPPayload(NBIOT_ClientsTypeDef* pClient, int socket, const char *addr, u16 port)
- @Description			NBIOT_Neul_NBxx_SendUDPPayload			: UDP·¢ËÍ¸ºÔØÊı¾İ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SendUDPPayload			: UDPå‘é€è´Ÿè½½æ•°æ®
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					socket								: Socket Num
-					addr									: Ä¿±êIP
-					port									: Ä¿±ê¶Ë¿Ú
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+					addr									: ç›®æ ‡IP
+					port									: ç›®æ ‡ç«¯å£
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SendUDPPayload(NBIOT_ClientsTypeDef* pClient, int socket, const char *addr, u16 port)
 {
@@ -1231,15 +1231,15 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SendUDPPayloadFlag(NBIOT_ClientsTypeDef* pClient, int socket, const char *addr, u16 port, const char *flag)
- @Description			NBIOT_Neul_NBxx_SendUDPPayloadFlag			: UDP·¢ËÍ¸ºÔØÊı¾İ(Ğ¯´ø±êÖ¾)
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_SendUDPPayloadFlag			: UDPå‘é€è´Ÿè½½æ•°æ®(æºå¸¦æ ‡å¿—)
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					socket								: Socket Num
-					addr									: Ä¿±êIP
-					port									: Ä¿±ê¶Ë¿Ú
-					flag							0x100	: ·¢ËÍ¸ßÓÅÏÈ¼¶ÏûÏ¢
-												0x200	: ·¢ËÍ³É¹¦ºóÂíÉÏ½øÈëIDLE
-												0x400	: ·¢ËÍÊı¾İµÃµ½»Ø¸´ºó½øÈëIDLE
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+					addr									: ç›®æ ‡IP
+					port									: ç›®æ ‡ç«¯å£
+					flag							0x100	: å‘é€é«˜ä¼˜å…ˆçº§æ¶ˆæ¯
+												0x200	: å‘é€æˆåŠŸåé©¬ä¸Šè¿›å…¥IDLE
+												0x400	: å‘é€æ•°æ®å¾—åˆ°å›å¤åè¿›å…¥IDLE
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SendUDPPayloadFlag(NBIOT_ClientsTypeDef* pClient, int socket, const char *addr, u16 port, const char *flag)
 {
@@ -1288,14 +1288,14 @@ exit:
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_ReadUDPPayload(NBIOT_ClientsTypeDef* pClient, int socket, int maxrlen, int *rleft, char *addr, u16 *port)
- @Description			NBIOT_Neul_NBxx_ReadUDPPayload			: UDP¶ÁÈ¡¸ºÔØÊı¾İ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NBIOT_Neul_NBxx_ReadUDPPayload			: UDPè¯»å–è´Ÿè½½æ•°æ®
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
 					socket								: Socket Num
-					maxrlen								: ×î´ó¶ÁÈ¡Êı¾İ´óĞ¡
-					rleft								: Ê£Óà¶ÁÈ¡Êı¾İ³¤¶È
-					addr									: Ä¿±êIP
-					port									: Ä¿±ê¶Ë¿Ú
- @Return				NBIOT_StatusTypeDef						: NBIOT´¦Àí×´Ì¬
+					maxrlen								: æœ€å¤§è¯»å–æ•°æ®å¤§å°
+					rleft								: å‰©ä½™è¯»å–æ•°æ®é•¿åº¦
+					addr									: ç›®æ ‡IP
+					port									: ç›®æ ‡ç«¯å£
+ @Return				NBIOT_StatusTypeDef						: NBIOTå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 NBIOT_StatusTypeDef NBIOT_Neul_NBxx_ReadUDPPayload(NBIOT_ClientsTypeDef* pClient, int socket, int maxrlen, int *rleft, char *addr, u16 *port)
 {

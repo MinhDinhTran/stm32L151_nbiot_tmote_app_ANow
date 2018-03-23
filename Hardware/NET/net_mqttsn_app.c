@@ -19,8 +19,8 @@
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_APP_PollExecution(MQTTSN_ClientsTypeDef* pClient)
- @Description			MQTTSN_APP_PollExecution				: MqttSNÂß¼­´¦Àí
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			MQTTSN_APP_PollExecution				: MqttSNé€»è¾‘å¤„ç†
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_APP_PollExecution(MQTTSN_ClientsTypeDef* pClient)
@@ -103,8 +103,8 @@ void NET_MQTTSN_APP_PollExecution(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_APP_ProcessExecution(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_APP_ProcessExecution		: MqttSNĞ­ÒéÂß¼­´¦Àí
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_APP_ProcessExecution		: MqttSNåè®®é€»è¾‘å¤„ç†
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_APP_ProcessExecution(MQTTSN_ClientsTypeDef* pClient)
@@ -139,8 +139,8 @@ void NET_MQTTSN_APP_ProcessExecution(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_StopMode(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_StopMode		: Í£Ö¹Ä£Ê½
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_StopMode		: åœæ­¢æ¨¡å¼
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_StopMode(MQTTSN_ClientsTypeDef* pClient)
@@ -184,8 +184,8 @@ void NET_MQTTSN_NBIOT_Event_StopMode(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_HardwareReboot(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_HardwareReboot	: Ó²¼şÖØÆô
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_HardwareReboot	: ç¡¬ä»¶é‡å¯
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_HardwareReboot(MQTTSN_ClientsTypeDef* pClient)
@@ -227,8 +227,8 @@ void NET_MQTTSN_NBIOT_Event_HardwareReboot(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_ModuleCheck(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_ModuleCheck		: Ä£¿é¼ì²â
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_ModuleCheck		: æ¨¡å—æ£€æµ‹
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_ModuleCheck(MQTTSN_ClientsTypeDef* pClient)
@@ -271,8 +271,8 @@ void NET_MQTTSN_NBIOT_Event_ModuleCheck(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_ParameterConfig(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_ParameterConfig	: ²ÎÊıÅäÖÃ
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_ParameterConfig	: å‚æ•°é…ç½®
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_ParameterConfig(MQTTSN_ClientsTypeDef* pClient)
@@ -477,8 +477,8 @@ void NET_MQTTSN_NBIOT_Event_ParameterConfig(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_SimICCIDCheck(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_SimICCIDCheck	: Sim¿¨¼ì²â
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_SimICCIDCheck	: Simå¡æ£€æµ‹
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_SimICCIDCheck(MQTTSN_ClientsTypeDef* pClient)
@@ -520,8 +520,8 @@ void NET_MQTTSN_NBIOT_Event_SimICCIDCheck(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_MiscEquipConfig(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_MiscEquipConfig	: ÆäËûÅäÖÃ
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_MiscEquipConfig	: å…¶ä»–é…ç½®
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_MiscEquipConfig(MQTTSN_ClientsTypeDef* pClient)
@@ -591,8 +591,8 @@ void NET_MQTTSN_NBIOT_Event_MiscEquipConfig(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_AttachCheck(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_AttachCheck		: ×¢Íø¼ì²é
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_AttachCheck		: æ³¨ç½‘æ£€æŸ¥
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_AttachCheck(MQTTSN_ClientsTypeDef* pClient)
@@ -642,8 +642,8 @@ void NET_MQTTSN_NBIOT_Event_AttachCheck(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_AttachExecute(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_AttachExecute	: ×¢Íø½øĞĞ
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_AttachExecute	: æ³¨ç½‘è¿›è¡Œ
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_AttachExecute(MQTTSN_ClientsTypeDef* pClient)
@@ -685,8 +685,8 @@ void NET_MQTTSN_NBIOT_Event_AttachExecute(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_AttachInquire(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_AttachInquire	: ×¢Íø²éÑ¯
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_AttachInquire	: æ³¨ç½‘æŸ¥è¯¢
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_AttachInquire(MQTTSN_ClientsTypeDef* pClient)
@@ -747,8 +747,8 @@ void NET_MQTTSN_NBIOT_Event_AttachInquire(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_NBIOT_Event_PatameterCheckOut(MQTTSN_ClientsTypeDef* pClient)
- @Description			NET_MQTTSN_NBIOT_Event_PatameterCheckOut: ²ÎÊı¼ì³ö
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Description			NET_MQTTSN_NBIOT_Event_PatameterCheckOut: å‚æ•°æ£€å‡º
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_NBIOT_Event_PatameterCheckOut(MQTTSN_ClientsTypeDef* pClient)
@@ -801,7 +801,7 @@ void NET_MQTTSN_NBIOT_Event_PatameterCheckOut(MQTTSN_ClientsTypeDef* pClient)
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_Event_Init(MQTTSN_ClientsTypeDef* pClient)
  @Description			NET_MQTTSN_Event_Init				: INIT
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_Event_Init(MQTTSN_ClientsTypeDef* pClient)
@@ -857,7 +857,7 @@ void NET_MQTTSN_Event_Init(MQTTSN_ClientsTypeDef* pClient)
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_Event_Disconnect(MQTTSN_ClientsTypeDef* pClient)
  @Description			NET_MQTTSN_Event_Disconnect			: DISCONNECT
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_Event_Disconnect(MQTTSN_ClientsTypeDef* pClient)
@@ -908,7 +908,7 @@ void NET_MQTTSN_Event_Disconnect(MQTTSN_ClientsTypeDef* pClient)
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_Event_Active(MQTTSN_ClientsTypeDef* pClient)
  @Description			NET_MQTTSN_Event_Active				: ACTIVE
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_Event_Active(MQTTSN_ClientsTypeDef* pClient)
@@ -1056,7 +1056,7 @@ void NET_MQTTSN_Event_Active(MQTTSN_ClientsTypeDef* pClient)
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_Event_Sleep(MQTTSN_ClientsTypeDef* pClient)
  @Description			NET_MQTTSN_Event_Sleep				: SLEEP
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_Event_Sleep(MQTTSN_ClientsTypeDef* pClient)
@@ -1132,7 +1132,7 @@ void NET_MQTTSN_Event_Sleep(MQTTSN_ClientsTypeDef* pClient)
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_Event_Aweak(MQTTSN_ClientsTypeDef* pClient)
  @Description			NET_MQTTSN_Event_Aweak				: AWAKE
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_Event_Aweak(MQTTSN_ClientsTypeDef* pClient)
@@ -1187,7 +1187,7 @@ void NET_MQTTSN_Event_Aweak(MQTTSN_ClientsTypeDef* pClient)
 /**********************************************************************************************************
  @Function			void NET_MQTTSN_Event_Lost(MQTTSN_ClientsTypeDef* pClient)
  @Description			NET_MQTTSN_Event_Lost				: LOST
- @Input				pClient							: MqttSN¿Í»§¶ËÊµÀı
+ @Input				pClient							: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_MQTTSN_Event_Lost(MQTTSN_ClientsTypeDef* pClient)
@@ -1209,10 +1209,10 @@ extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTTSN_MessageDataTypeDef* messageHandler)
- @Description			messageHandlerFunction		: MQTTSN½ÓÊÕ´¦Àí
- @Input				pClient					: MqttSN¿Í»§¶ËÊµÀı
-					messageHandler				: ÏÂĞĞÏûÏ¢
- @Return				MQTTSN_StatusTypeDef		: MQTTSN´¦Àí×´Ì¬
+ @Description			messageHandlerFunction		: MQTTSNæ¥æ”¶å¤„ç†
+ @Input				pClient					: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					messageHandler				: ä¸‹è¡Œæ¶ˆæ¯
+ @Return				MQTTSN_StatusTypeDef		: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTTSN_MessageDataTypeDef* messageHandler)
 {
@@ -1229,10 +1229,10 @@ MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTT
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef NET_MQTTSN_SendPayloadPacket(MQTTSN_ClientsTypeDef* pClient, NET_MQTTSN_ObjectPacketTypeDef ObjectPacket)
- @Description			NET_MQTTSN_SendPayloadPacket	: MQTTSN·¢ËÍ¸ºÔØ°ü
- @Input				pClient					: MqttSN¿Í»§¶ËÊµÀı
-					ObjectPacket				: ¶ÔÏóÀàĞÍ
- @Return				MQTTSN_StatusTypeDef		: MQTTSN´¦Àí×´Ì¬
+ @Description			NET_MQTTSN_SendPayloadPacket	: MQTTSNå‘é€è´Ÿè½½åŒ…
+ @Input				pClient					: MqttSNå®¢æˆ·ç«¯å®ä¾‹
+					ObjectPacket				: å¯¹è±¡ç±»å‹
+ @Return				MQTTSN_StatusTypeDef		: MQTTSNå¤„ç†çŠ¶æ€
 **********************************************************************************************************/
 MQTTSN_StatusTypeDef NET_MQTTSN_SendPayloadPacket(MQTTSN_ClientsTypeDef* pClient, NET_MQTTSN_ObjectPacketTypeDef ObjectPacket)
 {

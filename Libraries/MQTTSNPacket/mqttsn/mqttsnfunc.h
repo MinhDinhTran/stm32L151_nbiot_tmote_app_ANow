@@ -4,9 +4,9 @@
 #include "sys.h"
 #include "mqttsnconfig.h"
 
-MQTTSN_StatusTypeDef MQTTSN_ReadPacket(MQTTSN_ClientsTypeDef* pClient, int *msgTypes);								//»ñÈ¡Êı¾İ°üÊı¾İÓëÏûÏ¢ÀàĞÍ
-MQTTSN_StatusTypeDef MQTTSN_RecvPacketProcess(MQTTSN_ClientsTypeDef* pClient, int *msgTypes);							//½ÓÊÕÊı¾İ°ü´¦Àí
-MQTTSN_StatusTypeDef MQTTSN_WaitforRecvAck(MQTTSN_ClientsTypeDef* pClient, int msgType, Stm32_CalculagraphTypeDef* timerS);	//µÈ´ı½ÓÊÕµ½ÏàÓ¦Ó¦´ğÏûÏ¢ÀàĞÍ
+MQTTSN_StatusTypeDef MQTTSN_ReadPacket(MQTTSN_ClientsTypeDef* pClient, int *msgTypes);								//è·å–æ•°æ®åŒ…æ•°æ®ä¸æ¶ˆæ¯ç±»å‹
+MQTTSN_StatusTypeDef MQTTSN_RecvPacketProcess(MQTTSN_ClientsTypeDef* pClient, int *msgTypes);							//æ¥æ”¶æ•°æ®åŒ…å¤„ç†
+MQTTSN_StatusTypeDef MQTTSN_WaitforRecvAck(MQTTSN_ClientsTypeDef* pClient, int msgType, Stm32_CalculagraphTypeDef* timerS);	//ç­‰å¾…æ¥æ”¶åˆ°ç›¸åº”åº”ç­”æ¶ˆæ¯ç±»å‹
 
 /* Application Programming Interface */
 MQTTSN_StatusTypeDef MQTTSN_Connect(MQTTSN_ClientsTypeDef* pClient, MQTTSNPacket_connectData* options);

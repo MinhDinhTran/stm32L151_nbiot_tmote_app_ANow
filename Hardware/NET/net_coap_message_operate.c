@@ -21,10 +21,10 @@ COAP_SwapRecvDataTypeDef		NETCoapMessageRecvPark;
 
 /**********************************************************************************************************
  @Function			static bool NET_Coap_Message_SendDataisFull(void)
- @Description			NET_Coap_Message_SendDataisFull	: ¼ì²é·¢ËÍ¶ÓÁĞÊÇ·ñÒÑÂú
+ @Description			NET_Coap_Message_SendDataisFull	: æ£€æŸ¥å‘é€é˜Ÿåˆ—æ˜¯å¦å·²æ»¡
  @Input				void
- @Return				true							: ÒÑÂú
-					false						: Î´Âú
+ @Return				true							: å·²æ»¡
+					false						: æœªæ»¡
 **********************************************************************************************************/
 static bool NET_Coap_Message_SendDataisFull(void)
 {
@@ -42,10 +42,10 @@ static bool NET_Coap_Message_SendDataisFull(void)
 
 /**********************************************************************************************************
  @Function			static bool NET_Coap_Message_RecvDataisFull(void)
- @Description			NET_Coap_Message_SendDataisFull	: ¼ì²é½ÓÊÕ¶ÓÁĞÊÇ·ñÒÑÂú
+ @Description			NET_Coap_Message_SendDataisFull	: æ£€æŸ¥æ¥æ”¶é˜Ÿåˆ—æ˜¯å¦å·²æ»¡
  @Input				void
- @Return				true							: ÒÑÂú
-					false						: Î´Âú
+ @Return				true							: å·²æ»¡
+					false						: æœªæ»¡
 **********************************************************************************************************/
 static bool NET_Coap_Message_RecvDataisFull(void)
 {
@@ -63,10 +63,10 @@ static bool NET_Coap_Message_RecvDataisFull(void)
 
 /**********************************************************************************************************
  @Function			static bool NET_Coap_Message_SendDataisEmpty(void)
- @Description			NET_Coap_Message_SendDataisEmpty	: ¼ì²é·¢ËÍ¶ÓÁĞÊÇ·ñÒÑ¿Õ
+ @Description			NET_Coap_Message_SendDataisEmpty	: æ£€æŸ¥å‘é€é˜Ÿåˆ—æ˜¯å¦å·²ç©º
  @Input				void
- @Return				true							: ÒÑ¿Õ
-					false						: Î´¿Õ
+ @Return				true							: å·²ç©º
+					false						: æœªç©º
 **********************************************************************************************************/
 static bool NET_Coap_Message_SendDataisEmpty(void)
 {
@@ -84,10 +84,10 @@ static bool NET_Coap_Message_SendDataisEmpty(void)
 
 /**********************************************************************************************************
  @Function			static bool NET_Coap_Message_RecvDataisEmpty(void)
- @Description			NET_Coap_Message_SendDataisEmpty	: ¼ì²é½ÓÊÕ¶ÓÁĞÊÇ·ñÒÑ¿Õ
+ @Description			NET_Coap_Message_SendDataisEmpty	: æ£€æŸ¥æ¥æ”¶é˜Ÿåˆ—æ˜¯å¦å·²ç©º
  @Input				void
- @Return				true							: ÒÑ¿Õ
-					false						: Î´¿Õ
+ @Return				true							: å·²ç©º
+					false						: æœªç©º
 **********************************************************************************************************/
 static bool NET_Coap_Message_RecvDataisEmpty(void)
 {
@@ -105,9 +105,9 @@ static bool NET_Coap_Message_RecvDataisEmpty(void)
 
 /**********************************************************************************************************
  @Function			void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dataLength)
- @Description			NET_Coap_Message_SendDataEnqueue	: ·¢ËÍÊı¾İĞ´Èë¶ÓÁĞ
- @Input				dataBuf	 		 			: ĞèĞ´ÈëÊı¾İ
-					dataLength					: ĞèĞ´ÈëÊı¾İ³¤¶È
+ @Description			NET_Coap_Message_SendDataEnqueue	: å‘é€æ•°æ®å†™å…¥é˜Ÿåˆ—
+ @Input				dataBuf	 		 			: éœ€å†™å…¥æ•°æ®
+					dataLength					: éœ€å†™å…¥æ•°æ®é•¿åº¦
  @Return				void
 **********************************************************************************************************/
 void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dataLength)
@@ -116,15 +116,15 @@ void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dat
 		return;
 	}
 	
-	if (NET_Coap_Message_SendDataisFull() == true) {													//¶ÓÁĞÒÑÂú
-		NETCoapMessageSendPark.Rear = (NETCoapMessageSendPark.Rear + 1) % COAP_SEND_PARK_NUM;				//¶ÓÎ²Æ«ÒÆ1
+	if (NET_Coap_Message_SendDataisFull() == true) {													//é˜Ÿåˆ—å·²æ»¡
+		NETCoapMessageSendPark.Rear = (NETCoapMessageSendPark.Rear + 1) % COAP_SEND_PARK_NUM;				//é˜Ÿå°¾åç§»1
 		memset((u8 *)&NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear], 0x0, sizeof(NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear]));
 		memcpy(NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear].Buffer, dataBuf, dataLength);
 		NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear].Length = dataLength;
-		NETCoapMessageSendPark.Front = (NETCoapMessageSendPark.Front + 1) % COAP_SEND_PARK_NUM;				//¶ÓÍ·Æ«ÒÆ1
+		NETCoapMessageSendPark.Front = (NETCoapMessageSendPark.Front + 1) % COAP_SEND_PARK_NUM;				//é˜Ÿå¤´åç§»1
 	}
-	else {																					//¶ÓÁĞÎ´Âú
-		NETCoapMessageSendPark.Rear = (NETCoapMessageSendPark.Rear + 1) % COAP_SEND_PARK_NUM;				//¶ÓÎ²Æ«ÒÆ1
+	else {																					//é˜Ÿåˆ—æœªæ»¡
+		NETCoapMessageSendPark.Rear = (NETCoapMessageSendPark.Rear + 1) % COAP_SEND_PARK_NUM;				//é˜Ÿå°¾åç§»1
 		memset((u8 *)&NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear], 0x0, sizeof(NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear]));
 		memcpy(NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear].Buffer, dataBuf, dataLength);
 		NETCoapMessageSendPark.Park[NETCoapMessageSendPark.Rear].Length = dataLength;
@@ -133,9 +133,9 @@ void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dat
 
 /**********************************************************************************************************
  @Function			void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dataLength)
- @Description			NET_Coap_Message_RecvDataEnqueue	: ½ÓÊÕÊı¾İĞ´Èë¶ÓÁĞ
- @Input				dataBuf	 		 			: ĞèĞ´ÈëÊı¾İ
-					dataLength					: ĞèĞ´ÈëÊı¾İ³¤¶È
+ @Description			NET_Coap_Message_RecvDataEnqueue	: æ¥æ”¶æ•°æ®å†™å…¥é˜Ÿåˆ—
+ @Input				dataBuf	 		 			: éœ€å†™å…¥æ•°æ®
+					dataLength					: éœ€å†™å…¥æ•°æ®é•¿åº¦
  @Return				void
 **********************************************************************************************************/
 void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dataLength)
@@ -144,15 +144,15 @@ void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dat
 		return;
 	}
 	
-	if (NET_Coap_Message_RecvDataisFull() == true) {													//¶ÓÁĞÒÑÂú
-		NETCoapMessageRecvPark.Rear = (NETCoapMessageRecvPark.Rear + 1) % COAP_RECV_PARK_NUM;				//¶ÓÎ²Æ«ÒÆ1
+	if (NET_Coap_Message_RecvDataisFull() == true) {													//é˜Ÿåˆ—å·²æ»¡
+		NETCoapMessageRecvPark.Rear = (NETCoapMessageRecvPark.Rear + 1) % COAP_RECV_PARK_NUM;				//é˜Ÿå°¾åç§»1
 		memset((u8 *)&NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear], 0x0, sizeof(NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear]));
 		memcpy(NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear].Buffer, dataBuf, dataLength);
 		NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear].Length = dataLength;
-		NETCoapMessageRecvPark.Front = (NETCoapMessageRecvPark.Front + 1) % COAP_RECV_PARK_NUM;				//¶ÓÍ·Æ«ÒÆ1
+		NETCoapMessageRecvPark.Front = (NETCoapMessageRecvPark.Front + 1) % COAP_RECV_PARK_NUM;				//é˜Ÿå¤´åç§»1
 	}
-	else {																					//¶ÓÁĞÎ´Âú
-		NETCoapMessageRecvPark.Rear = (NETCoapMessageRecvPark.Rear + 1) % COAP_RECV_PARK_NUM;				//¶ÓÎ²Æ«ÒÆ1
+	else {																					//é˜Ÿåˆ—æœªæ»¡
+		NETCoapMessageRecvPark.Rear = (NETCoapMessageRecvPark.Rear + 1) % COAP_RECV_PARK_NUM;				//é˜Ÿå°¾åç§»1
 		memset((u8 *)&NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear], 0x0, sizeof(NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear]));
 		memcpy(NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear].Buffer, dataBuf, dataLength);
 		NETCoapMessageRecvPark.Park[NETCoapMessageRecvPark.Rear].Length = dataLength;
@@ -161,22 +161,22 @@ void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dat
 
 /**********************************************************************************************************
  @Function			bool NET_Coap_Message_SendDataDequeue(unsigned char* dataBuf, unsigned short* dataLength)
- @Description			NET_Coap_Message_SendDataDequeue	: ·¢ËÍÊı¾İ¶Á³ö¶ÓÁĞ
- @Input				dataBuf	 		 			: Ğè¶Á³öÊı¾İµØÖ·
-					dataLength					: Ğè¶Á³öÊı¾İ³¤¶ÈµØÖ·
- @Return				true							: Î´¿Õ
-					false						: ÒÑ¿Õ
+ @Description			NET_Coap_Message_SendDataDequeue	: å‘é€æ•°æ®è¯»å‡ºé˜Ÿåˆ—
+ @Input				dataBuf	 		 			: éœ€è¯»å‡ºæ•°æ®åœ°å€
+					dataLength					: éœ€è¯»å‡ºæ•°æ®é•¿åº¦åœ°å€
+ @Return				true							: æœªç©º
+					false						: å·²ç©º
 **********************************************************************************************************/
 bool NET_Coap_Message_SendDataDequeue(unsigned char* dataBuf, unsigned short* dataLength)
 {
 	bool MessageState;
 	unsigned char front;
 	
-	if (NET_Coap_Message_SendDataisEmpty() == true) {													//¶ÓÁĞÒÑ¿Õ
+	if (NET_Coap_Message_SendDataisEmpty() == true) {													//é˜Ÿåˆ—å·²ç©º
 		MessageState = false;
 	}
-	else {																					//¶ÓÁĞÎ´¿Õ
-		front = (NETCoapMessageSendPark.Front + 1) % COAP_SEND_PARK_NUM;									//¶ÓÍ·Æ«ÒÆ1
+	else {																					//é˜Ÿåˆ—æœªç©º
+		front = (NETCoapMessageSendPark.Front + 1) % COAP_SEND_PARK_NUM;									//é˜Ÿå¤´åç§»1
 		memcpy(dataBuf, NETCoapMessageSendPark.Park[front].Buffer, NETCoapMessageSendPark.Park[front].Length);
 		*dataLength = NETCoapMessageSendPark.Park[front].Length;
 		MessageState = true;
@@ -187,22 +187,22 @@ bool NET_Coap_Message_SendDataDequeue(unsigned char* dataBuf, unsigned short* da
 
 /**********************************************************************************************************
  @Function			bool NET_Coap_Message_RecvDataDequeue(unsigned char* dataBuf, unsigned short* dataLength)
- @Description			NET_Coap_Message_RecvDataDequeue	: ½ÓÊÕÊı¾İ¶Á³ö¶ÓÁĞ
- @Input				dataBuf	 		 			: Ğè¶Á³öÊı¾İµØÖ·
-					dataLength					: Ğè¶Á³öÊı¾İ³¤¶ÈµØÖ·
- @Return				true							: Î´¿Õ
-					false						: ÒÑ¿Õ
+ @Description			NET_Coap_Message_RecvDataDequeue	: æ¥æ”¶æ•°æ®è¯»å‡ºé˜Ÿåˆ—
+ @Input				dataBuf	 		 			: éœ€è¯»å‡ºæ•°æ®åœ°å€
+					dataLength					: éœ€è¯»å‡ºæ•°æ®é•¿åº¦åœ°å€
+ @Return				true							: æœªç©º
+					false						: å·²ç©º
 **********************************************************************************************************/
 bool NET_Coap_Message_RecvDataDequeue(unsigned char* dataBuf, unsigned short* dataLength)
 {
 	bool MessageState;
 	unsigned char front;
 	
-	if (NET_Coap_Message_RecvDataisEmpty() == true) {													//¶ÓÁĞÒÑ¿Õ
+	if (NET_Coap_Message_RecvDataisEmpty() == true) {													//é˜Ÿåˆ—å·²ç©º
 		MessageState = false;
 	}
-	else {																					//¶ÓÁĞÎ´¿Õ
-		front = (NETCoapMessageRecvPark.Front + 1) % COAP_RECV_PARK_NUM;									//¶ÓÍ·Æ«ÒÆ1
+	else {																					//é˜Ÿåˆ—æœªç©º
+		front = (NETCoapMessageRecvPark.Front + 1) % COAP_RECV_PARK_NUM;									//é˜Ÿå¤´åç§»1
 		memcpy(dataBuf, NETCoapMessageRecvPark.Park[front].Buffer, NETCoapMessageRecvPark.Park[front].Length);
 		*dataLength = NETCoapMessageRecvPark.Park[front].Length;
 		MessageState = true;
@@ -213,19 +213,19 @@ bool NET_Coap_Message_RecvDataDequeue(unsigned char* dataBuf, unsigned short* da
 
 /**********************************************************************************************************
  @Function			bool NET_Coap_Message_SendDataOffSet(void)
- @Description			NET_Coap_Message_SendDataOffSet	: ·¢ËÍÊı¾İ¶ÓÁĞ(¶ÓÁĞÍ·Æ«ÒÆ1)
+ @Description			NET_Coap_Message_SendDataOffSet	: å‘é€æ•°æ®é˜Ÿåˆ—(é˜Ÿåˆ—å¤´åç§»1)
  @Input				void
- @Return				true							: Î´¿Õ
-					false						: ÒÑ¿Õ
+ @Return				true							: æœªç©º
+					false						: å·²ç©º
 **********************************************************************************************************/
 bool NET_Coap_Message_SendDataOffSet(void)
 {
 	bool MessageState;
 	
-	if (NET_Coap_Message_SendDataisEmpty() == true) {													//¶ÓÁĞÒÑ¿Õ
+	if (NET_Coap_Message_SendDataisEmpty() == true) {													//é˜Ÿåˆ—å·²ç©º
 		MessageState = false;
 	}
-	else {																					//¶ÓÁĞÎ´¿Õ
+	else {																					//é˜Ÿåˆ—æœªç©º
 		NETCoapMessageSendPark.Front = (NETCoapMessageSendPark.Front + 1) % COAP_SEND_PARK_NUM;
 		MessageState = true;
 	}
@@ -235,19 +235,19 @@ bool NET_Coap_Message_SendDataOffSet(void)
 
 /**********************************************************************************************************
  @Function			bool NET_Coap_Message_RecvDataOffSet(void)
- @Description			NET_Coap_Message_RecvDataOffSet	: ½ÓÊÕÊı¾İ¶ÓÁĞ(¶ÓÁĞÍ·Æ«ÒÆ1)
+ @Description			NET_Coap_Message_RecvDataOffSet	: æ¥æ”¶æ•°æ®é˜Ÿåˆ—(é˜Ÿåˆ—å¤´åç§»1)
  @Input				void
- @Return				true							: Î´¿Õ
-					false						: ÒÑ¿Õ
+ @Return				true							: æœªç©º
+					false						: å·²ç©º
 **********************************************************************************************************/
 bool NET_Coap_Message_RecvDataOffSet(void)
 {
 	bool MessageState;
 	
-	if (NET_Coap_Message_RecvDataisEmpty() == true) {													//¶ÓÁĞÒÑ¿Õ
+	if (NET_Coap_Message_RecvDataisEmpty() == true) {													//é˜Ÿåˆ—å·²ç©º
 		MessageState = false;
 	}
-	else {																					//¶ÓÁĞÎ´¿Õ
+	else {																					//é˜Ÿåˆ—æœªç©º
 		NETCoapMessageRecvPark.Front = (NETCoapMessageRecvPark.Front + 1) % COAP_RECV_PARK_NUM;
 		MessageState = true;
 	}
@@ -257,9 +257,9 @@ bool NET_Coap_Message_RecvDataOffSet(void)
 
 /**********************************************************************************************************
  @Function			unsigned char NET_Coap_Message_SendDataRear(void)
- @Description			NET_Coap_Message_SendDataRear		: ·¢ËÍÊı¾İ¶ÓÎ²Öµ
+ @Description			NET_Coap_Message_SendDataRear		: å‘é€æ•°æ®é˜Ÿå°¾å€¼
  @Input				void
- @Return				·¢ËÍÊı¾İ¶ÓÎ²Öµ
+ @Return				å‘é€æ•°æ®é˜Ÿå°¾å€¼
 **********************************************************************************************************/
 unsigned char NET_Coap_Message_SendDataRear(void)
 {
@@ -268,9 +268,9 @@ unsigned char NET_Coap_Message_SendDataRear(void)
 
 /**********************************************************************************************************
  @Function			unsigned char NET_Coap_Message_RecvDataRear(void)
- @Description			NET_Coap_Message_SendDataRear		: ½ÓÊÕÊı¾İ¶ÓÎ²Öµ
+ @Description			NET_Coap_Message_SendDataRear		: æ¥æ”¶æ•°æ®é˜Ÿå°¾å€¼
  @Input				void
- @Return				½ÓÊÕÊı¾İ¶ÓÎ²Öµ
+ @Return				æ¥æ”¶æ•°æ®é˜Ÿå°¾å€¼
 **********************************************************************************************************/
 unsigned char NET_Coap_Message_RecvDataRear(void)
 {

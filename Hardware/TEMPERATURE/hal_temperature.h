@@ -16,9 +16,9 @@
 - (int32_t) *TEMPSENSOR_CAL1_ADDR)) * (int32_t)(TEMPSENSOR_CAL2_TEMP - TEMPSENSOR_CAL1_TEMP))		\
 / (int32_t)((int32_t)*TEMPSENSOR_CAL2_ADDR - (int32_t)*TEMPSENSOR_CAL1_ADDR)) + TEMPSENSOR_CAL1_TEMP)
 
-extern ADC_HandleTypeDef		TEMPERATURE_ADC_Handler;							//�ڲ��¶ȴ�������ѹADC���
+extern ADC_HandleTypeDef		TEMPERATURE_ADC_Handler;							//内部温度传感器电压ADC句柄
 
-void  TEMPERATURE_ADC_Init(void);											//��ѹADC��ʼ��
-short TEMPERATURE_ADC_Read(u32 timeout);									//�ڲ��¶ȴ������¶�ADC��ȡ
+void  TEMPERATURE_ADC_Init(void);											//电压ADC初始化
+short TEMPERATURE_ADC_Read(u32 timeout);									//内部温度传感器温度ADC读取
 
 #endif

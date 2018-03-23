@@ -6,7 +6,7 @@
 #include "stm32l1xx_hal.h"
 #include "stdbool.h"
 
-#define SYSTEM_SUPPORT_OS		0										//¶¨ÒåÏµÍ³ÎÄ¼ş¼ĞÊÇ·ñÖ§³ÖOS 0:²»Ö§³Öos 1:Ö§³Öos
+#define SYSTEM_SUPPORT_OS		0										//å®šä¹‰ç³»ç»Ÿæ–‡ä»¶å¤¹æ˜¯å¦æ”¯æŒOS 0:ä¸æ”¯æŒos 1:æ”¯æŒos
 
 #define ON					1
 #define OFF					0
@@ -47,24 +47,24 @@ typedef struct
 {
 	unsigned int	xTicksToWait;
 	unsigned int	xTimeOut;
-}Stm32_CalculagraphTypeDef;													//¼ÆÊ±Æ÷
+}Stm32_CalculagraphTypeDef;													//è®¡æ—¶å™¨
 
-void Stm32_Clock_Init(u32 pllmul, u32 plldiv);									//ÅäÖÃÏµÍ³Ê±ÖÓHSI
-void Stm32_MSIClock_Init(u32 msiClockRange);										//ÅäÖÃÏµÍ³Ê±ÖÓMSI
+void Stm32_Clock_Init(u32 pllmul, u32 plldiv);									//é…ç½®ç³»ç»Ÿæ—¶é’ŸHSI
+void Stm32_MSIClock_Init(u32 msiClockRange);										//é…ç½®ç³»ç»Ÿæ—¶é’ŸMSI
 
-void Stm32_IncSecondTick(void);												//ÔËĞĞÊ±¼ä¼Ó1Ãë
-u32  Stm32_GetSecondTick(void);												//»ñÈ¡ÔËĞĞÃëÊı
+void Stm32_IncSecondTick(void);												//è¿è¡Œæ—¶é—´åŠ 1ç§’
+u32  Stm32_GetSecondTick(void);												//è·å–è¿è¡Œç§’æ•°
 
-void Stm32_Calculagraph_Init(Stm32_CalculagraphTypeDef* timer);						//³õÊ¼»¯¼ÆÊ±Æ÷
-void Stm32_Calculagraph_CountdownMS(Stm32_CalculagraphTypeDef* timer, u32 timeout_ms);	//ÅäÖÃ¼ÆÊ±Æ÷µ¹ÊıÊ±¼ä(MS)
-bool Stm32_Calculagraph_IsExpiredMS(Stm32_CalculagraphTypeDef* timer);				//²éÑ¯ÊÇ·ñµ½´ï¼ÆÊ±Æ÷¼ÆÊ±Ê±¼ä(MS)
-void Stm32_Calculagraph_CountdownSec(Stm32_CalculagraphTypeDef* timer, u32 timeout_sec);	//ÅäÖÃ¼ÆÊ±Æ÷µ¹ÊıÊ±¼ä(S)
-bool Stm32_Calculagraph_IsExpiredSec(Stm32_CalculagraphTypeDef* timer);				//²éÑ¯ÊÇ·ñµ½´ï¼ÆÊ±Æ÷¼ÆÊ±Ê±¼ä(S)
+void Stm32_Calculagraph_Init(Stm32_CalculagraphTypeDef* timer);						//åˆå§‹åŒ–è®¡æ—¶å™¨
+void Stm32_Calculagraph_CountdownMS(Stm32_CalculagraphTypeDef* timer, u32 timeout_ms);	//é…ç½®è®¡æ—¶å™¨å€’æ•°æ—¶é—´(MS)
+bool Stm32_Calculagraph_IsExpiredMS(Stm32_CalculagraphTypeDef* timer);				//æŸ¥è¯¢æ˜¯å¦åˆ°è¾¾è®¡æ—¶å™¨è®¡æ—¶æ—¶é—´(MS)
+void Stm32_Calculagraph_CountdownSec(Stm32_CalculagraphTypeDef* timer, u32 timeout_sec);	//é…ç½®è®¡æ—¶å™¨å€’æ•°æ—¶é—´(S)
+bool Stm32_Calculagraph_IsExpiredSec(Stm32_CalculagraphTypeDef* timer);				//æŸ¥è¯¢æ˜¯å¦åˆ°è¾¾è®¡æ—¶å™¨è®¡æ—¶æ—¶é—´(S)
 
-/* ÒÔÏÂÎª»ã±àº¯Êı */
-void WFI_SET(void);															//Ö´ĞĞWFIÖ¸Áî
-void INTX_DISABLE(void);														//¹Ø±ÕËùÓĞÖĞ¶Ï
-void INTX_ENABLE(void);														//¿ªÆôËùÓĞÖĞ¶Ï
-void MSR_MSP(u32 addr);														//ÉèÖÃ¶ÑÕ»µØÖ·
+/* ä»¥ä¸‹ä¸ºæ±‡ç¼–å‡½æ•° */
+void WFI_SET(void);															//æ‰§è¡ŒWFIæŒ‡ä»¤
+void INTX_DISABLE(void);														//å…³é—­æ‰€æœ‰ä¸­æ–­
+void INTX_ENABLE(void);														//å¼€å¯æ‰€æœ‰ä¸­æ–­
+void MSR_MSP(u32 addr);														//è®¾ç½®å †æ ˆåœ°å€
 
 #endif

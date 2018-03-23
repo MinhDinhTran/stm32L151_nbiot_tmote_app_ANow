@@ -18,7 +18,7 @@
 
 /**********************************************************************************************************
  @Function			void BEEP_Ctrl(u8 beepEnable)
- @Description			·äÃùÆ÷¿ØÖÆ
+ @Description			èœ‚é¸£å™¨æ§åˆ¶
  @Input				ON or OFF
  @Return				void
 **********************************************************************************************************/
@@ -31,8 +31,8 @@ void BEEP_Ctrl(u8 beepEnable)
 	GPIO_Initure.Pin = BEEP_PIN;
 	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//¸ßËÙ
-	HAL_GPIO_Init(BEEP_GPIOx, &GPIO_Initure);								//³õÊ¼»¯GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//é«˜é€Ÿ
+	HAL_GPIO_Init(BEEP_GPIOx, &GPIO_Initure);								//åˆå§‹åŒ–GPIO
 	
 	if (beepEnable == ON) {
 		HAL_GPIO_WritePin(BEEP_GPIOx, BEEP_PIN, GPIO_PIN_SET);
@@ -43,14 +43,14 @@ void BEEP_Ctrl(u8 beepEnable)
 	
 	GPIO_Initure.Pin = BEEP_PIN;
 	GPIO_Initure.Speed = GPIO_SPEED_VERY_LOW;
-	HAL_GPIO_Init(BEEP_GPIOx, &GPIO_Initure);								//³õÊ¼»¯GPIO
+	HAL_GPIO_Init(BEEP_GPIOx, &GPIO_Initure);								//åˆå§‹åŒ–GPIO
 }
 
 /**********************************************************************************************************
  @Function			void BEEP_CtrlRepeat(u16 nCount, u16 nMs)
- @Description			·äÃùÆ÷¿ØÖÆÖØ¸´Ïì
- @Input				nCount	: ´ÎÊı
-					nMs		: ¼ä¸ô
+ @Description			èœ‚é¸£å™¨æ§åˆ¶é‡å¤å“
+ @Input				nCount	: æ¬¡æ•°
+					nMs		: é—´éš”
  @Return				void
 **********************************************************************************************************/
 void BEEP_CtrlRepeat(u16 nCount, u16 nMs)

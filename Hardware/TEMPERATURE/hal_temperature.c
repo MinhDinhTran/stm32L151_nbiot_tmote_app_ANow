@@ -16,11 +16,11 @@
 #include "hal_temperature.h"
 #include "delay.h"
 
-ADC_HandleTypeDef		TEMPERATURE_ADC_Handler;								//ÄÚ²¿ÎÂ¶È´«¸ĞÆ÷µçÑ¹ADC¾ä±ú
+ADC_HandleTypeDef		TEMPERATURE_ADC_Handler;								//å†…éƒ¨æ¸©åº¦ä¼ æ„Ÿå™¨ç”µå‹ADCå¥æŸ„
 
 /**********************************************************************************************************
  @Function			void TEMPERATURE_ADC_Init(void)
- @Description			µçÑ¹ADC³õÊ¼»¯
+ @Description			ç”µå‹ADCåˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -61,9 +61,9 @@ void TEMPERATURE_ADC_Init(void)
 
 /**********************************************************************************************************
  @Function			short TEMPERATURE_ADC_Read(u32 timeout)
- @Description			ÄÚ²¿ÎÂ¶È´«¸ĞÆ÷ÎÂ¶ÈADC¶ÁÈ¡
- @Input				¶Á³öµÈ´ı³¬Ê±Ê±¼ä
- @Return				ÎÂ¶ÈÖµ
+ @Description			å†…éƒ¨æ¸©åº¦ä¼ æ„Ÿå™¨æ¸©åº¦ADCè¯»å–
+ @Input				è¯»å‡ºç­‰å¾…è¶…æ—¶æ—¶é—´
+ @Return				æ¸©åº¦å€¼
 **********************************************************************************************************/
 short TEMPERATURE_ADC_Read(u32 timeout)
 {
@@ -75,7 +75,7 @@ short TEMPERATURE_ADC_Read(u32 timeout)
 	
 	TEMPERATURE_ADC_RCC_ADC1_CLK_ENABLE();
 	
-	TEMPERATURE_ADC_Init();												//µçÑ¹ADC³õÊ¼»¯
+	TEMPERATURE_ADC_Init();												//ç”µå‹ADCåˆå§‹åŒ–
 	
 	for (i = 0; i < 3; i++) {
 		HAL_ADC_Start(&TEMPERATURE_ADC_Handler);

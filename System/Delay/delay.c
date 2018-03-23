@@ -17,202 +17,202 @@
 #include "delay.h"
 #include "sys.h"
 
-#if SYSTEM_SUPPORT_OS													//Èç¹ûÊ¹ÓÃOS, Ôò°üÀ¨ÏÂÃæµÄÍ·ÎÄ¼ş£¨ÒÔucosÎªÀı£©¼´¿É
-#include "includes.h"													//Ö§³ÖOSÊ±Ê¹ÓÃ
+#if SYSTEM_SUPPORT_OS													//å¦‚æœä½¿ç”¨OS, åˆ™åŒ…æ‹¬ä¸‹é¢çš„å¤´æ–‡ä»¶ï¼ˆä»¥ucosä¸ºä¾‹ï¼‰å³å¯
+#include "includes.h"													//æ”¯æŒOSæ—¶ä½¿ç”¨
 #endif
 
-static u32 fac_us = 0;													//usÑÓÊ±±¶³ËÊı
+static u32 fac_us = 0;													//uså»¶æ—¶å€ä¹˜æ•°
 
 #if SYSTEM_SUPPORT_OS
-static u16 fac_ms = 0;													//msÑÓÊ±±¶³ËÊı,ÔÚosÏÂ,´ú±íÃ¿¸ö½ÚÅÄµÄmsÊı
+static u16 fac_ms = 0;													//mså»¶æ—¶å€ä¹˜æ•°,åœ¨osä¸‹,ä»£è¡¨æ¯ä¸ªèŠ‚æ‹çš„msæ•°
 #endif
 
-#if SYSTEM_SUPPORT_OS													//Èç¹ûSYSTEM_SUPPORT_OS¶¨ÒåÁË,ËµÃ÷ÒªÖ§³ÖOSÁË(²»ÏŞÓÚUCOS)
-//µ±delay_us/delay_msĞèÒªÖ§³ÖOSµÄÊ±ºòĞèÒªÈı¸öÓëOSÏà¹ØµÄºê¶¨ÒåºÍº¯ÊıÀ´Ö§³Ö
-//Ê×ÏÈÊÇ3¸öºê¶¨Òå:
-//	delay_osrunning	: ÓÃÓÚ±íÊ¾OSµ±Ç°ÊÇ·ñÕıÔÚÔËĞĞ,ÒÔ¾ö¶¨ÊÇ·ñ¿ÉÒÔÊ¹ÓÃÏà¹Øº¯Êı
-//	delay_ostickspersec	: ÓÃÓÚ±íÊ¾OSÉè¶¨µÄÊ±ÖÓ½ÚÅÄ,delay_init½«¸ù¾İÕâ¸ö²ÎÊıÀ´³õÊ¼¹şsystick
-//	delay_osintnesting	: ÓÃÓÚ±íÊ¾OSÖĞ¶ÏÇ¶Ì×¼¶±ğ,ÒòÎªÖĞ¶ÏÀïÃæ²»¿ÉÒÔµ÷¶È,delay_msÊ¹ÓÃ¸Ã²ÎÊıÀ´¾ö¶¨ÈçºÎÔËĞĞ
-//È»ºóÊÇ3¸öº¯Êı:
-//	delay_osschedlock	: ÓÃÓÚËø¶¨OSÈÎÎñµ÷¶È,½ûÖ¹µ÷¶È
-//	delay_osschedunlock	: ÓÃÓÚ½âËøOSÈÎÎñµ÷¶È,ÖØĞÂ¿ªÆôµ÷¶È
-//	delay_ostimedly	: ÓÃÓÚOSÑÓÊ±,¿ÉÒÔÒıÆğÈÎÎñµ÷¶È
+#if SYSTEM_SUPPORT_OS													//å¦‚æœSYSTEM_SUPPORT_OSå®šä¹‰äº†,è¯´æ˜è¦æ”¯æŒOSäº†(ä¸é™äºUCOS)
+//å½“delay_us/delay_mséœ€è¦æ”¯æŒOSçš„æ—¶å€™éœ€è¦ä¸‰ä¸ªä¸OSç›¸å…³çš„å®å®šä¹‰å’Œå‡½æ•°æ¥æ”¯æŒ
+//é¦–å…ˆæ˜¯3ä¸ªå®å®šä¹‰:
+//	delay_osrunning	: ç”¨äºè¡¨ç¤ºOSå½“å‰æ˜¯å¦æ­£åœ¨è¿è¡Œ,ä»¥å†³å®šæ˜¯å¦å¯ä»¥ä½¿ç”¨ç›¸å…³å‡½æ•°
+//	delay_ostickspersec	: ç”¨äºè¡¨ç¤ºOSè®¾å®šçš„æ—¶é’ŸèŠ‚æ‹,delay_initå°†æ ¹æ®è¿™ä¸ªå‚æ•°æ¥åˆå§‹å“ˆsystick
+//	delay_osintnesting	: ç”¨äºè¡¨ç¤ºOSä¸­æ–­åµŒå¥—çº§åˆ«,å› ä¸ºä¸­æ–­é‡Œé¢ä¸å¯ä»¥è°ƒåº¦,delay_msä½¿ç”¨è¯¥å‚æ•°æ¥å†³å®šå¦‚ä½•è¿è¡Œ
+//ç„¶åæ˜¯3ä¸ªå‡½æ•°:
+//	delay_osschedlock	: ç”¨äºé”å®šOSä»»åŠ¡è°ƒåº¦,ç¦æ­¢è°ƒåº¦
+//	delay_osschedunlock	: ç”¨äºè§£é”OSä»»åŠ¡è°ƒåº¦,é‡æ–°å¼€å¯è°ƒåº¦
+//	delay_ostimedly	: ç”¨äºOSå»¶æ—¶,å¯ä»¥å¼•èµ·ä»»åŠ¡è°ƒåº¦
 
-//±¾Àı³Ì½ö×÷UCOSIIºÍUCOSIIIµÄÖ§³Ö,ÆäËûOS,Çë×ÔĞĞ²Î¿¼×ÅÒÆÖ²
-//Ö§³ÖUCOSII
-#ifdef	OS_CRITICAL_METHOD												//OS_CRITICAL_METHOD¶¨ÒåÁË,ËµÃ÷ÒªÖ§³ÖUCOSII
-#define delay_osrunning		OSRunning										//OSÊÇ·ñÔËĞĞ±ê¼Ç,0,²»ÔËĞĞ; 1,ÔÚÔËĞĞ
-#define delay_ostickspersec	OS_TICKS_PER_SEC								//OSÊ±ÖÓ½ÚÅÄ,¼´Ã¿Ãëµ÷¶È´ÎÊı
-#define delay_osintnesting 	OSIntNesting									//ÖĞ¶ÏÇ¶Ì×¼¶±ğ,¼´ÖĞ¶ÏÇ¶Ì×´ÎÊı
+//æœ¬ä¾‹ç¨‹ä»…ä½œUCOSIIå’ŒUCOSIIIçš„æ”¯æŒ,å…¶ä»–OS,è¯·è‡ªè¡Œå‚è€ƒç€ç§»æ¤
+//æ”¯æŒUCOSII
+#ifdef	OS_CRITICAL_METHOD												//OS_CRITICAL_METHODå®šä¹‰äº†,è¯´æ˜è¦æ”¯æŒUCOSII
+#define delay_osrunning		OSRunning										//OSæ˜¯å¦è¿è¡Œæ ‡è®°,0,ä¸è¿è¡Œ; 1,åœ¨è¿è¡Œ
+#define delay_ostickspersec	OS_TICKS_PER_SEC								//OSæ—¶é’ŸèŠ‚æ‹,å³æ¯ç§’è°ƒåº¦æ¬¡æ•°
+#define delay_osintnesting 	OSIntNesting									//ä¸­æ–­åµŒå¥—çº§åˆ«,å³ä¸­æ–­åµŒå¥—æ¬¡æ•°
 #endif
 
-//Ö§³ÖUCOSIII
-#ifdef 	CPU_CFG_CRITICAL_METHOD											//CPU_CFG_CRITICAL_METHOD¶¨ÒåÁË,ËµÃ÷ÒªÖ§³ÖUCOSIII
-#define delay_osrunning		OSRunning										//OSÊÇ·ñÔËĞĞ±ê¼Ç,0,²»ÔËĞĞ;1,ÔÚÔËĞĞ
-#define delay_ostickspersec	OSCfg_TickRate_Hz								//OSÊ±ÖÓ½ÚÅÄ,¼´Ã¿Ãëµ÷¶È´ÎÊı
-#define delay_osintnesting 	OSIntNestingCtr								//ÖĞ¶ÏÇ¶Ì×¼¶±ğ,¼´ÖĞ¶ÏÇ¶Ì×´ÎÊı
+//æ”¯æŒUCOSIII
+#ifdef 	CPU_CFG_CRITICAL_METHOD											//CPU_CFG_CRITICAL_METHODå®šä¹‰äº†,è¯´æ˜è¦æ”¯æŒUCOSIII
+#define delay_osrunning		OSRunning										//OSæ˜¯å¦è¿è¡Œæ ‡è®°,0,ä¸è¿è¡Œ;1,åœ¨è¿è¡Œ
+#define delay_ostickspersec	OSCfg_TickRate_Hz								//OSæ—¶é’ŸèŠ‚æ‹,å³æ¯ç§’è°ƒåº¦æ¬¡æ•°
+#define delay_osintnesting 	OSIntNestingCtr								//ä¸­æ–­åµŒå¥—çº§åˆ«,å³ä¸­æ–­åµŒå¥—æ¬¡æ•°
 #endif
 
 
 /**********************************************************************************************************
  @Function			void Delay_Osschedlock(void)
- @Description			us¼¶ÑÓÊ±Ê±,¹Ø±ÕÈÎÎñµ÷¶È(·ÀÖ¹´ò¶Ïus¼¶ÑÓ³Ù)
+ @Description			usçº§å»¶æ—¶æ—¶,å…³é—­ä»»åŠ¡è°ƒåº¦(é˜²æ­¢æ‰“æ–­usçº§å»¶è¿Ÿ)
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void Delay_Osschedlock(void)
 {
-#ifdef CPU_CFG_CRITICAL_METHOD										//Ê¹ÓÃUCOSIII
+#ifdef CPU_CFG_CRITICAL_METHOD										//ä½¿ç”¨UCOSIII
 	OS_ERR err;
-	OSSchedLock(&err);													//UCOSIIIµÄ·½Ê½,½ûÖ¹µ÷¶È,·ÀÖ¹´ò¶ÏusÑÓÊ±
-#else															//·ñÔòUCOSII
-	OSSchedLock();														//UCOSIIµÄ·½Ê½,½ûÖ¹µ÷¶È,·ÀÖ¹´ò¶ÏusÑÓÊ±
+	OSSchedLock(&err);													//UCOSIIIçš„æ–¹å¼,ç¦æ­¢è°ƒåº¦,é˜²æ­¢æ‰“æ–­uså»¶æ—¶
+#else															//å¦åˆ™UCOSII
+	OSSchedLock();														//UCOSIIçš„æ–¹å¼,ç¦æ­¢è°ƒåº¦,é˜²æ­¢æ‰“æ–­uså»¶æ—¶
 #endif
 }
 
 /**********************************************************************************************************
  @Function			void Delay_Osschedunlock(void)
- @Description			us¼¶ÑÓÊ±Ê±,»Ö¸´ÈÎÎñµ÷¶È
+ @Description			usçº§å»¶æ—¶æ—¶,æ¢å¤ä»»åŠ¡è°ƒåº¦
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void Delay_Osschedunlock(void)
 {
-#ifdef CPU_CFG_CRITICAL_METHOD										//Ê¹ÓÃUCOSIII
+#ifdef CPU_CFG_CRITICAL_METHOD										//ä½¿ç”¨UCOSIII
 	OS_ERR err; 
-	OSSchedUnlock(&err);												//UCOSIIIµÄ·½Ê½,»Ö¸´µ÷¶È
-#else															//·ñÔòUCOSII
-	OSSchedUnlock();													//UCOSIIµÄ·½Ê½,»Ö¸´µ÷¶È
+	OSSchedUnlock(&err);												//UCOSIIIçš„æ–¹å¼,æ¢å¤è°ƒåº¦
+#else															//å¦åˆ™UCOSII
+	OSSchedUnlock();													//UCOSIIçš„æ–¹å¼,æ¢å¤è°ƒåº¦
 #endif
 }
 
 /**********************************************************************************************************
  @Function			void Delay_Ostimedly(u32 ticks)
- @Description			µ÷ÓÃOS×Ô´øµÄÑÓÊ±º¯ÊıÑÓÊ±
- @Input				ticks	: ÑÓÊ±µÄ½ÚÅÄÊı
+ @Description			è°ƒç”¨OSè‡ªå¸¦çš„å»¶æ—¶å‡½æ•°å»¶æ—¶
+ @Input				ticks	: å»¶æ—¶çš„èŠ‚æ‹æ•°
  @Return				void
 **********************************************************************************************************/
 void Delay_Ostimedly(u32 ticks)
 {
 #ifdef CPU_CFG_CRITICAL_METHOD
 	OS_ERR err;
-	OSTimeDly(ticks, OS_OPT_TIME_PERIODIC, &err);						//UCOSIIIÑÓÊ±²ÉÓÃÖÜÆÚÄ£Ê½
+	OSTimeDly(ticks, OS_OPT_TIME_PERIODIC, &err);						//UCOSIIIå»¶æ—¶é‡‡ç”¨å‘¨æœŸæ¨¡å¼
 #else
-	OSTimeDly(ticks);												//UCOSIIÑÓÊ±
+	OSTimeDly(ticks);												//UCOSIIå»¶æ—¶
 #endif 
 }
 
 
 /**********************************************************************************************************
  @Function			void SysTick_Handler(void)
- @Description			systickÖĞ¶Ï·şÎñº¯Êı,Ê¹ÓÃOSÊ±ÓÃµ½
+ @Description			systickä¸­æ–­æœåŠ¡å‡½æ•°,ä½¿ç”¨OSæ—¶ç”¨åˆ°
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void SysTick_Handler(void)
 {
 	HAL_IncTick();
-	if (delay_osrunning == 1)											//OS¿ªÊ¼ÅÜÁË,²ÅÖ´ĞĞÕı³£µÄµ÷¶È´¦Àí
+	if (delay_osrunning == 1)											//OSå¼€å§‹è·‘äº†,æ‰æ‰§è¡Œæ­£å¸¸çš„è°ƒåº¦å¤„ç†
 	{
-		OSIntEnter();													//½øÈëÖĞ¶Ï
-		OSTimeTick();													//µ÷ÓÃucosµÄÊ±ÖÓ·şÎñ³ÌĞò
-		OSIntExit();													//´¥·¢ÈÎÎñÇĞ»»ÈíÖĞ¶Ï
+		OSIntEnter();													//è¿›å…¥ä¸­æ–­
+		OSTimeTick();													//è°ƒç”¨ucosçš„æ—¶é’ŸæœåŠ¡ç¨‹åº
+		OSIntExit();													//è§¦å‘ä»»åŠ¡åˆ‡æ¢è½¯ä¸­æ–­
 	}
 }
 #endif
 
 /**********************************************************************************************************
  @Function			void Delay_Init(u32 SYSCLK)
- @Description			³õÊ¼»¯ÑÓ³Ùº¯Êı
-					µ±Ê¹ÓÃOSµÄÊ±ºò,´Ëº¯Êı»á³õÊ¼»¯OSµÄÊ±ÖÓ½ÚÅÄ
-					SYSTICKµÄÊ±ÖÓ¹Ì¶¨ÎªAHBÊ±ÖÓµÄ1/8
- @Input				SYSCLK	: ÏµÍ³Ê±ÖÓÆµÂÊ
+ @Description			åˆå§‹åŒ–å»¶è¿Ÿå‡½æ•°
+					å½“ä½¿ç”¨OSçš„æ—¶å€™,æ­¤å‡½æ•°ä¼šåˆå§‹åŒ–OSçš„æ—¶é’ŸèŠ‚æ‹
+					SYSTICKçš„æ—¶é’Ÿå›ºå®šä¸ºAHBæ—¶é’Ÿçš„1/8
+ @Input				SYSCLK	: ç³»ç»Ÿæ—¶é’Ÿé¢‘ç‡
  @Return				void
 **********************************************************************************************************/
 void Delay_Init(u32 SYSCLK)
 {
-#if SYSTEM_SUPPORT_OS													//Èç¹ûĞèÒªÖ§³ÖOS
+#if SYSTEM_SUPPORT_OS													//å¦‚æœéœ€è¦æ”¯æŒOS
 	u32 reload;
 #endif
-	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);						//SysTickÆµÂÊÎªHCLK
-	fac_us = SYSCLK;													//²»ÂÛÊÇ·ñÊ¹ÓÃOS, fac_us¶¼ĞèÒªÊ¹ÓÃ
-#if SYSTEM_SUPPORT_OS													//Èç¹ûĞèÒªÖ§³ÖOS
-	reload = SYSCLK;													//Ã¿ÃëÖÓµÄ¼ÆÊı´ÎÊı µ¥Î»ÎªK
-	reload *= 1000000 / delay_ostickspersec;								//¸ù¾İdelay_ostickspersecÉè¶¨Òç³öÊ±¼ä
-																	//reloadÎª24Î»¼Ä´æÆ÷,×î´óÖµ:16777216,ÔÚ216MÏÂ,Ô¼ºÏ77.7ms×óÓÒ	
-	fac_ms = 1000 / delay_ostickspersec;									//´ú±íOS¿ÉÒÔÑÓÊ±µÄ×îÉÙµ¥Î»
-	SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;								//¿ªÆôSYSTICKÖĞ¶Ï
-	SysTick->LOAD = reload;												//Ã¿1/OS_TICKS_PER_SECÃëÖĞ¶ÏÒ»´Î
-	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;								//¿ªÆôSYSTICK
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);						//SysTické¢‘ç‡ä¸ºHCLK
+	fac_us = SYSCLK;													//ä¸è®ºæ˜¯å¦ä½¿ç”¨OS, fac_uséƒ½éœ€è¦ä½¿ç”¨
+#if SYSTEM_SUPPORT_OS													//å¦‚æœéœ€è¦æ”¯æŒOS
+	reload = SYSCLK;													//æ¯ç§’é’Ÿçš„è®¡æ•°æ¬¡æ•° å•ä½ä¸ºK
+	reload *= 1000000 / delay_ostickspersec;								//æ ¹æ®delay_ostickspersecè®¾å®šæº¢å‡ºæ—¶é—´
+																	//reloadä¸º24ä½å¯„å­˜å™¨,æœ€å¤§å€¼:16777216,åœ¨216Mä¸‹,çº¦åˆ77.7mså·¦å³	
+	fac_ms = 1000 / delay_ostickspersec;									//ä»£è¡¨OSå¯ä»¥å»¶æ—¶çš„æœ€å°‘å•ä½
+	SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;								//å¼€å¯SYSTICKä¸­æ–­
+	SysTick->LOAD = reload;												//æ¯1/OS_TICKS_PER_SECç§’ä¸­æ–­ä¸€æ¬¡
+	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;								//å¼€å¯SYSTICK
 #endif
 }
 
-#if SYSTEM_SUPPORT_OS													//Èç¹ûĞèÒªÖ§³ÖOS
+#if SYSTEM_SUPPORT_OS													//å¦‚æœéœ€è¦æ”¯æŒOS
 /**********************************************************************************************************
  @Function			void Delay_US(u32 nus)
- @Description			ÑÓÊ±nus
- @Input				nus : ÒªÑÓÊ±µÄusÊı 0~204522252(×î´óÖµ¼´2^32/fac_us)
+ @Description			å»¶æ—¶nus
+ @Input				nus : è¦å»¶æ—¶çš„usæ•° 0~204522252(æœ€å¤§å€¼å³2^32/fac_us)
  @Return				void
 **********************************************************************************************************/	    								   
 void Delay_US(u32 nus)
 {
 	u32 ticks;
 	u32 told, tnow, tcnt = 0;
-	u32 reload = SysTick->LOAD;											//LOADµÄÖµ
+	u32 reload = SysTick->LOAD;											//LOADçš„å€¼
 	
-	ticks = nus * fac_us;												//ĞèÒªµÄ½ÚÅÄÊı
-	delay_osschedlock();												//×èÖ¹OSµ÷¶È, ·ÀÖ¹´ò¶ÏusÑÓÊ±
-	told = SysTick->VAL;												//¸Õ½øÈëÊ±µÄ¼ÆÊıÆ÷Öµ
+	ticks = nus * fac_us;												//éœ€è¦çš„èŠ‚æ‹æ•°
+	delay_osschedlock();												//é˜»æ­¢OSè°ƒåº¦, é˜²æ­¢æ‰“æ–­uså»¶æ—¶
+	told = SysTick->VAL;												//åˆšè¿›å…¥æ—¶çš„è®¡æ•°å™¨å€¼
 	while (1)
 	{
 		tnow = SysTick->VAL;
 		if (tnow != told)
 		{
 			if (tnow < told)
-				tcnt += told - tnow;									//ÕâÀï×¢ÒâÒ»ÏÂSYSTICKÊÇÒ»¸öµİ¼õµÄ¼ÆÊıÆ÷¾Í¿ÉÒÔÁË
+				tcnt += told - tnow;									//è¿™é‡Œæ³¨æ„ä¸€ä¸‹SYSTICKæ˜¯ä¸€ä¸ªé€’å‡çš„è®¡æ•°å™¨å°±å¯ä»¥äº†
 			else
 				tcnt += reload - tnow + told;
 			told = tnow;
-			if (tcnt >= ticks) break;									//Ê±¼ä³¬¹ı/µÈÓÚÒªÑÓ³ÙµÄÊ±¼ä,ÔòÍË³ö
+			if (tcnt >= ticks) break;									//æ—¶é—´è¶…è¿‡/ç­‰äºè¦å»¶è¿Ÿçš„æ—¶é—´,åˆ™é€€å‡º
 		}
 	}
-	delay_osschedunlock();												//»Ö¸´OSµ÷¶È
+	delay_osschedunlock();												//æ¢å¤OSè°ƒåº¦
 }
 
 /**********************************************************************************************************
  @Function			void Delay_MS(u16 nms)
- @Description			ÑÓÊ±nms
- @Input				nms : ÒªÑÓÊ±µÄmsÊı 0~65535
+ @Description			å»¶æ—¶nms
+ @Input				nms : è¦å»¶æ—¶çš„msæ•° 0~65535
  @Return				void
 **********************************************************************************************************/
 void Delay_MS(u16 nms)
 {
-	if (delay_osrunning && delay_osintnesting == 0)							//Èç¹ûOSÒÑ¾­ÔÚÅÜÁË,²¢ÇÒ²»ÊÇÔÚÖĞ¶ÏÀïÃæ(ÖĞ¶ÏÀïÃæ²»ÄÜÈÎÎñµ÷¶È)
+	if (delay_osrunning && delay_osintnesting == 0)							//å¦‚æœOSå·²ç»åœ¨è·‘äº†,å¹¶ä¸”ä¸æ˜¯åœ¨ä¸­æ–­é‡Œé¢(ä¸­æ–­é‡Œé¢ä¸èƒ½ä»»åŠ¡è°ƒåº¦)
 	{
-		if (nms >= fac_ms)												//ÑÓÊ±µÄÊ±¼ä´óÓÚOSµÄ×îÉÙÊ±¼äÖÜÆÚ
+		if (nms >= fac_ms)												//å»¶æ—¶çš„æ—¶é—´å¤§äºOSçš„æœ€å°‘æ—¶é—´å‘¨æœŸ
 		{
-   			delay_ostimedly(nms / fac_ms);								//OSÑÓÊ±
+   			delay_ostimedly(nms / fac_ms);								//OSå»¶æ—¶
 		}
-		nms %= fac_ms;													//OSÒÑ¾­ÎŞ·¨Ìá¹©ÕâÃ´Ğ¡µÄÑÓÊ±ÁË,²ÉÓÃÆÕÍ¨·½Ê½ÑÓÊ± 
+		nms %= fac_ms;													//OSå·²ç»æ— æ³•æä¾›è¿™ä¹ˆå°çš„å»¶æ—¶äº†,é‡‡ç”¨æ™®é€šæ–¹å¼å»¶æ—¶ 
 	}
-	delay_us((u32)(nms*1000));											//ÆÕÍ¨·½Ê½ÑÓÊ±
+	delay_us((u32)(nms*1000));											//æ™®é€šæ–¹å¼å»¶æ—¶
 }
 
-#else																//²»ÓÃucosÊ±
+#else																//ä¸ç”¨ucosæ—¶
 /**********************************************************************************************************
  @Function			void Delay_US(u32 nus)
- @Description			ÑÓÊ±nus
- @Input				nus : nusµÄÖµ²»Òª´óÓÚ1000us
+ @Description			å»¶æ—¶nus
+ @Input				nus : nusçš„å€¼ä¸è¦å¤§äº1000us
  @Return				void
 **********************************************************************************************************/
 void Delay_US(u32 nus)
 {
 	u32 ticks;
 	u32 told, tnow, tcnt = 0;
-	u32 reload = SysTick->LOAD;											//LOADµÄÖµ
+	u32 reload = SysTick->LOAD;											//LOADçš„å€¼
 	
-	ticks = nus * fac_us;												//ĞèÒªµÄ½ÚÅÄÊı
-	told = SysTick->VAL;												//¸Õ½øÈëÊ±µÄ¼ÆÊıÆ÷Öµ
+	ticks = nus * fac_us;												//éœ€è¦çš„èŠ‚æ‹æ•°
+	told = SysTick->VAL;												//åˆšè¿›å…¥æ—¶çš„è®¡æ•°å™¨å€¼
 	
 	while (1)
 	{
@@ -220,7 +220,7 @@ void Delay_US(u32 nus)
 		if (tnow != told)
 		{
 			if (tnow < told)
-				tcnt += told - tnow;									//ÕâÀï×¢ÒâÒ»ÏÂSYSTICKÊÇÒ»¸öµİ¼õµÄ¼ÆÊıÆ÷¾Í¿ÉÒÔÁË
+				tcnt += told - tnow;									//è¿™é‡Œæ³¨æ„ä¸€ä¸‹SYSTICKæ˜¯ä¸€ä¸ªé€’å‡çš„è®¡æ•°å™¨å°±å¯ä»¥äº†
 			else
 				tcnt += reload - tnow + told;
 			told = tnow;
@@ -228,9 +228,9 @@ void Delay_US(u32 nus)
 	#error No Define SYSTEMCLOCK!
 #else
 #if (SYSTEMCLOCK == 4194000)
-		if ((tcnt * 1020) >= ticks) break;									//Ê±¼ä³¬¹ı/µÈÓÚÒªÑÓ³ÙµÄÊ±¼ä,ÔòÍË³ö
+		if ((tcnt * 1020) >= ticks) break;									//æ—¶é—´è¶…è¿‡/ç­‰äºè¦å»¶è¿Ÿçš„æ—¶é—´,åˆ™é€€å‡º
 #elif (SYSTEMCLOCK == 32000000)
-		if ((tcnt * 1003) >= ticks) break;									//Ê±¼ä³¬¹ı/µÈÓÚÒªÑÓ³ÙµÄÊ±¼ä,ÔòÍË³ö
+		if ((tcnt * 1003) >= ticks) break;									//æ—¶é—´è¶…è¿‡/ç­‰äºè¦å»¶è¿Ÿçš„æ—¶é—´,åˆ™é€€å‡º
 #else
 	#error SYSTEMCLOCK Define Error
 #endif
@@ -241,8 +241,8 @@ void Delay_US(u32 nus)
 
 /**********************************************************************************************************
  @Function			void Delay_MS(u16 nms)
- @Description			ÑÓÊ±nms
- @Input				nms : ÒªÑÓÊ±µÄmsÊı
+ @Description			å»¶æ—¶nms
+ @Input				nms : è¦å»¶æ—¶çš„msæ•°
  @Return				void
 **********************************************************************************************************/
 void Delay_MS(u16 nms)

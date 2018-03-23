@@ -4,7 +4,7 @@
   * @author  Movebroad -- KK
   * @version V1.0
   * @date    2017-10-23
-  * @brief   ÖÐ¶Ïº¯Êý
+  * @brief   ä¸­æ–­å‡½æ•°
   *********************************************************************************************************
   * @attention
   *			
@@ -22,19 +22,19 @@
 
 /**********************************************************************************************************
  @Function			void TIM2_IRQHandler(void)
- @Description			¶¨Ê±Æ÷2ÖÐ¶Ï·þÎñº¯Êý
+ @Description			å®šæ—¶å™¨2ä¸­æ–­æœåŠ¡å‡½æ•°
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void TIM2_IRQHandler(void)
 {
-	HAL_TIM_IRQHandler(&RADAR_TIM2_Handler);								//µ÷ÓÃHAL¿âTIM2ÖÐ¶Ï´¦Àí¹«¹²º¯Êý
+	HAL_TIM_IRQHandler(&RADAR_TIM2_Handler);								//è°ƒç”¨HALåº“TIM2ä¸­æ–­å¤„ç†å…¬å…±å‡½æ•°
 }
 
 /**********************************************************************************************************
  @Function			void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
- @Description			¶¨Ê±Æ÷ÖÐ¶Ï´¦Àí»Øµ÷º¯Êý
-					ÔÚHAL¿âÖÐËùÓÐ¶¨Ê±Æ÷ÖÐ¶Ï·þÎñº¯Êý¶¼»áµ÷ÓÃ´Ëº¯Êý
+ @Description			å®šæ—¶å™¨ä¸­æ–­å¤„ç†å›žè°ƒå‡½æ•°
+					åœ¨HALåº“ä¸­æ‰€æœ‰å®šæ—¶å™¨ä¸­æ–­æœåŠ¡å‡½æ•°éƒ½ä¼šè°ƒç”¨æ­¤å‡½æ•°
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -42,7 +42,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if (htim->Instance == TIM2) {
 		if (RADAR_DAC_Handler.Instance) {
-			Radar_Get_Sample_Time();										//À×´ï²ÉÑù½ÚÅÄ
+			Radar_Get_Sample_Time();										//é›·è¾¾é‡‡æ ·èŠ‚æ‹
 		}
 	}
 }
@@ -50,7 +50,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 /**********************************************************************************************************
  @Function			void USART1_IRQHandler(void)
- @Description			´®¿Ú1ÖÐ¶Ï·þÎñ³ÌÐò
+ @Description			ä¸²å£1ä¸­æ–­æœåŠ¡ç¨‹åº
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -58,18 +58,18 @@ void USART1_IRQHandler(void)
 {
 //	u32 timeout = 0;
 	
-	HAL_UART_IRQHandler(&UART1_Handler);									//µ÷ÓÃHAL¿âÖÐ¶Ï´¦Àí¹«ÓÃº¯Êý
+	HAL_UART_IRQHandler(&UART1_Handler);									//è°ƒç”¨HALåº“ä¸­æ–­å¤„ç†å…¬ç”¨å‡½æ•°
 	
 //	timeout = 0;
-//	while (HAL_UART_GetState(&UART1_Handler) != HAL_UART_STATE_READY) {			//µÈ´ý¾ÍÐ÷
-//		timeout++;													//³¬Ê±´¦Àí
+//	while (HAL_UART_GetState(&UART1_Handler) != HAL_UART_STATE_READY) {			//ç­‰å¾…å°±ç»ª
+//		timeout++;													//è¶…æ—¶å¤„ç†
 //		if (timeout > HAL_MAX_DELAY) break;
 //	}
 //	
 //	timeout = 0;
-//	/* Ò»´Î´¦ÀíÍê³ÉÖ®ºó, ÖØÐÂ¿ªÆôÖÐ¶Ï²¢ÉèÖÃRxXferCountÎª1 */
+//	/* ä¸€æ¬¡å¤„ç†å®Œæˆä¹‹åŽ, é‡æ–°å¼€å¯ä¸­æ–­å¹¶è®¾ç½®RxXferCountä¸º1 */
 //	while (HAL_UART_Receive_IT(&UART1_Handler, (u8 *)USART1_aRxBuffer, USART1_RXBUFFERSIZE) != HAL_OK) {
-//		timeout++;													//³¬Ê±´¦Àí
+//		timeout++;													//è¶…æ—¶å¤„ç†
 //		if (timeout > HAL_MAX_DELAY) break;
 //	}
 	
@@ -88,7 +88,7 @@ void USART1_IRQHandler(void)
 
 /**********************************************************************************************************
  @Function			void USART2_IRQHandler(void)
- @Description			´®¿Ú2ÖÐ¶Ï·þÎñ³ÌÐò
+ @Description			ä¸²å£2ä¸­æ–­æœåŠ¡ç¨‹åº
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -96,18 +96,18 @@ void USART2_IRQHandler(void)
 {
 //	u32 timeout = 0;
 	
-	HAL_UART_IRQHandler(&UART2_Handler);									//µ÷ÓÃHAL¿âÖÐ¶Ï´¦Àí¹«ÓÃº¯Êý
+	HAL_UART_IRQHandler(&UART2_Handler);									//è°ƒç”¨HALåº“ä¸­æ–­å¤„ç†å…¬ç”¨å‡½æ•°
 	
 //	timeout = 0;
-//	while (HAL_UART_GetState(&UART2_Handler) != HAL_UART_STATE_READY) {			//µÈ´ý¾ÍÐ÷
-//		timeout++;													//³¬Ê±´¦Àí
+//	while (HAL_UART_GetState(&UART2_Handler) != HAL_UART_STATE_READY) {			//ç­‰å¾…å°±ç»ª
+//		timeout++;													//è¶…æ—¶å¤„ç†
 //		if (timeout > HAL_MAX_DELAY) break;
 //	}
 //	
 //	timeout = 0;
-//	/* Ò»´Î´¦ÀíÍê³ÉÖ®ºó, ÖØÐÂ¿ªÆôÖÐ¶Ï²¢ÉèÖÃRxXferCountÎª1 */
+//	/* ä¸€æ¬¡å¤„ç†å®Œæˆä¹‹åŽ, é‡æ–°å¼€å¯ä¸­æ–­å¹¶è®¾ç½®RxXferCountä¸º1 */
 //	while (HAL_UART_Receive_IT(&UART2_Handler, (u8 *)USART2_aRxBuffer, USART2_RXBUFFERSIZE) != HAL_OK) {
-//		timeout++;													//³¬Ê±´¦Àí
+//		timeout++;													//è¶…æ—¶å¤„ç†
 //		if (timeout > HAL_MAX_DELAY) break;
 //	}
 	
@@ -126,74 +126,74 @@ void USART2_IRQHandler(void)
 
 /**********************************************************************************************************
  @Function			void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
- @Description			´®¿Ú½ÓÊÕÖÐ¶Ï´¦Àí»Øµ÷º¯Êý
-					ÔÚHAL¿âÖÐËùÓÐ´®¿Ú½ÓÊÕÖÐ¶Ï·þÎñº¯Êý¶¼»áµ÷ÓÃ´Ëº¯Êý
- @Input				huart : UART¾ä±ú
+ @Description			ä¸²å£æŽ¥æ”¶ä¸­æ–­å¤„ç†å›žè°ƒå‡½æ•°
+					åœ¨HALåº“ä¸­æ‰€æœ‰ä¸²å£æŽ¥æ”¶ä¸­æ–­æœåŠ¡å‡½æ•°éƒ½ä¼šè°ƒç”¨æ­¤å‡½æ•°
+ @Input				huart : UARTå¥æŸ„
  @Return				void
 **********************************************************************************************************/
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart->Instance == USART1)										//Èç¹ûÊÇ´®¿Ú1
+	if (huart->Instance == USART1)										//å¦‚æžœæ˜¯ä¸²å£1
 	{
-		if ((USART1_RX_STA & 0x8000) == 0) {								//½ÓÊÕÎ´Íê³É
-			if (USART1_RX_STA & 0x4000) {									//½ÓÊÕµ½ÁË0x0D
-				if (USART1_aRxBuffer[0] != 0x0a) {							//»¹Î´½ÓÊÕµ½\r\n
+		if ((USART1_RX_STA & 0x8000) == 0) {								//æŽ¥æ”¶æœªå®Œæˆ
+			if (USART1_RX_STA & 0x4000) {									//æŽ¥æ”¶åˆ°äº†0x0D
+				if (USART1_aRxBuffer[0] != 0x0a) {							//è¿˜æœªæŽ¥æ”¶åˆ°\r\n
 					USART1_RX_STA &= 0xBFFF;
 					USART1_RX_BUF[USART1_RX_STA & 0X3FFF] = USART1_aRxBuffer[0];
 					USART1_RX_STA++;
-					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 				}
-				else {												//½ÓÊÕÍê³ÉÁË
+				else {												//æŽ¥æ”¶å®Œæˆäº†
 					USART1_RX_BUF[USART1_RX_STA & 0X3FFF] = USART1_aRxBuffer[0];
 					USART1_RX_STA++;
-					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 					USART1_RX_STA |= 0x8000;
 				}
 			}
-			else {													//»¹Ã»ÊÕµ½0x0D
+			else {													//è¿˜æ²¡æ”¶åˆ°0x0D
 				if (USART1_aRxBuffer[0] == 0x0d) {
 					USART1_RX_BUF[USART1_RX_STA & 0X3FFF] = USART1_aRxBuffer[0];
 					USART1_RX_STA++;
-					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 					USART1_RX_STA |= 0x4000;
 				}
 				else {
 					USART1_RX_BUF[USART1_RX_STA & 0X3FFF] = USART1_aRxBuffer[0];
 					USART1_RX_STA++;
-					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 				}
 			}
 		}
 	}
 	
-	if (huart->Instance == USART2)										//Èç¹ûÊÇ´®¿Ú2
+	if (huart->Instance == USART2)										//å¦‚æžœæ˜¯ä¸²å£2
 	{
-		if ((USART2_RX_STA & 0x8000) == 0) {								//½ÓÊÕÎ´Íê³É
-			if (USART2_RX_STA & 0x4000) {									//½ÓÊÕµ½ÁË0x0D
-				if (USART2_aRxBuffer[0] != 0x0a) {							//»¹Î´½ÓÊÕµ½\r\n
+		if ((USART2_RX_STA & 0x8000) == 0) {								//æŽ¥æ”¶æœªå®Œæˆ
+			if (USART2_RX_STA & 0x4000) {									//æŽ¥æ”¶åˆ°äº†0x0D
+				if (USART2_aRxBuffer[0] != 0x0a) {							//è¿˜æœªæŽ¥æ”¶åˆ°\r\n
 					USART2_RX_STA &= 0xBFFF;
 					USART2_RX_BUF[USART2_RX_STA & 0X3FFF] = USART2_aRxBuffer[0];
 					USART2_RX_STA++;
-					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 				}
-				else {												//½ÓÊÕÍê³ÉÁË
+				else {												//æŽ¥æ”¶å®Œæˆäº†
 					USART2_RX_BUF[USART2_RX_STA & 0X3FFF] = USART2_aRxBuffer[0];
 					USART2_RX_STA++;
-					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 					USART2_RX_STA |= 0x8000;
 				}
 			}
-			else {													//»¹Ã»ÊÕµ½0x0D
+			else {													//è¿˜æ²¡æ”¶åˆ°0x0D
 				if (USART2_aRxBuffer[0] == 0x0d) {
 					USART2_RX_BUF[USART2_RX_STA & 0X3FFF] = USART2_aRxBuffer[0];
 					USART2_RX_STA++;
-					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 					USART2_RX_STA |= 0x4000;
 				}
 				else {
 					USART2_RX_BUF[USART2_RX_STA & 0X3FFF] = USART2_aRxBuffer[0];
 					USART2_RX_STA++;
-					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//½ÓÊÕÊý¾Ý´íÎó, ÖØÐÂ¿ªÊ¼½ÓÊÕ
+					if ((USART2_RX_STA & 0X3FFF) > (USART2_REC_LEN-1)) USART2_RX_STA = 0;		//æŽ¥æ”¶æ•°æ®é”™è¯¯, é‡æ–°å¼€å§‹æŽ¥æ”¶
 				}
 			}
 		}

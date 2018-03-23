@@ -10,7 +10,7 @@
 
 #define BEEP(a)						BEEP_Ctrl(a);
 
-void BEEP_Ctrl(u8 beepEnable);											//·äÃùÆ÷¿ØÖÆ
-void BEEP_CtrlRepeat(u16 nCount, u16 nMs);									//·äÃùÆ÷¿ØÖÆÖØ¸´Ïì
+void BEEP_Ctrl(u8 beepEnable);											//èœ‚é¸£å™¨æ§åˆ¶
+void BEEP_CtrlRepeat(u16 nCount, u16 nMs);									//èœ‚é¸£å™¨æ§åˆ¶é‡å¤å“
 
 #endif

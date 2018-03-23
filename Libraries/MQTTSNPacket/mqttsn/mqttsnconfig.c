@@ -29,10 +29,10 @@ unsigned char MQTTSN_DataStack[MQTTSN_DATASTACK_SIZE];
 
 /**********************************************************************************************************
  @Function			void MQTTSN_WaitforCallback(MQTTSN_ClientsTypeDef* pClient)
- @Description			MQTTSN_WaitforCallback	: MQTTSNÊı¾İµÈ´ı½ÓÊÕ»Øµ÷º¯Êı
- @Input				pClient				: MqttSN¿Í»§¶ËÊµÀı
+ @Description			MQTTSN_WaitforCallback	: MQTTSNæ•°æ®ç­‰å¾…æ¥æ”¶å›è°ƒå‡½æ•°
+ @Input				pClient				: MqttSNå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
- @attention			MQTTSNµÈ´ıÏàÓ¦Ó¦´ğÏûÏ¢µ½À´Ê±¼ä½Ï³¤,´Ë»Øµ÷º¯ÊıÌá¹©ÔÚµÈ´ıÊ±ÔËĞĞº¯Êı
+ @attention			MQTTSNç­‰å¾…ç›¸åº”åº”ç­”æ¶ˆæ¯åˆ°æ¥æ—¶é—´è¾ƒé•¿,æ­¤å›è°ƒå‡½æ•°æä¾›åœ¨ç­‰å¾…æ—¶è¿è¡Œå‡½æ•°
 **********************************************************************************************************/
 void MQTTSN_WaitforCallback(MQTTSN_ClientsTypeDef* pClient)
 {
@@ -46,9 +46,9 @@ void MQTTSN_WaitforCallback(MQTTSN_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void MQTTSN_Client_Init(MQTTSN_ClientsTypeDef* pClient, MQTTSN_SocketNetTypeDef* NetSock)
- @Description			MQTTSN_Client_Init						: ³õÊ¼»¯MQTTSN¿Í»§¶Ë
- @Input				pClient								: MQTTSN¿Í»§¶ËÊµÀı
-					NetSock								: MQTTSN Socket Ğ­ÒéÕ»
+ @Description			MQTTSN_Client_Init						: åˆå§‹åŒ–MQTTSNå®¢æˆ·ç«¯
+ @Input				pClient								: MQTTSNå®¢æˆ·ç«¯å®ä¾‹
+					NetSock								: MQTTSN Socket åè®®æ ˆ
  @Return				void
 **********************************************************************************************************/
 void MQTTSN_Client_Init(MQTTSN_ClientsTypeDef* pClient, MQTTSN_SocketNetTypeDef* NetSock)

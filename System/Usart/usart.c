@@ -15,69 +15,69 @@
 
 #include "usart.h"
 
-u8 USART1_RX_BUF[USART1_REC_LEN];    										//USART1½ÓÊÕ»º³å,×î´óUSART1_REC_LEN¸ö×Ö½Ú
-u8 USART2_RX_BUF[USART2_REC_LEN];    										//USART2½ÓÊÕ»º³å,×î´óUSART1_REC_LEN¸ö×Ö½Ú
+u8 USART1_RX_BUF[USART1_REC_LEN];    										//USART1æ¥æ”¶ç¼“å†²,æœ€å¤§USART1_REC_LENä¸ªå­—èŠ‚
+u8 USART2_RX_BUF[USART2_REC_LEN];    										//USART2æ¥æ”¶ç¼“å†²,æœ€å¤§USART1_REC_LENä¸ªå­—èŠ‚
 
-u16 USART1_RX_STA = 0;													//USART1½ÓÊÕ×´Ì¬±ê¼Ç bit15,½ÓÊÕÍê³É±êÖ¾ bit14,½ÓÊÕµ½0x0d(\n)
-u16 USART2_RX_STA = 0;													//USART2½ÓÊÕ×´Ì¬±ê¼Ç bit15,½ÓÊÕÍê³É±êÖ¾ bit14,½ÓÊÕµ½0x0d(\n)
+u16 USART1_RX_STA = 0;													//USART1æ¥æ”¶çŠ¶æ€æ ‡è®° bit15,æ¥æ”¶å®Œæˆæ ‡å¿— bit14,æ¥æ”¶åˆ°0x0d(\n)
+u16 USART2_RX_STA = 0;													//USART2æ¥æ”¶çŠ¶æ€æ ‡è®° bit15,æ¥æ”¶å®Œæˆæ ‡å¿— bit14,æ¥æ”¶åˆ°0x0d(\n)
 
-u8 USART1_aRxBuffer[USART1_RXBUFFERSIZE];									//HAL¿âÊ¹ÓÃµÄ´®¿Ú½ÓÊÕ»º³å
-u8 USART2_aRxBuffer[USART2_RXBUFFERSIZE];									//HAL¿âÊ¹ÓÃµÄ´®¿Ú½ÓÊÕ»º³å
+u8 USART1_aRxBuffer[USART1_RXBUFFERSIZE];									//HALåº“ä½¿ç”¨çš„ä¸²å£æ¥æ”¶ç¼“å†²
+u8 USART2_aRxBuffer[USART2_RXBUFFERSIZE];									//HALåº“ä½¿ç”¨çš„ä¸²å£æ¥æ”¶ç¼“å†²
 
-UART_HandleTypeDef UART1_Handler;											//UART1¾ä±ú
-UART_HandleTypeDef UART2_Handler;											//UART2¾ä±ú
+UART_HandleTypeDef UART1_Handler;											//UART1å¥æŸ„
+UART_HandleTypeDef UART2_Handler;											//UART2å¥æŸ„
 
 /**********************************************************************************************************
  @Function			void Uart1_Init(u32 bound)
- @Description			´®¿Ú1³õÊ¼»¯
+ @Description			ä¸²å£1åˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void Uart1_Init(u32 bound)
 {
 	UART1_Handler.Instance = USART1;										//USART1
-	UART1_Handler.Init.BaudRate = bound;									//²¨ÌØÂÊ
-	UART1_Handler.Init.WordLength = UART_WORDLENGTH_8B;						//×Ö³¤Îª8Î»Êı¾İ¸ñÊ½
-	UART1_Handler.Init.StopBits = UART_STOPBITS_1;							//Ò»¸öÍ£Ö¹Î»
-	UART1_Handler.Init.Parity = UART_PARITY_NONE;							//ÎŞÆæÅ¼Ğ£ÑéÎ»
-	UART1_Handler.Init.HwFlowCtl = UART_HWCONTROL_NONE;						//ÎŞÓ²¼şÁ÷¿Ø
-	UART1_Handler.Init.Mode = UART_MODE_TX_RX;								//ÊÕ·¢Ä£Ê½
+	UART1_Handler.Init.BaudRate = bound;									//æ³¢ç‰¹ç‡
+	UART1_Handler.Init.WordLength = UART_WORDLENGTH_8B;						//å­—é•¿ä¸º8ä½æ•°æ®æ ¼å¼
+	UART1_Handler.Init.StopBits = UART_STOPBITS_1;							//ä¸€ä¸ªåœæ­¢ä½
+	UART1_Handler.Init.Parity = UART_PARITY_NONE;							//æ— å¥‡å¶æ ¡éªŒä½
+	UART1_Handler.Init.HwFlowCtl = UART_HWCONTROL_NONE;						//æ— ç¡¬ä»¶æµæ§
+	UART1_Handler.Init.Mode = UART_MODE_TX_RX;								//æ”¶å‘æ¨¡å¼
 	UART1_Handler.Init.OverSampling = UART_OVERSAMPLING_16;
-	if (HAL_UART_Init(&UART1_Handler) != HAL_OK) {							//HAL_UART_Init()»áÊ¹ÄÜUART1
+	if (HAL_UART_Init(&UART1_Handler) != HAL_OK) {							//HAL_UART_Init()ä¼šä½¿èƒ½UART1
 		while(1);
 	}
 	
-	/* ¸Ãº¯Êı»á¿ªÆô½ÓÊÕÖĞ¶Ï: ±êÖ¾Î»UART_IT_RXNE, ²¢ÇÒÉèÖÃ½ÓÊÕ»º³åÒÔ¼°½ÓÊÕ»º³å½ÓÊÕ×î´óÊı¾İÁ¿ */
+	/* è¯¥å‡½æ•°ä¼šå¼€å¯æ¥æ”¶ä¸­æ–­: æ ‡å¿—ä½UART_IT_RXNE, å¹¶ä¸”è®¾ç½®æ¥æ”¶ç¼“å†²ä»¥åŠæ¥æ”¶ç¼“å†²æ¥æ”¶æœ€å¤§æ•°æ®é‡ */
 	HAL_UART_Receive_IT(&UART1_Handler, (u8 *)USART1_aRxBuffer, USART1_RXBUFFERSIZE);
 }
 
 /**********************************************************************************************************
  @Function			void Uart2_Init(u32 bound)
- @Description			´®¿Ú2³õÊ¼»¯
+ @Description			ä¸²å£2åˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void Uart2_Init(u32 bound)
 {
 	UART2_Handler.Instance = USART2;										//USART2
-	UART2_Handler.Init.BaudRate = bound;									//²¨ÌØÂÊ
-	UART2_Handler.Init.WordLength = UART_WORDLENGTH_8B;						//×Ö³¤Îª8Î»Êı¾İ¸ñÊ½
-	UART2_Handler.Init.StopBits = UART_STOPBITS_1;							//Ò»¸öÍ£Ö¹Î»
-	UART2_Handler.Init.Parity = UART_PARITY_NONE;							//ÎŞÆæÅ¼Ğ£ÑéÎ»
-	UART2_Handler.Init.HwFlowCtl = UART_HWCONTROL_NONE;						//ÎŞÓ²¼şÁ÷¿Ø
-	UART2_Handler.Init.Mode = UART_MODE_TX_RX;								//ÊÕ·¢Ä£Ê½
+	UART2_Handler.Init.BaudRate = bound;									//æ³¢ç‰¹ç‡
+	UART2_Handler.Init.WordLength = UART_WORDLENGTH_8B;						//å­—é•¿ä¸º8ä½æ•°æ®æ ¼å¼
+	UART2_Handler.Init.StopBits = UART_STOPBITS_1;							//ä¸€ä¸ªåœæ­¢ä½
+	UART2_Handler.Init.Parity = UART_PARITY_NONE;							//æ— å¥‡å¶æ ¡éªŒä½
+	UART2_Handler.Init.HwFlowCtl = UART_HWCONTROL_NONE;						//æ— ç¡¬ä»¶æµæ§
+	UART2_Handler.Init.Mode = UART_MODE_TX_RX;								//æ”¶å‘æ¨¡å¼
 	UART1_Handler.Init.OverSampling = UART_OVERSAMPLING_16;
-	if (HAL_UART_Init(&UART2_Handler) != HAL_OK) {							//HAL_UART_Init()»áÊ¹ÄÜUART2
+	if (HAL_UART_Init(&UART2_Handler) != HAL_OK) {							//HAL_UART_Init()ä¼šä½¿èƒ½UART2
 		while (1);
 	}
 	
-	/* ¸Ãº¯Êı»á¿ªÆô½ÓÊÕÖĞ¶Ï: ±êÖ¾Î»UART_IT_RXNE, ²¢ÇÒÉèÖÃ½ÓÊÕ»º³åÒÔ¼°½ÓÊÕ»º³å½ÓÊÕ×î´óÊı¾İÁ¿ */
+	/* è¯¥å‡½æ•°ä¼šå¼€å¯æ¥æ”¶ä¸­æ–­: æ ‡å¿—ä½UART_IT_RXNE, å¹¶ä¸”è®¾ç½®æ¥æ”¶ç¼“å†²ä»¥åŠæ¥æ”¶ç¼“å†²æ¥æ”¶æœ€å¤§æ•°æ®é‡ */
 	HAL_UART_Receive_IT(&UART2_Handler, (u8 *)USART2_aRxBuffer, USART2_RXBUFFERSIZE);
 }
 
 /**********************************************************************************************************
  @Function			void Uart1_PortSerialEnable(u8 xRxEnable, u8 xTxEnable)
- @Description			Ê¹ÄÜ/Ê§ÄÜ ·¢ËÍ/½ÓÊÕ ´®¿ÚÖĞ¶Ï
+ @Description			ä½¿èƒ½/å¤±èƒ½ å‘é€/æ¥æ”¶ ä¸²å£ä¸­æ–­
  @Input				xRxEnable : 1 ENABLE
 							  0 DISABLE
 					xTxEnable : 1 ENBALE
@@ -88,17 +88,17 @@ void Uart1_PortSerialEnable(u8 xRxEnable, u8 xTxEnable)
 {
 	ENTER_CRITICAL_SECTION();
 	
-	if (xRxEnable) {													//Ê¹ÄÜ´®¿Ú½ÓÊÕÖĞ¶Ï
+	if (xRxEnable) {													//ä½¿èƒ½ä¸²å£æ¥æ”¶ä¸­æ–­
 		__HAL_USART_ENABLE_IT(&UART1_Handler, UART_IT_RXNE);
 	}
-	else {															//Ê§ÄÜ´®¿Ú½ÓÊÕÖĞ¶Ï
+	else {															//å¤±èƒ½ä¸²å£æ¥æ”¶ä¸­æ–­
 		__HAL_USART_DISABLE_IT(&UART1_Handler, UART_IT_RXNE);
 	}
 	
-	if (xTxEnable) {													//Ê¹ÄÜ´®¿Ú·¢ËÍÖĞ¶Ï
+	if (xTxEnable) {													//ä½¿èƒ½ä¸²å£å‘é€ä¸­æ–­
 		__HAL_USART_ENABLE_IT(&UART1_Handler, UART_IT_TXE);
 	}
-	else {															//Ê§ÄÜ´®¿Ú·¢ËÍÖĞ¶Ï
+	else {															//å¤±èƒ½ä¸²å£å‘é€ä¸­æ–­
 		__HAL_USART_DISABLE_IT(&UART1_Handler, UART_IT_TXE);
 	}
 	
@@ -107,7 +107,7 @@ void Uart1_PortSerialEnable(u8 xRxEnable, u8 xTxEnable)
 
 /**********************************************************************************************************
  @Function			void Uart2_PortSerialEnable(u8 xRxEnable, u8 xTxEnable)
- @Description			Ê¹ÄÜ/Ê§ÄÜ ·¢ËÍ/½ÓÊÕ ´®¿ÚÖĞ¶Ï
+ @Description			ä½¿èƒ½/å¤±èƒ½ å‘é€/æ¥æ”¶ ä¸²å£ä¸­æ–­
  @Input				xRxEnable : 1 ENABLE
 							  0 DISABLE
 					xTxEnable : 1 ENBALE
@@ -118,17 +118,17 @@ void Uart2_PortSerialEnable(u8 xRxEnable, u8 xTxEnable)
 {
 	ENTER_CRITICAL_SECTION();
 	
-	if (xRxEnable) {													//Ê¹ÄÜ´®¿Ú½ÓÊÕÖĞ¶Ï
+	if (xRxEnable) {													//ä½¿èƒ½ä¸²å£æ¥æ”¶ä¸­æ–­
 		__HAL_USART_ENABLE_IT(&UART2_Handler, UART_IT_RXNE);
 	}
-	else {															//Ê§ÄÜ´®¿Ú½ÓÊÕÖĞ¶Ï
+	else {															//å¤±èƒ½ä¸²å£æ¥æ”¶ä¸­æ–­
 		__HAL_USART_DISABLE_IT(&UART2_Handler, UART_IT_RXNE);
 	}
 	
-	if (xTxEnable) {													//Ê¹ÄÜ´®¿Ú·¢ËÍÖĞ¶Ï
+	if (xTxEnable) {													//ä½¿èƒ½ä¸²å£å‘é€ä¸­æ–­
 		__HAL_USART_ENABLE_IT(&UART2_Handler, UART_IT_TXE);
 	}
-	else {															//Ê§ÄÜ´®¿Ú·¢ËÍÖĞ¶Ï
+	else {															//å¤±èƒ½ä¸²å£å‘é€ä¸­æ–­
 		__HAL_USART_DISABLE_IT(&UART2_Handler, UART_IT_TXE);
 	}
 	
@@ -137,7 +137,7 @@ void Uart2_PortSerialEnable(u8 xRxEnable, u8 xTxEnable)
 
 /**********************************************************************************************************
  @Function			void Uart_EnterCriticalSection(void)
- @Description			½øÈë¹Ø¼ü²Ù×÷,¹Ø±ÕÖĞ¶Ï,µÈ´ıÖĞ¶Ï½áÊø·µ»Ø
+ @Description			è¿›å…¥å…³é”®æ“ä½œ,å…³é—­ä¸­æ–­,ç­‰å¾…ä¸­æ–­ç»“æŸè¿”å›
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -148,7 +148,7 @@ void Uart_EnterCriticalSection(void)
 
 /**********************************************************************************************************
  @Function			void Uart_ExitCriticalSection(void)
- @Description			ÍË³ö¹Ø¼ü²Ù×÷,¿ªÆôÖĞ¶Ï
+ @Description			é€€å‡ºå…³é”®æ“ä½œ,å¼€å¯ä¸­æ–­
  @Input				void
  @Return				void
 **********************************************************************************************************/

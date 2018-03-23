@@ -148,9 +148,9 @@ void FLASH_EEPROM_WriteWord(unsigned int Address, unsigned int Data)
  @Function			void FLASH_EEPROM_ReadBuffer(unsigned int Address, unsigned char* buf, unsigned short length)
  @Description			FLASH_EEPROM_ReadBuffer
  @Input				void
- @Return				addr   : ¶Á³öÊı¾İEEPROMÆ«ÒÆµØÖ·
-					*buf   : ´ı¶Á³öÊı¾İµØÖ·
-					length : ¶Á³ö×Ö½ÚÊı
+ @Return				addr   : è¯»å‡ºæ•°æ®EEPROMåç§»åœ°å€
+					*buf   : å¾…è¯»å‡ºæ•°æ®åœ°å€
+					length : è¯»å‡ºå­—èŠ‚æ•°
 **********************************************************************************************************/
 void FLASH_EEPROM_ReadBuffer(unsigned int Address, unsigned char* buf, unsigned short length)
 {
@@ -163,9 +163,9 @@ void FLASH_EEPROM_ReadBuffer(unsigned int Address, unsigned char* buf, unsigned 
  @Function			void FLASH_EEPROM_WriteBuffer(unsigned int Address, unsigned char* buf, unsigned short length)
  @Description			FLASH_EEPROM_WriteBuffer
  @Input				void
- @Return				addr   : Ğ´ÈëÊı¾İEEPROMÆ«ÒÆµØÖ·
-					*buf   : ´ıĞ´ÈëÊı¾İµØÖ·
-					length : Ğ´Èë×Ö½ÚÊı
+ @Return				addr   : å†™å…¥æ•°æ®EEPROMåç§»åœ°å€
+					*buf   : å¾…å†™å…¥æ•°æ®åœ°å€
+					length : å†™å…¥å­—èŠ‚æ•°
 **********************************************************************************************************/
 void FLASH_EEPROM_WriteBuffer(unsigned int Address, unsigned char* buf, unsigned short length)
 {
@@ -183,7 +183,7 @@ void FLASH_EEPROM_WriteBuffer(unsigned int Address, unsigned char* buf, unsigned
 
 /**********************************************************************************************************
  @Function			void EEPROM_EnterCriticalSection(void)
- @Description			½øÈë¹Ø¼ü²Ù×÷,¹Ø±ÕÖĞ¶Ï,µÈ´ıÖĞ¶Ï½áÊø·µ»Ø
+ @Description			è¿›å…¥å…³é”®æ“ä½œ,å…³é—­ä¸­æ–­,ç­‰å¾…ä¸­æ–­ç»“æŸè¿”å›
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -194,7 +194,7 @@ void EEPROM_EnterCriticalSection(void)
 
 /**********************************************************************************************************
  @Function			void EEPROM_ExitCriticalSection(void)
- @Description			ÍË³ö¹Ø¼ü²Ù×÷,¿ªÆôÖĞ¶Ï
+ @Description			é€€å‡ºå…³é”®æ“ä½œ,å¼€å¯ä¸­æ–­
  @Input				void
  @Return				void
 **********************************************************************************************************/

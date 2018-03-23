@@ -3,7 +3,7 @@
 
 #include "sys.h"
 
-void IWDG_Init(u8 prer, u16 rlr);											//初始化独立看门狗
-void IWDG_Feed(void);													//喂独立看门狗
+void IWDG_Init(u8 prer, u16 rlr);											//鍒濆鍖栫嫭绔嬬湅闂ㄧ嫍
+void IWDG_Feed(void);													//鍠傜嫭绔嬬湅闂ㄧ嫍
 
 #endif

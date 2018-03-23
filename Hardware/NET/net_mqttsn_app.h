@@ -37,22 +37,22 @@ typedef enum
 	OBJECT_TYPE_TMOTES_STATUS_EXTEND_PUT	= 0x01							//EXTEND		STATUS
 }NET_MQTTSN_ObjectPacketTypeDef;
 
-MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTTSN_MessageDataTypeDef* messageHandler);			//MQTTSN½ÓÊÕ´¦Àí
-MQTTSN_StatusTypeDef NET_MQTTSN_SendPayloadPacket(MQTTSN_ClientsTypeDef* pClient, NET_MQTTSN_ObjectPacketTypeDef ObjectPacket);	//MQTTSN·¢ËÍ¸ºÔØ°ü
+MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTTSN_MessageDataTypeDef* messageHandler);			//MQTTSNæ¥æ”¶å¤„ç†
+MQTTSN_StatusTypeDef NET_MQTTSN_SendPayloadPacket(MQTTSN_ClientsTypeDef* pClient, NET_MQTTSN_ObjectPacketTypeDef ObjectPacket);	//MQTTSNå‘é€è´Ÿè½½åŒ…
 
-void NET_MQTTSN_APP_PollExecution(MQTTSN_ClientsTypeDef* pClient);				//MqttSNÂß¼­´¦Àí
-void NET_MQTTSN_NBIOT_Event_StopMode(MQTTSN_ClientsTypeDef* pClient);				//Í£Ö¹Ä£Ê½
-void NET_MQTTSN_NBIOT_Event_HardwareReboot(MQTTSN_ClientsTypeDef* pClient);		//Ó²¼şÖØÆô
-void NET_MQTTSN_NBIOT_Event_ModuleCheck(MQTTSN_ClientsTypeDef* pClient);			//Ä£¿é¼ì²â
-void NET_MQTTSN_NBIOT_Event_ParameterConfig(MQTTSN_ClientsTypeDef* pClient);		//²ÎÊıÅäÖÃ
-void NET_MQTTSN_NBIOT_Event_SimICCIDCheck(MQTTSN_ClientsTypeDef* pClient);			//Sim¿¨¼ì²â
-void NET_MQTTSN_NBIOT_Event_MiscEquipConfig(MQTTSN_ClientsTypeDef* pClient);		//ÆäËûÅäÖÃ
-void NET_MQTTSN_NBIOT_Event_AttachCheck(MQTTSN_ClientsTypeDef* pClient);			//×¢Íø¼ì²é
-void NET_MQTTSN_NBIOT_Event_AttachExecute(MQTTSN_ClientsTypeDef* pClient);			//×¢Íø½øĞĞ
-void NET_MQTTSN_NBIOT_Event_AttachInquire(MQTTSN_ClientsTypeDef* pClient);			//×¢Íø²éÑ¯
-void NET_MQTTSN_NBIOT_Event_PatameterCheckOut(MQTTSN_ClientsTypeDef* pClient);		//²ÎÊı¼ì³ö
+void NET_MQTTSN_APP_PollExecution(MQTTSN_ClientsTypeDef* pClient);				//MqttSNé€»è¾‘å¤„ç†
+void NET_MQTTSN_NBIOT_Event_StopMode(MQTTSN_ClientsTypeDef* pClient);				//åœæ­¢æ¨¡å¼
+void NET_MQTTSN_NBIOT_Event_HardwareReboot(MQTTSN_ClientsTypeDef* pClient);		//ç¡¬ä»¶é‡å¯
+void NET_MQTTSN_NBIOT_Event_ModuleCheck(MQTTSN_ClientsTypeDef* pClient);			//æ¨¡å—æ£€æµ‹
+void NET_MQTTSN_NBIOT_Event_ParameterConfig(MQTTSN_ClientsTypeDef* pClient);		//å‚æ•°é…ç½®
+void NET_MQTTSN_NBIOT_Event_SimICCIDCheck(MQTTSN_ClientsTypeDef* pClient);			//Simå¡æ£€æµ‹
+void NET_MQTTSN_NBIOT_Event_MiscEquipConfig(MQTTSN_ClientsTypeDef* pClient);		//å…¶ä»–é…ç½®
+void NET_MQTTSN_NBIOT_Event_AttachCheck(MQTTSN_ClientsTypeDef* pClient);			//æ³¨ç½‘æ£€æŸ¥
+void NET_MQTTSN_NBIOT_Event_AttachExecute(MQTTSN_ClientsTypeDef* pClient);			//æ³¨ç½‘è¿›è¡Œ
+void NET_MQTTSN_NBIOT_Event_AttachInquire(MQTTSN_ClientsTypeDef* pClient);			//æ³¨ç½‘æŸ¥è¯¢
+void NET_MQTTSN_NBIOT_Event_PatameterCheckOut(MQTTSN_ClientsTypeDef* pClient);		//å‚æ•°æ£€å‡º
 
-void NET_MQTTSN_APP_ProcessExecution(MQTTSN_ClientsTypeDef* pClient);				//MqttSNĞ­ÒéÂß¼­´¦Àí
+void NET_MQTTSN_APP_ProcessExecution(MQTTSN_ClientsTypeDef* pClient);				//MqttSNåè®®é€»è¾‘å¤„ç†
 void NET_MQTTSN_Event_Init(MQTTSN_ClientsTypeDef* pClient);						//INIT
 void NET_MQTTSN_Event_Disconnect(MQTTSN_ClientsTypeDef* pClient);				//DISCONNECT
 void NET_MQTTSN_Event_Active(MQTTSN_ClientsTypeDef* pClient);					//ACTIVE

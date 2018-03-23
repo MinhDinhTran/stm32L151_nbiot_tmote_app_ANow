@@ -17,12 +17,12 @@
 #include "hal_rtc.h"
 #include "string.h"
 
-const u8 COAPFeedBackData[] = {0xAA, 0xBB};									//COAP·´À¡°üÊı¾İ
+const u8 COAPFeedBackData[] = {0xAA, 0xBB};									//COAPåé¦ˆåŒ…æ•°æ®
 
 /**********************************************************************************************************
  @Function			void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_APP_PollExecution			: COAPÂß¼­´¦Àí
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_APP_PollExecution			: COAPé€»è¾‘å¤„ç†
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient)
@@ -105,8 +105,8 @@ void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_StopMode(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_StopMode			: Í£Ö¹Ä£Ê½
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_StopMode			: åœæ­¢æ¨¡å¼
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_StopMode(NBIOT_ClientsTypeDef* pClient)
@@ -146,8 +146,8 @@ void NET_COAP_NBIOT_Event_StopMode(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_HardwareReboot	: Ó²¼şÖØÆô
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_HardwareReboot	: ç¡¬ä»¶é‡å¯
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient)
@@ -189,8 +189,8 @@ void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_ModuleCheck		: Ä£¿é¼ì²â
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_ModuleCheck		: æ¨¡å—æ£€æµ‹
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient)
@@ -233,8 +233,8 @@ void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_ParameterConfig	: ²ÎÊıÅäÖÃ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_ParameterConfig	: å‚æ•°é…ç½®
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
@@ -439,8 +439,8 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_SimICCIDCheck		: Sim¿¨¼ì²â
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_SimICCIDCheck		: Simå¡æ£€æµ‹
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient)
@@ -482,8 +482,8 @@ void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_FullFunctionality	: ÍêÕû¹¦ÄÜ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_FullFunctionality	: å®Œæ•´åŠŸèƒ½
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
@@ -553,8 +553,8 @@ void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_MinimumFunctionality	: ×îĞ¡¹¦ÄÜ
- @Input				pClient								: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_MinimumFunctionality	: æœ€å°åŠŸèƒ½
+ @Input				pClient								: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
@@ -624,8 +624,8 @@ void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_CDPServerCheck	: CDP·şÎñÆ÷²éÑ¯
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_CDPServerCheck	: CDPæœåŠ¡å™¨æŸ¥è¯¢
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient)
@@ -677,8 +677,8 @@ void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_CDPServerConfig	: CDP·şÎñÆ÷ÅäÖÃ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_CDPServerConfig	: CDPæœåŠ¡å™¨é…ç½®
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
@@ -753,8 +753,8 @@ void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_MiscEquipConfig	: ÆäËûÅäÖÃ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_MiscEquipConfig	: å…¶ä»–é…ç½®
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
@@ -880,8 +880,8 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_AttachCheck		: ×¢Íø¼ì²é
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_AttachCheck		: æ³¨ç½‘æ£€æŸ¥
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient)
@@ -931,8 +931,8 @@ void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_AttachExecute		: ×¢Íø½øĞĞ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_AttachExecute		: æ³¨ç½‘è¿›è¡Œ
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient)
@@ -974,8 +974,8 @@ void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_AttachInquire		: ×¢Íø²éÑ¯
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_AttachInquire		: æ³¨ç½‘æŸ¥è¯¢
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient)
@@ -1036,8 +1036,8 @@ void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_PatameterCheckOut	: ²ÎÊı¼ì³ö
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_PatameterCheckOut	: å‚æ•°æ£€å‡º
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient)
@@ -1089,8 +1089,8 @@ void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_SendData			: ·¢ËÍÊı¾İ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_SendData			: å‘é€æ•°æ®
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
@@ -1173,7 +1173,7 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 		
 		SendSentNum = pClient->Parameter.coapSendMessage.sent;
 		
-		/* ·¢ËÍ¸ºÔØÊı¾İ */
+		/* å‘é€è´Ÿè½½æ•°æ® */
 		if (NBIOT_Neul_NBxx_SendCOAPPayload(pClient) == NBIOT_OK) {
 			/* Dictate execute is Success */
 			pClient->DictateRunCtl.dictateEvent = SEND_DATA;
@@ -1247,8 +1247,8 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_RecvData			: ½ÓÊÕÊı¾İ
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_RecvData			: æ¥æ”¶æ•°æ®
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
@@ -1290,7 +1290,7 @@ void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
 		/* Has Data Need Receive */
 		for (int index = 0; index < pClient->Parameter.coapReadMessage.buffered; index++) {
 			
-			/* ¶ÁÈ¡¸ºÔØÊı¾İ */
+			/* è¯»å–è´Ÿè½½æ•°æ® */
 			if (NBIOT_Neul_NBxx_ReadCOAPPayload(pClient) == NBIOT_OK) {
 				/* Dictate execute is Success */
 				pClient->DictateRunCtl.dictateEvent = pClient->DictateRunCtl.dictateEvent;
@@ -1354,8 +1354,8 @@ extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
 
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient)
- @Description			NET_COAP_NBIOT_Event_ExecutDownlinkData	: ÏÂĞĞÊı¾İ´¦Àí
- @Input				pClient							: NBIOT¿Í»§¶ËÊµÀı
+ @Description			NET_COAP_NBIOT_Event_ExecutDownlinkData	: ä¸‹è¡Œæ•°æ®å¤„ç†
+ @Input				pClient							: NBIOTå®¢æˆ·ç«¯å®ä¾‹
  @Return				void
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient)
