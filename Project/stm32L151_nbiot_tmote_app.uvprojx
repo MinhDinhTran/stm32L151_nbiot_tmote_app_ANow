@@ -817,6 +817,16 @@
               <FilePath>..\User\system_stm32l1xx.c</FilePath>
             </File>
             <File>
+              <FileName>platform_map.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\platform_map.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_map.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\platform_map.h</FilePath>
+            </File>
+            <File>
               <FileName>platform_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\platform_config.c</FilePath>

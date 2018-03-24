@@ -796,8 +796,8 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 		return;
 	}
 	
-	if (pClient->Parameter.band != ChinaTelecom) {
-		if (NBIOT_Neul_NBxx_SetSupportedBands(pClient, ChinaTelecom) == NBIOT_OK) {
+	if (pClient->Parameter.band != COAP_NBIOT_BAND) {
+		if (NBIOT_Neul_NBxx_SetSupportedBands(pClient, COAP_NBIOT_BAND) == NBIOT_OK) {
 			/* Dictate execute is Success */
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;

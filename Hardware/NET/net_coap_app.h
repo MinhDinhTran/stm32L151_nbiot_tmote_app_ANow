@@ -7,8 +7,15 @@
 #include "nbiottransport.h"
 #include "net_coap_message_operate.h"
 
-#define COAPCDPADDR						"117.60.157.137"					//电信生产 : "117.60.157.137", 电信测试 : "180.101.147.115"
+#define COAPCDPADDR_CHINA_TELECOM_FORMAL	"117.60.157.137"					//电信生产 : "117.60.157.137"
+#define COAPCDPADDR_CHINA_TELECOM_TEST		"180.101.147.115"					//电信测试 : "180.101.147.115"
+#define COAPCDPADDR						COAPCDPADDR_CHINA_TELECOM_FORMAL
 #define COAPCDPPORT						5683
+
+#define COAP_NBIOT_BAND_CHINA_TELECOM		ChinaTelecom
+#define COAP_NBIOT_BAND_CHINA_MOBILE		ChinaMobile
+#define COAP_NBIOT_BAND_CHINA_UNICOM		ChinaUnicom
+#define COAP_NBIOT_BAND					COAP_NBIOT_BAND_CHINA_TELECOM
 
 void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient);					//COAP逻辑处理
 void NET_COAP_NBIOT_Event_StopMode(NBIOT_ClientsTypeDef* pClient);				//停止模式
@@ -28,8 +35,6 @@ void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient);		//�
 void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient);				//发送数据
 void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient);				//接收数据
 void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient);		//下行数据处理
-
-
 
 
 
