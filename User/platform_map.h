@@ -7,8 +7,9 @@
 #define MVB_FLOWMAGNETIC_MODEL			52
 #define MVB_MODEL_TYPE					MVB_STATICMAGNETIC_MODEL
 
-
-
+#define TCFG_ENV_BOOTMODE_TOUPDATE			1
+#define TCFG_ENV_BOOTMODE_NORMAL			2
+#define TCFG_ENV_BOOTMODE_UPDATING			3
 
 #define TCFG_FLAGTYPE_GENERAL				0
 #define TCFG_FLAGTYPE_MAGAlGORITHM			1
@@ -18,16 +19,12 @@
 #define TCFG_Y_AXIS						1
 #define TCFG_Z_AXIS						2
 
-
-
-
-
 #define EEPROM_BASE_ADDRESS				0x08080000
 #define EEPROM_CONFIG_OFFSET				0x08080000
 #define EEPROM_CONFIG_SIZE				0x0300
 
 #define TCFG_FACTORY_BRAND_SN_OFFSET		0x0400											//0x08080400
-#define TCFG_FACTORY_BRAND_SN_LENGTH		8												//
+#define TCFG_FACTORY_BRAND_SN_LENGTH		8												//SN Brand
 
 /* The environment parameters are used both by bootLoader and application */
 #define TCFG_ENVFLAG_OFFSET				TCFG_FACTORY_BRAND_SN_OFFSET + TCFG_FACTORY_BRAND_SN_LENGTH	//0x08080408
@@ -82,10 +79,30 @@
 
 #define TCFG_RECORD_SERVER_OFFSET			TCFG_APP_ENV1_OFFSET + TCFG_APP_ENV1_SIZE				//0x080804AC
 #define TCFG_RECORD_SERVER_LENGTH			6												//Server Coap
-
-
-
-
+#define TCFG_WORKMODE_OFFSET				TCFG_RECORD_SERVER_OFFSET + TCFG_RECORD_SERVER_LENGTH		//0x080804B2
+#define TCFG_WORKMODE_LENGTH				1												//WorkMode
+#define TCFG_RADARCOUNT_OFFSET			TCFG_WORKMODE_OFFSET + TCFG_WORKMODE_LENGTH				//0x080804B3
+#define TCFG_RADARCOUNT_LENGTH			4												//RadarCount
+#define TCFG_RADARDBG_OFFSET				TCFG_RADARCOUNT_OFFSET + TCFG_RADARCOUNT_LENGTH			//0x080804B7
+#define TCFG_RADARDBG_LENGTH				1												//RadarDbg
+#define TCFG_STATUSCNT_OFFSET				TCFG_RADARDBG_OFFSET + TCFG_RADARDBG_LENGTH				//0x080804B8
+#define TCFG_STATUSCNT_LENGTH				4												//StatusCnt
+#define TCFG_RFCHANNEL_OFFSET				TCFG_STATUSCNT_OFFSET + TCFG_STATUSCNT_LENGTH			//0x080804BC
+#define TCFG_RFCHANNEL_LENGTH				1												//RFChannel
+#define TCFG_ENABLE_NBIOTPSM_OFFSET		TCFG_RFCHANNEL_OFFSET + TCFG_RFCHANNEL_LENGTH			//0x080804BD
+#define TCFG_ENABLE_NBIOTPSM_LENGTH		1												//NBIOTPSM
+#define TCFG_ACTIVE_DEIVCE_OFFSET			TCFG_ENABLE_NBIOTPSM_OFFSET + TCFG_ENABLE_NBIOTPSM_LENGTH	//0x080804BE
+#define TCFG_ACTIVE_DEIVCE_LENGTH			1												//ActiveDeice
+#define TCFG_NBIOT_BOOTCNT_OFFSET			TCFG_ACTIVE_DEIVCE_OFFSET + TCFG_ACTIVE_DEIVCE_LENGTH		//0x080804BF
+#define TCFG_NBIOT_BOOTCNT_LENGTH			4												//NBIOTBootCnt
+#define TCFG_NBIOT_SENTCNT_OFFSET			TCFG_NBIOT_BOOTCNT_OFFSET + TCFG_NBIOT_BOOTCNT_LENGTH		//0x080804C3
+#define TCFG_NBIOT_SENTCNT_LENGTH			4												//NBIOTSentCnt
+#define TCFG_DEV_BOOTCNT_OFFSET			TCFG_NBIOT_SENTCNT_OFFSET + TCFG_NBIOT_SENTCNT_LENGTH		//0x080804C7
+#define TCFG_DEV_BOOTCNT_LENGTH			2												//DevBootCnt
+#define TCFG_EVENT_TIME_OFFSET			TCFG_DEV_BOOTCNT_OFFSET + TCFG_DEV_BOOTCNT_LENGTH			//0x080804C9
+#define TCFG_EVENT_TIME_LENGTH			4												//EventTime
+#define TCFG_TEMP_BACKGROUND_OFFSET		TCFG_EVENT_TIME_OFFSET + TCFG_EVENT_TIME_LENGTH			//0x080804CD
+#define TCFG_TEMP_BACKGROUND_LENGTH		2												//BackgroundTemp
 
 
 
@@ -115,20 +132,65 @@ unsigned char TCFG_EEPROM_GetMagFreq(void);													//读取Freq
 void TCFG_EEPROM_SetMagBackgroud(int16_t x_axis, int16_t y_axis, int16_t z_axis);					//保存地磁背景值
 unsigned short TCFG_EEPROM_GetMagBackgroud(char axis);											//读取地磁背景值
 
+void TCFG_EEPROM_SetSubSN(unsigned int subsn);												//保存SubSN
+unsigned int TCFG_EEPROM_GetSubSN(void);													//读取SubSN
+
 void TCFG_EEPROM_SetBrandCode(unsigned int brand);											//保存BrandCode
 unsigned int TCFG_EEPROM_GetBrandCode(void);													//读取BrandCode
 
 void TCFG_EEPROM_SetBootCount(unsigned char count);											//保存BootCount
 unsigned char TCFG_EEPROM_GetBootCount(void);												//读取BootCount
 
+void TCFG_EEPROM_SetServerIP(unsigned int val);												//保存ServerIP
+unsigned int TCFG_EEPROM_GetServerIP(void);													//读取ServerIP
+
+void TCFG_EEPROM_SetServerPort(unsigned short val);											//保存ServerPort
+unsigned short TCFG_EEPROM_GetServerPort(void);												//读取ServerPort
+
+void TCFG_EEPROM_SetWorkMode(unsigned char val);												//保存WorkMode
+unsigned char TCFG_EEPROM_GetWorkMode(void);													//读取WorkMode
+
+void TCFG_EEPROM_SetRadarCount(unsigned int val);												//保存RadarCount
+unsigned int TCFG_EEPROM_GetRadarCount(void);												//读取RadarCount
+
+void TCFG_EEPROM_SetRadarDbgMode(unsigned char val);											//保存RadarDbgMode
+unsigned char TCFG_EEPROM_GetRadarDbgMode(void);												//读取RadarDbgMode
+
+void TCFG_EEPROM_SetStatusCount(unsigned int val);											//保存StatusCount
+unsigned int TCFG_EEPROM_GetStatusCount(void);												//读取StatusCount
+
+void TCFG_EEPROM_SetRfChannel(unsigned char val);												//保存RfChannel
+unsigned char TCFG_EEPROM_GetRfChannel(void);												//读取RfChannel
+
+void TCFG_EEPROM_SetEnableNBiotPSM(unsigned char val);											//保存EnableNBiotPSM
+unsigned char TCFG_EEPROM_GetEnableNBiotPSM(void);											//读取EnableNBiotPSM
+
+void TCFG_EEPROM_SetActiveDeice(unsigned char val);											//保存ActiveDeice
+unsigned char TCFG_EEPROM_GetActiveDeice(void);												//读取ActiveDeice
+
+void TCFG_EEPROM_SetNbiotBootCnt(unsigned int val);											//保存NbiotBootCnt
+unsigned int TCFG_EEPROM_GetNbiotBootCnt(void);												//读取NbiotBootCnt
+
+void TCFG_EEPROM_SetNbiotSentCnt(unsigned int val);											//保存NbiotSentCnt
+unsigned int TCFG_EEPROM_GetNbiotSentCnt(void);												//读取NbiotSentCnt
+
+void TCFG_EEPROM_SetDevBootCnt(unsigned short val);											//保存DevBootCnt
+unsigned short TCFG_EEPROM_GetDevBootCnt(void);												//读取DevBootCnt
+
+void TCFG_EEPROM_SetEventTime(unsigned int val);												//保存EventTime
+unsigned int TCFG_EEPROM_GetEventTime(void);													//读取EventTime
+
+void TCFG_EEPROM_SetBackgroundTemp(int16_t val);												//保存BackgroundTemp
+int16_t TCFG_EEPROM_GetBackgroundTemp(void);													//读取BackgroundTemp
+
 void TCFG_EEPROM_SaveConfigInformation(unsigned int subSN);										//保存配置信息和SN
 bool TCFG_EEPROM_CheckHeadFlag(char flagtype);												//检测保存信息标志位
+bool TCFG_EEPROM_CheckInfoBurned(void);														//检测生产商信息
+unsigned int TCFG_EEPROM_GetSNfromBrandKey(void);												//读取SNfromBrandKey
+unsigned int TCFG_EEPROM_GetFactoryBrand(void);												//读取FactoryBrand
 
-
-
-
-
-
+unsigned char TCFG_Utility_Get_Major_Softnumber(void);											//读取Major_Softnumber
+unsigned char TCFG_Utility_Get_Sub_Softnumber(void);											//读取Sub_Softnumber
 
 
 

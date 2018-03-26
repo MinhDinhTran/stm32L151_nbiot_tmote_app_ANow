@@ -79,6 +79,7 @@ int DebugMain(void);
 int main(void)
 {
 	HAL_Init();																//HAL库初始化
+	
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else

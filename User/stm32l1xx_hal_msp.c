@@ -18,6 +18,7 @@
 #include "hal_rtc.h"
 #include "hal_vbat.h"
 #include "hal_temperature.h"
+#include "hal_rf.h"
 #include "radar_adc.h"
 #include "radar_dac.h"
 
@@ -363,6 +364,73 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *huart)
 		HAL_GPIO_Init(GPIOA, &GPIO_Initure);								//初始化PA2|PA3
 		
 		HAL_NVIC_DisableIRQ(USART2_IRQn);									//失能USART2中断通道
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
+ @Description			SPI底层驱动, 时钟配置
+					此函数会被HAL_SPI_Init()函数调用
+ @Input				hspi : SPI句柄
+ @Return				void
+**********************************************************************************************************/
+void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
+{
+	GPIO_InitTypeDef GPIO_Initure;
+	
+	if (hspi->Instance == SPIx)
+	{
+		SPIx_NSS_GPIO_CLK_ENABLE();
+		SPIx_SCK_GPIO_CLK_ENABLE();
+		SPIx_MOSI_GPIO_CLK_ENABLE();
+		SPIx_MISO_GPIO_CLK_ENABLE();
+		
+		SPIx_RCC_CLK_ENABLE();
+		
+		/* SPI1_NSS */
+		GPIO_Initure.Pin		= SPIx_NSS_PIN;
+		GPIO_Initure.Mode		= GPIO_MODE_OUTPUT_PP;
+		GPIO_Initure.Speed		= GPIO_SPEED_HIGH;
+		HAL_GPIO_Init(SPIx_NSS_GPIO_PORT, &GPIO_Initure);
+		
+		/* SPI1_SCK */
+		GPIO_Initure.Pin		= SPIx_SCK_PIN;
+		GPIO_Initure.Mode		= GPIO_MODE_AF_PP;
+		GPIO_Initure.Pull		= GPIO_PULLDOWN;
+		GPIO_Initure.Speed		= GPIO_SPEED_FREQ_VERY_HIGH;
+		GPIO_Initure.Alternate	= SPIx_SCK_AF;
+		HAL_GPIO_Init(SPIx_SCK_GPIO_PORT, &GPIO_Initure);
+		
+		/* SPI1_MOSI */
+		GPIO_Initure.Pin		= SPIx_MOSI_PIN;
+		GPIO_Initure.Alternate	= SPIx_MOSI_AF;
+		HAL_GPIO_Init(SPIx_MOSI_GPIO_PORT, &GPIO_Initure);
+		
+		/* SPI1_MISO */
+		GPIO_Initure.Pin		= SPIx_MISO_PIN;
+		GPIO_Initure.Alternate	= SPIx_MISO_AF;
+		HAL_GPIO_Init(SPIx_MISO_GPIO_PORT, &GPIO_Initure);
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
+ @Description			SPI底层驱动, 时钟关闭
+					此函数会被HAL_SPI_DeInit()函数调用
+ @Input				hspi : SPI句柄
+ @Return				void
+**********************************************************************************************************/
+void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
+{
+	if (hspi->Instance == SPIx)
+	{
+		SPIx_FORCE_RESET();
+		SPIx_RELEASE_RESET();
+		
+		HAL_GPIO_DeInit(SPIx_NSS_GPIO_PORT, SPIx_NSS_PIN);
+		HAL_GPIO_DeInit(SPIx_SCK_GPIO_PORT, SPIx_SCK_PIN);
+		HAL_GPIO_DeInit(SPIx_MOSI_GPIO_PORT, SPIx_MOSI_PIN);
+		HAL_GPIO_DeInit(SPIx_MISO_GPIO_PORT, SPIx_MISO_PIN);
 	}
 }
 
