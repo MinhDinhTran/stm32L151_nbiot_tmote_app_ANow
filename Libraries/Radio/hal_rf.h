@@ -54,7 +54,7 @@ extern SPI_HandleTypeDef SPI_Handler;										//SPI句柄
 
 
 void Radio_Rf_Interface_Init(void);										//Initialize the mcu's spi interface
-
+void Radio_Rf_Interface_Deinit(void);										//Deinitialize the mcu's spi interface
 
 
 

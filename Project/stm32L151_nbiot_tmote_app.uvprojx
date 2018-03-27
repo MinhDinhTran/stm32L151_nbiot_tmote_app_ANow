@@ -1016,6 +1016,16 @@
               <FileType>1</FileType>
               <FilePath>..\Libraries\Radio\hal_rf.c</FilePath>
             </File>
+            <File>
+              <FileName>radio_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\radio_src\radio_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>radio_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\radio_src\radio_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

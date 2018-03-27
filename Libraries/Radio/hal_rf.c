@@ -79,7 +79,18 @@ void Radio_Rf_Interface_Init(void)
 	HAL_NVIC_DisableIRQ(RF_IRQn);
 }
 
-
+/**********************************************************************************************************
+ @Function			void Radio_Rf_Interface_Deinit(void)
+ @Description			Radio_Rf_Interface_Deinit	: Deinitialize the mcu's spi interface
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void Radio_Rf_Interface_Deinit(void)
+{
+	if (HAL_SPI_DeInit(&SPI_Handler) != HAL_OK) {
+		/* Deinitialization Error */
+	}
+}
 
 
 
