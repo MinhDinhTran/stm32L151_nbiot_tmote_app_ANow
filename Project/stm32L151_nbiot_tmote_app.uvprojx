@@ -1017,6 +1017,16 @@
               <FilePath>..\Libraries\Radio\hal_rf.c</FilePath>
             </File>
             <File>
+              <FileName>si446x_api_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\radio_src\si446x_api_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>radio_comm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\radio_src\radio_comm.c</FilePath>
+            </File>
+            <File>
               <FileName>radio_hal.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\Radio\radio_src\radio_hal.c</FilePath>
