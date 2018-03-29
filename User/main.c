@@ -34,11 +34,11 @@
 
 /* Debug Include File */
 #include "tmesh_xtea.h"
-#include "hal_rf.h"
-#include "tmesh_rf_app.h"
+#include "radio_hal_rf.h"
+#include "radio_rf_app.h"
 
 #define NBIOTDEBUG			0
-#define RADIODEBUG			0
+#define RADIODEBUG			1
 #define OTDEBUG			0
 #define UARTDEBUG			0
 

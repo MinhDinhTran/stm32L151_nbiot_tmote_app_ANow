@@ -2,7 +2,7 @@
 #define   __RADIO_H
 
 #include "sys.h"
-#include "compiler_defs.h"
+#include "radio_compiler_defs.h"
 
 #define		SI4438_B1
 //#define		SI4438_C2

@@ -19,7 +19,7 @@
 #include "radar_adc.h"
 #include "radar_dac.h"
 #include "radar_timer.h"
-#include "hal_rf.h"
+#include "radio_hal_rf.h"
 
 /**********************************************************************************************************
  @Function			void TIM2_IRQHandler(void)
@@ -210,13 +210,23 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 **********************************************************************************************************/
 void EXTI15_10_IRQHandler(void)
 {
-	/* EXTI line interrupt detected */
-	if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_10) != RESET) {
-		__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_10);
+	HAL_GPIO_EXTI_IRQHandler(RF_nIRQ_PIN);									//调用中断处理公共函数
+}
+
+/**********************************************************************************************************
+ @Function			void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+ @Description			外部中断线中断处理回调函数
+					在HAL库中所有外部中断服务函数都会调用此函数
+ @Input				GPIO_Pin : 中断线引脚
+ @Return				void
+**********************************************************************************************************/
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if (GPIO_Pin == RF_nIRQ_PIN) {										//RF_nIRQ_PIN 中断
 		Radio_Rf_ISR();
-		HAL_GPIO_EXTI_Callback(GPIO_PIN_10);
 	}
 }
+
 
 /**********************************************************************************************************
  @Function			void NMI_Handler(void)
@@ -310,6 +320,7 @@ void PendSV_Handler(void)
 {
 }
 
+
 /**********************************************************************************************************
  @Function			void SysTick_Handler(void)
  @Description			This function handles SysTick Handler.
@@ -317,6 +328,18 @@ void PendSV_Handler(void)
  @Return				void
 **********************************************************************************************************/
 void SysTick_Handler(void)
+{
+	HAL_SYSTICK_IRQHandler();
+}
+
+/**********************************************************************************************************
+ @Function			void HAL_SYSTICK_Callback(void)
+ @Description			系统嘀嗒定时器中断处理回调函数
+					在HAL库中所有系统嘀嗒定时器中断服务函数都会调用此函数
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void HAL_SYSTICK_Callback(void)
 {
 	HAL_IncTick();
 	Stm32_IncSecondTick();

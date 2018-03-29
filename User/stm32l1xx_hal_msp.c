@@ -18,9 +18,9 @@
 #include "hal_rtc.h"
 #include "hal_vbat.h"
 #include "hal_temperature.h"
-#include "hal_rf.h"
 #include "radar_adc.h"
 #include "radar_dac.h"
+#include "radio_hal_rf.h"
 
 /**********************************************************************************************************
  @Function			void HAL_MspInit(void)

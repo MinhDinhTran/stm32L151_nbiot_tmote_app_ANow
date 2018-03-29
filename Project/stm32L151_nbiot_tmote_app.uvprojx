@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L151xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Core;..\HALLibraries\Inc;..\User;..\System\Delay;..\System\Sys;..\System\Usart;..\Libraries\Radar;..\Libraries\Inspect;..\Libraries\NBIot;..\Libraries\MQTTSNPacket\src;..\Libraries\MQTTSNPacket\mqttsn;..\Libraries\Radio;..\Libraries\Radio\radio_inc;..\Libraries\Radio\radio_src;..\Libraries\Xtea;..\Hardware\RTC;..\Hardware\EEPROM;..\Hardware\IWDG;..\Hardware\IIC;..\Hardware\QMC5883L;..\Hardware\SWITCH;..\Hardware\VBAT;..\Hardware\BEEP;..\Hardware\RADAR;..\Hardware\NET;..\Hardware\TEMPERATURE</IncludePath>
+              <IncludePath>..\Core;..\HALLibraries\Inc;..\User;..\System\Delay;..\System\Sys;..\System\Usart;..\Libraries\Radar;..\Libraries\Inspect;..\Libraries\NBIot;..\Libraries\MQTTSNPacket\src;..\Libraries\MQTTSNPacket\mqttsn;..\Libraries\Radio;..\Libraries\Radio\radio_inc;..\Libraries\Radio\radio_src;..\Libraries\Radio\si446x_inc;..\Libraries\Radio\si446x_src;..\Libraries\Xtea;..\Hardware\RTC;..\Hardware\EEPROM;..\Hardware\IWDG;..\Hardware\IIC;..\Hardware\QMC5883L;..\Hardware\SWITCH;..\Hardware\VBAT;..\Hardware\BEEP;..\Hardware\RADAR;..\Hardware\NET;..\Hardware\TEMPERATURE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1012,14 +1012,9 @@
           <GroupName>Radio</GroupName>
           <Files>
             <File>
-              <FileName>tmesh_rf_app.c</FileName>
+              <FileName>radio_rf_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\Radio\tmesh_rf_app.c</FilePath>
-            </File>
-            <File>
-              <FileName>hal_rf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\Radio\hal_rf.c</FilePath>
+              <FilePath>..\Libraries\Radio\radio_src\radio_rf_app.c</FilePath>
             </File>
             <File>
               <FileName>radio.c</FileName>
@@ -1027,9 +1022,9 @@
               <FilePath>..\Libraries\Radio\radio_src\radio.c</FilePath>
             </File>
             <File>
-              <FileName>si446x_api_lib.c</FileName>
+              <FileName>radio_hal_rf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\Radio\radio_src\si446x_api_lib.c</FilePath>
+              <FilePath>..\Libraries\Radio\radio_src\radio_hal_rf.c</FilePath>
             </File>
             <File>
               <FileName>radio_comm.c</FileName>
@@ -1045,6 +1040,11 @@
               <FileName>radio_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\Radio\radio_src\radio_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>si446x_api_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\si446x_src\si446x_api_lib.c</FilePath>
             </File>
           </Files>
         </Group>

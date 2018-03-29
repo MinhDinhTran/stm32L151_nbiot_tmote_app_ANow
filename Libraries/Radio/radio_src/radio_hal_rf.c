@@ -16,11 +16,12 @@
   *********************************************************************************************************
   */
 
-#include "hal_rf.h"
-#include "tmesh_rf_app.h"
+#include "radio_hal_rf.h"
+#include "radio_rf_app.h"
 #include "radio.h"
 #include "si446x_api_lib.h"
 #include "si446x_cmd.h"
+#include "si446x_defs.h"
 #include "platform_config.h"
 #include "delay.h"
 #include "string.h"

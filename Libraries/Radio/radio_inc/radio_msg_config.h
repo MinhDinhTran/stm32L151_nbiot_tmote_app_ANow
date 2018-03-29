@@ -1,5 +1,5 @@
-#ifndef __XMESHCFG_H
-#define __XMESHCFG_H
+#ifndef __RADIO_MSG_CONFIG_H
+#define   __RADIO_MSG_CONFIG_H
 
 #include "sys.h"
 
@@ -76,27 +76,6 @@ enum
 	TMOTE_PLAIN_PUB,//	5 终端主动上报信息给配置器,主动上报心跳包,状态包等.
 	TMOTE_PLAIN_ACK,//	6 配置器应答信息给终端
 };
-
-
-
-typedef struct
-{
-	uint8_t rec_buf[FR_CONFIG_BUFSIZE];
-	uint8_t rec_len;
-}RF_Buf_t;
-
-
-extern RF_Buf_t rfbuf;
-extern uint8_t config_send_buf[256];
-extern void (*configured_callback)(void);
-extern uint32_t ConfSN;
-
-void start_configured_task(void);
-void xm_Cfg_buildframe(uint8_t *msg,uint8_t type,uint8_t pktnum,uint32_t *sn,uint8_t *send,uint8_t len);
-
-
-
-
 
 
 #endif

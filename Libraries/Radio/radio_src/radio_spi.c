@@ -14,7 +14,7 @@
   */
 
 #include "radio_spi.h"
-#include "hal_rf.h"
+#include "radio_hal_rf.h"
 
 /**********************************************************************************************************
  @Function			unsigned char Radio_RF_ReadWriteByte_SPI1(unsigned char byteDataIn)

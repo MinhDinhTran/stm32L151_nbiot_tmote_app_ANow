@@ -13,10 +13,10 @@
   *********************************************************************************************************
   */
 
-#include "tmesh_rf_app.h"
-#include "hal_rf.h"
+#include "radio_rf_app.h"
+#include "radio_hal_rf.h"
 #include "radio.h"
-#include "xmeshcfg.h"
+#include "radio_msg_config.h"
 #include "tmesh_xtea.h"
 #include "platform_map.h"
 #include "platform_config.h"
@@ -210,6 +210,8 @@ char tmesh_rf_operate_recvmsg(uint8_t *inmsg, uint8_t len)
 	return rc;
 }
 
+extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
+
 /**********************************************************************************************************
  @Function			void trf_app_task(void)
  @Description			trf_app_task
@@ -237,7 +239,7 @@ void trf_app_task(void)
 	
 	if (TRF_SUCCESS == tmesh_rf_receive(trf_recv_buf, &len)) {
 		if (TRF_SUCCESS == tmesh_rf_operate_recvmsg(trf_recv_buf, len)) {
-			
+			BEEP_CtrlRepeat(5, 100);
 		}
 	}
 }

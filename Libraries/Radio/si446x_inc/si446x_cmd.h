@@ -16,7 +16,7 @@
 
 #ifndef SI446X_CMD_H
 #define SI446X_CMD_H
-#include "compiler_defs.h"
+#include "radio_compiler_defs.h"
 
 
 /* This section contains command map declarations */

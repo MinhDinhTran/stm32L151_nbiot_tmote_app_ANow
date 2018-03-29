@@ -2,7 +2,7 @@
 #define   __HAL_RF_H
 
 #include "sys.h"
-#include "compiler_defs.h"
+#include "radio_compiler_defs.h"
 
 /* Definition for SPIx clock resources */
 #define SPIx							SPI1

@@ -2,7 +2,7 @@
 #define   __SI446X_API_LIB_H
 
 #include "sys.h"
-#include "compiler_defs.h"
+#include "radio_compiler_defs.h"
 
 enum
 {
