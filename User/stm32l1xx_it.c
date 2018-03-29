@@ -19,6 +19,7 @@
 #include "radar_adc.h"
 #include "radar_dac.h"
 #include "radar_timer.h"
+#include "hal_rf.h"
 
 /**********************************************************************************************************
  @Function			void TIM2_IRQHandler(void)
@@ -200,6 +201,22 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	}
 }
 
+
+/**********************************************************************************************************
+ @Function			void EXTI15_10_IRQHandler(void)
+ @Description			This function handles EXTI15_10 exception.
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void EXTI15_10_IRQHandler(void)
+{
+	/* EXTI line interrupt detected */
+	if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_10) != RESET) {
+		__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_10);
+		Radio_Rf_ISR();
+		HAL_GPIO_EXTI_Callback(GPIO_PIN_10);
+	}
+}
 
 /**********************************************************************************************************
  @Function			void NMI_Handler(void)

@@ -1012,9 +1012,19 @@
           <GroupName>Radio</GroupName>
           <Files>
             <File>
+              <FileName>tmesh_rf_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\tmesh_rf_app.c</FilePath>
+            </File>
+            <File>
               <FileName>hal_rf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\Radio\hal_rf.c</FilePath>
+            </File>
+            <File>
+              <FileName>radio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\radio_src\radio.c</FilePath>
             </File>
             <File>
               <FileName>si446x_api_lib.c</FileName>

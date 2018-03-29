@@ -6,7 +6,7 @@
 #define	SYSTEMCLOCK			4194000
 //#define	SYSTEMCLOCK			32000000
 
-
+#define	RADIO_SI4438
 
 
 

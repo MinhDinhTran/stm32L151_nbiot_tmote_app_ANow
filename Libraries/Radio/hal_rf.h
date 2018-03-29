@@ -2,6 +2,7 @@
 #define   __HAL_RF_H
 
 #include "sys.h"
+#include "compiler_defs.h"
 
 /* Definition for SPIx clock resources */
 #define SPIx							SPI1
@@ -49,25 +50,45 @@
 /* Definition for SPIx's NVIC */
 #define RF_IRQn						EXTI15_10_IRQn
 
+#define MMESH_CHECKSUM_SIZE				2
+
+enum TRF_ERRCODE
+{
+	TRF_OK = 0,
+	TRF_ERROR,
+};
+
+enum Protocol_type
+{
+	OPTIONAL_PRT,
+	SIMPLICITI_PRT,
+	XMESH_PRT,
+	XMESHLITE_PRT,
+	UPGRADE_PRT,
+	XMESHCFG_PRT,
+	RSVED6,
+	RSVED7
+};
+
+typedef enum
+{
+	CHECK_FAIL,
+	CHECK_SUCESS
+}check_t;
+
 extern SPI_HandleTypeDef SPI_Handler;										//SPI句柄
+extern unsigned char RF_CHANNEL1;
+extern char trf_status;
 
-
-
+char Radio_Rf_Init(void);												//initialize the radio chip
+char Radio_Rf_PrepareToTx(uint8_t* pPacket, uint8_t len);						//send a wireless packet
+void Radio_Rf_ISR(void);													//RF IRQ
 void Radio_Rf_Interface_Init(void);										//Initialize the mcu's spi interface
 void Radio_Rf_Interface_Deinit(void);										//Deinitialize the mcu's spi interface
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Radio_Rf_Sleep(void);												//set the radio to sleep mode
+char Radio_Rf_is_Sleep(void);												//check the radio to sleep mode
+void Radio_Rf_Interrupt_Init(void);										//Init the radio Interrupt
+void Radio_Rf_Interrupt_Deinit(void);										//Deinit the radio Interrupt
+char Radio_Rf_get_Status(void);											//get the radio error status
 
 #endif

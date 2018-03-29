@@ -33,7 +33,12 @@
 
 
 /* Debug Include File */
+#include "tmesh_xtea.h"
+#include "hal_rf.h"
+#include "tmesh_rf_app.h"
+
 #define NBIOTDEBUG			0
+#define RADIODEBUG			0
 #define OTDEBUG			0
 #define UARTDEBUG			0
 
@@ -118,6 +123,14 @@ int main(void)
 	
 	BEEP_CtrlRepeat(2, 50);														//蜂鸣器
 	
+#if RADIODEBUG
+	MODELPOWER(ON);
+	Delay_MS(10);
+	tmesh_securityInit();
+	Radio_Rf_Init();
+	trf_xmit_heartbeat();
+#endif
+	
 	CoapLongStructure.HeadPacket.DataLen = 0x00;
 	CoapLongStructure.HeadPacket.ProtocolType = 0x00;
 	CoapLongStructure.HeadPacket.Reserved1 = 0x00;
@@ -158,6 +171,11 @@ int main(void)
 #endif
 	
 	while (1) {
+		
+#if RADIODEBUG
+		trf_printf("Radio Test Success MVBKK ^_^\n\n");
+		trf_app_task();
+#endif
 		
 #if NBIOTDEBUG
 //		NET_COAP_APP_PollExecution(&NbiotClientHandler);
