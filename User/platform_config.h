@@ -3,11 +3,15 @@
 
 #include "sys.h"
 
-#define	SYSTEMCLOCK			4194000
-//#define	SYSTEMCLOCK			32000000
+#define	SYSTEMCLOCKMSI					4194000
+#define	SYSTEMCLOCKHSI					32000000
+#define	SYSTEMCLOCK					SYSTEMCLOCKMSI
+
+#define	NETCOAP						0
+#define	NETMQTTSN						1
+#define	NETPROTOCAL					NETCOAP
 
 #define	RADIO_SI4438
-
 
 
 

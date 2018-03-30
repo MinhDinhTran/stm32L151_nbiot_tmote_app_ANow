@@ -40,6 +40,7 @@
 #define NBIOTDEBUG			0
 #define RADIODEBUG			0
 #define OTDEBUG			0
+#define UARTDEBUG			0
 
 COAP_PacketShortTypeDef		CoapShortStructure;
 COAP_PacketLongTypeDef		CoapLongStructure;
@@ -47,13 +48,28 @@ COAP_PacketInfoTypeDef		CoapInfoStructure;
 
 MQTTSN_StatusBasicTypeDef	MqttSNStatusBasicStructure;
 MQTTSN_StatusExtendTypeDef	MqttSNStatusExtendStructure;
+/*
+	CoapShortStructure.HeadPacket.DataLen = 0x00;
+	CoapShortStructure.HeadPacket.ProtocolType = 0x00;
+	CoapShortStructure.HeadPacket.Reserved1 = 0x00;
+	CoapShortStructure.HeadPacket.ProtocolVersion = 0x00;
+	CoapShortStructure.HeadPacket.Reserved2 = 0x00;
+	CoapShortStructure.HeadPacket.PacketType = 0x05;
+	CoapShortStructure.HeadPacket.PacketNumber = 0x00;
+	CoapShortStructure.HeadPacket.DeviceSN = 0x81010001;
+	CoapShortStructure.MsgPacket.DestSN = 0x00;
+	CoapShortStructure.MsgPacket.Version = 0x01;
+	CoapShortStructure.MsgPacket.Type = 0x37;
+	CoapLongStructure.MsgPacket.Type = 0x3A;
+	CoapInfoStructure.MsgPacket.Type = 0x35;
+*/
 
-NBIOT_ATCmdTypeDef			NbiotATCmdHandler;
-NBIOT_ClientsTypeDef		NbiotClientHandler;
-MQTTSN_SocketNetTypeDef		MqttSNSocketNetHandler;
-MQTTSN_ClientsTypeDef		MqttSNClientHandler;
+NBIOT_ATCmdTypeDef		NbiotATCmdHandler;
+NBIOT_ClientsTypeDef	NbiotClientHandler;
+MQTTSN_SocketNetTypeDef	MqttSNSocketNetHandler;
+MQTTSN_ClientsTypeDef	MqttSNClientHandler;
 
-RCC_RESET_FLAG_TypeDef 		ResetStatus;
+RCC_RESET_FLAG_TypeDef ResetStatus;
 unsigned int SendTimes = 0;
 int DebugMain(void);
 /* Debug Ending */
@@ -92,7 +108,7 @@ int main(void)
 	Uart1_Init(9600);															//串口1初始化
 	Uart2_Init(9600);															//串口2初始化
 	
-	TCFG_EEPROM_Set_MAC_SN(0x81010001);											//写入MACSN
+	TCFG_EEPROM_Set_MAC_SN(0x83010001);											//写入MACSN
 	TCFG_EEPROM_SetVender("mvb");													//写入Verder
 	
 #if OTDEBUG
@@ -112,6 +128,7 @@ int main(void)
 	
 #if RADIODEBUG
 	MODELPOWER(ON);
+	Delay_MS(10);
 	tmesh_securityInit();
 	Radio_Rf_Init();
 	Radio_Trf_Xmit_Heartbeat();
@@ -125,7 +142,7 @@ int main(void)
 	CoapLongStructure.HeadPacket.Reserved2 = 0x00;
 	CoapLongStructure.HeadPacket.PacketType = 0x05;
 	CoapLongStructure.HeadPacket.PacketNumber = 0x00;
-	CoapLongStructure.HeadPacket.DeviceSN = TCFG_EEPROM_Get_MAC_SN();
+	CoapLongStructure.HeadPacket.DeviceSN = 0x81010001;
 	CoapLongStructure.MsgPacket.DestSN = 0x00;
 	CoapLongStructure.MsgPacket.Version = 0x01;
 	CoapLongStructure.MsgPacket.Type = 0x3A;
@@ -138,7 +155,7 @@ int main(void)
 	CoapLongStructure.RadarCoverCount = 15;
 	CoapLongStructure.RadarDiff = 20;
 	
-	MqttSNStatusExtendStructure.DeviceSN = TCFG_EEPROM_Get_MAC_SN();
+	MqttSNStatusExtendStructure.DeviceSN = 0x83010001;
 	MqttSNStatusExtendStructure.MagX = 100;
 	MqttSNStatusExtendStructure.MagY = 100;
 	MqttSNStatusExtendStructure.MagZ = 100;
@@ -152,6 +169,7 @@ int main(void)
 	NBIOT_Client_Init(&NbiotClientHandler, &NbiotATCmdHandler);									//NBIOT客户端初始化
 	
 	MQTTSN_Transport_Init(&MqttSNSocketNetHandler, &NbiotClientHandler, 4000, "106.14.142.169", 1884);	//MqttSN数据传输接口初始化
+//	MQTTSN_Transport_Init(&MqttSNSocketNetHadnler, &NbiotClientHandler, 4000, "120.78.66.248", 1884);	//MqttSN数据传输接口初始化
 	MQTTSN_Client_Init(&MqttSNClientHandler, &MqttSNSocketNetHandler);							//MQTTSN客户端初始化
 #endif
 	
@@ -163,11 +181,8 @@ int main(void)
 #endif
 		
 #if NBIOTDEBUG
-#if NETPROTOCAL == NETCOAP
-		NET_COAP_APP_PollExecution(&NbiotClientHandler);
-#elif NETPROTOCAL == NETMQTTSN
+//		NET_COAP_APP_PollExecution(&NbiotClientHandler);
 		NET_MQTTSN_APP_PollExecution(&MqttSNClientHandler);
-#endif
 		
 		Uart2_PortSerialEnable(DISABLE, DISABLE);
 		if (USART2_RX_STA & 0x8000) {
@@ -242,7 +257,25 @@ int main(void)
 		printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
 		printf("Mercury : %d\n\n", Mercury_Read());
 #endif
+
+#if UARTDEBUG
+		Uart1_PortSerialEnable(DISABLE, DISABLE);
+		Uart2_PortSerialEnable(DISABLE, DISABLE);
 		
+		if (USART1_RX_STA & 0x8000) {
+			BEEP_CtrlRepeat(1, 50);
+			HAL_UART_Transmit(&UART1_Handler, USART1_RX_BUF, USART1_RX_STA & 0X3FFF, 0xFFFF);
+			USART1_RX_STA = 0;
+		}
+		if (USART2_RX_STA & 0x8000) {
+			BEEP_CtrlRepeat(1, 50);
+			HAL_UART_Transmit(&UART2_Handler, USART2_RX_BUF, USART2_RX_STA & 0X3FFF, 0xFFFF);
+			USART2_RX_STA = 0;
+		}
+		
+		Uart1_PortSerialEnable(ENABLE, DISABLE);
+		Uart2_PortSerialEnable(ENABLE, DISABLE);
+#endif
 		IWDG_Feed();
 		Delay_MS(1000);
 	}

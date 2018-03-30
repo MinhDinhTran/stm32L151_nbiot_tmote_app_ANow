@@ -227,9 +227,9 @@ void Delay_US(u32 nus)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 		if ((tcnt * 1020) >= ticks) break;									//时间超过/等于要延迟的时间,则退出
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 		if ((tcnt * 1003) >= ticks) break;									//时间超过/等于要延迟的时间,则退出
 #else
 	#error SYSTEMCLOCK Define Error

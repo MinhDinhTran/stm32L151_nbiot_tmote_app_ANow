@@ -75,9 +75,9 @@ void Radio_Rf_Interface_Init(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	SPI_Handler.Init.BaudRatePrescaler		= SPI_BAUDRATEPRESCALER_2;
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	SPI_Handler.Init.BaudRatePrescaler		= SPI_BAUDRATEPRESCALER_8;
 #else
 	#error SYSTEMCLOCK Define Error

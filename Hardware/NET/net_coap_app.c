@@ -17,8 +17,6 @@
 #include "hal_rtc.h"
 #include "string.h"
 
-const u8 COAPFeedBackData[] = {0xAA, 0xBB};									//COAP反馈包数据
-
 /**********************************************************************************************************
  @Function			void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient)
  @Description			NET_COAP_APP_PollExecution			: COAP逻辑处理
@@ -1254,6 +1252,7 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
 {
 	Stm32_CalculagraphTypeDef dictateRunTime;
+	u8 COAPFeedBackData[] = {0xAA, 0xBB};									//COAP反馈包数据
 	
 	/* It is the first time to execute */
 	if (pClient->DictateRunCtl.dictateEnable != true) {

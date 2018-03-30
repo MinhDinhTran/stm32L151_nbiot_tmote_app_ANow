@@ -172,6 +172,9 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 {
 	char rc = TRF_SUCCESS;
 	trf_msg_s* pPayload;
+	unsigned int mac_sn = 0;
+	
+	mac_sn = TCFG_EEPROM_Get_MAC_SN();
 	
 	if (CFG_GET_FROM_FRAME(CFG_P_FRAME_PRE(inmsg), CFG_PRE_TYPE_OS) == XMESHCFG_PRT)
 	{
@@ -183,9 +186,9 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 			
 			cnt = CFG_GET_FROM_FRAME(CFG_P_FRAME_HEAD(inmsg), CFG_PKTNUM_OS);
 			payload_len = CFG_GET_PAYLOAD_LEN(inmsg) + CFG_FRAME_LEN_SIZE;
-			tmesh_securityMix(0x81010001);
+			tmesh_securityMix(mac_sn);
 			tmesh_decipher((uint8_t*)pPayload, payload_len , &cnt);
-			if (pPayload->head.destSN != 0x81010001) {
+			if (pPayload->head.destSN != mac_sn) {
 				rc = TRF_NOT_FORME;
 				return rc;
 			}
@@ -216,7 +219,7 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 			}
 		}
 		else {
-			if (pPayload->head.destSN != 0x81010001) {
+			if (pPayload->head.destSN != mac_sn) {
 				rc = TRF_NOT_FORME;
 				return rc;
 			}
@@ -255,10 +258,6 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 	return rc;
 }
 
-
-
-extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
-
 /**********************************************************************************************************
  @Function			void Radio_Trf_App_Task(void)
  @Description			Radio_Trf_App_Task
@@ -286,7 +285,7 @@ void Radio_Trf_App_Task(void)
 	
 	if (TRF_SUCCESS == Radio_Rf_Receive(trf_recv_buf, &len)) {
 		if (TRF_SUCCESS == Radio_Rf_Operate_Recvmsg(trf_recv_buf, len)) {
-			BEEP_CtrlRepeat(5, 100);
+			
 		}
 	}
 }
@@ -353,7 +352,7 @@ void Radio_Trf_Default_Resp(uint8_t ret, uint8_t type)
 	pDefaultRsp->head.type		= type;
 	pDefaultRsp->ret			= ret;
 	
-	Radio_Trf_Cfg_Buildframe((uint8_t *)pDefaultRsp, TMOTE_PLAIN_RSP, Radio_Trf_Xmit_Get_Pktnum(), 0x81010001, trf_send_buf, sizeof(trf_defaultrsp_s));
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pDefaultRsp, TMOTE_PLAIN_RSP, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), trf_send_buf, sizeof(trf_defaultrsp_s));
 	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
 }
 
@@ -417,7 +416,7 @@ void Radio_Trf_Xmit_Heartbeat(void)
 	}
 	pHeartBeat->status			= 0;
 	
-	Radio_Trf_Cfg_Buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), 0x81010001, trf_send_buf, sizeof(trf_heartbeat_s));
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), trf_send_buf, sizeof(trf_heartbeat_s));
 	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
 	Delay_MS(6);
 }
@@ -466,7 +465,7 @@ void Radio_Trf_Do_Rf_Pintf(char* info)
 	pMsg->head.type			= TRF_MSG_DEBUG_INFO;
 	strncpy(pMsg->pData, info, infolen);
 	
-	Radio_Trf_Cfg_Buildframe((uint8_t *)pMsg, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), 0x81010001, trf_send_buf, sizeof(trf_msghead_s) + infolen);
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pMsg, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), trf_send_buf, sizeof(trf_msghead_s) + infolen);
 	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
 	if (trf_send_buf[0] >=  RADIO_TX_ALMOST_EMPTY_THRESHOLD) {
 		Radio_StartTx_dummy(RF_CHANNEL1);

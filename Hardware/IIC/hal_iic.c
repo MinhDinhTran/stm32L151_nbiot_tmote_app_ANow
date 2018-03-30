@@ -65,9 +65,9 @@ void IIC_Start(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(4);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -77,9 +77,9 @@ void IIC_Start(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(4);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -104,9 +104,9 @@ void IIC_Stop(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(4);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -117,9 +117,9 @@ void IIC_Stop(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(4);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -166,9 +166,9 @@ void IIC_Ack(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -178,9 +178,9 @@ void IIC_Ack(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -203,9 +203,9 @@ void IIC_NAck(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -215,9 +215,9 @@ void IIC_NAck(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 	Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -245,9 +245,9 @@ void IIC_Send_Byte(u8 txd)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 		__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 		Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -257,9 +257,9 @@ void IIC_Send_Byte(u8 txd)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 		__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 		Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -269,9 +269,9 @@ void IIC_Send_Byte(u8 txd)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 		__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 		Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -297,9 +297,9 @@ u8 IIC_Read_Byte(unsigned char ack)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 		__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 		Delay_US(2);
 #else
 	#error SYSTEMCLOCK Define Error
@@ -311,9 +311,9 @@ u8 IIC_Read_Byte(unsigned char ack)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 		__NOP();
-#elif (SYSTEMCLOCK == 32000000)
+#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
 		Delay_US(1);
 #else
 	#error SYSTEMCLOCK Define Error

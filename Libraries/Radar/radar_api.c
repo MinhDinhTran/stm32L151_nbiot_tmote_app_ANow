@@ -397,7 +397,7 @@ void Radar_EnterCriticalSection(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);													//设置时钟32Mhz
 	Delay_Init(32000);																			//初始化延时
 #endif
@@ -423,7 +423,7 @@ void Radar_ExitCriticalSection(void)
 #ifndef SYSTEMCLOCK
 	#error No Define SYSTEMCLOCK!
 #else
-#if (SYSTEMCLOCK == 4194000)
+#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
 	Stm32_MSIClock_Init(RCC_MSIRANGE_6);															//设置时钟MSI->4.194MHz
 	Delay_Init(4194);																			//初始化延时
 #endif
