@@ -650,6 +650,66 @@ unsigned int TCFG_EEPROM_GetFactoryBrand(void)
 }
 
 /**********************************************************************************************************
+ @Function			void TCFG_EEPROM_Set_MAC_SN(unsigned int subsn)
+ @Description			TCFG_EEPROM_Set_MAC_SN						: 保存MAC SN
+ @Input				sn
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_Set_MAC_SN(unsigned int sn)
+{
+	unsigned int subsn = 0;
+	
+	subsn |= (sn & 0xFF000000) >> 3*8;
+	subsn |= (sn & 0x00FF0000) >> 1*8;
+	subsn |= (sn & 0x0000FF00) << 1*8;
+	subsn |= (sn & 0x000000FF) << 3*8;
+	
+	FLASH_EEPROM_WriteWord(TCFG_FACTORY_MAC_SN_OFFSET, subsn);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned int TCFG_EEPROM_Get_MAC_SN(void)
+ @Description			TCFG_EEPROM_Get_MAC_SN						: 读取MAC SN
+ @Input				void
+ @Return				sn
+**********************************************************************************************************/
+unsigned int TCFG_EEPROM_Get_MAC_SN(void)
+{
+	unsigned int subsn = 0;
+	unsigned int sn = 0;
+	
+	subsn = FLASH_EEPROM_ReadWord(TCFG_FACTORY_MAC_SN_OFFSET);
+	sn |= (subsn & 0xFF000000) >> 3*8;
+	sn |= (subsn & 0x00FF0000) >> 1*8;
+	sn |= (subsn & 0x0000FF00) << 1*8;
+	sn |= (subsn & 0x000000FF) << 3*8;
+	
+	return sn;
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetVender(char* vender)
+ @Description			TCFG_EEPROM_SetVender						: 保存vender
+ @Input				&vender
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetVender(char* vender)
+{
+	FLASH_EEPROM_WriteBuffer(TCFG_FACTORY_VENDER_OFFSET, (unsigned char*)vender, TCFG_FACTORY_VENDER_LENGTH);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_GetVender(char* vender)
+ @Description			TCFG_EEPROM_GetVender						: 读取vender
+ @Input				&vender
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_GetVender(char* vender)
+{
+	FLASH_EEPROM_ReadBuffer(TCFG_FACTORY_VENDER_OFFSET, (unsigned char*)vender, TCFG_FACTORY_VENDER_LENGTH);
+}
+
+/**********************************************************************************************************
  @Function			unsigned char TCFG_Utility_Get_Major_Softnumber(void)
  @Description			TCFG_Utility_Get_Major_Softnumber				: 读取Major_Softnumber
  @Input				void
@@ -670,6 +730,13 @@ unsigned char TCFG_Utility_Get_Sub_Softnumber(void)
 {
 	return 1;
 }
+
+
+
+
+
+
+
 
 
 

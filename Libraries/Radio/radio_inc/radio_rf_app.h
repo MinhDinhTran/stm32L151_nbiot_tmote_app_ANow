@@ -1,5 +1,5 @@
-#ifndef __TMESH_RF_APP_H
-#define   __TMESH_RF_APP_H
+#ifndef __RADIO_RF_APP_H
+#define   __RADIO_RF_APP_H
 
 #include "sys.h"
 
@@ -141,23 +141,23 @@ typedef __packed struct _tmote_general_cmd
 	char								buf[16];
 }tmote_general_cmd_s;
 
-void tmesh_rf_data_handle_isr(mrfiPacket_t* rfpacket);
-char tmesh_rf_receive(uint8_t *outmsg, uint8_t *len);
-char tmesh_rf_send(uint8_t *inmsg, uint8_t len);
-char tmesh_rf_operate_recvmsg(uint8_t *inmsg, uint8_t len);
+void Radio_Rf_Data_Handle_Isr(mrfiPacket_t* rfpacket);
+char Radio_Rf_Receive(uint8_t *outmsg, uint8_t *len);
+char Radio_Rf_Send(uint8_t *inmsg, uint8_t len);
+char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len);
 
-void trf_app_task(void);
-void trf_cfg_buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_t sn, uint8_t *outsend, uint8_t len);
-uint8_t trf_xmit_get_pktnum(void);
-void trf_default_resp(uint8_t ret, uint8_t type);
+void Radio_Trf_App_Task(void);
+void Radio_Trf_Cfg_Buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_t sn, uint8_t *outsend, uint8_t len);
+uint8_t Radio_Trf_Xmit_Get_Pktnum(void);
+void Radio_Trf_Default_Resp(uint8_t ret, uint8_t type);
 
-uint8_t trf_get_workmode(void);
-void trf_set_workmode(uint8_t val);
+uint8_t Radio_Trf_Get_Workmode(void);
+void Radio_Trf_Set_Workmode(uint8_t val);
 
-void trf_xmit_heartbeat(void);
-void trf_do_heartbeat(void);
+void Radio_Trf_Xmit_Heartbeat(void);
+void Radio_Trf_Do_Heartbeat(void);
 
-void trf_dprintf(const char *fmt, ...);
-void trf_printf(const char *fmt, ...);
+void Radio_Trf_Debug_Printf(const char *fmt, ...);
+void Radio_Trf_Printf(const char *fmt, ...);
 
 #endif

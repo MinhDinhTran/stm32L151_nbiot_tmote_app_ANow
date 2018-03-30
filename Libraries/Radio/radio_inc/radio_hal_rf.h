@@ -1,5 +1,5 @@
-#ifndef __HAL_RF_H
-#define   __HAL_RF_H
+#ifndef __RADIO_HAL_RF_H
+#define   __RADIO_HAL_RF_H
 
 #include "sys.h"
 #include "radio_compiler_defs.h"

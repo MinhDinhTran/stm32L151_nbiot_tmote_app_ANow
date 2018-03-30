@@ -117,7 +117,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name></Name>
+          <Name>/</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -167,7 +167,7 @@
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>SendTimes,0x0A</ItemText>
+          <ItemText>SendTimes,0x10</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
@@ -1753,8 +1753,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Libraries\Radio\radio_src\radio.c</PathWithFileName>
-      <FilenameWithoutPath>radio.c</FilenameWithoutPath>
+      <PathWithFileName>..\Libraries\Radio\radio_src\radio_hal_rf.c</PathWithFileName>
+      <FilenameWithoutPath>radio_hal_rf.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1765,8 +1765,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Libraries\Radio\radio_src\radio_hal_rf.c</PathWithFileName>
-      <FilenameWithoutPath>radio_hal_rf.c</FilenameWithoutPath>
+      <PathWithFileName>..\Libraries\Radio\radio_src\radio.c</PathWithFileName>
+      <FilenameWithoutPath>radio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

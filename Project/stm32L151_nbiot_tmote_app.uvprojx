@@ -1017,14 +1017,14 @@
               <FilePath>..\Libraries\Radio\radio_src\radio_rf_app.c</FilePath>
             </File>
             <File>
-              <FileName>radio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libraries\Radio\radio_src\radio.c</FilePath>
-            </File>
-            <File>
               <FileName>radio_hal_rf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\Radio\radio_src\radio_hal_rf.c</FilePath>
+            </File>
+            <File>
+              <FileName>radio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Radio\radio_src\radio.c</FilePath>
             </File>
             <File>
               <FileName>radio_comm.c</FileName>

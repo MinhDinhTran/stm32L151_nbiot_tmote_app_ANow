@@ -23,6 +23,12 @@
 #define EEPROM_CONFIG_OFFSET				0x08080000
 #define EEPROM_CONFIG_SIZE				0x0300
 
+#define TCFG_FACTORY_VENDER_OFFSET			0x0C00
+#define TCFG_FACTORY_VENDER_LENGTH			4
+
+#define TCFG_FACTORY_MAC_SN_OFFSET			0x0C04
+#define TCFG_FACTORY_MAC_SN_LENGTH			4
+
 #define TCFG_FACTORY_BRAND_SN_OFFSET		0x0400											//0x08080400
 #define TCFG_FACTORY_BRAND_SN_LENGTH		8												//SN Brand
 
@@ -199,8 +205,16 @@ bool TCFG_EEPROM_CheckInfoBurned(void);														//检测生产商信息
 unsigned int TCFG_EEPROM_GetSNfromBrandKey(void);												//读取SNfromBrandKey
 unsigned int TCFG_EEPROM_GetFactoryBrand(void);												//读取FactoryBrand
 
+void TCFG_EEPROM_Set_MAC_SN(unsigned int sn);												//保存MAC SN
+unsigned int TCFG_EEPROM_Get_MAC_SN(void);													//读取MAC SN
+
+void TCFG_EEPROM_SetVender(char* vender);													//保存Vender
+void TCFG_EEPROM_GetVender(char* vender);													//获取Verder
+
 unsigned char TCFG_Utility_Get_Major_Softnumber(void);											//读取Major_Softnumber
 unsigned char TCFG_Utility_Get_Sub_Softnumber(void);											//读取Sub_Softnumber
+
+
 
 
 

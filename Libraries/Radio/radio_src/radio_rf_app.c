@@ -15,8 +15,8 @@
 
 #include "radio_rf_app.h"
 #include "radio_hal_rf.h"
-#include "radio.h"
 #include "radio_msg_config.h"
+#include "radio.h"
 #include "tmesh_xtea.h"
 #include "platform_map.h"
 #include "platform_config.h"
@@ -40,12 +40,24 @@ uint8_t trf_sensitivity = SENSE_HIGHEST;
 bool isIdleMode = true;
 bool is_actived = true;
 
-void tmesh_rf_QInit(void)
+/**********************************************************************************************************
+ @Function			void Radio_Rf_QInit(void)
+ @Description			Radio_Rf_QInit
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void Radio_Rf_QInit(void)
 {
 	memset(sInFrameQ, 0, sizeof(sInFrameQ));
 }
 
-void tmesh_rf_QPush(mrfiPacket_t* rfpacket)
+/**********************************************************************************************************
+ @Function			void Radio_Rf_QPush(mrfiPacket_t* rfpacket)
+ @Description			Radio_Rf_QPush
+ @Input				rfpacket
+ @Return				void
+**********************************************************************************************************/
+void Radio_Rf_QPush(mrfiPacket_t* rfpacket)
 {
 	int8_t i, oldest = 0, avail = -1;
 	
@@ -67,7 +79,13 @@ void tmesh_rf_QPush(mrfiPacket_t* rfpacket)
 	sInFrameQ[avail].orderStamp = sInFrameQ[oldest].orderStamp++;
 }
 
-mrfiPacket_t* tmesh_rf_QPop(void)
+/**********************************************************************************************************
+ @Function			mrfiPacket_t* Radio_Rf_QPop(void)
+ @Description			Radio_Rf_QPop
+ @Input				void
+ @Return				rfpacket
+**********************************************************************************************************/
+mrfiPacket_t* Radio_Rf_QPop(void)
 {
 	int8_t i;
 	
@@ -81,15 +99,28 @@ mrfiPacket_t* tmesh_rf_QPop(void)
 	return NULL;
 }
 
-void tmesh_rf_data_handle_isr(mrfiPacket_t* rfpacket)
+/**********************************************************************************************************
+ @Function			void Radio_Rf_Data_Handle_Isr(mrfiPacket_t* rfpacket)
+ @Description			Radio_Rf_Data_Handle_Isr
+ @Input				rfpacket
+ @Return				void
+**********************************************************************************************************/
+void Radio_Rf_Data_Handle_Isr(mrfiPacket_t* rfpacket)
 {
-	tmesh_rf_QPush(rfpacket);
+	Radio_Rf_QPush(rfpacket);
 }
 
-char tmesh_rf_receive(uint8_t *outmsg, uint8_t *len)
+/**********************************************************************************************************
+ @Function			char Radio_Rf_Receive(uint8_t *outmsg, uint8_t *len)
+ @Description			Radio_Rf_Receive
+ @Input				outmsg
+					len
+ @Return				void
+**********************************************************************************************************/
+char Radio_Rf_Receive(uint8_t *outmsg, uint8_t *len)
 {
 	mrfiPacket_t* rfpacket;
-	rfpacket = tmesh_rf_QPop();
+	rfpacket = Radio_Rf_QPop();
 	
 	if (rfpacket != NULL) {
 		*len = 1 + (CFG_GET_FROM_FRAME(CFG_P_FRAME_LEN(rfpacket->frame), CFG_LEN_OS));
@@ -101,7 +132,14 @@ char tmesh_rf_receive(uint8_t *outmsg, uint8_t *len)
 	return TRF_NO_PAYLOAD;
 }
 
-char tmesh_rf_send(uint8_t *inmsg, uint8_t len)
+/**********************************************************************************************************
+ @Function			char Radio_Rf_Send(uint8_t *inmsg, uint8_t len)
+ @Description			Radio_Rf_Send
+ @Input				inmsg
+					len
+ @Return				void
+**********************************************************************************************************/
+char Radio_Rf_Send(uint8_t *inmsg, uint8_t len)
 {
 	static char error_cnt = 0;
 	char rc;
@@ -123,7 +161,14 @@ char tmesh_rf_send(uint8_t *inmsg, uint8_t len)
 	return rc;
 }
 
-char tmesh_rf_operate_recvmsg(uint8_t *inmsg, uint8_t len)
+/**********************************************************************************************************
+ @Function			char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
+ @Description			Radio_Rf_Operate_Recvmsg
+ @Input				inmsg
+					len
+ @Return				void
+**********************************************************************************************************/
+char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 {
 	char rc = TRF_SUCCESS;
 	trf_msg_s* pPayload;
@@ -204,21 +249,23 @@ char tmesh_rf_operate_recvmsg(uint8_t *inmsg, uint8_t len)
 	}
 	
 	if (rc == TRF_SUCCESS) {
-		trf_default_resp(100, pPayload->head.type);
+		Radio_Trf_Default_Resp(100, pPayload->head.type);
 	}
 	
 	return rc;
 }
 
+
+
 extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
 
 /**********************************************************************************************************
- @Function			void trf_app_task(void)
- @Description			trf_app_task
+ @Function			void Radio_Trf_App_Task(void)
+ @Description			Radio_Trf_App_Task
  @Input				void
  @Return				void
 **********************************************************************************************************/
-void trf_app_task(void)
+void Radio_Trf_App_Task(void)
 {
 	uint8_t len = 0;
 	
@@ -231,26 +278,26 @@ void trf_app_task(void)
 		Radio_Rf_Interface_Init();
 		Radio_Rf_Interrupt_Init();
 		
-		trf_xmit_heartbeat();
-		if (DEBUG_WORK == trf_get_workmode()) {
+		Radio_Trf_Xmit_Heartbeat();
+		if (DEBUG_WORK == Radio_Trf_Get_Workmode()) {
 			
 		}
 	}
 	
-	if (TRF_SUCCESS == tmesh_rf_receive(trf_recv_buf, &len)) {
-		if (TRF_SUCCESS == tmesh_rf_operate_recvmsg(trf_recv_buf, len)) {
+	if (TRF_SUCCESS == Radio_Rf_Receive(trf_recv_buf, &len)) {
+		if (TRF_SUCCESS == Radio_Rf_Operate_Recvmsg(trf_recv_buf, len)) {
 			BEEP_CtrlRepeat(5, 100);
 		}
 	}
 }
 
 /**********************************************************************************************************
- @Function			void trf_cfg_buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_t sn, uint8_t *outsend, uint8_t len)
- @Description			trf_cfg_buildframe
+ @Function			void Radio_Trf_Cfg_Buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_t sn, uint8_t *outsend, uint8_t len)
+ @Description			Radio_Trf_Cfg_Buildframe
  @Input				...
  @Return				void
 **********************************************************************************************************/
-void trf_cfg_buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_t sn, uint8_t *outsend, uint8_t len)
+void Radio_Trf_Cfg_Buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_t sn, uint8_t *outsend, uint8_t len)
 {
 	uint8_t i;
 	uint16_t check_sum = 0;
@@ -281,24 +328,24 @@ void trf_cfg_buildframe(uint8_t *inmsg, uint8_t pkttype, uint8_t pktnum, uint32_
 }
 
 /**********************************************************************************************************
- @Function			uint8_t trf_xmit_get_pktnum(void)
- @Description			trf_xmit_get_pktnum
+ @Function			uint8_t Radio_Trf_Xmit_Get_Pktnum(void)
+ @Description			Radio_Trf_Xmit_Get_Pktnum
  @Input				void
  @Return				pktnum
 **********************************************************************************************************/
-uint8_t trf_xmit_get_pktnum(void)
+uint8_t Radio_Trf_Xmit_Get_Pktnum(void)
 {
 	static uint8_t pktnum = 0;
 	return pktnum++;
 }
 
 /**********************************************************************************************************
- @Function			void trf_default_resp(uint8_t ret, uint8_t type)
- @Description			trf_default_resp
+ @Function			void Radio_Trf_Default_Resp(uint8_t ret, uint8_t type)
+ @Description			Radio_Trf_Default_Resp
  @Input				void
  @Return				void
 **********************************************************************************************************/
-void trf_default_resp(uint8_t ret, uint8_t type)
+void Radio_Trf_Default_Resp(uint8_t ret, uint8_t type)
 {
 	trf_defaultrsp_s *pDefaultRsp = (trf_defaultrsp_s*)(trf_send_buf + 32);
 	pDefaultRsp->head.destSN		= 0xFFFFFFFF;
@@ -306,17 +353,17 @@ void trf_default_resp(uint8_t ret, uint8_t type)
 	pDefaultRsp->head.type		= type;
 	pDefaultRsp->ret			= ret;
 	
-	trf_cfg_buildframe((uint8_t *)pDefaultRsp, TMOTE_PLAIN_RSP, trf_xmit_get_pktnum(), 0x81010001, trf_send_buf, sizeof(trf_defaultrsp_s));
-	tmesh_rf_send(trf_send_buf, trf_send_buf[0]);
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pDefaultRsp, TMOTE_PLAIN_RSP, Radio_Trf_Xmit_Get_Pktnum(), 0x81010001, trf_send_buf, sizeof(trf_defaultrsp_s));
+	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
 }
 
 /**********************************************************************************************************
- @Function			uint8_t trf_get_workmode(void)
- @Description			trf_get_workmode
+ @Function			uint8_t Radio_Trf_Get_Workmode(void)
+ @Description			Radio_Trf_Get_Workmode
  @Input				void
  @Return				workmode
 **********************************************************************************************************/
-uint8_t trf_get_workmode(void)
+uint8_t Radio_Trf_Get_Workmode(void)
 {
 	if (isIdleMode == true) {
 		return IDLE_WORK;
@@ -330,23 +377,23 @@ uint8_t trf_get_workmode(void)
 }
 
 /**********************************************************************************************************
- @Function			void trf_set_workmode(uint8_t val)
- @Description			trf_set_workmode
+ @Function			void Radio_Trf_Set_Workmode(uint8_t val)
+ @Description			Radio_Trf_Set_Workmode
  @Input				workmode
  @Return				void
 **********************************************************************************************************/
-void trf_set_workmode(uint8_t val)
+void Radio_Trf_Set_Workmode(uint8_t val)
 {
 	trf_work_mode = val;
 }
 
 /**********************************************************************************************************
- @Function			void trf_xmit_heartbeat(void)
- @Description			trf_xmit_heartbeat
+ @Function			void Radio_Trf_Xmit_Heartbeat(void)
+ @Description			Radio_Trf_Xmit_Heartbeat
  @Input				void
  @Return				void
 **********************************************************************************************************/
-void trf_xmit_heartbeat(void)
+void Radio_Trf_Xmit_Heartbeat(void)
 {
 	trf_heartbeat_s *pHeartBeat = (trf_heartbeat_s*)(trf_send_buf + 32);
 	
@@ -370,34 +417,34 @@ void trf_xmit_heartbeat(void)
 	}
 	pHeartBeat->status			= 0;
 	
-	trf_cfg_buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, trf_xmit_get_pktnum(), 0x81010001, trf_send_buf, sizeof(trf_heartbeat_s));
-	tmesh_rf_send(trf_send_buf, trf_send_buf[0]);
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), 0x81010001, trf_send_buf, sizeof(trf_heartbeat_s));
+	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
 	Delay_MS(6);
 }
 
 /**********************************************************************************************************
- @Function			void trf_do_heartbeat(void)
- @Description			trf_do_heartbeat
+ @Function			void Radio_Trf_Do_Heartbeat(void)
+ @Description			Radio_Trf_Do_Heartbeat
  @Input				void
  @Return				void
 **********************************************************************************************************/
-void trf_do_heartbeat(void)
+void Radio_Trf_Do_Heartbeat(void)
 {
 #ifdef	RADIO_SI4438
 	Radio_Rf_Interface_Init();
 	Radio_Rf_Interrupt_Init();
 	
-	trf_xmit_heartbeat();
+	Radio_Trf_Xmit_Heartbeat();
 #endif
 }
 
 /**********************************************************************************************************
- @Function			void trf_do_rfpintf(char* info)
- @Description			trf_do_rfpintf
+ @Function			void Radio_Trf_Do_Rf_Pintf(char* info)
+ @Description			Radio_Trf_Do_Rf_Pintf
  @Input				info
  @Return				void
 **********************************************************************************************************/
-void trf_do_rfpintf(char* info)
+void Radio_Trf_Do_Rf_Pintf(char* info)
 {
 	uint8_t infolen;
 	trf_msg_s *pMsg = (trf_msg_s*)(trf_send_buf + 32);
@@ -419,22 +466,22 @@ void trf_do_rfpintf(char* info)
 	pMsg->head.type			= TRF_MSG_DEBUG_INFO;
 	strncpy(pMsg->pData, info, infolen);
 	
-	trf_cfg_buildframe((uint8_t *)pMsg, TMOTE_PLAIN_PUB, trf_xmit_get_pktnum(), 0x81010001, trf_send_buf, sizeof(trf_msghead_s) + infolen);
-	tmesh_rf_send(trf_send_buf, trf_send_buf[0]);
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pMsg, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), 0x81010001, trf_send_buf, sizeof(trf_msghead_s) + infolen);
+	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
 	if (trf_send_buf[0] >=  RADIO_TX_ALMOST_EMPTY_THRESHOLD) {
 		Radio_StartTx_dummy(RF_CHANNEL1);
 	}
 }
 
 /**********************************************************************************************************
- @Function			void trf_dprintf(const char *fmt, ...)
- @Description			trf_dprintf			: Radio Debug Printf
+ @Function			void Radio_Trf_Debug_Printf(const char *fmt, ...)
+ @Description			Radio_Trf_Debug_Printf		: Radio Debug Printf
  @Input				...
  @Return				void
 **********************************************************************************************************/
-void trf_dprintf(const char *fmt, ...)
+void Radio_Trf_Debug_Printf(const char *fmt, ...)
 {
-	if (DEBUG_WORK == trf_get_workmode()){
+	if (DEBUG_WORK == Radio_Trf_Get_Workmode()){
 #ifdef	RADIO_SI4438
 		__va_list args;
 		va_start (args, fmt);
@@ -442,18 +489,18 @@ void trf_dprintf(const char *fmt, ...)
 		memset(trf_print2buffer, 0, sizeof(trf_print2buffer));
 		vsprintf(trf_print2buffer, fmt, args);
 		va_end (args);
-		trf_do_rfpintf(trf_print2buffer);
+		Radio_Trf_Do_Rf_Pintf(trf_print2buffer);
 #endif
 	}
 }
 
 /**********************************************************************************************************
- @Function			void trf_printf(const char *fmt, ...)
- @Description			trf_printf			: Radio Printf
+ @Function			void Radio_Trf_Printf(const char *fmt, ...)
+ @Description			Radio_Trf_Printf			: Radio Printf
  @Input				...
  @Return				void
 **********************************************************************************************************/
-void trf_printf(const char *fmt, ...)
+void Radio_Trf_Printf(const char *fmt, ...)
 {
 #ifdef	RADIO_SI4438
 	__va_list args;
@@ -462,7 +509,7 @@ void trf_printf(const char *fmt, ...)
 	memset(trf_print2buffer, 0, sizeof(trf_print2buffer));
 	vsprintf (trf_print2buffer, fmt, args);
 	va_end (args);
-	trf_do_rfpintf(trf_print2buffer);
+	Radio_Trf_Do_Rf_Pintf(trf_print2buffer);
 #endif
 }
 

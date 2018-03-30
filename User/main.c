@@ -33,12 +33,11 @@
 
 
 /* Debug Include File */
-#include "tmesh_xtea.h"
 #include "radio_hal_rf.h"
 #include "radio_rf_app.h"
-
+#include "tmesh_xtea.h"
 #define NBIOTDEBUG			0
-#define RADIODEBUG			1
+#define RADIODEBUG			0
 #define OTDEBUG			0
 #define UARTDEBUG			0
 
@@ -128,7 +127,7 @@ int main(void)
 	Delay_MS(10);
 	tmesh_securityInit();
 	Radio_Rf_Init();
-	trf_xmit_heartbeat();
+	Radio_Trf_Xmit_Heartbeat();
 #endif
 	
 	CoapLongStructure.HeadPacket.DataLen = 0x00;
@@ -173,8 +172,8 @@ int main(void)
 	while (1) {
 		
 #if RADIODEBUG
-		trf_printf("Radio Test Success MVBKK ^_^\n\n");
-		trf_app_task();
+		Radio_Trf_Printf("Radio Test Success MVBKK ^_^\n\n");
+		Radio_Trf_App_Task();
 #endif
 		
 #if NBIOTDEBUG
