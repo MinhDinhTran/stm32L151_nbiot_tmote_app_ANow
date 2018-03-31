@@ -101,34 +101,53 @@
 #define TCFG_ACTIVE_DEIVCE_LENGTH			1												//ActiveDeice
 #define TCFG_NBIOT_BOOTCNT_OFFSET			TCFG_ACTIVE_DEIVCE_OFFSET + TCFG_ACTIVE_DEIVCE_LENGTH		//0x080804BF
 #define TCFG_NBIOT_BOOTCNT_LENGTH			4												//NBIOTBootCnt
-#define TCFG_NBIOT_SENTCNT_OFFSET			TCFG_NBIOT_BOOTCNT_OFFSET + TCFG_NBIOT_BOOTCNT_LENGTH		//0x080804C3
-#define TCFG_NBIOT_SENTCNT_LENGTH			4												//NBIOTSentCnt
-#define TCFG_DEV_BOOTCNT_OFFSET			TCFG_NBIOT_SENTCNT_OFFSET + TCFG_NBIOT_SENTCNT_LENGTH		//0x080804C7
+#define TCFG_COAP_SENTCNT_OFFSET			TCFG_NBIOT_BOOTCNT_OFFSET + TCFG_NBIOT_BOOTCNT_LENGTH		//0x080804C3
+#define TCFG_COAP_SENTCNT_LENGTH			4												//CoapSentCnt
+#define TCFG_COAP_RECVCNT_OFFSET			TCFG_COAP_SENTCNT_OFFSET + TCFG_COAP_SENTCNT_LENGTH		//0x080804C7
+#define TCFG_COAP_RECVCNT_LENGTH			4												//CoapRecvCnt
+#define TCFG_MQTTSN_SENTCNT_OFFSET			TCFG_COAP_RECVCNT_OFFSET + TCFG_COAP_RECVCNT_LENGTH		//0x080804CB
+#define TCFG_MQTTSN_SENTCNT_LENGTH			4												//MqttSentCnt
+#define TCFG_MQTTSN_RECVCNT_OFFSET			TCFG_MQTTSN_SENTCNT_OFFSET + TCFG_MQTTSN_SENTCNT_LENGTH	//0x080804CF
+#define TCFG_MQTTSN_RECVCNT_LENGTH			4												//MqttRecvCnt
+#define TCFG_DEV_BOOTCNT_OFFSET			TCFG_MQTTSN_RECVCNT_OFFSET + TCFG_MQTTSN_RECVCNT_LENGTH	//0x080804D3
 #define TCFG_DEV_BOOTCNT_LENGTH			2												//DevBootCnt
-#define TCFG_EVENT_TIME_OFFSET			TCFG_DEV_BOOTCNT_OFFSET + TCFG_DEV_BOOTCNT_LENGTH			//0x080804C9
+#define TCFG_EVENT_TIME_OFFSET			TCFG_DEV_BOOTCNT_OFFSET + TCFG_DEV_BOOTCNT_LENGTH			//0x080804D5
 #define TCFG_EVENT_TIME_LENGTH			4												//EventTime
-#define TCFG_TEMP_BACKGROUND_OFFSET		TCFG_EVENT_TIME_OFFSET + TCFG_EVENT_TIME_LENGTH			//0x080804CD
+#define TCFG_TEMP_BACKGROUND_OFFSET		TCFG_EVENT_TIME_OFFSET + TCFG_EVENT_TIME_LENGTH			//0x080804D9
 #define TCFG_TEMP_BACKGROUND_LENGTH		2												//BackgroundTemp
 
-
-
-
-enum TCFG_SENSITIVITY
+enum TCFG_SENSITIVITY																	//传感器灵敏度
 {
-	SENSE_HIGHEST = 1,
-	SENSE_HIGH,
-	SENSE_MIDDLE,
-	SENSE_LOW,
-	SENSE_LOWEST
+	SENSE_HIGHEST 						= 0x01,
+	SENSE_HIGH						= 0x02,
+	SENSE_MIDDLE						= 0x03,
+	SENSE_LOW							= 0x04,
+	SENSE_LOWEST						= 0x05
 };
 
+typedef struct
+{
+	unsigned int						SubSn;											//设备号
+	unsigned short						Heartinterval;										//心跳间隔
+	unsigned char						Sensitivity;										//灵敏度
+	unsigned char						WorkMode;											//工作模式
+	unsigned char						RFChannel;										//无线通道
+	unsigned int						NBIotBootCount;									//NBIot重启次数
+	unsigned int						CoapSentCount;										//Coap发送包数
+	unsigned int						CoapRecvCount;										//Coap接收包数
+	unsigned int						MqttSNSentCount;									//MqttSN发送包数
+	unsigned int						MqttSNRecvCount;									//MqttSN接收包数
+}TCFG_SystemDataTypeDef;
+
+extern TCFG_SystemDataTypeDef				TCFG_SystemData;
 
 
 
 
 
 
-
+void TCFG_EEPROM_SystemInfo_Init(void);														//系统信息初始化
+void TCFG_EEPROM_ReadConfigData(void);														//读取系统配置信息
 
 void TCFG_EEPROM_SetBootMode(char bootmode);													//保存Boot启动模式
 char TCFG_EEPROM_GetBootMode(void);														//读取Boot启动模式
@@ -187,8 +206,17 @@ unsigned char TCFG_EEPROM_GetActiveDeice(void);												//读取ActiveDeice
 void TCFG_EEPROM_SetNbiotBootCnt(unsigned int val);											//保存NbiotBootCnt
 unsigned int TCFG_EEPROM_GetNbiotBootCnt(void);												//读取NbiotBootCnt
 
-void TCFG_EEPROM_SetNbiotSentCnt(unsigned int val);											//保存NbiotSentCnt
-unsigned int TCFG_EEPROM_GetNbiotSentCnt(void);												//读取NbiotSentCnt
+void TCFG_EEPROM_SetCoapSentCnt(unsigned int val);											//保存CoapSentCnt
+unsigned int TCFG_EEPROM_GetCoapSentCnt(void);												//读取CoapSentCnt
+
+void TCFG_EEPROM_SetCoapRecvCnt(unsigned int val);											//保存CoapRecvCnt
+unsigned int TCFG_EEPROM_GetCoapRecvCnt(void);												//读取CoapRecvCnt
+
+void TCFG_EEPROM_SetMqttSNSentCnt(unsigned int val);											//保存MqttSNSentCnt
+unsigned int TCFG_EEPROM_GetMqttSNSentCnt(void);												//读取MqttSNSentCnt
+
+void TCFG_EEPROM_SetMqttSNRecvCnt(unsigned int val);											//保存MqttSNRecvCnt
+unsigned int TCFG_EEPROM_GetMqttSNRecvCnt(void);												//读取MqttSNRecvCnt
 
 void TCFG_EEPROM_SetDevBootCnt(unsigned short val);											//保存DevBootCnt
 unsigned short TCFG_EEPROM_GetDevBootCnt(void);												//读取DevBootCnt

@@ -65,4 +65,24 @@ void BEEP_CtrlRepeat(u16 nCount, u16 nMs)
 	}
 }
 
+/**********************************************************************************************************
+ @Function			void BEEP_CtrlRepeat_Extend(u16 nCount, u16 speak_nMs, u16 shut_nMs)
+ @Description			蜂鸣器控制重复响
+ @Input				nCount	: 次数
+					speak_nMs	: 间隔鸣
+					shut_nMs	: 间隔闭
+ @Return				void
+**********************************************************************************************************/
+void BEEP_CtrlRepeat_Extend(u16 nCount, u16 speak_nMs, u16 shut_nMs)
+{
+	u16 index = 0;
+	
+	for (index = 0; index < nCount; index++) {
+		BEEP(ON);
+		Delay_MS(speak_nMs);
+		BEEP(OFF);
+		Delay_MS(shut_nMs);
+	}
+}
+
 /********************************************** END OF FLEE **********************************************/

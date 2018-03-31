@@ -3,16 +3,13 @@
 
 #include "sys.h"
 
-#define IDLE_WORK						4
-#define NOTACTIVE_WORK					3
-#define DEBUG_WORK						1
-#define NORMAL_WORK						0
+#define HEART_INTERVAL					30								//默认心跳间隔时间
 
 #define SIZE_INFRAME_Q					2
 #define MRFI_RX_METRICS_SIZE				2
 
-#define FI_AVAILABLE					0											/* entry available for use */
-#define FI_INUSE_UNTIL_DEL				1											/* in use. will be explicitly reclaimed */
+#define FI_AVAILABLE					0
+#define FI_INUSE_UNTIL_DEL				1
 
 #define TRF_MSG_VERSION					0x01
 

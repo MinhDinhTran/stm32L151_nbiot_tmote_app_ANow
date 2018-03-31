@@ -113,6 +113,19 @@ void Stm32_MSIClock_Init(u32 MsiClockRange)
 }
 
 /**********************************************************************************************************
+ @Function			void Stm32_System_Software_Reboot(void)
+ @Description			Stm32_System_Software_Reboot : 软重启
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void Stm32_System_Software_Reboot(void)
+{
+	HAL_NVIC_SystemReset();
+	
+	__NOP();
+}
+
+/**********************************************************************************************************
  @Function			void Stm32_IncSecondTick(void)
  @Description			Stm32_IncSecondTick : 运行时间加1秒
  @Input				void

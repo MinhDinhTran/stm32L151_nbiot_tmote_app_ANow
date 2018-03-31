@@ -15,7 +15,8 @@
 
 #include "platform_config.h"
 
-
+bool DeviceIdleMode = true;
+bool DeviceActivedMode = true;
 
 
 

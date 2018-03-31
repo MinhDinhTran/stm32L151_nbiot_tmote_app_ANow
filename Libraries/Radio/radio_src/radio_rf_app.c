@@ -20,6 +20,7 @@
 #include "tmesh_xtea.h"
 #include "platform_map.h"
 #include "platform_config.h"
+#include "hal_beep.h"
 #include "delay.h"
 #include "string.h"
 #include <stdarg.h>
@@ -30,15 +31,6 @@ uint8_t trf_send_buf[256] = {0};
 uint8_t trf_recv_buf[256] = {0};
 
 char trf_print2buffer[256] = {0};
-
-static uint32_t hearttime_pre = 0;
-uint16_t trf_heart_interval = 30;
-
-uint8_t trf_work_mode = NORMAL_WORK;
-uint8_t trf_sensitivity = SENSE_HIGHEST;
-
-bool isIdleMode = true;
-bool is_actived = true;
 
 /**********************************************************************************************************
  @Function			void Radio_Rf_QInit(void)
@@ -172,7 +164,9 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 {
 	char rc = TRF_SUCCESS;
 	trf_msg_s* pPayload;
+	
 	unsigned int mac_sn = 0;
+	unsigned int uval32 = 0;
 	
 	mac_sn = TCFG_EEPROM_Get_MAC_SN();
 	
@@ -184,38 +178,77 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 			uint32_t cnt;
 			uint8_t payload_len;
 			
+			BEEP_CtrlRepeat_Extend(1, 200, 0);
 			cnt = CFG_GET_FROM_FRAME(CFG_P_FRAME_HEAD(inmsg), CFG_PKTNUM_OS);
 			payload_len = CFG_GET_PAYLOAD_LEN(inmsg) + CFG_FRAME_LEN_SIZE;
+			
 			tmesh_securityMix(mac_sn);
 			tmesh_decipher((uint8_t*)pPayload, payload_len , &cnt);
+			
 			if (pPayload->head.destSN != mac_sn) {
 				rc = TRF_NOT_FORME;
 				return rc;
 			}
 			
+			/* 升级指令 */
 			if (pPayload->head.type == TRF_MSG_UPGRADE) {
-				
-				
+				for (int i = 0; i < 5; i++) {
+					TCFG_EEPROM_SetBootMode(TCFG_ENV_BOOTMODE_TOUPDATE);
+					if (TCFG_ENV_BOOTMODE_TOUPDATE == TCFG_EEPROM_GetBootMode()) {
+						Radio_Trf_Default_Resp(100, TRF_MSG_UPGRADE);
+						BEEP_CtrlRepeat_Extend(5, 25, 25);
+						Stm32_System_Software_Reboot();
+					}
+				}
 			}
+			/* 传感器灵敏度配置指令 */
 			else if (pPayload->head.type == TRF_MSG_SENSITIVITY) {
-				
-				
+				TCFG_SystemData.Sensitivity = ((tmote_sensitivity_s*)CFG_P_FRAME_PAYLOAD(inmsg))->sensitivity;
+				if ((TCFG_SystemData.Sensitivity > SENSE_LOWEST) || (TCFG_SystemData.Sensitivity < SENSE_HIGHEST)) {
+					TCFG_SystemData.Sensitivity = SENSE_MIDDLE;
+					TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
+					__NOP();
+				}
 			}
+			/* 工作模式配置指令 */
 			else if (pPayload->head.type == TRF_MSG_WORKMODE) {
-				
-				
+				TCFG_SystemData.WorkMode = ((tmote_work_mode_s*)CFG_P_FRAME_PAYLOAD(inmsg))->mode;
+				if ((TCFG_SystemData.WorkMode != DEBUG_WORK) && (TCFG_SystemData.WorkMode != NORMAL_WORK)) {
+					TCFG_SystemData.WorkMode = NORMAL_WORK;
+					TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
+					__NOP();
+				}
 			}
+			/* 无线心跳间隔时间配置指令 */
 			else if (pPayload->head.type == TRF_MSG_RFHEART_INTERVAL) {
-				
-				
+				TCFG_SystemData.Heartinterval = ((tmote_beat_interval_s*)CFG_P_FRAME_PAYLOAD(inmsg))->seconds;
+				if ((TCFG_SystemData.Heartinterval > 120) || (TCFG_SystemData.Heartinterval < 10)) {
+					TCFG_SystemData.Heartinterval = HEART_INTERVAL;
+					TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
+					__NOP();
+				}
 			}
+			/* 初始化传感器指令 */
 			else if (pPayload->head.type == TRF_MSG_INITBACKGROUND) {
 				
 				
 			}
+			/* 其他下行指令 */
 			else if (pPayload->head.type == TRF_MSG_GENERAL_CMD) {
-				
-				
+				((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf[15] = 0;
+				/* reboot */
+				if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "reboot")) {
+					BEEP_CtrlRepeat_Extend(2, 500, 250);
+					Stm32_System_Software_Reboot();
+					__NOP();
+				}
+				/* newsn */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "newsn")) {
+					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "newsn:%08x", &uval32);
+					TCFG_EEPROM_Set_MAC_SN(uval32);
+					__NOP();
+				}
+				/* ...... */
 			}
 		}
 		else {
@@ -223,24 +256,26 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				rc = TRF_NOT_FORME;
 				return rc;
 			}
+			
 			if (CFG_GET_FROM_FRAME(CFG_P_FRAME_HEAD(inmsg), CFG_HEAD_TYPE_OS) == TMOTE_PLAIN_GET)
 			{
+				BEEP_CtrlRepeat_Extend(2, 50, 50);
 				if (pPayload->head.type == TRF_MSG_BASICINFO) {
-					
+					__NOP();
 				}
 				else if (pPayload->head.type == TRF_MSG_SENSITIVITY) {
-					
+					__NOP();
 				}
 				else if (pPayload->head.type == TRF_MSG_WORKMODE) {
-					
+					__NOP();
 				}
 				else if (pPayload->head.type == TRF_MSG_INITBACKGROUND) {
-					
+					__NOP();
 				}
 			}
 			else if (CFG_GET_FROM_FRAME(CFG_P_FRAME_HEAD(inmsg), CFG_HEAD_TYPE_OS) == TMOTE_PLAIN_ACK)
 			{
-				
+				__NOP();
 			}
 			else {
 				rc = TRF_BAD_MSGTYPE;
@@ -266,23 +301,27 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 **********************************************************************************************************/
 void Radio_Trf_App_Task(void)
 {
+	static uint32_t hearttime_pre = 0;										//心跳包计时器
 	uint8_t len = 0;
 	
 	if (TRF_OK != Radio_Rf_get_Status()) {
 		return;
 	}
 	
-	hearttime_pre++;
-	if ((hearttime_pre % 30) == 0) {
+	/* 到达心跳时间 */
+	if ((hearttime_pre + TCFG_SystemData.Heartinterval) < Stm32_GetSecondTick()) {
+		hearttime_pre = Stm32_GetSecondTick();
 		Radio_Rf_Interface_Init();
 		Radio_Rf_Interrupt_Init();
-		
+		/* 发送心跳包 */
 		Radio_Trf_Xmit_Heartbeat();
+		/* 发送调试信息 */
 		if (DEBUG_WORK == Radio_Trf_Get_Workmode()) {
 			
 		}
 	}
 	
+	/* 接收无线下行数据 */
 	if (TRF_SUCCESS == Radio_Rf_Receive(trf_recv_buf, &len)) {
 		if (TRF_SUCCESS == Radio_Rf_Operate_Recvmsg(trf_recv_buf, len)) {
 			
@@ -364,14 +403,14 @@ void Radio_Trf_Default_Resp(uint8_t ret, uint8_t type)
 **********************************************************************************************************/
 uint8_t Radio_Trf_Get_Workmode(void)
 {
-	if (isIdleMode == true) {
+	if (DeviceIdleMode == true) {
 		return IDLE_WORK;
 	}
-	else if (is_actived != true) {
+	else if (DeviceActivedMode != true) {
 		return NOTACTIVE_WORK;
 	}
 	else {
-		return trf_work_mode;
+		return TCFG_SystemData.WorkMode;
 	}
 }
 
@@ -383,7 +422,7 @@ uint8_t Radio_Trf_Get_Workmode(void)
 **********************************************************************************************************/
 void Radio_Trf_Set_Workmode(uint8_t val)
 {
-	trf_work_mode = val;
+	TCFG_SystemData.WorkMode = val;
 }
 
 /**********************************************************************************************************
@@ -408,8 +447,8 @@ void Radio_Trf_Xmit_Heartbeat(void)
 	pHeartBeat->sub_softver		= TCFG_Utility_Get_Sub_Softnumber();
 	pHeartBeat->DevType			= MVB_MODEL_TYPE;
 	pHeartBeat->sub_hardver		= 2;
-	if (is_actived == true) {
-		pHeartBeat->workmode	= trf_work_mode;
+	if (DeviceActivedMode == true) {
+		pHeartBeat->workmode	= TCFG_SystemData.WorkMode;
 	}
 	else {
 		pHeartBeat->workmode	= NOTACTIVE_WORK;

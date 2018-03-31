@@ -14,8 +14,87 @@
   */
 
 #include "platform_map.h"
+#include "platform_config.h"
 #include "hal_eeprom.h"
+#include "radio_hal_rf.h"
+#include "radio_rf_app.h"
 #include "string.h"
+
+TCFG_SystemDataTypeDef			TCFG_SystemData;
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SystemInfo_Init(void)
+ @Description			TCFG_EEPROM_SystemInfo_Init					: 系统信息初始化
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SystemInfo_Init(void)
+{
+	TCFG_EEPROM_ReadConfigData();
+	TCFG_EEPROM_SetBootMode(TCFG_ENV_BOOTMODE_NORMAL);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_ReadConfigData(void)
+ @Description			TCFG_EEPROM_ReadConfigData					: 读取系统配置信息
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_ReadConfigData(void)
+{
+	/* 获取传感器灵敏度值 */
+	TCFG_SystemData.Sensitivity = TCFG_EEPROM_GetSavedSensitivity();
+	if ((TCFG_SystemData.Sensitivity > SENSE_LOWEST) || (TCFG_SystemData.Sensitivity < SENSE_HIGHEST)) {
+		TCFG_SystemData.Sensitivity = SENSE_MIDDLE;
+		TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
+	}
+	
+	/* 获取设备工作模式 */
+	TCFG_SystemData.WorkMode = TCFG_EEPROM_GetWorkMode();
+	if ((TCFG_SystemData.WorkMode != DEBUG_WORK) && (TCFG_SystemData.WorkMode != NORMAL_WORK)) {
+		TCFG_SystemData.WorkMode = NORMAL_WORK;
+		TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
+	}
+	
+	/* 无线通道选择 */
+	TCFG_SystemData.RFChannel = TCFG_EEPROM_GetRfChannel();
+	switch (TCFG_SystemData.RFChannel)
+	{
+	case 36:
+		RF_CHANNEL1 = 36;
+		break;
+	case 4:
+		RF_CHANNEL1 = 4;
+		break;
+	case 6:
+		RF_CHANNEL1 = 6;
+		break;
+	case 16:
+		RF_CHANNEL1 = 16;
+		break;
+	case 26:
+		RF_CHANNEL1 = 26;
+		break;
+	default:
+		RF_CHANNEL1 = 36;
+		TCFG_SystemData.RFChannel = 36;
+		TCFG_EEPROM_SetRfChannel(TCFG_SystemData.RFChannel);
+		break;
+	}
+	
+	/* 无线心跳间隔 */
+	TCFG_SystemData.Heartinterval = TCFG_EEPROM_GetHeartinterval();
+	if ((TCFG_SystemData.Heartinterval > 120) || (TCFG_SystemData.Heartinterval < 10)) {
+		TCFG_SystemData.Heartinterval = HEART_INTERVAL;
+		TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
+	}
+	
+	TCFG_SystemData.NBIotBootCount = TCFG_EEPROM_GetNbiotBootCnt();
+	TCFG_SystemData.CoapRecvCount = TCFG_EEPROM_GetCoapRecvCnt();
+	TCFG_SystemData.CoapSentCount = TCFG_EEPROM_GetCoapSentCnt();
+	TCFG_SystemData.MqttSNRecvCount = TCFG_EEPROM_GetMqttSNRecvCnt();
+	TCFG_SystemData.MqttSNSentCount = TCFG_EEPROM_GetMqttSNSentCnt();
+}
 
 /**********************************************************************************************************
  @Function			void TCFG_EEPROM_SetBootMode(char bootmode)
@@ -521,25 +600,91 @@ unsigned int TCFG_EEPROM_GetNbiotBootCnt(void)
 }
 
 /**********************************************************************************************************
- @Function			void TCFG_EEPROM_SetNbiotSentCnt(unsigned int val)
- @Description			TCFG_EEPROM_SetNbiotSentCnt					: 保存NbiotSentCnt
+ @Function			void TCFG_EEPROM_SetCoapSentCnt(unsigned int val)
+ @Description			TCFG_EEPROM_SetCoapSentCnt					: 保存CoapSentCnt
  @Input				val
  @Return				void
 **********************************************************************************************************/
-void TCFG_EEPROM_SetNbiotSentCnt(unsigned int val)
+void TCFG_EEPROM_SetCoapSentCnt(unsigned int val)
 {
-	FLASH_EEPROM_WriteWord(TCFG_NBIOT_SENTCNT_OFFSET, val);
+	FLASH_EEPROM_WriteWord(TCFG_COAP_SENTCNT_OFFSET, val);
 }
 
 /**********************************************************************************************************
- @Function			unsigned int TCFG_EEPROM_GetNbiotSentCnt(void)
- @Description			TCFG_EEPROM_GetNbiotSentCnt					: 读取NbiotSentCnt
+ @Function			unsigned int TCFG_EEPROM_GetCoapSentCnt(void)
+ @Description			TCFG_EEPROM_GetCoapSentCnt					: 读取CoapSentCnt
  @Input				void
  @Return				val
 **********************************************************************************************************/
-unsigned int TCFG_EEPROM_GetNbiotSentCnt(void)
+unsigned int TCFG_EEPROM_GetCoapSentCnt(void)
 {
-	return FLASH_EEPROM_ReadWord(TCFG_NBIOT_SENTCNT_OFFSET);
+	return FLASH_EEPROM_ReadWord(TCFG_COAP_SENTCNT_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetCoapRecvCnt(unsigned int val)
+ @Description			TCFG_EEPROM_SetCoapRecvCnt					: 保存CoapRecvCnt
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetCoapRecvCnt(unsigned int val)
+{
+	FLASH_EEPROM_WriteWord(TCFG_COAP_RECVCNT_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned int TCFG_EEPROM_GetCoapRecvCnt(void)
+ @Description			TCFG_EEPROM_GetCoapRecvCnt					: 读取CoapRecvCnt
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned int TCFG_EEPROM_GetCoapRecvCnt(void)
+{
+	return FLASH_EEPROM_ReadWord(TCFG_COAP_RECVCNT_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetMqttSNSentCnt(unsigned int val)
+ @Description			TCFG_EEPROM_SetMqttSNSentCnt					: 保存MqttSNSentCnt
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetMqttSNSentCnt(unsigned int val)
+{
+	FLASH_EEPROM_WriteWord(TCFG_MQTTSN_SENTCNT_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned int TCFG_EEPROM_GetMqttSNSentCnt(void)
+ @Description			TCFG_EEPROM_GetMqttSNSentCnt					: 读取MqttSNSentCnt
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned int TCFG_EEPROM_GetMqttSNSentCnt(void)
+{
+	return FLASH_EEPROM_ReadWord(TCFG_MQTTSN_SENTCNT_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetMqttSNRecvCnt(unsigned int val)
+ @Description			TCFG_EEPROM_SetMqttSNRecvCnt					: 保存MqttSNRecvCnt
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetMqttSNRecvCnt(unsigned int val)
+{
+	FLASH_EEPROM_WriteWord(TCFG_MQTTSN_RECVCNT_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned int TCFG_EEPROM_GetMqttSNRecvCnt(void)
+ @Description			TCFG_EEPROM_GetMqttSNRecvCnt					: 读取MqttSNRecvCnt
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned int TCFG_EEPROM_GetMqttSNRecvCnt(void)
+{
+	return FLASH_EEPROM_ReadWord(TCFG_MQTTSN_RECVCNT_OFFSET);
 }
 
 /**********************************************************************************************************

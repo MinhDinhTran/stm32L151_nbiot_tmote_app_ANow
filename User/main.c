@@ -38,7 +38,7 @@
 #include "tmesh_xtea.h"
 
 #define NBIOTDEBUG			0
-#define RADIODEBUG			0
+#define RADIODEBUG			1
 #define OTDEBUG			0
 
 COAP_PacketShortTypeDef		CoapShortStructure;
@@ -94,6 +94,7 @@ int main(void)
 	
 	TCFG_EEPROM_Set_MAC_SN(0x81010001);											//写入MACSN
 	TCFG_EEPROM_SetVender("mvb");													//写入Verder
+	TCFG_EEPROM_SystemInfo_Init();												//系统运行信息初始化
 	
 #if OTDEBUG
 	ResetStatus = RCC_ResetFlag_GetStatus();										//复位标志位
@@ -108,7 +109,7 @@ int main(void)
 	}
 #endif
 	
-	BEEP_CtrlRepeat(2, 50);														//蜂鸣器
+	BEEP_CtrlRepeat(10, 50);														//蜂鸣器
 	
 #if RADIODEBUG
 	MODELPOWER(ON);
@@ -158,7 +159,7 @@ int main(void)
 	while (1) {
 		
 #if RADIODEBUG
-		Radio_Trf_Printf("Radio Test Success MVBKK ^_^\n\n");
+		Radio_Trf_Printf("Radio Test Success MVBKK ^_^");
 		Radio_Trf_App_Task();
 #endif
 		
@@ -168,7 +169,6 @@ int main(void)
 #elif NETPROTOCAL == NETMQTTSN
 		NET_MQTTSN_APP_PollExecution(&MqttSNClientHandler);
 #endif
-		
 		Uart2_PortSerialEnable(DISABLE, DISABLE);
 		if (USART2_RX_STA & 0x8000) {
 			USART2_RX_STA = 0;
@@ -242,7 +242,6 @@ int main(void)
 		printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
 		printf("Mercury : %d\n\n", Mercury_Read());
 #endif
-		
 		IWDG_Feed();
 		Delay_MS(1000);
 	}
