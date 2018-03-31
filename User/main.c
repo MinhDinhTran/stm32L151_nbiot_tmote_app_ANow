@@ -30,15 +30,13 @@
 #include "hal_radar.h"
 #include "net_coap_app.h"
 #include "net_mqttsn_app.h"
-
-
-/* Debug Include File */
 #include "radio_hal_rf.h"
 #include "radio_rf_app.h"
 #include "tmesh_xtea.h"
 
+
+/* Debug Include File */
 #define NBIOTDEBUG			0
-#define RADIODEBUG			1
 #define OTDEBUG			0
 
 COAP_PacketShortTypeDef		CoapShortStructure;
@@ -96,6 +94,10 @@ int main(void)
 	TCFG_EEPROM_SetVender("mvb");													//写入Verder
 	TCFG_EEPROM_SystemInfo_Init();												//系统运行信息初始化
 	
+	tmesh_securityInit();														//XTEA加密初始化
+	Radio_Rf_Init();															//SI4438初始化
+	Radio_Trf_Xmit_Heartbeat();													//SI4438发送心跳包
+	
 #if OTDEBUG
 	ResetStatus = RCC_ResetFlag_GetStatus();										//复位标志位
 #endif
@@ -109,14 +111,9 @@ int main(void)
 	}
 #endif
 	
-	BEEP_CtrlRepeat(10, 50);														//蜂鸣器
-	
-#if RADIODEBUG
-	MODELPOWER(ON);
-	tmesh_securityInit();
-	Radio_Rf_Init();
-	Radio_Trf_Xmit_Heartbeat();
-#endif
+	TCFG_EEPROM_SetBootCount(0);													//运行正常BootCount清0
+	BEEP_CtrlRepeat_Extend(20, 50, 25);											//蜂鸣器
+	Radio_Trf_Printf("@_@ Device Start MVBKK ^_^ ...... ");							//启动信息
 	
 #if NBIOTDEBUG
 	CoapLongStructure.HeadPacket.DataLen = 0x00;
@@ -158,10 +155,8 @@ int main(void)
 	
 	while (1) {
 		
-#if RADIODEBUG
-		Radio_Trf_Printf("Radio Test Success MVBKK ^_^");
-		Radio_Trf_App_Task();
-#endif
+		
+		
 		
 #if NBIOTDEBUG
 #if NETPROTOCAL == NETCOAP
@@ -242,6 +237,8 @@ int main(void)
 		printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
 		printf("Mercury : %d\n\n", Mercury_Read());
 #endif
+		Radio_Trf_App_Task();
+		
 		IWDG_Feed();
 		Delay_MS(1000);
 	}
