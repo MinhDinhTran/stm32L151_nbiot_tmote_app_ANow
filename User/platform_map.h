@@ -46,29 +46,29 @@
 #define TCFG_SPOTID_OFFSET				TCFG_SN_OFFSET + TCFG_SN_LENGTH						//0x08080415
 #define TCFG_SPOTID_LENGTH				16												//SPOTID
 #define TCFG_HEARTINTERVAL_OFFSET			TCFG_SPOTID_OFFSET + TCFG_SPOTID_LENGTH					//0x08080425
-#define TCFG_HEARTINTERVAL_LENGTH			2												//Heart Interval
+#define TCFG_HEARTINTERVAL_LENGTH			2												//Heart Interval		心跳间隔时间
 #define TCFG_MAG_SENSITIVITY_OFFSET		TCFG_HEARTINTERVAL_OFFSET + TCFG_HEARTINTERVAL_LENGTH		//0x08080427
-#define TCFG_MAG_SENSITIVITY_LENGTH		1												//Sensitivity
+#define TCFG_MAG_SENSITIVITY_LENGTH		1												//Sensitivity			传感器灵敏度
 #define TCFG_MAG_FREQ_OFFSET				TCFG_MAG_SENSITIVITY_OFFSET + TCFG_MAG_SENSITIVITY_LENGTH	//0x08080428
 #define TCFG_MAG_FREQ_LENGTH				1												//Freq
 
 #define TCFG_MAGFLAG_OFFSET				TCFG_MAG_FREQ_OFFSET + TCFG_MAG_FREQ_LENGTH				//0x08080429
 #define TCFG_MAGFLAG_LENGTH				1												//'T' = 0x54
 #define TCFG_MAG_BACK_X_OFFSET			TCFG_MAGFLAG_OFFSET + TCFG_MAGFLAG_LENGTH				//0x0808042A
-#define TCFG_MAG_BACK_X_LENGTH			2												//Mag X Back
+#define TCFG_MAG_BACK_X_LENGTH			2												//Mag X Back			地磁X背景值
 #define TCFG_MAG_BACK_Y_OFFSET			TCFG_MAG_BACK_X_OFFSET + TCFG_MAG_BACK_X_LENGTH			//0x0808042C
-#define TCFG_MAG_BACK_Y_LENGTH			2												//Mag Y Back
+#define TCFG_MAG_BACK_Y_LENGTH			2												//Mag Y Back			地磁Y背景值
 #define TCFG_MAG_BACK_Z_OFFSET			TCFG_MAG_BACK_Y_OFFSET + TCFG_MAG_BACK_Y_LENGTH			//0x0808042E
-#define TCFG_MAG_BACK_Z_LENGTH			2												//Mag Z Back
+#define TCFG_MAG_BACK_Z_LENGTH			2												//Mag Z Back			地磁Z背景值
 
 #define TCFG_SECUFLAG_OFFSET				TCFG_MAG_BACK_Z_OFFSET + TCFG_MAG_BACK_Z_LENGTH			//0x08080430
 #define TCFG_SECUFLAG_LENGTH				1												//'T' = 0x54
 #define TCFG_SECU_BRAND_OFFSET			TCFG_SECUFLAG_OFFSET + TCFG_SECUFLAG_LENGTH				//0x08080431
 #define TCFG_SECU_BRAND_LENGTH			6												//BrandCode
 #define TCFG_SECU_BRANDKEY_OFFSET			TCFG_SECU_BRAND_OFFSET + TCFG_SECU_BRAND_LENGTH			//0x08080437
-#define TCFG_SECU_BRANDKEY_LENGTH			32												//Reserved
+#define TCFG_SECU_BRANDKEY_LENGTH			32												//Reserved			未使用
 #define TCFG_SECU_BRANCHKEY_OFFSET			TCFG_SECU_BRANDKEY_OFFSET + TCFG_SECU_BRANDKEY_LENGTH		//0x08080457
-#define TCFG_SECU_BRANCHKEY_LENGTH			32												//Reserved
+#define TCFG_SECU_BRANCHKEY_LENGTH			32												//Reserved			未使用
 
 #define TCFG_RECORD_RUNTIME_OFFSET			TCFG_SECU_BRANCHKEY_OFFSET + TCFG_SECU_BRANCHKEY_LENGTH	//0x08080477
 #define TCFG_RECORD_RUNTIME_LENGTH			4												//Reserved
@@ -84,9 +84,9 @@
 #define TCFG_APP_ENV1_SIZE				24												//参数区域1
 
 #define TCFG_RECORD_SERVER_OFFSET			TCFG_APP_ENV1_OFFSET + TCFG_APP_ENV1_SIZE				//0x080804AC
-#define TCFG_RECORD_SERVER_LENGTH			6												//Server Coap
+#define TCFG_RECORD_SERVER_LENGTH			6												//Server Coap			CDP服务器地址
 #define TCFG_WORKMODE_OFFSET				TCFG_RECORD_SERVER_OFFSET + TCFG_RECORD_SERVER_LENGTH		//0x080804B2
-#define TCFG_WORKMODE_LENGTH				1												//WorkMode
+#define TCFG_WORKMODE_LENGTH				1												//WorkMode			工作模式
 #define TCFG_RADARCOUNT_OFFSET			TCFG_WORKMODE_OFFSET + TCFG_WORKMODE_LENGTH				//0x080804B3
 #define TCFG_RADARCOUNT_LENGTH			4												//RadarCount
 #define TCFG_RADARDBG_OFFSET				TCFG_RADARCOUNT_OFFSET + TCFG_RADARCOUNT_LENGTH			//0x080804B7
@@ -94,12 +94,12 @@
 #define TCFG_STATUSCNT_OFFSET				TCFG_RADARDBG_OFFSET + TCFG_RADARDBG_LENGTH				//0x080804B8
 #define TCFG_STATUSCNT_LENGTH				4												//StatusCnt
 #define TCFG_RFCHANNEL_OFFSET				TCFG_STATUSCNT_OFFSET + TCFG_STATUSCNT_LENGTH			//0x080804BC
-#define TCFG_RFCHANNEL_LENGTH				1												//RFChannel
+#define TCFG_RFCHANNEL_LENGTH				1												//RFChannel			无线通信通道
 #define TCFG_ENABLE_NBIOTPSM_OFFSET		TCFG_RFCHANNEL_OFFSET + TCFG_RFCHANNEL_LENGTH			//0x080804BD
 #define TCFG_ENABLE_NBIOTPSM_LENGTH		1												//NBIOTPSM
-#define TCFG_ACTIVE_DEIVCE_OFFSET			TCFG_ENABLE_NBIOTPSM_OFFSET + TCFG_ENABLE_NBIOTPSM_LENGTH	//0x080804BE
-#define TCFG_ACTIVE_DEIVCE_LENGTH			1												//ActiveDeice
-#define TCFG_NBIOT_BOOTCNT_OFFSET			TCFG_ACTIVE_DEIVCE_OFFSET + TCFG_ACTIVE_DEIVCE_LENGTH		//0x080804BF
+#define TCFG_ACTIVE_DEVICE_OFFSET			TCFG_ENABLE_NBIOTPSM_OFFSET + TCFG_ENABLE_NBIOTPSM_LENGTH	//0x080804BE
+#define TCFG_ACTIVE_DEVICE_LENGTH			1												//ActiveDevice
+#define TCFG_NBIOT_BOOTCNT_OFFSET			TCFG_ACTIVE_DEVICE_OFFSET + TCFG_ACTIVE_DEVICE_LENGTH		//0x080804BF
 #define TCFG_NBIOT_BOOTCNT_LENGTH			4												//NBIOTBootCnt			NB重启次数
 #define TCFG_COAP_SENTCNT_OFFSET			TCFG_NBIOT_BOOTCNT_OFFSET + TCFG_NBIOT_BOOTCNT_LENGTH		//0x080804C3
 #define TCFG_COAP_SENTCNT_LENGTH			4												//CoapSentCnt			COAP发送包数
@@ -112,7 +112,7 @@
 #define TCFG_DEV_BOOTCNT_OFFSET			TCFG_MQTTSN_RECVCNT_OFFSET + TCFG_MQTTSN_RECVCNT_LENGTH	//0x080804D3
 #define TCFG_DEV_BOOTCNT_LENGTH			2												//DevBootCnt			设备重启次数
 #define TCFG_EVENT_TIME_OFFSET			TCFG_DEV_BOOTCNT_OFFSET + TCFG_DEV_BOOTCNT_LENGTH			//0x080804D5
-#define TCFG_EVENT_TIME_LENGTH			4												//EventTime			设备运行时间
+#define TCFG_EVENT_TIME_LENGTH			4												//EventTime			设备运行事件时间
 #define TCFG_TEMP_BACKGROUND_OFFSET		TCFG_EVENT_TIME_OFFSET + TCFG_EVENT_TIME_LENGTH			//0x080804D9
 #define TCFG_TEMP_BACKGROUND_LENGTH		2												//BackgroundTemp
 
@@ -128,6 +128,7 @@ enum TCFG_SENSITIVITY																	//传感器灵敏度
 typedef struct
 {
 	unsigned int						SubSn;											//设备号
+	unsigned char						SubMacSN[9];										//设备标识号
 	unsigned short						Heartinterval;										//心跳间隔
 	unsigned char						Sensitivity;										//灵敏度
 	unsigned char						WorkMode;											//工作模式
@@ -137,6 +138,7 @@ typedef struct
 	unsigned int						CoapRecvCount;										//Coap接收包数
 	unsigned int						MqttSNSentCount;									//MqttSN发送包数
 	unsigned int						MqttSNRecvCount;									//MqttSN接收包数
+	unsigned short						DeviceBootCount;									//设备重启次数
 }TCFG_SystemDataTypeDef;
 
 extern TCFG_SystemDataTypeDef				TCFG_SystemData;
@@ -200,8 +202,8 @@ unsigned char TCFG_EEPROM_GetRfChannel(void);												//读取RfChannel
 void TCFG_EEPROM_SetEnableNBiotPSM(unsigned char val);											//保存EnableNBiotPSM
 unsigned char TCFG_EEPROM_GetEnableNBiotPSM(void);											//读取EnableNBiotPSM
 
-void TCFG_EEPROM_SetActiveDeice(unsigned char val);											//保存ActiveDeice
-unsigned char TCFG_EEPROM_GetActiveDeice(void);												//读取ActiveDeice
+void TCFG_EEPROM_SetActiveDevice(unsigned char val);											//保存ActiveDevice
+unsigned char TCFG_EEPROM_GetActiveDevice(void);												//读取ActiveDevice
 
 void TCFG_EEPROM_SetNbiotBootCnt(unsigned int val);											//保存NbiotBootCnt
 unsigned int TCFG_EEPROM_GetNbiotBootCnt(void);												//读取NbiotBootCnt
@@ -235,11 +237,13 @@ unsigned int TCFG_EEPROM_GetFactoryBrand(void);												//读取FactoryBrand
 
 void TCFG_EEPROM_Set_MAC_SN(unsigned int sn);												//保存MAC SN
 unsigned int TCFG_EEPROM_Get_MAC_SN(void);													//读取MAC SN
+char* TCFG_EEPROM_Get_MAC_SN_String(void);													//读取MAC SN字符串
 
 void TCFG_EEPROM_SetVender(char* vender);													//保存Vender
 void TCFG_EEPROM_GetVender(char* vender);													//获取Verder
 
 unsigned char TCFG_Utility_Get_Major_Softnumber(void);											//读取Major_Softnumber
 unsigned char TCFG_Utility_Get_Sub_Softnumber(void);											//读取Sub_Softnumber
+unsigned char TCFG_Utility_Get_Major_Hardnumber(void);											//读取Major_Hardnumber
 
 #endif

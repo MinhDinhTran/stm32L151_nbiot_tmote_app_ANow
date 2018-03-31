@@ -89,6 +89,10 @@ void TCFG_EEPROM_ReadConfigData(void)
 		TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
 	}
 	
+	/* 设备重启次数 */
+	TCFG_SystemData.DeviceBootCount = TCFG_EEPROM_GetDevBootCnt() + 1;
+	TCFG_EEPROM_SetDevBootCnt(TCFG_SystemData.DeviceBootCount);
+	
 	TCFG_SystemData.NBIotBootCount = TCFG_EEPROM_GetNbiotBootCnt();
 	TCFG_SystemData.CoapRecvCount = TCFG_EEPROM_GetCoapRecvCnt();
 	TCFG_SystemData.CoapSentCount = TCFG_EEPROM_GetCoapSentCnt();
@@ -554,11 +558,11 @@ unsigned char TCFG_EEPROM_GetEnableNBiotPSM(void)
  @Input				val
  @Return				void
 **********************************************************************************************************/
-void TCFG_EEPROM_SetActiveDeice(unsigned char val)
+void TCFG_EEPROM_SetActiveDevice(unsigned char val)
 {
 	if (val) val = 0;
 	else val = 1;
-	FLASH_EEPROM_WriteByte(TCFG_ACTIVE_DEIVCE_OFFSET, val);
+	FLASH_EEPROM_WriteByte(TCFG_ACTIVE_DEVICE_OFFSET, val);
 }
 
 /**********************************************************************************************************
@@ -567,9 +571,9 @@ void TCFG_EEPROM_SetActiveDeice(unsigned char val)
  @Input				void
  @Return				val
 **********************************************************************************************************/
-unsigned char TCFG_EEPROM_GetActiveDeice(void)
+unsigned char TCFG_EEPROM_GetActiveDevice(void)
 {
-	if (1 == FLASH_EEPROM_ReadByte(TCFG_ACTIVE_DEIVCE_OFFSET)) {
+	if (1 == FLASH_EEPROM_ReadByte(TCFG_ACTIVE_DEVICE_OFFSET)) {
 		return 0;
 	}
 	else {
@@ -833,6 +837,29 @@ unsigned int TCFG_EEPROM_Get_MAC_SN(void)
 }
 
 /**********************************************************************************************************
+ @Function			char* TCFG_EEPROM_Get_MAC_SN_String(void)
+ @Description			TCFG_EEPROM_Get_MAC_SN_String					: 读取MAC SN字符串
+ @Input				void
+ @Return				sn_string
+**********************************************************************************************************/
+char* TCFG_EEPROM_Get_MAC_SN_String(void)
+{
+	unsigned int subsn = 0;
+	unsigned int sn = 0;
+	
+	subsn = FLASH_EEPROM_ReadWord(TCFG_FACTORY_MAC_SN_OFFSET);
+	sn |= (subsn & 0xFF000000) >> 3*8;
+	sn |= (subsn & 0x00FF0000) >> 1*8;
+	sn |= (subsn & 0x0000FF00) << 1*8;
+	sn |= (subsn & 0x000000FF) << 3*8;
+	
+	memset((void *)TCFG_SystemData.SubMacSN, 0x0, sizeof(TCFG_SystemData.SubMacSN));
+	sprintf((char*)TCFG_SystemData.SubMacSN, "%08x", sn);
+	
+	return (char*)TCFG_SystemData.SubMacSN;
+}
+
+/**********************************************************************************************************
  @Function			void TCFG_EEPROM_SetVender(char* vender)
  @Description			TCFG_EEPROM_SetVender						: 保存vender
  @Input				&vender
@@ -862,7 +889,7 @@ void TCFG_EEPROM_GetVender(char* vender)
 **********************************************************************************************************/
 unsigned char TCFG_Utility_Get_Major_Softnumber(void)
 {
-	return 2;
+	return SOFTWAREMAJOR;
 }
 
 /**********************************************************************************************************
@@ -873,7 +900,18 @@ unsigned char TCFG_Utility_Get_Major_Softnumber(void)
 **********************************************************************************************************/
 unsigned char TCFG_Utility_Get_Sub_Softnumber(void)
 {
-	return 1;
+	return SOFTWARESUB;
+}
+
+/**********************************************************************************************************
+ @Function			unsigned char TCFG_Utility_Get_Major_Hardnumber(void)
+ @Description			TCFG_Utility_Get_Sub_Hardnumber				: 读取Major_Hardnumber
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned char TCFG_Utility_Get_Major_Hardnumber(void)
+{
+	return HARDWAREMAJOR;
 }
 
 /********************************************** END OF FLEE **********************************************/

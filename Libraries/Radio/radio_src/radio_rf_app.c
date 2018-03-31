@@ -178,7 +178,7 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 			uint32_t cnt;
 			uint8_t payload_len;
 			
-			BEEP_CtrlRepeat_Extend(1, 200, 0);
+			BEEP_CtrlRepeat_Extend(1, 300, 0);
 			cnt = CFG_GET_FROM_FRAME(CFG_P_FRAME_HEAD(inmsg), CFG_PKTNUM_OS);
 			payload_len = CFG_GET_PAYLOAD_LEN(inmsg) + CFG_FRAME_LEN_SIZE;
 			

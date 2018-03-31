@@ -6,6 +6,7 @@
 #include "nbiotfunc.h"
 #include "nbiottransport.h"
 #include "net_coap_message_operate.h"
+#include "platform_map.h"
 
 #define COAPCDPADDR_CHINA_TELECOM_FORMAL	"117.60.157.137"					//电信生产 : "117.60.157.137"
 #define COAPCDPADDR_CHINA_TELECOM_TEST		"180.101.147.115"					//电信测试 : "180.101.147.115"

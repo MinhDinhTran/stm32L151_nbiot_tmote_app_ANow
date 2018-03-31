@@ -13,15 +13,10 @@
   *********************************************************************************************************
   */
 
+#include "main.h"
 #include "mqttsnconfig.h"
 #include "mqttsnfunc.h"
 #include "mqttsntransport.h"
-
-/* Debug Include File */
-#include "hal_iwdg.h"
-#include "delay.h"
-#include "usart.h"
-/* Debug Ending */
 
 unsigned char MQTTSN_SendBuf[MQTTSN_BUFFER_SIZE];
 unsigned char MQTTSN_RecvBuf[MQTTSN_BUFFER_SIZE];
@@ -36,12 +31,7 @@ unsigned char MQTTSN_DataStack[MQTTSN_DATASTACK_SIZE];
 **********************************************************************************************************/
 void MQTTSN_WaitforCallback(MQTTSN_ClientsTypeDef* pClient)
 {
-/* Debug */
-	//Todo
-	printf("Wait For Call Back\n");
-	IWDG_Feed();
-	Delay_MS(1000);
-/* End Debug */
+	MainMajorCycle();
 }
 
 /**********************************************************************************************************

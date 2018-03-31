@@ -9,9 +9,10 @@
 #include "nbiotfunc.h"
 #include "nbiottransport.h"
 #include "net_mqttsn_message_operate.h"
+#include "platform_map.h"
 
-#define MQTTSN_CLIENT_ID					"MVBKK_83010001"
-#define MQTTSN_SUBSCRIBE_ID				"MVBKK_83010001"
+#define MQTTSN_CLIENT_ID					TCFG_EEPROM_Get_MAC_SN_String()
+#define MQTTSN_SUBSCRIBE_ID				TCFG_EEPROM_Get_MAC_SN_String()
 
 #define MQTTSN_NBIOT_BAND_CHINA_TELECOM		ChinaTelecom
 #define MQTTSN_NBIOT_BAND_CHINA_MOBILE		ChinaMobile

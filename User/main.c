@@ -13,6 +13,7 @@
   *********************************************************************************************************
   */
 
+#include "main.h"
 #include "sys.h"
 #include "delay.h"
 #include "usart.h"
@@ -90,7 +91,7 @@ int main(void)
 	Uart1_Init(9600);															//串口1初始化
 	Uart2_Init(9600);															//串口2初始化
 	
-	TCFG_EEPROM_Set_MAC_SN(0x81010001);											//写入MACSN
+	TCFG_EEPROM_Set_MAC_SN(0x83010001);											//写入MACSN
 	TCFG_EEPROM_SetVender("mvb");													//写入Verder
 	TCFG_EEPROM_SystemInfo_Init();												//系统运行信息初始化
 	
@@ -113,7 +114,7 @@ int main(void)
 	
 	TCFG_EEPROM_SetBootCount(0);													//运行正常BootCount清0
 	BEEP_CtrlRepeat_Extend(20, 50, 25);											//蜂鸣器
-	Radio_Trf_Printf("@_@ Device Start MVBKK ^_^ ...... ");							//启动信息
+	Radio_Trf_Printf("Device Start MVBKK Reboot : %d ^_^", TCFG_SystemData.DeviceBootCount);	//启动信息
 	
 #if NBIOTDEBUG
 	CoapLongStructure.HeadPacket.DataLen = 0x00;
@@ -157,91 +158,103 @@ int main(void)
 		
 		
 		
-		
 #if NBIOTDEBUG
 #if NETPROTOCAL == NETCOAP
 		NET_COAP_APP_PollExecution(&NbiotClientHandler);
 #elif NETPROTOCAL == NETMQTTSN
 		NET_MQTTSN_APP_PollExecution(&MqttSNClientHandler);
 #endif
-		Uart2_PortSerialEnable(DISABLE, DISABLE);
-		if (USART2_RX_STA & 0x8000) {
-			USART2_RX_STA = 0;
-			HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
-			BEEP_CtrlRepeat(1, 500);
-			BEEP_CtrlRepeat(1, 50);
-			/* COAP DATA ENQUEUE */
-			CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
-			CoapLongStructure.SpotCount += 1;
-			CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
-			/* MQTTSN DATA ENQUEUE */
-			MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
-			MqttSNStatusExtendStructure.Count += 1;
-			MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
-		}
-		Uart2_PortSerialEnable(ENABLE, DISABLE);
-		
-		SendTimes++;
-		if ((SendTimes % 600) == 0) {
-			HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
-			BEEP_CtrlRepeat(1, 500);
-			BEEP_CtrlRepeat(1, 50);
-			/* COAP DATA ENQUEUE */
-			CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
-			CoapLongStructure.SpotCount += 1;
-			CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
-			/* MQTTSN DATA ENQUEUE */
-			MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
-			MqttSNStatusExtendStructure.Count += 1;
-			MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
-		}
 #endif
-		
-#if OTDEBUG
-		if (Radar_GetDataPack(10) != TRADAR_OK) {									//获取雷达数据包
-			printf("No Radar!!\n");
-		}
-		Radar_DataPackToDataStruct();												//将雷达数据提取到雷达结构体
-		printf("NotargetNum : %d\n", radarDataStruct.NotargetNum);
-		printf("CoverNum : %d\n", radarDataStruct.CoverNum);
-		printf("DismagNum : %d\n", radarDataStruct.DismagNum);
-		printf("DisVal : %d\n", radarDataStruct.DisVal);
-		printf("MagVal : %d\n", radarDataStruct.MagVal);
-		printf("Diff : %d\n\n", radarDataStruct.Diff);
-		
-		printf("%s\n", radarDataPack.RADARData[0]);
-		printf("%s\n", radarDataPack.RADARData[1]);
-		printf("%s\n", radarDataPack.RADARData[2]);
-		printf("%s\n", radarDataPack.RADARData[3]);
-		printf("%s\n", radarDataPack.RADARData[4]);
-		printf("%s\n", radarDataPack.RADARData[5]);
-		printf("%s\n", radarDataPack.RADARData[6]);
-		printf("%s\n", radarDataPack.RADARData[7]);
-		printf("%s\n", radarDataPack.RADARData[8]);
-		printf("%s\n", radarDataPack.RADARData[9]);
-		printf("\n");
-		
-		QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);
-		QMC5883L_ReadData();
-		QMC5883L_Mode_Selection(QMC_MODE_STANDBY);
-		printf("X : %d\n", Qmc5883lData.X_Now);
-		printf("Y : %d\n", Qmc5883lData.Y_Now);
-		printf("Z : %d\n", Qmc5883lData.Z_Now);
-		printf("\n");
-		
-		printf("VBAT : %d\n\n", VBAT_ADC_Read(1000));
-		printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
-		printf("Mercury : %d\n\n", Mercury_Read());
-#endif
-		Radio_Trf_App_Task();
-		
-		IWDG_Feed();
-		Delay_MS(1000);
+		MainMajorCycle();
 	}
+}
+
+/**********************************************************************************************************
+ @Function			void MainMajorCycle(void)
+ @Description			MainMajorCycle
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainMajorCycle(void)
+{
+#if NBIOTDEBUG
+	Uart2_PortSerialEnable(DISABLE, DISABLE);
+	if (USART2_RX_STA & 0x8000) {
+		USART2_RX_STA = 0;
+		HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
+		BEEP_CtrlRepeat(1, 500);
+		BEEP_CtrlRepeat(1, 50);
+		/* COAP DATA ENQUEUE */
+		CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
+		CoapLongStructure.SpotCount += 1;
+		CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
+		NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
+		/* MQTTSN DATA ENQUEUE */
+		MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
+		MqttSNStatusExtendStructure.Count += 1;
+		MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
+		NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
+	}
+	Uart2_PortSerialEnable(ENABLE, DISABLE);
+	
+	SendTimes++;
+	if ((SendTimes % 600) == 0) {
+		HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
+		BEEP_CtrlRepeat(1, 500);
+		BEEP_CtrlRepeat(1, 50);
+		/* COAP DATA ENQUEUE */
+		CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
+		CoapLongStructure.SpotCount += 1;
+		CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
+		NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
+		/* MQTTSN DATA ENQUEUE */
+		MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
+		MqttSNStatusExtendStructure.Count += 1;
+		MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
+		NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
+	}
+#endif
+	
+#if OTDEBUG
+	if (Radar_GetDataPack(10) != TRADAR_OK) {									//获取雷达数据包
+		printf("No Radar!!\n");
+	}
+	Radar_DataPackToDataStruct();												//将雷达数据提取到雷达结构体
+	printf("NotargetNum : %d\n", radarDataStruct.NotargetNum);
+	printf("CoverNum : %d\n", radarDataStruct.CoverNum);
+	printf("DismagNum : %d\n", radarDataStruct.DismagNum);
+	printf("DisVal : %d\n", radarDataStruct.DisVal);
+	printf("MagVal : %d\n", radarDataStruct.MagVal);
+	printf("Diff : %d\n\n", radarDataStruct.Diff);
+	
+	printf("%s\n", radarDataPack.RADARData[0]);
+	printf("%s\n", radarDataPack.RADARData[1]);
+	printf("%s\n", radarDataPack.RADARData[2]);
+	printf("%s\n", radarDataPack.RADARData[3]);
+	printf("%s\n", radarDataPack.RADARData[4]);
+	printf("%s\n", radarDataPack.RADARData[5]);
+	printf("%s\n", radarDataPack.RADARData[6]);
+	printf("%s\n", radarDataPack.RADARData[7]);
+	printf("%s\n", radarDataPack.RADARData[8]);
+	printf("%s\n", radarDataPack.RADARData[9]);
+	printf("\n");
+	
+	QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);
+	QMC5883L_ReadData();
+	QMC5883L_Mode_Selection(QMC_MODE_STANDBY);
+	printf("X : %d\n", Qmc5883lData.X_Now);
+	printf("Y : %d\n", Qmc5883lData.Y_Now);
+	printf("Z : %d\n", Qmc5883lData.Z_Now);
+	printf("\n");
+	
+	printf("VBAT : %d\n\n", VBAT_ADC_Read(1000));
+	printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
+	printf("Mercury : %d\n\n", Mercury_Read());
+#endif
+	Radio_Trf_App_Task();
+	
+	IWDG_Feed();
+	Delay_MS(1000);
 }
 
 /********************************************** END OF FLEE **********************************************/

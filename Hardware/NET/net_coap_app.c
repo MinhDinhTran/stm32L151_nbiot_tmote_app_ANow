@@ -15,6 +15,7 @@
 
 #include "net_coap_app.h"
 #include "hal_rtc.h"
+#include "hal_beep.h"
 #include "string.h"
 
 /**********************************************************************************************************
@@ -1345,12 +1346,6 @@ void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
 	}
 }
 
-
-
-
-
-extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
-
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient)
  @Description			NET_COAP_NBIOT_Event_ExecutDownlinkData	: 下行数据处理
@@ -1359,12 +1354,20 @@ extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
 **********************************************************************************************************/
 void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient)
 {
-	//Todo
 	if (NET_Coap_Message_RecvDataDequeue(pClient->Recvbuf, (unsigned short*)&pClient->Recvlen) == true) {
 		NET_Coap_Message_RecvDataOffSet();
 		
-		BEEP_CtrlRepeat(1, 500);
-		BEEP_CtrlRepeat(2, 50);
+		BEEP_CtrlRepeat_Extend(5, 25, 25);
+		
+		
+		//Todo
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	pClient->DictateRunCtl.dictateEvent = SEND_DATA;

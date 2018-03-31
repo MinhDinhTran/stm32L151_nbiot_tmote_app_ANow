@@ -15,6 +15,7 @@
 
 #include "net_mqttsn_app.h"
 #include "hal_rtc.h"
+#include "hal_beep.h"
 #include "string.h"
 
 /**********************************************************************************************************
@@ -1205,7 +1206,7 @@ void NET_MQTTSN_Event_Lost(MQTTSN_ClientsTypeDef* pClient)
 
 
 
-extern void BEEP_CtrlRepeat(u16 nCount, u16 nMs);
+
 
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTTSN_MessageDataTypeDef* messageHandler)
@@ -1221,8 +1222,19 @@ MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTT
 	printf("\nRecv MQTTSN Publish topicFilter : %s, topicid : %d\n", pClient->messageHandlers[0].topicFilter, pClient->messageHandlers[0].topicid);
 	printf("\nRecv MQTTSN Publish Payload : %.*s\n", messageHandler->message->payloadlen, messageHandler->message->payload);
 	
-	BEEP_CtrlRepeat(1, 500);
-	BEEP_CtrlRepeat(2, 50);
+	BEEP_CtrlRepeat_Extend(5, 25, 25);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	return MQTTSN_OK;
 }
