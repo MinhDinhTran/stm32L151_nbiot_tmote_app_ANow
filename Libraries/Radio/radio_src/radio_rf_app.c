@@ -248,6 +248,33 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 					TCFG_EEPROM_Set_MAC_SN(uval32);
 					__NOP();
 				}
+				/* netinfo */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "netinfo")) {
+				#if NETPROTOCAL == NETCOAP
+					Radio_Trf_Printf("Manufacturer:%s", NbiotClientHandler.Parameter.manufacturer);
+					Radio_Trf_Printf("ManufacturerMode:%s", NbiotClientHandler.Parameter.manufacturermode);
+					Radio_Trf_Printf("IMEI:%s", NbiotClientHandler.Parameter.imei);
+					Radio_Trf_Printf("ICCID:%s", NbiotClientHandler.Parameter.iccid);
+					Radio_Trf_Printf("IMSI:%s", NbiotClientHandler.Parameter.imsi);
+					Radio_Trf_Printf("CGPADDR:%s", NbiotClientHandler.Parameter.cgpaddr);
+					Radio_Trf_Printf("CGDCONT:%s", NbiotClientHandler.Parameter.cgdcont);
+					Radio_Trf_Printf("RSSI:%d", NbiotClientHandler.Parameter.rssi);
+					Radio_Trf_Printf("SNR:%d", NbiotClientHandler.Parameter.statisticsCELL.snr);
+					Radio_Trf_Printf("CDPServerHost:%s", NbiotClientHandler.Parameter.cdpserver.CDPServerHost);
+					Radio_Trf_Printf("CDPServerPort:%d", NbiotClientHandler.Parameter.cdpserver.CDPServerPort);
+				#elif NETPROTOCAL == NETMQTTSN
+					Radio_Trf_Printf("Manufacturer:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.manufacturer);
+					Radio_Trf_Printf("ManufacturerMode:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.manufacturermode);
+					Radio_Trf_Printf("IMEI:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.imei);
+					Radio_Trf_Printf("ICCID:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.iccid);
+					Radio_Trf_Printf("IMSI:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.imsi);
+					Radio_Trf_Printf("CGPADDR:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.cgpaddr);
+					Radio_Trf_Printf("CGDCONT:%s", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.cgdcont);
+					Radio_Trf_Printf("RSSI:%d", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.rssi);
+					Radio_Trf_Printf("SNR:%d", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.statisticsCELL.snr);
+				#endif
+					__NOP();
+				}
 				/* ...... */
 			}
 		}
@@ -519,7 +546,7 @@ void Radio_Trf_Do_Rf_Pintf(char* info)
 **********************************************************************************************************/
 void Radio_Trf_Debug_Printf(const char *fmt, ...)
 {
-	if (DEBUG_WORK == Radio_Trf_Get_Workmode()){
+	if (DEBUG_WORK == Radio_Trf_Get_Workmode()) {
 #ifdef	RADIO_SI4438
 		__va_list args;
 		va_start (args, fmt);

@@ -99,7 +99,9 @@ short TEMPERATURE_ADC_Read(u32 timeout)
 		Delay_MS(10);
 	}
 	
-	HAL_ADC_DeInit(&TEMPERATURE_ADC_Handler);
+	if (HAL_ADC_DeInit(&TEMPERATURE_ADC_Handler) != HAL_OK) {
+		__NOP();
+	}
 	
 	return temp2nd;
 }

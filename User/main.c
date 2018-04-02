@@ -25,6 +25,7 @@
 #include "hal_beep.h"
 #include "hal_switch.h"
 #include "hal_vbat.h"
+#include "hal_vptat.h"
 #include "hal_temperature.h"
 #include "hal_eeprom.h"
 #include "hal_qmc5883l.h"
@@ -39,18 +40,6 @@
 /* Debug Include File */
 #define NBIOTDEBUG			0
 #define OTDEBUG			0
-
-COAP_PacketShortTypeDef		CoapShortStructure;
-COAP_PacketLongTypeDef		CoapLongStructure;
-COAP_PacketInfoTypeDef		CoapInfoStructure;
-
-MQTTSN_StatusBasicTypeDef	MqttSNStatusBasicStructure;
-MQTTSN_StatusExtendTypeDef	MqttSNStatusExtendStructure;
-
-NBIOT_ATCmdTypeDef			NbiotATCmdHandler;
-NBIOT_ClientsTypeDef		NbiotClientHandler;
-MQTTSN_SocketNetTypeDef		MqttSNSocketNetHandler;
-MQTTSN_ClientsTypeDef		MqttSNClientHandler;
 
 RCC_RESET_FLAG_TypeDef 		ResetStatus;
 unsigned int SendTimes = 0;
@@ -91,7 +80,7 @@ int main(void)
 	Uart1_Init(9600);															//串口1初始化
 	Uart2_Init(9600);															//串口2初始化
 	
-	TCFG_EEPROM_Set_MAC_SN(0x83010001);											//写入MACSN
+	TCFG_EEPROM_Set_MAC_SN(0x81010001);											//写入MACSN
 	TCFG_EEPROM_SetVender("mvb");													//写入Verder
 	TCFG_EEPROM_SystemInfo_Init();												//系统运行信息初始化
 	
@@ -248,6 +237,7 @@ void MainMajorCycle(void)
 	printf("\n");
 	
 	printf("VBAT : %d\n\n", VBAT_ADC_Read(1000));
+	printf("VPTAT : %d\n\n", VPTAT_ADC_Read(1000));
 	printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
 	printf("Mercury : %d\n\n", Mercury_Read());
 #endif

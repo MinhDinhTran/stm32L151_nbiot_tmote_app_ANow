@@ -232,7 +232,6 @@ void QMC5883L_Mode_Selection(u8 mode)
 	
 	reg = QMC5883L_ReadByte(QMC5883L_CR1);
 	if (mode == QMC_MODE_STANDBY) {
-		QMC5883L_ClearInsideData();										//Stadby模式进入清除QMC待读取数据
 		QMC5883L_WriteByte(QMC5883L_CR1, (reg & 0xFC) | QMC_MODE_STANDBY);
 	}
 	else if (mode == QMC_MODE_CONTINOUS) {

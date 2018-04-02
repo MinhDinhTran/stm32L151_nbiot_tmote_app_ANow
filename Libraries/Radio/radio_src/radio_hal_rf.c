@@ -206,18 +206,21 @@ char Radio_Rf_Init(void)
 	/* step 1: reset chip */
 	for (i = 0; i < 3; i++) {
 		Radio_PowerUp();
-		rf_inited = 1;
 		/* step 2: set up the rf chip */
 		si446x_part_info();
 		
 		if (Si446xCmd.PART_INFO.PART != 0x4438) {
 			trf_status = TRF_ERROR;
-			return TRF_ERROR;
 		}
 		else {
+			rf_inited = 1;
 			trf_status = TRF_OK;
 			break;
 		}
+	}
+	
+	if (trf_status == TRF_ERROR) {
+		return TRF_ERROR;
 	}
 	
 	while (SI446X_SUCCESS != si446x_configuration_init(Radio_Configuration_Data_Array)) {

@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L151xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Core;..\HALLibraries\Inc;..\User;..\System\Delay;..\System\Sys;..\System\Usart;..\Libraries\Radar;..\Libraries\Inspect;..\Libraries\NBIot;..\Libraries\MQTTSNPacket\src;..\Libraries\MQTTSNPacket\mqttsn;..\Libraries\Radio;..\Libraries\Radio\radio_inc;..\Libraries\Radio\radio_src;..\Libraries\Radio\si446x_inc;..\Libraries\Radio\si446x_src;..\Libraries\Xtea;..\Hardware\RTC;..\Hardware\EEPROM;..\Hardware\IWDG;..\Hardware\IIC;..\Hardware\QMC5883L;..\Hardware\SWITCH;..\Hardware\VBAT;..\Hardware\BEEP;..\Hardware\RADAR;..\Hardware\NET;..\Hardware\TEMPERATURE</IncludePath>
+              <IncludePath>..\Core;..\HALLibraries\Inc;..\User;..\System\Delay;..\System\Sys;..\System\Usart;..\Libraries\Radar;..\Libraries\Inspect;..\Libraries\NBIot;..\Libraries\MQTTSNPacket\src;..\Libraries\MQTTSNPacket\mqttsn;..\Libraries\Radio;..\Libraries\Radio\radio_inc;..\Libraries\Radio\radio_src;..\Libraries\Radio\si446x_inc;..\Libraries\Radio\si446x_src;..\Libraries\Xtea;..\Hardware\RTC;..\Hardware\EEPROM;..\Hardware\IWDG;..\Hardware\IIC;..\Hardware\QMC5883L;..\Hardware\SWITCH;..\Hardware\VBAT;..\Hardware\VPTAT;..\Hardware\BEEP;..\Hardware\RADAR;..\Hardware\NET;..\Hardware\TEMPERATURE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -745,6 +745,11 @@
               <FileName>hal_vbat.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\VBAT\hal_vbat.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_vptat.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\VPTAT\hal_vptat.c</FilePath>
             </File>
             <File>
               <FileName>hal_temperature.c</FileName>
