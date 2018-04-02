@@ -27,10 +27,9 @@
 
 static frameInfo_t sInFrameQ[SIZE_INFRAME_Q];
 
-uint8_t trf_send_buf[256] = {0};
-uint8_t trf_recv_buf[256] = {0};
-
-char trf_print2buffer[256] = {0};
+unsigned char TRF_SendBuf[RF_BUFFER_SIZE];
+unsigned char TRF_RecvBuf[RF_BUFFER_SIZE];
+unsigned char TRF_PrintfBuf[RF_PRINTF_BUFFER_SIZE];
 
 /**********************************************************************************************************
  @Function			void Radio_Rf_QInit(void)
@@ -349,8 +348,8 @@ void Radio_Trf_App_Task(void)
 	}
 	
 	/* 接收无线下行数据 */
-	if (TRF_SUCCESS == Radio_Rf_Receive(trf_recv_buf, &len)) {
-		if (TRF_SUCCESS == Radio_Rf_Operate_Recvmsg(trf_recv_buf, len)) {
+	if (TRF_SUCCESS == Radio_Rf_Receive(TRF_RecvBuf, &len)) {
+		if (TRF_SUCCESS == Radio_Rf_Operate_Recvmsg(TRF_RecvBuf, len)) {
 			
 		}
 	}
@@ -412,14 +411,14 @@ uint8_t Radio_Trf_Xmit_Get_Pktnum(void)
 **********************************************************************************************************/
 void Radio_Trf_Default_Resp(uint8_t ret, uint8_t type)
 {
-	trf_defaultrsp_s *pDefaultRsp = (trf_defaultrsp_s*)(trf_send_buf + 32);
+	trf_defaultrsp_s *pDefaultRsp = (trf_defaultrsp_s*)(TRF_SendBuf + 32);
 	pDefaultRsp->head.destSN		= 0xFFFFFFFF;
 	pDefaultRsp->head.version	= TRF_MSG_VERSION;
 	pDefaultRsp->head.type		= type;
 	pDefaultRsp->ret			= ret;
 	
-	Radio_Trf_Cfg_Buildframe((uint8_t *)pDefaultRsp, TMOTE_PLAIN_RSP, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), trf_send_buf, sizeof(trf_defaultrsp_s));
-	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pDefaultRsp, TMOTE_PLAIN_RSP, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), TRF_SendBuf, sizeof(trf_defaultrsp_s));
+	Radio_Rf_Send(TRF_SendBuf, TRF_SendBuf[0]);
 }
 
 /**********************************************************************************************************
@@ -460,7 +459,7 @@ void Radio_Trf_Set_Workmode(uint8_t val)
 **********************************************************************************************************/
 void Radio_Trf_Xmit_Heartbeat(void)
 {
-	trf_heartbeat_s *pHeartBeat = (trf_heartbeat_s*)(trf_send_buf + 32);
+	trf_heartbeat_s *pHeartBeat = (trf_heartbeat_s*)(TRF_SendBuf + 32);
 	
 	if (TRF_OK != Radio_Rf_get_Status()) {
 		return;
@@ -482,8 +481,8 @@ void Radio_Trf_Xmit_Heartbeat(void)
 	}
 	pHeartBeat->status			= 0;
 	
-	Radio_Trf_Cfg_Buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), trf_send_buf, sizeof(trf_heartbeat_s));
-	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), TRF_SendBuf, sizeof(trf_heartbeat_s));
+	Radio_Rf_Send(TRF_SendBuf, TRF_SendBuf[0]);
 	Delay_MS(6);
 }
 
@@ -512,7 +511,7 @@ void Radio_Trf_Do_Heartbeat(void)
 void Radio_Trf_Do_Rf_Pintf(char* info)
 {
 	uint8_t infolen;
-	trf_msg_s *pMsg = (trf_msg_s*)(trf_send_buf + 32);
+	trf_msg_s *pMsg = (trf_msg_s*)(TRF_SendBuf + 32);
 	
 	infolen = strlen(info);
 	if (infolen > 46) {
@@ -531,9 +530,9 @@ void Radio_Trf_Do_Rf_Pintf(char* info)
 	pMsg->head.type			= TRF_MSG_DEBUG_INFO;
 	strncpy(pMsg->pData, info, infolen);
 	
-	Radio_Trf_Cfg_Buildframe((uint8_t *)pMsg, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), trf_send_buf, sizeof(trf_msghead_s) + infolen);
-	Radio_Rf_Send(trf_send_buf, trf_send_buf[0]);
-	if (trf_send_buf[0] >=  RADIO_TX_ALMOST_EMPTY_THRESHOLD) {
+	Radio_Trf_Cfg_Buildframe((uint8_t *)pMsg, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), TRF_SendBuf, sizeof(trf_msghead_s) + infolen);
+	Radio_Rf_Send(TRF_SendBuf, TRF_SendBuf[0]);
+	if (TRF_SendBuf[0] >=  RADIO_TX_ALMOST_EMPTY_THRESHOLD) {
 		Radio_StartTx_dummy(RF_CHANNEL1);
 	}
 }
@@ -551,10 +550,10 @@ void Radio_Trf_Debug_Printf(const char *fmt, ...)
 		__va_list args;
 		va_start (args, fmt);
 		
-		memset(trf_print2buffer, 0, sizeof(trf_print2buffer));
-		vsprintf(trf_print2buffer, fmt, args);
+		memset(TRF_PrintfBuf, 0, sizeof(TRF_PrintfBuf));
+		vsprintf((char*)TRF_PrintfBuf, fmt, args);
 		va_end (args);
-		Radio_Trf_Do_Rf_Pintf(trf_print2buffer);
+		Radio_Trf_Do_Rf_Pintf((char*)TRF_PrintfBuf);
 #endif
 	}
 }
@@ -571,10 +570,10 @@ void Radio_Trf_Printf(const char *fmt, ...)
 	__va_list args;
 	va_start (args, fmt);
 	
-	memset(trf_print2buffer, 0, sizeof(trf_print2buffer));
-	vsprintf (trf_print2buffer, fmt, args);
+	memset(TRF_PrintfBuf, 0, sizeof(TRF_PrintfBuf));
+	vsprintf ((char*)TRF_PrintfBuf, fmt, args);
 	va_end (args);
-	Radio_Trf_Do_Rf_Pintf(trf_print2buffer);
+	Radio_Trf_Do_Rf_Pintf((char*)TRF_PrintfBuf);
 #endif
 }
 

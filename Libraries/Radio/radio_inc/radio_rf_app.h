@@ -5,6 +5,10 @@
 
 #define HEART_INTERVAL					30								//默认心跳间隔时间
 
+/* RF 开辟缓存大小 */
+#define RF_BUFFER_SIZE					256
+#define RF_PRINTF_BUFFER_SIZE				256
+
 #define SIZE_INFRAME_Q					2
 #define MRFI_RX_METRICS_SIZE				2
 
