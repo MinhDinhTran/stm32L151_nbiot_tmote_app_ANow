@@ -9,16 +9,16 @@
 #define RADAR_ADCx_CLK_ENABLE()				__HAL_RCC_ADC1_CLK_ENABLE()
 #define RADAR_ADCx_CLK_DISABLE()				__HAL_RCC_ADC1_CLK_DISABLE()
 
-/* ¶¨ÒåADCÍ¨µÀÒı½Å */
+/* å®šä¹‰ADCé€šé“å¼•è„š */
 #define RADAR_ADCx_CHANNEL_GPIO_PORT			GPIOA
 #define RADAR_ADCx_CHANNEL_PIN				GPIO_PIN_1
 
 extern __IO uint16_t RADAR_ADC_ConvertedValue;
 
-extern ADC_HandleTypeDef						RADAR_ADC_Handler;				//RADAR ADC¾ä±ú
-extern DMA_HandleTypeDef 					RADAR_ADC_DMA_Handler;			//RADAR ADC DMA¾ä±ú
+extern ADC_HandleTypeDef						RADAR_ADC_Handler;				//RADAR ADCå¥æŸ„
+extern DMA_HandleTypeDef 					RADAR_ADC_DMA_Handler;			//RADAR ADC DMAå¥æŸ„
 
-void Radar_ADC_Init(void);												//À×´ïADC³õÊ¼»¯
-void Radar_ADC_DeInit(void);												//À×´ïADC¸´Î»
+void Radar_ADC_Init(void);												//é›·è¾¾ADCåˆå§‹åŒ–
+void Radar_ADC_DeInit(void);												//é›·è¾¾ADCå¤ä½
 
 #endif

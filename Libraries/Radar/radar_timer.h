@@ -3,9 +3,9 @@
 
 #include "sys.h"
 
-extern TIM_HandleTypeDef						RADAR_TIM2_Handler;				//À×´ï¶¨Ê±Æ÷2¾ä±ú
+extern TIM_HandleTypeDef						RADAR_TIM2_Handler;				//é›·è¾¾å®šæ—¶å™¨2å¥æŸ„
 
-void Radar_TIM2_Init(u16 arr, u16 psc);										//À×´ïÍ¨ÓÃ¶¨Ê±Æ÷2ÖĞ¶Ï³õÊ¼»¯
-void Radar_TIM2_DeInit(void);												//À×´ïÍ¨ÓÃ¶¨Ê±Æ÷2·´³õÊ¼»¯
+void Radar_TIM2_Init(u16 arr, u16 psc);										//é›·è¾¾é€šç”¨å®šæ—¶å™¨2ä¸­æ–­åˆå§‹åŒ–
+void Radar_TIM2_DeInit(void);												//é›·è¾¾é€šç”¨å®šæ—¶å™¨2ååˆå§‹åŒ–
 
 #endif

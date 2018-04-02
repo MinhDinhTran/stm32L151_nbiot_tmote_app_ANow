@@ -62,7 +62,7 @@ tradar_targetinfo_s targetinfo;
 
 /**********************************************************************************************************
  @Function			void Rader_Init(void)
- @Description			À×´ï³õÊ¼»¯
+ @Description			é›·è¾¾åˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -72,23 +72,23 @@ void Radar_Init(void)
 	Radar_ADC_Init();
 	Radar_DAC_Init();
 	
-	Radar_TIM2_Init(10-1, 32-1);																	//10usÖĞ¶ÏÒ»´Î(32MHz)
-	__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);															//ÏÈ¹Ø±ÕTIM2,µÈ´ıÊ¹ÓÃÀ×´ïÊ±¿ªÆô
+	Radar_TIM2_Init(10-1, 32-1);																	//10usä¸­æ–­ä¸€æ¬¡(32MHz)
+	__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);															//å…ˆå…³é—­TIM2,ç­‰å¾…ä½¿ç”¨é›·è¾¾æ—¶å¼€å¯
 	
-	Radar_DataPackInit();																		//³õÊ¼»¯À×´ï½ÓÊÕ¶ÓÁĞ
+	Radar_DataPackInit();																		//åˆå§‹åŒ–é›·è¾¾æ¥æ”¶é˜Ÿåˆ—
 	
-	FLASH_EEPROM_ReadBuffer(EEPROM_BASE_ADDR1, (u8 *)fre_magBG, sizeof(fre_magBG));							//¶ÁÈ¡EEPROM±³¾°Öµ
+	FLASH_EEPROM_ReadBuffer(EEPROM_BASE_ADDR1, (u8 *)fre_magBG, sizeof(fre_magBG));							//è¯»å–EEPROMèƒŒæ™¯å€¼
 	
-	tradar_background_set(fre_magBG, (sizeof(fre_magBG))/2);											//Ğ´Èë±³¾°²ÎÊı
+	tradar_background_set(fre_magBG, (sizeof(fre_magBG))/2);											//å†™å…¥èƒŒæ™¯å‚æ•°
 }
 
 /**********************************************************************************************************
  @Function			u8 Radar_CheckData(u32 datain_t[], u16 in_num)
- @Description			À×´ï¼ì²âÊı¾İ
+ @Description			é›·è¾¾æ£€æµ‹æ•°æ®
  @Input				datain_t		: sample data
 					in_num		: the data number
- @Return				TRADAR_ERROR	: Òì³£
-					TRADAR_OK 	: ÕıÈ·
+ @Return				TRADAR_ERROR	: å¼‚å¸¸
+					TRADAR_OK 	: æ­£ç¡®
 **********************************************************************************************************/
 u8 Radar_CheckData(u32 datain_t[], u16 in_num)
 {
@@ -116,25 +116,25 @@ u8 Radar_CheckData(u32 datain_t[], u16 in_num)
 
 /**********************************************************************************************************
  @Function			u8 Radar_InitBackGround(void)
- @Description			À×´ï³õÊ¼»¯±³¾°Öµ
+ @Description			é›·è¾¾åˆå§‹åŒ–èƒŒæ™¯å€¼
  @Input				void
- @Return				TRADAR_ERROR	: Òì³£
-					TRADAR_OK 	: ÕıÈ·
+ @Return				TRADAR_ERROR	: å¼‚å¸¸
+					TRADAR_OK 	: æ­£ç¡®
 **********************************************************************************************************/
 u8 Radar_InitBackGround(void)
 {
-	RADAR_ENTER_CRITICAL_SECTION();																//À×´ïÆô¶¯³õÊ¼»¯ÅäÖÃ
+	RADAR_ENTER_CRITICAL_SECTION();																//é›·è¾¾å¯åŠ¨åˆå§‹åŒ–é…ç½®
 	
-	RADERPOWER(ON);																			//¿ªÆôÀ×´ïµçÔ´
+	RADERPOWER(ON);																			//å¼€å¯é›·è¾¾ç”µæº
 	Delay_MS(10);
 	
-	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//Æô¶¯À×´ï¶¨Ê±Æ÷
+	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//å¯åŠ¨é›·è¾¾å®šæ—¶å™¨
 	
 	bgTimes = 31;
 	
 	while (1) {
 		while (flag_main_go != 0) {
-			if (Radar_CheckData(sample_array0, SAMPLE_NUM) == TRADAR_OK) {								//À×´ïÊı¾İĞ£Ñé
+			if (Radar_CheckData(sample_array0, SAMPLE_NUM) == TRADAR_OK) {								//é›·è¾¾æ•°æ®æ ¡éªŒ
 				if (bgTimes > 1) {
 					if (flag_main_go == 1) {									
 						tradar_background_transform(sample_array0,SAMPLE_NUM,fre_magBG,(sizeof(fre_magBG))/2);
@@ -144,13 +144,13 @@ u8 Radar_InitBackGround(void)
 					}
 					
 					bgTimes--;
-					if (bgTimes == 1) {															//³õÊ¼»¯±³¾°Íê³É
-						FLASH_EEPROM_WriteBuffer(EEPROM_BASE_ADDR1, (u8 *)fre_magBG, sizeof(fre_magBG));	//±³¾°ÖµĞ´ÈëEEPROM
-						tradar_background_set(fre_magBG,(sizeof(fre_magBG))/2);						//ÉèÖÃ±³¾°Öµ
+					if (bgTimes == 1) {															//åˆå§‹åŒ–èƒŒæ™¯å®Œæˆ
+						FLASH_EEPROM_WriteBuffer(EEPROM_BASE_ADDR1, (u8 *)fre_magBG, sizeof(fre_magBG));	//èƒŒæ™¯å€¼å†™å…¥EEPROM
+						tradar_background_set(fre_magBG,(sizeof(fre_magBG))/2);						//è®¾ç½®èƒŒæ™¯å€¼
 						flag_main_go = 0;
 						
-						__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);										//À×´ï¹¤×÷½áÊø¹Ø±Õ¶¨Ê±Æ÷
-						RADERPOWER(OFF);														//¹Ø±ÕÀ×´ïµçÔ´
+						__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);										//é›·è¾¾å·¥ä½œç»“æŸå…³é—­å®šæ—¶å™¨
+						RADERPOWER(OFF);														//å…³é—­é›·è¾¾ç”µæº
 						
 						RADAR_EXIT_CRITICAL_SECTION();
 						
@@ -159,8 +159,8 @@ u8 Radar_InitBackGround(void)
 				}
 			}
 			else {
-				__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);												//À×´ï¹¤×÷½áÊø¹Ø±Õ¶¨Ê±Æ÷
-				RADERPOWER(OFF);																//¹Ø±ÕÀ×´ïµçÔ´
+				__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);												//é›·è¾¾å·¥ä½œç»“æŸå…³é—­å®šæ—¶å™¨
+				RADERPOWER(OFF);																//å…³é—­é›·è¾¾ç”µæº
 				
 				RADAR_EXIT_CRITICAL_SECTION();
 				
@@ -174,27 +174,27 @@ u8 Radar_InitBackGround(void)
 
 /**********************************************************************************************************
  @Function			u8 Radar_GetDataPack(u8 dataNum)
- @Description			»ñÈ¡À×´ïÊı¾İ
- @Input				dataNum : À×´ïÊı¾İÌõÊı
- @Return				TRADAR_ERROR	: Òì³£
-					TRADAR_OK 	: ÕıÈ·
+ @Description			è·å–é›·è¾¾æ•°æ®
+ @Input				dataNum : é›·è¾¾æ•°æ®æ¡æ•°
+ @Return				TRADAR_ERROR	: å¼‚å¸¸
+					TRADAR_OK 	: æ­£ç¡®
 **********************************************************************************************************/
 u8 Radar_GetDataPack(u8 dataNum)
 {
 	u8 buf[RADAR_CACHE_SIZE];
 	
-	Radar_DataPackInit();																		//³õÊ¼»¯À×´ï½ÓÊÕ¶ÓÁĞ
+	Radar_DataPackInit();																		//åˆå§‹åŒ–é›·è¾¾æ¥æ”¶é˜Ÿåˆ—
 	
-	RADAR_ENTER_CRITICAL_SECTION();																//À×´ïÆô¶¯³õÊ¼»¯ÅäÖÃ
+	RADAR_ENTER_CRITICAL_SECTION();																//é›·è¾¾å¯åŠ¨åˆå§‹åŒ–é…ç½®
 	
-	RADERPOWER(ON);																			//¿ªÆôÀ×´ïµçÔ´
+	RADERPOWER(ON);																			//å¼€å¯é›·è¾¾ç”µæº
 	Delay_MS(10);
 	
-	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//Æô¶¯À×´ï¶¨Ê±Æ÷
+	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//å¯åŠ¨é›·è¾¾å®šæ—¶å™¨
 	
 	while (dataNum) {
 		while (flag_main_go != 0) {
-			if (Radar_CheckData(sample_array0, SAMPLE_NUM) == TRADAR_OK) {								//À×´ïÊı¾İĞ£Ñé
+			if (Radar_CheckData(sample_array0, SAMPLE_NUM) == TRADAR_OK) {								//é›·è¾¾æ•°æ®æ ¡éªŒ
 				if (bgTimes > 1) {
 					if (flag_main_go == 1)
 					{
@@ -206,13 +206,13 @@ u8 Radar_GetDataPack(u8 dataNum)
 					}
 					
 					bgTimes--;
-					if (bgTimes == 1) {															//³õÊ¼»¯±³¾°Íê³É
+					if (bgTimes == 1) {															//åˆå§‹åŒ–èƒŒæ™¯å®Œæˆ
 						FLASH_EEPROM_WriteBuffer(EEPROM_BASE_ADDR1, (u8 *)fre_magBG, sizeof(fre_magBG));
 						tradar_background_set(fre_magBG, (sizeof(fre_magBG))/2);
 						flag_main_go = 0;
 						
-						__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);										//À×´ï¹¤×÷½áÊø¹Ø±Õ¶¨Ê±Æ÷
-						RADERPOWER(OFF);														//¹Ø±ÕÀ×´ïµçÔ´
+						__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);										//é›·è¾¾å·¥ä½œç»“æŸå…³é—­å®šæ—¶å™¨
+						RADERPOWER(OFF);														//å…³é—­é›·è¾¾ç”µæº
 						
 						RADAR_EXIT_CRITICAL_SECTION();
 						
@@ -229,8 +229,8 @@ u8 Radar_GetDataPack(u8 dataNum)
 				}
 			}
 			else {
-				__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);												//À×´ï¹¤×÷½áÊø¹Ø±Õ¶¨Ê±Æ÷
-				RADERPOWER(OFF);																//¹Ø±ÕÀ×´ïµçÔ´
+				__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);												//é›·è¾¾å·¥ä½œç»“æŸå…³é—­å®šæ—¶å™¨
+				RADERPOWER(OFF);																//å…³é—­é›·è¾¾ç”µæº
 				
 				RADAR_EXIT_CRITICAL_SECTION();
 				
@@ -240,19 +240,19 @@ u8 Radar_GetDataPack(u8 dataNum)
 			if (targetinfo.status == TRADAR_BE_COVERED) {
 				memset(buf, 0, RADAR_CACHE_SIZE);
 				sprintf((char *)buf, "COVER !!!diff=%d", targetinfo.strenth_total_diff);
-				Radar_DataPackEnqueue((u8 *)buf, strlen((char *)buf));									//À×´ïÊı¾İĞ´Èë¶ÓÁĞ
+				Radar_DataPackEnqueue((u8 *)buf, strlen((char *)buf));									//é›·è¾¾æ•°æ®å†™å…¥é˜Ÿåˆ—
 				dataNum--;
 			}
 			else if (targetinfo.status == TRADAR_NO_TARGET) {
 				memset(buf, 0, RADAR_CACHE_SIZE);
 				sprintf((char *)buf, "No target ...diff=%d", targetinfo.strenth_total_diff);
-				Radar_DataPackEnqueue((u8 *)buf, strlen((char *)buf));									//À×´ïÊı¾İĞ´Èë¶ÓÁĞ
+				Radar_DataPackEnqueue((u8 *)buf, strlen((char *)buf));									//é›·è¾¾æ•°æ®å†™å…¥é˜Ÿåˆ—
 				dataNum--;
 			}
 			else if (targetinfo.status == TRADAR_HAS_TARGET) {
 				memset(buf, 0, RADAR_CACHE_SIZE);
 				sprintf((char *)buf, "dis=%d,mag=%d,diff=%d", targetinfo.distance_cm, targetinfo.signal_strength, targetinfo.strenth_total_diff);
-				Radar_DataPackEnqueue((u8 *)buf, strlen((char *)buf));									//À×´ïÊı¾İĞ´Èë¶ÓÁĞ
+				Radar_DataPackEnqueue((u8 *)buf, strlen((char *)buf));									//é›·è¾¾æ•°æ®å†™å…¥é˜Ÿåˆ—
 				dataNum--;
 			}
 			
@@ -260,8 +260,8 @@ u8 Radar_GetDataPack(u8 dataNum)
 		}
 	}
 	
-	__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);															//À×´ï¹¤×÷½áÊø¹Ø±Õ¶¨Ê±Æ÷
-	RADERPOWER(OFF);																			//¹Ø±ÕÀ×´ïµçÔ´
+	__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);															//é›·è¾¾å·¥ä½œç»“æŸå…³é—­å®šæ—¶å™¨
+	RADERPOWER(OFF);																			//å…³é—­é›·è¾¾ç”µæº
 	
 	RADAR_EXIT_CRITICAL_SECTION();
 	
@@ -270,21 +270,21 @@ u8 Radar_GetDataPack(u8 dataNum)
 
 /**********************************************************************************************************
  @Function			void Radar_RunTest(void)
- @Description			À×´ïÔËĞĞ²âÊÔ
+ @Description			é›·è¾¾è¿è¡Œæµ‹è¯•
  @Input				void
  @Return				void
 **********************************************************************************************************/
 void Radar_RunTest(void)
 {
-	RADAR_ENTER_CRITICAL_SECTION();																//À×´ïÆô¶¯³õÊ¼»¯ÅäÖÃ
+	RADAR_ENTER_CRITICAL_SECTION();																//é›·è¾¾å¯åŠ¨åˆå§‹åŒ–é…ç½®
 	
 	Uart1_Init(115200);
 	Uart2_Init(115200);
 	
-	RADERPOWER(ON);																			//¿ªÆôÀ×´ïµçÔ´
+	RADERPOWER(ON);																			//å¼€å¯é›·è¾¾ç”µæº
 	Delay_MS(10);
 	
-	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//Æô¶¯À×´ï¶¨Ê±Æ÷
+	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//å¯åŠ¨é›·è¾¾å®šæ—¶å™¨
 	
 	while (1) {
 		while (flag_main_go != 0) {
@@ -299,7 +299,7 @@ void Radar_RunTest(void)
 				}
 				
 				bgTimes--;
-				if (bgTimes == 1) {																//³õÊ¼»¯±³¾°Íê³É
+				if (bgTimes == 1) {																//åˆå§‹åŒ–èƒŒæ™¯å®Œæˆ
 					FLASH_EEPROM_WriteBuffer(EEPROM_BASE_ADDR1, (u8 *)fre_magBG, sizeof(fre_magBG));
 					tradar_background_set(fre_magBG, (sizeof(fre_magBG))/2);
 				}
@@ -328,7 +328,7 @@ void Radar_RunTest(void)
 
 /**********************************************************************************************************
  @Function			void Radar_Get_Sample(void)
- @Description			À×´ï²ÉÑù
+ @Description			é›·è¾¾é‡‡æ ·
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -347,9 +347,9 @@ void Radar_Get_Sample(void)
 		
 		sample_array0[n_array] = RADAR_ADC_ConvertedValue;
 		
-		/* ÉèÖÃDACÍ¨µÀÖµ */
+		/* è®¾ç½®DACé€šé“å€¼ */
 		HAL_DAC_SetValue(&RADAR_DAC_Handler, DAC_CHANNEL_1, DAC_ALIGN_12B_R, (SAMPLE_NUM - n_array) * RADER_RANGE + RADER_LOW);
-		/* Æô¶¯DAC */
+		/* å¯åŠ¨DAC */
 		HAL_DAC_Start(&RADAR_DAC_Handler, DAC_CHANNEL_1);
 		
 		n_array++;
@@ -357,10 +357,10 @@ void Radar_Get_Sample(void)
 	else {
 		sample_array1[n_array] = RADAR_ADC_ConvertedValue;
 		
-		/* ÉèÖÃDACÍ¨µÀÖµ */
+		/* è®¾ç½®DACé€šé“å€¼ */
 		HAL_DAC_SetValue(&RADAR_DAC_Handler, DAC_CHANNEL_1, DAC_ALIGN_12B_R, (SAMPLE_NUM - n_array) * RADER_RANGE + RADER_LOW);
 		
-		/* Æô¶¯DAC */
+		/* å¯åŠ¨DAC */
 		HAL_DAC_Start(&RADAR_DAC_Handler, DAC_CHANNEL_1);
 		
 		n_array++;
@@ -369,7 +369,7 @@ void Radar_Get_Sample(void)
 
 /**********************************************************************************************************
  @Function			void Radar_Get_Sample_Time(void)
- @Description			À×´ï²ÉÑù½ÚÅÄ
+ @Description			é›·è¾¾é‡‡æ ·èŠ‚æ‹
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -388,7 +388,7 @@ void Radar_Get_Sample_Time(void)
 
 /**********************************************************************************************************
  @Function			void Radar_EnterCriticalSection(void)
- @Description			À×´ïÆô¶¯³õÊ¼»¯ÅäÖÃÎª32MHz HSI
+ @Description			é›·è¾¾å¯åŠ¨åˆå§‹åŒ–é…ç½®ä¸º32MHz HSI
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -398,12 +398,12 @@ void Radar_EnterCriticalSection(void)
 	#error No Define SYSTEMCLOCK!
 #else
 #if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
-	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);													//ÉèÖÃÊ±ÖÓ32Mhz
-	Delay_Init(32000);																			//³õÊ¼»¯ÑÓÊ±
+	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);													//è®¾ç½®æ—¶é’Ÿ32Mhz
+	Delay_Init(32000);																			//åˆå§‹åŒ–å»¶æ—¶
 #endif
 #endif
 	
-	n_array = 0;																				//Çå¿Õ×´Ì¬
+	n_array = 0;																				//æ¸…ç©ºçŠ¶æ€
 	flag_in_array = 0;
 	flag_main_go = 0;
 	
@@ -414,7 +414,7 @@ void Radar_EnterCriticalSection(void)
 
 /**********************************************************************************************************
  @Function			void Radar_EnterCriticalSection(void)
- @Description			À×´ïÍË³ö·´³õÊ¼»¯ÅäÖÃÎªÔ­ÏµÍ³Ê±ÖÓMSI
+ @Description			é›·è¾¾é€€å‡ºååˆå§‹åŒ–é…ç½®ä¸ºåŸç³»ç»Ÿæ—¶é’ŸMSI
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -424,12 +424,12 @@ void Radar_ExitCriticalSection(void)
 	#error No Define SYSTEMCLOCK!
 #else
 #if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
-	Stm32_MSIClock_Init(RCC_MSIRANGE_6);															//ÉèÖÃÊ±ÖÓMSI->4.194MHz
-	Delay_Init(4194);																			//³õÊ¼»¯ÑÓÊ±
+	Stm32_MSIClock_Init(RCC_MSIRANGE_6);															//è®¾ç½®æ—¶é’ŸMSI->4.194MHz
+	Delay_Init(4194);																			//åˆå§‹åŒ–å»¶æ—¶
 #endif
 #endif
 	
-	n_array = 0;																				//Çå¿Õ×´Ì¬
+	n_array = 0;																				//æ¸…ç©ºçŠ¶æ€
 	flag_in_array = 0;
 	flag_main_go = 0;
 	

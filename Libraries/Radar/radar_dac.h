@@ -11,7 +11,7 @@
 #define RADAR_DACx_FORCE_RESET()				__HAL_RCC_DAC_FORCE_RESET()
 #define RADAR_DACx_RELEASE_RESET()				__HAL_RCC_DAC_RELEASE_RESET()
 
-/* ¶¨ÒåDACÍ¨µÀÒı½Å */
+/* å®šä¹‰DACé€šé“å¼•è„š */
 #define RADAR_DACx_CHANNEL_GPIO_PORT			GPIOA
 #define RADAR_DACx_CHANNEL_PIN				GPIO_PIN_4
 
@@ -19,12 +19,12 @@
 #define RADAR_DACx_DMAx_CHANNELn_IRQn			DMA1_Channel2_IRQn
 #define RADAR_DACx_DMAx_CHANNELn_IRQHANDLER		DMA1_Channel2_IRQHandler
 
-/* ¶¨ÒåDACÍ¨µÀ */
+/* å®šä¹‰DACé€šé“ */
 #define RADAR_DACx_CHANNEL					DAC_CHANNEL_1
 
-extern DAC_HandleTypeDef						RADAR_DAC_Handler;				//Radar DAC¾ä±ú
+extern DAC_HandleTypeDef						RADAR_DAC_Handler;				//Radar DACå¥æŸ„
 
-void Radar_DAC_Init(void);												//À×´ïDAC³õÊ¼»¯
-void Radar_DAC_DeInit(void);												//À×´ïDAC¸´Î»
+void Radar_DAC_Init(void);												//é›·è¾¾DACåˆå§‹åŒ–
+void Radar_DAC_DeInit(void);												//é›·è¾¾DACå¤ä½
 
 #endif

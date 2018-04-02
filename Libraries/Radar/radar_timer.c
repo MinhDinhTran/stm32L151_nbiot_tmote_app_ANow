@@ -15,33 +15,33 @@
 
 #include "radar_timer.h"
 
-TIM_HandleTypeDef RADAR_TIM2_Handler;										//À×´ï¶¨Ê±Æ÷2¾ä±ú
+TIM_HandleTypeDef RADAR_TIM2_Handler;										//é›·è¾¾å®šæ—¶å™¨2å¥æŸ„
 
 /**********************************************************************************************************
  @Function			void Radar_TIM2_Init(u16 arr, u16 psc)
- @Description			À×´ïÍ¨ÓÃ¶¨Ê±Æ÷2ÖĞ¶Ï³õÊ¼»¯
- @Input				arr£º×Ô¶¯ÖØ×°Öµ
-					psc£ºÊ±ÖÓÔ¤·ÖÆµÊı
- @Other				¶¨Ê±Æ÷Òç³öÊ±¼ä¼ÆËã·½·¨ : Tout = ((arr+1)*(psc+1))/Ft us.
-										Ft   = ¶¨Ê±Æ÷¹¤×÷ÆµÂÊ,µ¥Î»:Mhz
-					ÕâÀïÊ¹ÓÃµÄÊÇ¶¨Ê±Æ÷2!(¶¨Ê±Æ÷2¹ÒÔÚAPB1ÉÏ, Ê±ÖÓÎªHCLK)
+ @Description			é›·è¾¾é€šç”¨å®šæ—¶å™¨2ä¸­æ–­åˆå§‹åŒ–
+ @Input				arrï¼šè‡ªåŠ¨é‡è£…å€¼
+					pscï¼šæ—¶é’Ÿé¢„åˆ†é¢‘æ•°
+ @Other				å®šæ—¶å™¨æº¢å‡ºæ—¶é—´è®¡ç®—æ–¹æ³• : Tout = ((arr+1)*(psc+1))/Ft us.
+										Ft   = å®šæ—¶å™¨å·¥ä½œé¢‘ç‡,å•ä½:Mhz
+					è¿™é‡Œä½¿ç”¨çš„æ˜¯å®šæ—¶å™¨2!(å®šæ—¶å™¨2æŒ‚åœ¨APB1ä¸Š, æ—¶é’Ÿä¸ºHCLK)
  @Return				void
 **********************************************************************************************************/
 void Radar_TIM2_Init(u16 arr, u16 psc)
 {
-	RADAR_TIM2_Handler.Instance = TIM2;									//Í¨ÓÃ¶¨Ê±Æ÷2
-	RADAR_TIM2_Handler.Init.Prescaler = psc;								//·ÖÆµÊı
-	RADAR_TIM2_Handler.Init.CounterMode = TIM_COUNTERMODE_UP;					//ÏòÉÏ¼ÆÊıÆ÷
-	RADAR_TIM2_Handler.Init.Period = arr;									//×Ô¶¯×°ÔØÖµ
-	RADAR_TIM2_Handler.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;				//Ê±ÖÓ·ÖÆµÒò×Ó
+	RADAR_TIM2_Handler.Instance = TIM2;									//é€šç”¨å®šæ—¶å™¨2
+	RADAR_TIM2_Handler.Init.Prescaler = psc;								//åˆ†é¢‘æ•°
+	RADAR_TIM2_Handler.Init.CounterMode = TIM_COUNTERMODE_UP;					//å‘ä¸Šè®¡æ•°å™¨
+	RADAR_TIM2_Handler.Init.Period = arr;									//è‡ªåŠ¨è£…è½½å€¼
+	RADAR_TIM2_Handler.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;				//æ—¶é’Ÿåˆ†é¢‘å› å­
 	HAL_TIM_Base_Init(&RADAR_TIM2_Handler);
 	
-	HAL_TIM_Base_Start_IT(&RADAR_TIM2_Handler);								//Ê¹ÄÜ¶¨Ê±Æ÷2ºÍ¶¨Ê±Æ÷2¸üĞÂÖĞ¶Ï :¡¡TIM_IT_UPDATE
+	HAL_TIM_Base_Start_IT(&RADAR_TIM2_Handler);								//ä½¿èƒ½å®šæ—¶å™¨2å’Œå®šæ—¶å™¨2æ›´æ–°ä¸­æ–­ :ã€€TIM_IT_UPDATE
 }
 
 /**********************************************************************************************************
  @Function			void Radar_TIM2_DeInit(void)
- @Description			À×´ïÍ¨ÓÃ¶¨Ê±Æ÷2·´³õÊ¼»¯
+ @Description			é›·è¾¾é€šç”¨å®šæ—¶å™¨2ååˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/

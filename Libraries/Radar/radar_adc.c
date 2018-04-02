@@ -17,12 +17,12 @@
 
 __IO uint16_t RADAR_ADC_ConvertedValue = 10;
 
-ADC_HandleTypeDef RADAR_ADC_Handler;										//RADAR ADC¾ä±ú
-DMA_HandleTypeDef RADAR_ADC_DMA_Handler;									//RADAR ADC DMA¾ä±ú
+ADC_HandleTypeDef RADAR_ADC_Handler;										//RADAR ADCå¥æŸ„
+DMA_HandleTypeDef RADAR_ADC_DMA_Handler;									//RADAR ADC DMAå¥æŸ„
 
 /**********************************************************************************************************
  @Function			void Radar_ADC_Init(void)
- @Description			À×´ïADC³õÊ¼»¯
+ @Description			é›·è¾¾ADCåˆå§‹åŒ–
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -52,13 +52,13 @@ void Radar_ADC_Init(void)
 	ADC_ChanelConfig.SamplingTime = ADC_SAMPLETIME_4CYCLES;
 	HAL_ADC_ConfigChannel(&RADAR_ADC_Handler, &ADC_ChanelConfig);
 	
-	/* Æô¶¯AD×ª»»²¢Ê¹ÄÜDMA´«ÊäºÍÖĞ¶Ï */
+	/* å¯åŠ¨ADè½¬æ¢å¹¶ä½¿èƒ½DMAä¼ è¾“å’Œä¸­æ–­ */
 	HAL_ADC_Start_DMA(&RADAR_ADC_Handler, (uint32_t*)&RADAR_ADC_ConvertedValue, 1);
 }
 
 /**********************************************************************************************************
  @Function			void Radar_ADC_DeInit(void)
- @Description			À×´ïADC¸´Î»
+ @Description			é›·è¾¾ADCå¤ä½
  @Input				void
  @Return				void
 **********************************************************************************************************/

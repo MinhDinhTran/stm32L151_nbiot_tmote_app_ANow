@@ -13,11 +13,11 @@
 #define	NETMQTTSN						1
 #define	NETPROTOCAL					NETCOAP							//网络模式
 
+#define	RADIO_SI4438
+
 #define	SOFTWAREMAJOR					2								//主固件版本
 #define	SOFTWARESUB					7								//从固件版本
 #define	HARDWAREMAJOR					2								//主硬件版本
-
-#define	RADIO_SI4438
 
 #define	IDLE_WORK						4								//休眠
 #define	NOTACTIVE_WORK					3								//不工作

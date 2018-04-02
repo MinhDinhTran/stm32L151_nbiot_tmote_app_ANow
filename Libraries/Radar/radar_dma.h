@@ -3,7 +3,7 @@
 
 #include "sys.h"
 
-void Radar_DMA_Init(void);												//À×´ïDMA³õÊ¼»¯
-void Radar_DMA_DeInit(void);												//À×´ïDMA¸´Î»
+void Radar_DMA_Init(void);												//é›·è¾¾DMAåˆå§‹åŒ–
+void Radar_DMA_DeInit(void);												//é›·è¾¾DMAå¤ä½
 
 #endif

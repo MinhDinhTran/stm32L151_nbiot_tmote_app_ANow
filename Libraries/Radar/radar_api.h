@@ -7,16 +7,16 @@
 #define RADAR_ENTER_CRITICAL_SECTION()		Radar_EnterCriticalSection();
 #define RADAR_EXIT_CRITICAL_SECTION()		Radar_ExitCriticalSection();
 
-void Radar_Init(void);													//À×´ï³õÊ¼»¯
-u8   Radar_InitBackGround(void);											//À×´ï³õÊ¼»¯±³¾°Öµ
-u8   Radar_GetDataPack(u8 dataNum);										//»ñÈ¡À×´ïÊı¾İ
-void Radar_RunTest(void);												//À×´ïÔËĞĞ²âÊÔ
-void Radar_Get_Sample(void);												//À×´ï²ÉÑù
-void Radar_Get_Sample_Time(void);											//À×´ï²ÉÑù½ÚÅÄ
+void Radar_Init(void);													//é›·è¾¾åˆå§‹åŒ–
+u8   Radar_InitBackGround(void);											//é›·è¾¾åˆå§‹åŒ–èƒŒæ™¯å€¼
+u8   Radar_GetDataPack(u8 dataNum);										//è·å–é›·è¾¾æ•°æ®
+void Radar_RunTest(void);												//é›·è¾¾è¿è¡Œæµ‹è¯•
+void Radar_Get_Sample(void);												//é›·è¾¾é‡‡æ ·
+void Radar_Get_Sample_Time(void);											//é›·è¾¾é‡‡æ ·èŠ‚æ‹
 
-u8   Radar_CheckData(u32 datain_t[], u16 in_num);								//À×´ï¼ì²âÊı¾İ
+u8   Radar_CheckData(u32 datain_t[], u16 in_num);								//é›·è¾¾æ£€æµ‹æ•°æ®
 
-void Radar_EnterCriticalSection(void);										//À×´ïÆô¶¯³õÊ¼»¯ÅäÖÃÎª32MHz HSI
-void Radar_ExitCriticalSection(void);										//À×´ïÍË³ö·´³õÊ¼»¯ÅäÖÃÎªÔ­ÏµÍ³Ê±ÖÓMSI
+void Radar_EnterCriticalSection(void);										//é›·è¾¾å¯åŠ¨åˆå§‹åŒ–é…ç½®ä¸º32MHz HSI
+void Radar_ExitCriticalSection(void);										//é›·è¾¾é€€å‡ºååˆå§‹åŒ–é…ç½®ä¸ºåŸç³»ç»Ÿæ—¶é’ŸMSI
 
 #endif

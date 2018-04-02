@@ -80,7 +80,7 @@ int main(void)
 	Uart1_Init(9600);															//串口1初始化
 	Uart2_Init(9600);															//串口2初始化
 	
-	TCFG_EEPROM_Set_MAC_SN(0x81010001);											//写入MACSN
+	TCFG_EEPROM_Set_MAC_SN(0x83010001);											//写入MACSN
 	TCFG_EEPROM_SetVender("mvb");													//写入Verder
 	TCFG_EEPROM_SystemInfo_Init();												//系统运行信息初始化
 	
@@ -96,9 +96,7 @@ int main(void)
 	QMC5883L_Init();															//QMC初始化
 	
 	Radar_Init();																//雷达初始化
-	if (Radar_InitBackGround() != TRADAR_OK) {										//雷达背景初始化
-		printf("No Radar!!\n");
-	}
+	Radar_InitBackGround();														//雷达背景初始化
 #endif
 	
 	TCFG_EEPROM_SetBootCount(0);													//运行正常BootCount清0
@@ -106,6 +104,7 @@ int main(void)
 	Radio_Trf_Printf("Device Start MVBKK Reboot : %d ^_^", TCFG_SystemData.DeviceBootCount);	//启动信息
 	
 #if NBIOTDEBUG
+	CoapLongStructure.HeadPacket.DeviceSN = TCFG_EEPROM_Get_MAC_SN();
 	CoapLongStructure.HeadPacket.DataLen = 0x00;
 	CoapLongStructure.HeadPacket.ProtocolType = 0x00;
 	CoapLongStructure.HeadPacket.Reserved1 = 0x00;
@@ -113,7 +112,6 @@ int main(void)
 	CoapLongStructure.HeadPacket.Reserved2 = 0x00;
 	CoapLongStructure.HeadPacket.PacketType = 0x05;
 	CoapLongStructure.HeadPacket.PacketNumber = 0x00;
-	CoapLongStructure.HeadPacket.DeviceSN = TCFG_EEPROM_Get_MAC_SN();
 	CoapLongStructure.MsgPacket.DestSN = 0x00;
 	CoapLongStructure.MsgPacket.Version = 0x01;
 	CoapLongStructure.MsgPacket.Type = 0x3A;
