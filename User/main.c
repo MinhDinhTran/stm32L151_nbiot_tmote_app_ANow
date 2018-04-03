@@ -38,6 +38,10 @@
 
 
 /* Debug Include File */
+#include "inspectconfig.h"
+#include "inspectfunc.h"
+#include "inspect.h"
+
 #define NBIOTDEBUG			0
 #define OTDEBUG			0
 

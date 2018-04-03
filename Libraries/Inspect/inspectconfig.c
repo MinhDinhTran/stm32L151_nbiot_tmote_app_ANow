@@ -15,7 +15,7 @@
 
 #include "inspectconfig.h"
 
-
+Inspect_Qmc5883lTypeDef		InspectQmc5883lHandler;							//Inspect QMC5883L Handler
 
 
 

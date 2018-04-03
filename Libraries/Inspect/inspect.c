@@ -14,7 +14,7 @@
   */
 
 #include "inspect.h"
-
+#include "inspectconfig.h"
 
 
 
