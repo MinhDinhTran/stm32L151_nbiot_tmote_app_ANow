@@ -5,6 +5,10 @@
 #include "net_coap_app.h"
 #include "net_mqttsn_app.h"
 
+#define	MVB_STATICMAGNETIC_MODEL			51
+#define	MVB_FLOWMAGNETIC_MODEL			52
+#define	MVB_MODEL_TYPE					MVB_FLOWMAGNETIC_MODEL				//设备类型
+
 #define	SYSTEMCLOCKMSI					4194000
 #define	SYSTEMCLOCKHSI					32000000
 #define	SYSTEMCLOCK					SYSTEMCLOCKMSI						//系统时钟
@@ -15,7 +19,7 @@
 
 #define	RADIO_SI4438													//无线开启
 
-#define	SOFTWAREMAJOR					2								//主固件版本
+#define	SOFTWAREMAJOR					10								//主固件版本
 #define	SOFTWARESUB					8								//从固件版本
 #define	HARDWAREMAJOR					2								//主硬件版本
 

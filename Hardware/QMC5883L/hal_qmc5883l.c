@@ -136,14 +136,54 @@ void QMC5883L_Init(void)
 }
 
 /**********************************************************************************************************
- @Function			void QMC5883L_ReadData(void)
+ @Function			void QMC5883L_ReadData_Simplify(void)
  @Description			QMC5883L读取数据
  @Input				void
  @Return				void
 **********************************************************************************************************/
-void QMC5883L_ReadData(void)
+void QMC5883L_ReadData_Simplify(void)
 {
-	u8 ucReadBuf[QMC_SAMPLE_TIMES][6];
+	u8 ucReadBuf[QMC_REG_MAG];
+	u32 timeover = 0;
+	
+	while (1) {
+		if (QMC_DRDY_READ() == 1) {
+			for (int index = 0; index < QMC_REG_MAG; index++) {
+				ucReadBuf[index] = QMC5883L_ReadByte(QMC_DATA_OUT_X_L + index);
+			}
+			timeover = 0;
+			break;
+		}
+		else {
+			timeover++;
+			if (timeover >= 10000) {										//超时处理
+				break;
+			}
+		}
+		
+		Delay_US(10);
+	}
+	
+	Qmc5883lData.X_Now = 0;
+	Qmc5883lData.Y_Now = 0;
+	Qmc5883lData.Z_Now = 0;
+	
+	if (timeover == 0) {
+		Qmc5883lData.X_Now = (int16_t)(ucReadBuf[1] << 8) | ucReadBuf[0];
+		Qmc5883lData.Y_Now = (int16_t)(ucReadBuf[3] << 8) | ucReadBuf[2];
+		Qmc5883lData.Z_Now = (int16_t)(ucReadBuf[5] << 8) | ucReadBuf[4];
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void QMC5883L_ReadData_Extend(void)
+ @Description			QMC5883L读取数据
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void QMC5883L_ReadData_Extend(void)
+{
+	u8 ucReadBuf[QMC_SAMPLE_TIMES][QMC_REG_MAG];
 	int16_t magdata_x[QMC_SAMPLE_TIMES], magdata_y[QMC_SAMPLE_TIMES], magdata_z[QMC_SAMPLE_TIMES];
 	u32 timeover = 0;
 	u8 index = 0;
@@ -151,7 +191,7 @@ void QMC5883L_ReadData(void)
 	
 	while (1) {
 		if (QMC_DRDY_READ() == 1) {
-			for (index = 0; index < 6; index++) {
+			for (index = 0; index < QMC_REG_MAG; index++) {
 				ucReadBuf[sample_times][index] = QMC5883L_ReadByte(QMC_DATA_OUT_X_L + index);
 			}
 			sample_times++;
@@ -214,7 +254,7 @@ void QMC5883L_ClearInsideData(void)
 	u8 index = 0;
 	
 	if (QMC_DRDY_READ() == 1) {
-		for (index = 0; index < 6; index++) {
+		for (index = 0; index < QMC_REG_MAG; index++) {
 			QMC5883L_ReadByte(QMC_DATA_OUT_X_L + index);
 		}
 	}

@@ -844,6 +844,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Inspect</GroupName>
+          <Files>
+            <File>
+              <FileName>inspectconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Inspect\inspectconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>inspectfunc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Inspect\inspectfunc.c</FilePath>
+            </File>
+            <File>
+              <FileName>inspect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\Inspect\inspect.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Radar</GroupName>
           <Files>
             <File>

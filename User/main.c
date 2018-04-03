@@ -227,7 +227,7 @@ void MainMajorCycle(void)
 	printf("\n");
 	
 	QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);
-	QMC5883L_ReadData();
+	QMC5883L_ReadData_Extend();
 	QMC5883L_Mode_Selection(QMC_MODE_STANDBY);
 	printf("X : %d\n", Qmc5883lData.X_Now);
 	printf("Y : %d\n", Qmc5883lData.Y_Now);

@@ -46,6 +46,7 @@
 #define QMC_POINT_ROLL_DISABLE	(0<<6)									//数据读取完指针自动偏转失能
 #define QMC_SOFT_REST			(1<<7)									//软件复位
 
+#define QMC_REG_MAG				6										//地磁数据寄存器
 #define QMC_DEVIATION_MAX		100										//最大跳变值
 #define QMC_SAMPLE_TIMES			5										//采样次数
 
@@ -60,7 +61,8 @@ extern QMC5883L_TypeDef			Qmc5883lData;								//QMC5883L数据存储区
 void QMC5883L_Init(void);												//QMC5883L初始化
 void QMC5883L_Drdy_Init(void);											//QMC5883L引脚配置PA11高电平读取
 void QMC5883L_Drdy_DeInit(void);											//QMC5883L引脚配置PA11反初始化
-void QMC5883L_ReadData(void);												//QMC5883L读取数据
+void QMC5883L_ReadData_Simplify(void);										//QMC5883L读取数据
+void QMC5883L_ReadData_Extend(void);										//QMC5883L读取数据
 void QMC5883L_ClearInsideData(void);										//QMC5883L清除内部待读取数据缓存
 void QMC5883L_Mode_Selection(u8 mode);										//QMC5883L工作模式选择
 void QMC5883L_Rates_Selection(u8 rates);									//QMC5883L数据输出速率选择
