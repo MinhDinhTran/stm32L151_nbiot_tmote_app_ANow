@@ -852,14 +852,14 @@
               <FilePath>..\Libraries\Inspect\inspectconfig.c</FilePath>
             </File>
             <File>
-              <FileName>inspectfunc.c</FileName>
+              <FileName>inspectqmc5883l.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\Inspect\inspectfunc.c</FilePath>
+              <FilePath>..\Libraries\Inspect\inspectqmc5883l.c</FilePath>
             </File>
             <File>
-              <FileName>inspect.c</FileName>
+              <FileName>inspectradar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Libraries\Inspect\inspect.c</FilePath>
+              <FilePath>..\Libraries\Inspect\inspectradar.c</FilePath>
             </File>
           </Files>
         </Group>

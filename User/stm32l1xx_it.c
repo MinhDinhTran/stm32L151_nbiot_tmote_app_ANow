@@ -15,6 +15,8 @@
 
 #include "stm32l1xx_it.h"
 #include "usart.h"
+#include "hal_qmc5883l.h"
+#include "inspectconfig.h"
 #include "radar_api.h"
 #include "radar_adc.h"
 #include "radar_dac.h"
@@ -211,6 +213,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void EXTI15_10_IRQHandler(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(RF_nIRQ_PIN);									//调用中断处理公共函数
+	HAL_GPIO_EXTI_IRQHandler(QMC_DRDY_PIN);									//调用中断处理公共函数
 }
 
 /**********************************************************************************************************
@@ -224,6 +227,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin == RF_nIRQ_PIN) {										//RF_nIRQ_PIN 中断
 		Radio_Rf_ISR();
+	}
+	else if (GPIO_Pin == QMC_DRDY_PIN) {									//QMC_DRDY_PIN 中断
+		Inspect_Qmc5883l_ISR();
 	}
 }
 

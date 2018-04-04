@@ -112,6 +112,27 @@ void QMC5883L_Drdy_DeInit(void)
 }
 
 /**********************************************************************************************************
+ @Function			void QMC5883L_Drdy_Exti_Init(void)
+ @Description			QMC5883L引脚配置PA11高电平读取(中断)
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void QMC5883L_Drdy_Exti_Init(void)
+{
+	GPIO_InitTypeDef GPIO_Initure;
+	
+	QMC_DRDY_RCC_GPIO_CLK_ENABLE();										//使能QMC DRDY GPIO 时钟
+	
+	GPIO_Initure.Pin = QMC_DRDY_PIN;										//PA11
+	GPIO_Initure.Mode = GPIO_MODE_IT_RISING;								//中断上升沿触发
+	GPIO_Initure.Pull = GPIO_PULLDOWN;										//下拉
+	HAL_GPIO_Init(QMC_DRDY_GPIOx, &GPIO_Initure);
+	
+	HAL_NVIC_SetPriority(QMC_DRDY_IRQn, 2, 1);
+	HAL_NVIC_EnableIRQ(QMC_DRDY_IRQn);
+}
+
+/**********************************************************************************************************
  @Function			void QMC5883L_Init(void)
  @Description			QMC5883L初始化
  @Input				void
@@ -127,24 +148,26 @@ void QMC5883L_Init(void)
 	QMC5883L_WriteByte(0x20, 0x40);
 	QMC5883L_WriteByte(0x21, 0x01);
 	
-	/* 64滤波, 8高斯范围, 200Hz输出, 初始化为StandBy */
-	QMC5883L_WriteByte(QMC5883L_CR1, QMC_OSR_64 | QMC_RANGE_8G | QMC_RATES_200HZ | QMC_MODE_STANDBY);
+	/* 64滤波, 8高斯范围, 50Hz输出, 初始化为StandBy */
+	QMC5883L_WriteByte(QMC5883L_CR1, QMC_OSR_64 | QMC_RANGE_8G | QMC_RATES_50HZ | QMC_MODE_STANDBY);
 	/* 引脚中断使能, 数据读取完指针自动偏转失能 */
 	QMC5883L_WriteByte(QMC5883L_CR2, QMC_INT_ENABLE | QMC_POINT_ROLL_DISABLE);
 	
-	QMC5883L_Drdy_Init();												//QMC5883L引脚配置PA11高电平读取
+	QMC5883L_Drdy_Exti_Init();											//QMC5883L引脚配置PA11高电平读取
 }
 
 /**********************************************************************************************************
- @Function			void QMC5883L_ReadData_Simplify(void)
+ @Function			unsigned char QMC5883L_ReadData_Simplify(void)
  @Description			QMC5883L读取数据
  @Input				void
- @Return				void
+ @Return				1		: success
+					0		: fail
 **********************************************************************************************************/
-void QMC5883L_ReadData_Simplify(void)
+unsigned char QMC5883L_ReadData_Simplify(void)
 {
 	u8 ucReadBuf[QMC_REG_MAG];
 	u32 timeover = 0;
+	u8 ret = 0;
 	
 	while (1) {
 		if (QMC_DRDY_READ() == 1) {
@@ -172,22 +195,27 @@ void QMC5883L_ReadData_Simplify(void)
 		Qmc5883lData.X_Now = (int16_t)(ucReadBuf[1] << 8) | ucReadBuf[0];
 		Qmc5883lData.Y_Now = (int16_t)(ucReadBuf[3] << 8) | ucReadBuf[2];
 		Qmc5883lData.Z_Now = (int16_t)(ucReadBuf[5] << 8) | ucReadBuf[4];
+		ret = 1;
 	}
+	
+	return ret;
 }
 
 /**********************************************************************************************************
- @Function			void QMC5883L_ReadData_Extend(void)
+ @Function			unsigned char QMC5883L_ReadData_Extend(void)
  @Description			QMC5883L读取数据
  @Input				void
- @Return				void
+ @Return				1		: success
+					0		: fail
 **********************************************************************************************************/
-void QMC5883L_ReadData_Extend(void)
+unsigned char QMC5883L_ReadData_Extend(void)
 {
 	u8 ucReadBuf[QMC_SAMPLE_TIMES][QMC_REG_MAG];
 	int16_t magdata_x[QMC_SAMPLE_TIMES], magdata_y[QMC_SAMPLE_TIMES], magdata_z[QMC_SAMPLE_TIMES];
 	u32 timeover = 0;
 	u8 index = 0;
 	u8 sample_times = 0;
+	u8 ret = 0;
 	
 	while (1) {
 		if (QMC_DRDY_READ() == 1) {
@@ -240,7 +268,10 @@ void QMC5883L_ReadData_Extend(void)
 			Qmc5883lData.Y_Now += (((int16_t)(ucReadBuf[index][3] << 8)|ucReadBuf[index][2])+QMC_SAMPLE_TIMES/2)/QMC_SAMPLE_TIMES;
 			Qmc5883lData.Z_Now += (((int16_t)(ucReadBuf[index][5] << 8)|ucReadBuf[index][4])+QMC_SAMPLE_TIMES/2)/QMC_SAMPLE_TIMES;
 		}
+		ret = 1;
 	}
+	
+	return ret;
 }
 
 /**********************************************************************************************************

@@ -9,6 +9,8 @@
 #define QMC_DRDY_RCC_GPIO_CLK_DISABLE()		__HAL_RCC_GPIOA_CLK_DISABLE()
 #define QMC_DRDY_READ()					HAL_GPIO_ReadPin(QMC_DRDY_GPIOx, QMC_DRDY_PIN)
 
+#define QMC_DRDY_IRQn					EXTI15_10_IRQn
+
 #define QMC5883L_SLAVE_ADDRESS_W	0x1A										//I2C从机地址写
 #define QMC5883L_SLAVE_ADDRESS_R	0x1B										//I2C从机地址读
 
@@ -61,8 +63,9 @@ extern QMC5883L_TypeDef			Qmc5883lData;								//QMC5883L数据存储区
 void QMC5883L_Init(void);												//QMC5883L初始化
 void QMC5883L_Drdy_Init(void);											//QMC5883L引脚配置PA11高电平读取
 void QMC5883L_Drdy_DeInit(void);											//QMC5883L引脚配置PA11反初始化
-void QMC5883L_ReadData_Simplify(void);										//QMC5883L读取数据
-void QMC5883L_ReadData_Extend(void);										//QMC5883L读取数据
+void QMC5883L_Drdy_Exti_Init(void);										//QMC5883L引脚配置PA11高电平读取(中断)
+unsigned char QMC5883L_ReadData_Simplify(void);								//QMC5883L读取数据
+unsigned char QMC5883L_ReadData_Extend(void);								//QMC5883L读取数据
 void QMC5883L_ClearInsideData(void);										//QMC5883L清除内部待读取数据缓存
 void QMC5883L_Mode_Selection(u8 mode);										//QMC5883L工作模式选择
 void QMC5883L_Rates_Selection(u8 rates);									//QMC5883L数据输出速率选择

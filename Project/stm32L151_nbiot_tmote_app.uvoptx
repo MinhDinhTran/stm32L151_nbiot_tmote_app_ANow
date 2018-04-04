@@ -209,6 +209,16 @@
           <WinNumber>2</WinNumber>
           <ItemText>NBIOT_ATRecvBuf</ItemText>
         </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>InspectQmc5883lHandler,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>TCFG_SystemData,0x10</ItemText>
+        </Ww>
       </WatchWindow2>
       <Tracepoint>
         <THDelay>0</THDelay>
@@ -1354,7 +1364,7 @@
 
   <Group>
     <GroupName>Inspect</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1377,8 +1387,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Libraries\Inspect\inspectfunc.c</PathWithFileName>
-      <FilenameWithoutPath>inspectfunc.c</FilenameWithoutPath>
+      <PathWithFileName>..\Libraries\Inspect\inspectqmc5883l.c</PathWithFileName>
+      <FilenameWithoutPath>inspectqmc5883l.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1389,8 +1399,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Libraries\Inspect\inspect.c</PathWithFileName>
-      <FilenameWithoutPath>inspect.c</FilenameWithoutPath>
+      <PathWithFileName>..\Libraries\Inspect\inspectradar.c</PathWithFileName>
+      <FilenameWithoutPath>inspectradar.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

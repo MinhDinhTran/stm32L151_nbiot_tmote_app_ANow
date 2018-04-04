@@ -1,6 +1,6 @@
 /**
   *********************************************************************************************************
-  * @file    inspectfunc.c
+  * @file    inspectqmc5883l.c
   * @author  Movebroad -- KK
   * @version V1.0
   * @date    2018-04-02
@@ -13,7 +13,7 @@
   *********************************************************************************************************
   */
 
-#include "inspectfunc.h"
+#include "inspectqmc5883l.h"
 #include "stdlib.h"
 
 /**********************************************************************************************************
@@ -46,7 +46,7 @@ Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_Pass_Detect(int16_t x_mag, int16
 				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.y_now - InspectQmc5883lHandler.MagValCalculate.y_back)) * 
 				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.y_now - InspectQmc5883lHandler.MagValCalculate.y_back)) + 
 				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.z_now - InspectQmc5883lHandler.MagValCalculate.z_back)) * 
-				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.z_now - InspectQmc5883lHandler.MagValCalculate.z_back)) + 8) >> 4;
+				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.z_now - InspectQmc5883lHandler.MagValCalculate.z_back))) >> 6;
 		
 		if (magSumS32 > 0xFFFF) {
 			magSumU16 = 0xFFFF;
@@ -389,42 +389,5 @@ unsigned char Inspect_Qmc5883l_BackgroundCalculate(void)
 	
 	return ret;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /********************************************** END OF FLEE **********************************************/

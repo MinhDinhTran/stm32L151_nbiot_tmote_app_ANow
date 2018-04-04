@@ -46,6 +46,7 @@
 #define RF_SDN_PIN						GPIO_PIN_4
 #define RF_nIRQ_GPIO_PORT				GPIOB
 #define RF_nIRQ_PIN						GPIO_PIN_10
+#define RF_nIRQ_Read()					HAL_GPIO_ReadPin(RF_nIRQ_GPIO_PORT, RF_nIRQ_PIN)
 
 /* Definition for SPIx's NVIC */
 #define RF_IRQn						EXTI15_10_IRQn

@@ -127,6 +127,7 @@ typedef struct
 	unsigned char						SubMacSN[9];										//设备标识号
 	unsigned short						Heartinterval;										//心跳间隔
 	unsigned char						Sensitivity;										//灵敏度
+	unsigned char						MagFreq;											//地磁扫描频率
 	unsigned char						WorkMode;											//工作模式
 	unsigned char						RFChannel;										//无线通道
 	unsigned int						NBIotBootCount;									//NBIot重启次数
@@ -145,6 +146,7 @@ extern TCFG_SystemDataTypeDef				TCFG_SystemData;
 
 
 void TCFG_EEPROM_SystemInfo_Init(void);														//系统信息初始化
+void TCFG_EEPROM_WriteConfigData(void);														//写入系统配置信息
 void TCFG_EEPROM_ReadConfigData(void);														//读取系统配置信息
 
 void TCFG_EEPROM_SetBootMode(char bootmode);													//保存Boot启动模式
@@ -227,8 +229,12 @@ int16_t TCFG_EEPROM_GetBackgroundTemp(void);													//读取BackgroundTemp
 
 void TCFG_EEPROM_SaveConfigInformation(unsigned int subSN);										//保存配置信息和SN
 bool TCFG_EEPROM_CheckHeadFlag(char flagtype);												//检测保存信息标志位
+
 bool TCFG_EEPROM_CheckInfoBurned(void);														//检测生产商信息
+bool TCFG_EEPROM_CheckNewSNorBrand(void);													//检测新的设备号或厂牌信息
+void TCFG_EEPROM_SetSNfromBrandKey(unsigned int val);											//保存SNfromBrandKey
 unsigned int TCFG_EEPROM_GetSNfromBrandKey(void);												//读取SNfromBrandKey
+void TCFG_EEPROM_SetFactoryBrand(unsigned int val);											//保存FactoryBrand
 unsigned int TCFG_EEPROM_GetFactoryBrand(void);												//读取FactoryBrand
 
 void TCFG_EEPROM_Set_MAC_SN(unsigned int sn);												//保存MAC SN

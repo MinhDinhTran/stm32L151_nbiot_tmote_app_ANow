@@ -89,25 +89,16 @@ typedef struct
 	unsigned short						detect_nS0;										//连续状态0个数
 	unsigned short						detect_nS1;										//连续状态1个数
 	
-	
+	Inspect_Qmc5883l_StatusTypeDef		(*PassDetect)(int16_t x_mag, int16_t y_mag, int16_t z_mag);	//车辆检测
+	Inspect_Qmc5883l_StatusTypeDef		(*CheckStatus)(unsigned char index);					//检测状态
+	unsigned char						(*KmeansAllocate)(void);								//质心分配
+	unsigned char						(*BackgroundCalculate)(void);							//背景计算
 }Inspect_Qmc5883lTypeDef;
 
 extern Inspect_Qmc5883lTypeDef			InspectQmc5883lHandler;								//Inspect QMC5883L Handler
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Inspect_Qmc5883l_Init(void);															//Qmc5883L车辆检测初始化
+void Inspect_Qmc5883l_ISR(void);															//Qmc5883L中断处理函数
 
 
 

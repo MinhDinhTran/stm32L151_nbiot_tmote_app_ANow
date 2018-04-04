@@ -35,6 +35,66 @@ void TCFG_EEPROM_SystemInfo_Init(void)
 }
 
 /**********************************************************************************************************
+ @Function			void TCFG_EEPROM_WriteConfigData(void)
+ @Description			TCFG_EEPROM_WriteConfigData					: 写入系统配置信息
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_WriteConfigData(void)
+{
+	char vender[4];
+	unsigned int Brand = 0;
+	
+	/* 生产商与设备号 */
+	TCFG_EEPROM_SetSNfromBrandKey(TCFG_EEPROM_Get_MAC_SN());
+	TCFG_EEPROM_GetVender(vender);
+	Brand |= (vender[0] & 0x000000FF) << 3*8;
+	Brand |= (vender[1] & 0x000000FF) << 2*8;
+	Brand |= (vender[2] & 0x000000FF) << 1*8;
+	Brand |= (vender[3] & 0x000000FF) << 0*8;
+	TCFG_EEPROM_SetFactoryBrand(Brand);
+	
+	/* 传感器灵敏度值 */
+	TCFG_SystemData.Sensitivity = SENSE_MIDDLE;
+	TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
+	
+	/* 地磁扫描频率 */
+	TCFG_SystemData.MagFreq = 0;
+	TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+	
+	/* 设备工作模式 */
+	TCFG_SystemData.WorkMode = NORMAL_WORK;
+	TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
+	
+	/* 无线通道选择 */
+	TCFG_SystemData.RFChannel = 36;
+	TCFG_EEPROM_SetRfChannel(TCFG_SystemData.RFChannel);
+	
+	/* 无线心跳间隔 */
+	TCFG_SystemData.Heartinterval = HEART_INTERVAL;
+	TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
+	
+	/* 设备重启次数 */
+	TCFG_SystemData.DeviceBootCount = 0;
+	TCFG_EEPROM_SetDevBootCnt(TCFG_SystemData.DeviceBootCount);
+	
+	TCFG_SystemData.NBIotBootCount = 0;
+	TCFG_EEPROM_SetNbiotBootCnt(TCFG_SystemData.NBIotBootCount);
+	
+	TCFG_SystemData.CoapRecvCount = 0;
+	TCFG_EEPROM_SetCoapRecvCnt(TCFG_SystemData.CoapRecvCount);
+	
+	TCFG_SystemData.CoapSentCount = 0;
+	TCFG_EEPROM_SetCoapSentCnt(TCFG_SystemData.CoapSentCount);
+	
+	TCFG_SystemData.MqttSNRecvCount = 0;
+	TCFG_EEPROM_SetCoapRecvCnt(TCFG_SystemData.MqttSNRecvCount);
+	
+	TCFG_SystemData.MqttSNSentCount = 0;
+	TCFG_EEPROM_SetMqttSNSentCnt(TCFG_SystemData.MqttSNSentCount);
+}
+
+/**********************************************************************************************************
  @Function			void TCFG_EEPROM_ReadConfigData(void)
  @Description			TCFG_EEPROM_ReadConfigData					: 读取系统配置信息
  @Input				void
@@ -42,11 +102,22 @@ void TCFG_EEPROM_SystemInfo_Init(void)
 **********************************************************************************************************/
 void TCFG_EEPROM_ReadConfigData(void)
 {
+	/* 获取SubSN */
+	TCFG_SystemData.SubSn = TCFG_EEPROM_Get_MAC_SN();
+	TCFG_EEPROM_Get_MAC_SN_String();
+	
 	/* 获取传感器灵敏度值 */
 	TCFG_SystemData.Sensitivity = TCFG_EEPROM_GetSavedSensitivity();
 	if ((TCFG_SystemData.Sensitivity > SENSE_LOWEST) || (TCFG_SystemData.Sensitivity < SENSE_HIGHEST)) {
 		TCFG_SystemData.Sensitivity = SENSE_MIDDLE;
 		TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
+	}
+	
+	/* 获取地磁扫描频率 */
+	TCFG_SystemData.MagFreq = TCFG_EEPROM_GetMagFreq();
+	if (TCFG_SystemData.MagFreq >= 4) {
+		TCFG_SystemData.MagFreq = 0;
+		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
 	}
 	
 	/* 获取设备工作模式 */
@@ -777,6 +848,49 @@ bool TCFG_EEPROM_CheckInfoBurned(void)
 }
 
 /**********************************************************************************************************
+ @Function			bool TCFG_EEPROM_CheckNewSNorBrand(void)
+ @Description			TCFG_EEPROM_CheckNewSNorBrand					: 检测新的设备号或厂牌信息
+ @Input				void
+ @Return				bool
+**********************************************************************************************************/
+bool TCFG_EEPROM_CheckNewSNorBrand(void)
+{
+	bool ret = false;
+	char vender[4];
+	unsigned int Brand = 0;
+	
+	if (TCFG_EEPROM_CheckInfoBurned() != true) {								//厂牌空
+		ret = true;
+	}
+	
+	if (TCFG_EEPROM_Get_MAC_SN() != TCFG_EEPROM_GetSNfromBrandKey()) {			//设备号不同
+		ret = true;
+	}
+	
+	TCFG_EEPROM_GetVender(vender);
+	Brand |= (vender[0] & 0x000000FF) << 3*8;
+	Brand |= (vender[1] & 0x000000FF) << 2*8;
+	Brand |= (vender[2] & 0x000000FF) << 1*8;
+	Brand |= (vender[3] & 0x000000FF) << 0*8;
+	if (Brand != TCFG_EEPROM_GetFactoryBrand()) {							//厂牌号不同
+		ret = true;
+	}
+	
+	return ret;
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetSNfromBrandKey(unsigned int val)
+ @Description			TCFG_EEPROM_SetSNfromBrandKey					: 保存SNfromBrandKey
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetSNfromBrandKey(unsigned int val)
+{
+	FLASH_EEPROM_WriteWord(TCFG_FACTORY_BRAND_SN_OFFSET + 4, val);
+}
+
+/**********************************************************************************************************
  @Function			unsigned int TCFG_EEPROM_GetSNfromBrandKey(void)
  @Description			TCFG_EEPROM_GetSNfromBrandKey					: 读取SNfromBrandKey
  @Input				void
@@ -785,6 +899,17 @@ bool TCFG_EEPROM_CheckInfoBurned(void)
 unsigned int TCFG_EEPROM_GetSNfromBrandKey(void)
 {
 	return FLASH_EEPROM_ReadWord(TCFG_FACTORY_BRAND_SN_OFFSET + 4);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetFactoryBrand(unsigned int val)
+ @Description			TCFG_EEPROM_SetFactoryBrand					: 保存FactoryBrand
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetFactoryBrand(unsigned int val)
+{
+	FLASH_EEPROM_WriteWord(TCFG_FACTORY_BRAND_SN_OFFSET, val);
 }
 
 /**********************************************************************************************************

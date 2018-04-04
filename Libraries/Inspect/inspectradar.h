@@ -1,5 +1,5 @@
-#ifndef __INSPECT_H
-#define   __INSPECT_H
+#ifndef __INSPECT_RADAR_H
+#define   __INSPECT_RADAR_H
 
 #include "sys.h"
 

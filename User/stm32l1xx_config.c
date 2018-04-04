@@ -14,6 +14,8 @@
   */
 
 #include "stm32l1xx_config.h"
+#include "hal_iic.h"
+#include "delay.h"
 
 /**********************************************************************************************************
  @Function			RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void)
@@ -191,6 +193,46 @@ static void VbatPower_Init(void)
 	HAL_GPIO_Init(VBAT_POWER_GPIOx, &GPIO_Initure);							//初始化GPIO
 	
 	VBATPOWER(OFF);
+}
+
+/**********************************************************************************************************
+ @Function			void ModulePowerReset_Init(void)
+ @Description			模块复位电源控制
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void ModulePowerReset_Init(void)
+{
+	GPIO_InitTypeDef GPIO_Initure;
+	
+	ModelPower_Init();													//模块电源初始化
+	RaderPower_Init();													//雷达电源初始化
+	NBIOTPower_Init();													//NBIOT电源初始化
+	VbatPower_Init();													//电压检测电源初始化
+	
+	MODELPOWER(OFF);													//开启模块总电源
+	RADERPOWER(OFF);													//关闭雷达电源
+	NBIOTPOWER(OFF);													//关闭NBIOT电源
+	VBATPOWER(OFF);													//关闭电源电压检测电源
+	
+	IIC_SCL_RCC_GPIO_CLK_ENABLE();
+	IIC_SDA_RCC_GPIO_CLK_ENABLE();
+	
+	GPIO_Initure.Pin = IIC_SCL_PIN;										//IIC_SCL
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//HIGH
+	HAL_GPIO_Init(IIC_SCL_GPIOx, &GPIO_Initure);
+	
+	GPIO_Initure.Pin = IIC_SDA_PIN;										//IIC_SDA
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//HIGH
+	HAL_GPIO_Init(IIC_SDA_GPIOx, &GPIO_Initure);
+	
+	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_RESET);
+	Delay_MS(3000);													//断电3秒
+	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_SET);
 }
 
 /**********************************************************************************************************
