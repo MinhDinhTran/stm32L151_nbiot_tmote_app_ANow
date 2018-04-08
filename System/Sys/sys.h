@@ -49,6 +49,16 @@ typedef struct
 	unsigned int	xTimeOut;
 }Stm32_CalculagraphTypeDef;													//计时器
 
+typedef struct
+{
+	unsigned int	seconds;													//秒
+	unsigned int	minutes;													//分
+	unsigned int	hours;													//时
+	unsigned int	days;													//天
+}Stm32_SystemRunningTime;													//系统运行时间
+
+extern Stm32_SystemRunningTime	SystemRunningTime;								//系统运行时间(结构体)
+
 void Stm32_Clock_Init(u32 pllmul, u32 plldiv);									//配置系统时钟HSI
 void Stm32_MSIClock_Init(u32 msiClockRange);										//配置系统时钟MSI
 

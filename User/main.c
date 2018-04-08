@@ -131,6 +131,7 @@ int main(void)
 		
 		Radio_Trf_App_Task();															//小无线处理
 		
+		/* 算法检测处理 */
 		if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {							//QMC5883L有数据待读取
 			InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAUNREADY;							//QMC5883L待读取标志位清空
 			QMC5883L_ReadData_Simplify();													//QMC5883L读取数据
@@ -206,18 +207,17 @@ int main(void)
 #endif
 		}
 		
+		/* 日常处理 */
+		MainHandleRoutine();
+		
 		/* QMC5883L异常由WAKE UP唤醒MCU */
 		if (InspectQmc5883lHandler.Qmc5883lFail == INSPECT_QMC_ERROR_IS) {						//QMC5883L异常状态
 			InspectQmc5883lHandler.Qmc5883lFail = INSPECT_QMC_ERROR_NONE;
-			
-			
-			
-			
+			ModelError_Init();															//模块初始化
 		}
 		
-		
-		
-		
+		Radio_Rf_BeforeSleep();															//小无线进入休眠
+//		LowPowerEnterStop();															//MCU进入休眠
 	}
 }
 
@@ -234,6 +234,7 @@ void MainMajorCycle(void)
 		
 		Radio_Trf_App_Task();															//小无线处理
 		
+		/* 算法检测处理 */
 		if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {							//QMC5883L有数据待读取
 			InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAUNREADY;							//QMC5883L待读取标志位清空
 			QMC5883L_ReadData_Simplify();													//QMC5883L读取数据
@@ -303,6 +304,38 @@ void MainMajorCycle(void)
 			InspectQmc5883lHandler.Configuration.background_recalibration_seconds++;				//QMC5883L检测背景学习时间累加
 			break;
 		}
+		
+		/* 日常处理 */
+		MainHandleRoutine();
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void MainHandleRoutine(void)
+ @Description			MainHandleRoutine
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainHandleRoutine(void)
+{
+	if (Stm32_GetSecondTick() != SystemRunningTime.seconds) {
+		
+		
+		SystemRunningTime.seconds = Stm32_GetSecondTick();
+	}
+	if ((Stm32_GetSecondTick() / 60) != SystemRunningTime.minutes) {
+		
+		
+		SystemRunningTime.minutes = Stm32_GetSecondTick() / 60;
+	}
+	if ((Stm32_GetSecondTick() / 3600) != SystemRunningTime.hours) {
+		
+		
+		SystemRunningTime.minutes = Stm32_GetSecondTick() / 3600;
+	}
+	if ((Stm32_GetSecondTick() / (24*3600)) != SystemRunningTime.days) {
+		ModelError_Init();																//模块初始化
+		SystemRunningTime.minutes = Stm32_GetSecondTick() / (24*3600);
 	}
 }
 

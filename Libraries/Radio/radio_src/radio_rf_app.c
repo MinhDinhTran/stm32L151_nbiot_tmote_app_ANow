@@ -20,6 +20,7 @@
 #include "tmesh_xtea.h"
 #include "platform_map.h"
 #include "platform_config.h"
+#include "stm32l1xx_config.h"
 #include "hal_beep.h"
 #include "hal_qmc5883l.h"
 #include "inspectconfig.h"
@@ -161,7 +162,8 @@ char Radio_Rf_Send(uint8_t *inmsg, uint8_t len)
 			trf_status = TRF_ERROR;
 		}
 		else if ((error_cnt % 3) == 0) {
-			//Todo 初始化地磁和无线
+			/* 初始化地磁和无线 */
+			ModelError_Init();
 		}
 	}
 	else {
@@ -279,12 +281,28 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "newsn")) {
 					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "newsn:%08x", &uval32);
 					TCFG_EEPROM_Set_MAC_SN(uval32);
+					Radio_Trf_Printf("New SN : %08x", TCFG_EEPROM_Get_MAC_SN());
 					__NOP();
 				}
 				/* MagFreq */
 				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "magfreq")) {
 					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "magfreq:%hu", &uval16);
 					Inspect_Qmc5883l_MagFreqConfig(uval16);
+					Radio_Trf_Printf("Mag Freq : %hu", TCFG_EEPROM_GetMagFreq());
+					__NOP();
+				}
+				/* RecaNum */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "recanum")) {
+					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "recanum:%hu", &uval16);
+					Inspect_Qmc5883l_RecalibrationNumConfig(uval16);
+					Radio_Trf_Printf("Recalibration Num : %hu", TCFG_EEPROM_GetRecalibrationNum());
+					__NOP();
+				}
+				/* RecaTime */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "recatime")) {
+					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "recatime:%hu", &uval16);
+					Inspect_Qmc5883l_RecalibrationOvertimeConfig(uval16);
+					Radio_Trf_Printf("Recalibration Overtime : %hu", TCFG_EEPROM_GetRecalibrationOverTime());
 					__NOP();
 				}
 				/* NetInfo */

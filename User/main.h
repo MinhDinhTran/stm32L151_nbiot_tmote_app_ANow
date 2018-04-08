@@ -46,6 +46,7 @@
 /* Exported functions ------------------------------------------------------- */
 
 void MainMajorCycle(void);
+void MainHandleRoutine(void);
 
 #endif /* __MAIN_H */
 

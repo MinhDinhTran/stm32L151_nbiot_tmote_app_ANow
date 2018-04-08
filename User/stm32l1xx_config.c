@@ -16,10 +16,13 @@
 #include "stm32l1xx_config.h"
 #include "platform_config.h"
 #include "platform_map.h"
-#include "inspectconfig.h"
-#include "hal_iic.h"
 #include "hal_rtc.h"
+#include "hal_iic.h"
 #include "hal_qmc5883l.h"
+#include "inspectconfig.h"
+#include "radio_hal_rf.h"
+#include "radio_rf_app.h"
+#include "tmesh_xtea.h"
 #include "delay.h"
 
 extern __IO uint32_t uwTick;
@@ -131,33 +134,33 @@ static void ModelPower_Init(void)
 	MODEL_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = MODEL_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//推挽输出
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//推挽输出
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//高速
-	HAL_GPIO_Init(MODEL_POWER_GPIOx, &GPIO_Initure);							//初始化GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//高速
+	HAL_GPIO_Init(MODEL_POWER_GPIOx, &GPIO_Initure);										//初始化GPIO
 	
-	MODELPOWER(OFF);													//初始化关闭电源
+	MODELPOWER(OFF);																//初始化关闭电源
 }
 
 /**********************************************************************************************************
- @Function			static void RaderPower_Init(void)
+ @Function			static void RadarPower_Init(void)
  @Description			Rader Power 初始化 PB3 : 1 导通 0 : 截止
  @Input				void
  @Return				void
 **********************************************************************************************************/
-static void RaderPower_Init(void)
+static void RadarPower_Init(void)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	RADER_POWER_RCC_GPIO_CLK_ENABLE();
+	RADAR_POWER_RCC_GPIO_CLK_ENABLE();
 	
-	GPIO_Initure.Pin = RADER_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//推挽输出
+	GPIO_Initure.Pin = RADAR_POWER_PIN;
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//推挽输出
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//高速
-	HAL_GPIO_Init(RADER_POWER_GPIOx, &GPIO_Initure);							//初始化GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//高速
+	HAL_GPIO_Init(RADAR_POWER_GPIOx, &GPIO_Initure);										//初始化GPIO
 	
-	RADERPOWER(OFF);
+	RADARPOWER(OFF);
 }
 
 /**********************************************************************************************************
@@ -173,10 +176,10 @@ static void NBIOTPower_Init(void)
 	NBIOT_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = NBIOT_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//推挽输出
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//推挽输出
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//高速
-	HAL_GPIO_Init(NBIOT_POWER_GPIOx, &GPIO_Initure);							//初始化GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//高速
+	HAL_GPIO_Init(NBIOT_POWER_GPIOx, &GPIO_Initure);										//初始化GPIO
 	
 	NBIOTPOWER(OFF);
 }
@@ -194,10 +197,10 @@ static void VbatPower_Init(void)
 	VBAT_POWER_RCC_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = VBAT_POWER_PIN;
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//推挽输出
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//推挽输出
 	GPIO_Initure.Pull = GPIO_NOPULL;
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//高速
-	HAL_GPIO_Init(VBAT_POWER_GPIOx, &GPIO_Initure);							//初始化GPIO
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//高速
+	HAL_GPIO_Init(VBAT_POWER_GPIOx, &GPIO_Initure);										//初始化GPIO
 	
 	VBATPOWER(OFF);
 }
@@ -212,32 +215,32 @@ void ModulePowerReset_Init(void)
 {
 	GPIO_InitTypeDef GPIO_Initure;
 	
-	ModelPower_Init();													//模块电源初始化
-	RaderPower_Init();													//雷达电源初始化
-	NBIOTPower_Init();													//NBIOT电源初始化
-	VbatPower_Init();													//电压检测电源初始化
+	ModelPower_Init();																//模块电源初始化
+	RadarPower_Init();																//雷达电源初始化
+	NBIOTPower_Init();																//NBIOT电源初始化
+	VbatPower_Init();																//电压检测电源初始化
 	
-	MODELPOWER(OFF);													//关闭模块总电源
-	RADERPOWER(OFF);													//关闭雷达电源
-	NBIOTPOWER(OFF);													//关闭NBIOT电源
-	VBATPOWER(OFF);													//关闭电源电压检测电源
+	MODELPOWER(OFF);																//关闭模块总电源
+	RADARPOWER(OFF);																//关闭雷达电源
+	NBIOTPOWER(OFF);																//关闭NBIOT电源
+	VBATPOWER(OFF);																//关闭电源电压检测电源
 	
 	IIC_SCL_RCC_GPIO_CLK_ENABLE();
 	IIC_SDA_RCC_GPIO_CLK_ENABLE();
 	
-	GPIO_Initure.Pin = IIC_SCL_PIN;										//IIC_SCL
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//OUTPUT
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//HIGH
+	GPIO_Initure.Pin = IIC_SCL_PIN;													//IIC_SCL
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
 	HAL_GPIO_Init(IIC_SCL_GPIOx, &GPIO_Initure);
 	
-	GPIO_Initure.Pin = IIC_SDA_PIN;										//IIC_SDA
-	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;								//OUTPUT
-	GPIO_Initure.Speed = GPIO_SPEED_HIGH;									//HIGH
+	GPIO_Initure.Pin = IIC_SDA_PIN;													//IIC_SDA
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
 	HAL_GPIO_Init(IIC_SDA_GPIOx, &GPIO_Initure);
 	
 	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_RESET);
-	Delay_MS(3000);													//断电3秒
+	Delay_MS(3000);																//断电3秒
 	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_SET);
 }
@@ -258,7 +261,7 @@ void LowPowerEnterStop(void)
 	HAL_RTCEx_SetWakeUpTimer_IT(&RTC_Handler, 0x800, RTC_WAKEUPCLOCK_RTCCLK_DIV16);
 	
 	/* QMC5883L数据读取 */
-	if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {				//QMC5883L有数据待读取
+	if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {							//QMC5883L有数据待读取
 		InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAUNREADY;
 		QMC5883L_ReadData_Simplify();
 	}
@@ -270,19 +273,19 @@ void LowPowerEnterStop(void)
 	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 	
 	/* 根据扫描频率补差休眠时间 */
-	if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 0) {			//地磁扫描频率, 即休眠时间 10Hz
+	if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 0) {						//地磁扫描频率, 即休眠时间 10Hz
 		uwTick += 100;
 	}
-	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 1) {		//地磁扫描频率, 即休眠时间 50Hz
+	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 1) {					//地磁扫描频率, 即休眠时间 50Hz
 		uwTick += 20;
 	}
-	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 2) {		//地磁扫描频率, 即休眠时间 100Hz
+	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 2) {					//地磁扫描频率, 即休眠时间 100Hz
 		uwTick += 10;
 	}
-	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 3) {		//地磁扫描频率, 即休眠时间 200Hz
+	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 3) {					//地磁扫描频率, 即休眠时间 200Hz
 		uwTick += 5;
 	}
-	else {															//地磁扫描频率, 即休眠时间 50Hz
+	else {																		//地磁扫描频率, 即休眠时间 50Hz
 		uwTick += 20;
 	}
 	
@@ -291,11 +294,11 @@ void LowPowerEnterStop(void)
 	#error No Define SYSTEMCLOCK!
 #else
 #if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
-	Stm32_MSIClock_Init(RCC_MSIRANGE_6);									//设置时钟MSI->4.194MHz
-	Delay_Init(4194);													//延时初始化4.194MHz系统时钟
+	Stm32_MSIClock_Init(RCC_MSIRANGE_6);												//设置时钟MSI->4.194MHz
+	Delay_Init(4194);																//延时初始化4.194MHz系统时钟
 #elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
-	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);							//设置时钟HSI->32MHz
-	Delay_Init(32000);													//延时初始化32MHz系统时钟
+	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);										//设置时钟HSI->32MHz
+	Delay_Init(32000);																//延时初始化32MHz系统时钟
 #else
 	#error SYSTEMCLOCK Define Error
 #endif
@@ -310,15 +313,59 @@ void LowPowerEnterStop(void)
 **********************************************************************************************************/
 void PowerCtrlIO_Init(void)
 {
-	ModelPower_Init();													//模块电源初始化
-	RaderPower_Init();													//雷达电源初始化
-	NBIOTPower_Init();													//NBIOT电源初始化
-	VbatPower_Init();													//电压检测电源初始化
+	ModelPower_Init();																//模块电源初始化
+	RadarPower_Init();																//雷达电源初始化
+	NBIOTPower_Init();																//NBIOT电源初始化
+	VbatPower_Init();																//电压检测电源初始化
 	
-	MODELPOWER(ON);													//开启模块总电源
-	RADERPOWER(OFF);													//关闭雷达电源
-	NBIOTPOWER(OFF);													//关闭NBIOT电源
-	VBATPOWER(OFF);													//关闭电源电压检测电源
+	MODELPOWER(ON);																//开启模块总电源
+	RADARPOWER(OFF);																//关闭雷达电源
+	NBIOTPOWER(OFF);																//关闭NBIOT电源
+	VBATPOWER(OFF);																//关闭电源电压检测电源
+}
+
+/**********************************************************************************************************
+ @Function			void ModelError_Init(void)
+ @Description			模块异常初始化
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void ModelError_Init(void)
+{
+	ModulePowerReset_Init();															//模块电源复位
+	PowerCtrlIO_Init();																//电源控制IO初始化
+	
+	tmesh_securityInit();															//XTEA加密初始化
+	Radio_Rf_Init();																//SI4438初始化
+	Radio_Trf_Xmit_Heartbeat();														//SI4438发送心跳包
+	
+	Inspect_Qmc5883l_Init();															//QMC5883L检测算法初始化
+	QMC5883L_Init();																//QMC5883L初始化
+	
+	QMC5883L_Rates_Selection_Freq(InspectQmc5883lHandler.Configuration.mag_measure_freq);		//QMC5883L扫描频率设置
+	QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);											//QMC5883L数据读取开启
+}
+
+/**********************************************************************************************************
+ @Function			void RadarError_Init(void)
+ @Description			雷达异常初始化
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void RadarError_Init(void)
+{
+	
+}
+
+/**********************************************************************************************************
+ @Function			void NbiotError_Init(void)
+ @Description			NBIOT异常初始化
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void NbiotError_Init(void)
+{
+	
 }
 
 /********************************************** END OF FLEE **********************************************/

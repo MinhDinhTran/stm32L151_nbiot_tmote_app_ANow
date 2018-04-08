@@ -125,7 +125,7 @@ u8 Radar_InitBackGround(void)
 {
 	RADAR_ENTER_CRITICAL_SECTION();																//雷达启动初始化配置
 	
-	RADERPOWER(ON);																			//开启雷达电源
+	RADARPOWER(ON);																			//开启雷达电源
 	Delay_MS(10);
 	
 	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//启动雷达定时器
@@ -150,7 +150,7 @@ u8 Radar_InitBackGround(void)
 						flag_main_go = 0;
 						
 						__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);										//雷达工作结束关闭定时器
-						RADERPOWER(OFF);														//关闭雷达电源
+						RADARPOWER(OFF);														//关闭雷达电源
 						
 						RADAR_EXIT_CRITICAL_SECTION();
 						
@@ -160,7 +160,7 @@ u8 Radar_InitBackGround(void)
 			}
 			else {
 				__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);												//雷达工作结束关闭定时器
-				RADERPOWER(OFF);																//关闭雷达电源
+				RADARPOWER(OFF);																//关闭雷达电源
 				
 				RADAR_EXIT_CRITICAL_SECTION();
 				
@@ -187,7 +187,7 @@ u8 Radar_GetDataPack(u8 dataNum)
 	
 	RADAR_ENTER_CRITICAL_SECTION();																//雷达启动初始化配置
 	
-	RADERPOWER(ON);																			//开启雷达电源
+	RADARPOWER(ON);																			//开启雷达电源
 	Delay_MS(10);
 	
 	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//启动雷达定时器
@@ -212,7 +212,7 @@ u8 Radar_GetDataPack(u8 dataNum)
 						flag_main_go = 0;
 						
 						__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);										//雷达工作结束关闭定时器
-						RADERPOWER(OFF);														//关闭雷达电源
+						RADARPOWER(OFF);														//关闭雷达电源
 						
 						RADAR_EXIT_CRITICAL_SECTION();
 						
@@ -230,7 +230,7 @@ u8 Radar_GetDataPack(u8 dataNum)
 			}
 			else {
 				__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);												//雷达工作结束关闭定时器
-				RADERPOWER(OFF);																//关闭雷达电源
+				RADARPOWER(OFF);																//关闭雷达电源
 				
 				RADAR_EXIT_CRITICAL_SECTION();
 				
@@ -261,7 +261,7 @@ u8 Radar_GetDataPack(u8 dataNum)
 	}
 	
 	__HAL_TIM_DISABLE(&RADAR_TIM2_Handler);															//雷达工作结束关闭定时器
-	RADERPOWER(OFF);																			//关闭雷达电源
+	RADARPOWER(OFF);																			//关闭雷达电源
 	
 	RADAR_EXIT_CRITICAL_SECTION();
 	
@@ -281,7 +281,7 @@ void Radar_RunTest(void)
 	Uart1_Init(115200);
 	Uart2_Init(115200);
 	
-	RADERPOWER(ON);																			//开启雷达电源
+	RADARPOWER(ON);																			//开启雷达电源
 	Delay_MS(10);
 	
 	__HAL_TIM_ENABLE(&RADAR_TIM2_Handler);															//启动雷达定时器

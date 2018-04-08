@@ -16,6 +16,7 @@
 #include "sys.h"
 
 __IO u32 SystemRunningTimesSecond = 0;										//系统运行时间(S)
+Stm32_SystemRunningTime			SystemRunningTime;							//系统运行时间(结构体)
 
 /**********************************************************************************************************
  @Function			void Stm32_Clock_Init(u32 pllmul, u32 plldiv)

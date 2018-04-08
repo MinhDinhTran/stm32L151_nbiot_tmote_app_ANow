@@ -186,6 +186,40 @@ void Inspect_Qmc5883l_MagFreqConfig(unsigned char Freq)
 }
 
 /**********************************************************************************************************
+ @Function			void Inspect_Qmc5883l_RecalibrationNumConfig(unsigned char RecalibrationNum)
+ @Description			Inspect_Qmc5883l_RecalibrationNumConfig	: Qmc5883L微小变化重计算次数配置
+ @Input				RecalibrationNum
+ @Return				void
+**********************************************************************************************************/
+void Inspect_Qmc5883l_RecalibrationNumConfig(unsigned char RecalibrationNum)
+{
+	if (RecalibrationNum > 15) {
+		RecalibrationNum = 15;
+	}
+	
+	TCFG_SystemData.RecalibrationNum = RecalibrationNum;
+	TCFG_EEPROM_SetRecalibrationNum(TCFG_SystemData.RecalibrationNum);
+	InspectQmc5883lHandler.Configuration.recalibration_num				= TCFG_SystemData.RecalibrationNum;	//微小变化重计算次数
+}
+
+/**********************************************************************************************************
+ @Function			void Inspect_Qmc5883l_RecalibrationNumConfig(unsigned char RecalibrationNum)
+ @Description			Inspect_Qmc5883l_RecalibrationNumConfig	: Qmc5883L激烈变化重计算时间(min)配置
+ @Input				RecalibrationOvertime
+ @Return				void
+**********************************************************************************************************/
+void Inspect_Qmc5883l_RecalibrationOvertimeConfig(unsigned char RecalibrationOvertime)
+{
+	if (RecalibrationOvertime > 15) {
+		RecalibrationOvertime = 15;
+	}
+	
+	TCFG_SystemData.RecalibrationOvertime = RecalibrationOvertime;
+	TCFG_EEPROM_SetRecalibrationOverTime(TCFG_SystemData.RecalibrationOvertime);
+	InspectQmc5883lHandler.Configuration.recalibration_overtime			= TCFG_SystemData.RecalibrationOvertime;//激烈变化重计算时间(min)
+}
+
+/**********************************************************************************************************
  @Function			void Inspect_Qmc5883l_ISR(void)
  @Description			Inspect_Qmc5883l_ISR		: Qmc5883L中断处理函数
  @Input				void
