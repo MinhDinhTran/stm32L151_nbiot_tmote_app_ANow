@@ -8,5 +8,6 @@ Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_Pass_Detect(int16_t x_mag, int16
 Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_CheckStatus(unsigned char index);							//检测状态
 unsigned char Inspect_Qmc5883l_KmeansAllocate(void);													//质心分配
 unsigned char Inspect_Qmc5883l_BackgroundCalculate(void);												//背景计算
+unsigned char Inspect_Qmc5883l_BackgroundDoCalculate(void);												//背景重新计算
 
 #endif

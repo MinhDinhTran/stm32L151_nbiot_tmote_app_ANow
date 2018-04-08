@@ -181,7 +181,7 @@ Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_Pass_Detect(int16_t x_mag, int16
 	/* 背景值计算 */
 	if (Inspect_Qmc5883l_BackgroundCalculate()) {
 		/* 更新计算数组 */
-		for(unsigned char i = 0; i < INSPECT_QMC_PROCESS_NUM; i++) {
+		for (unsigned char i = 0; i < INSPECT_QMC_PROCESS_NUM; i++) {
 			InspectQmc5883lHandler.Data[i].sum = 0;
 		}
 		InspectQmc5883lHandler.minPos = InspectQmc5883lHandler.maxPos = InspectQmc5883lHandler.dataIndex;
@@ -385,6 +385,34 @@ unsigned char Inspect_Qmc5883l_BackgroundCalculate(void)
 			InspectQmc5883lHandler.MagValCalculate.y_back_sum = 0;
 			InspectQmc5883lHandler.MagValCalculate.z_back_sum = 0;
 		}
+	}
+	
+	return ret;
+}
+
+/**********************************************************************************************************
+ @Function			unsigned char Inspect_Qmc5883l_BackgroundCalculate(void)
+ @Description			Inspect_Qmc5883l_BackgroundCalculate	: 背景值重新计算
+ @Input				void
+ @Return				0								: 正常
+					1								: 异常
+**********************************************************************************************************/
+unsigned char Inspect_Qmc5883l_BackgroundDoCalculate(void)
+{
+	unsigned char ret = 1;
+	
+	InspectQmc5883lHandler.Configuration.background_recalibration_seconds += InspectQmc5883lHandler.Configuration.recalibration_overtime * 60;
+	
+	/* 背景值计算 */
+	if (Inspect_Qmc5883l_BackgroundCalculate()) {
+		/* 更新计算数组 */
+		for (unsigned char i = 0; i < INSPECT_QMC_PROCESS_NUM; i++) {
+			InspectQmc5883lHandler.Data[i].sum = 0;
+		}
+		InspectQmc5883lHandler.minPos = InspectQmc5883lHandler.maxPos = InspectQmc5883lHandler.dataIndex;
+		InspectQmc5883lHandler.lastCenter = 0;
+		
+		ret = 0;
 	}
 	
 	return ret;

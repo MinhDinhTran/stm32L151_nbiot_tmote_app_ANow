@@ -217,7 +217,7 @@ void ModulePowerReset_Init(void)
 	NBIOTPower_Init();													//NBIOT电源初始化
 	VbatPower_Init();													//电压检测电源初始化
 	
-	MODELPOWER(OFF);													//开启模块总电源
+	MODELPOWER(OFF);													//关闭模块总电源
 	RADERPOWER(OFF);													//关闭雷达电源
 	NBIOTPOWER(OFF);													//关闭NBIOT电源
 	VBATPOWER(OFF);													//关闭电源电压检测电源

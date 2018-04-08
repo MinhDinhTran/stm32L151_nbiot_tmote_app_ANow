@@ -102,7 +102,7 @@ typedef struct
 	unsigned short						detect_nS1;										//连续状态1个数
 	
 	unsigned char						DataReady;										//数据准备标志位
-	unsigned char						Qmc5883lFile;										//QMC5883L异常标志位
+	unsigned char						Qmc5883lFail;										//QMC5883L异常标志位
 	Inspect_Qmc5883l_StatusTypeDef		CarStatus;										//检测状态
 	
 	Inspect_Qmc5883l_StatusTypeDef		(*PassDetect)(int16_t x_mag, int16_t y_mag, int16_t z_mag);	//车辆检测
@@ -114,6 +114,8 @@ typedef struct
 extern Inspect_Qmc5883lTypeDef			InspectQmc5883lHandler;								//Inspect QMC5883L Handler
 
 void Inspect_Qmc5883l_Init(void);															//Qmc5883L车辆检测初始化
+void Inspect_Qmc5883l_SensitivityConfig(unsigned char Sensitivity);								//Qmc5883L灵敏度配置
+void Inspect_Qmc5883l_MagFreqConfig(unsigned char Freq);										//Qmc5883L地磁扫描频率配置
 void Inspect_Qmc5883l_ISR(void);															//Qmc5883L中断处理函数
 
 #endif

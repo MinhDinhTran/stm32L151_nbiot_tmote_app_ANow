@@ -289,7 +289,7 @@ void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 {
 	if (hrtc == &RTC_Handler) {
 		/* QMC5883L异常没有唤醒MCU */
-		InspectQmc5883lHandler.Qmc5883lFile = INSPECT_QMC_ERROR_IS;
+		InspectQmc5883lHandler.Qmc5883lFail = INSPECT_QMC_ERROR_IS;
 	}
 }
 

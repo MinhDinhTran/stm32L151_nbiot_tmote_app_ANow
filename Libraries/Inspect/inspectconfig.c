@@ -59,7 +59,8 @@ void Inspect_Qmc5883l_Init(void)
 	}
 	InspectQmc5883lHandler.Configuration.background_recalibration_seconds	= 0;								//记录上次背景校准之后时间
 	
-	InspectQmc5883lHandler.Qmc5883lFile							= INSPECT_QMC_ERROR_NONE;
+	InspectQmc5883lHandler.DataReady								= INSPECT_QMC_DATAUNREADY;
+	InspectQmc5883lHandler.Qmc5883lFail							= INSPECT_QMC_ERROR_NONE;
 	InspectQmc5883lHandler.CarStatus								= INSPECT_CAR_NONE;
 	
 	/* 调用方法 */
@@ -70,6 +71,121 @@ void Inspect_Qmc5883l_Init(void)
 }
 
 /**********************************************************************************************************
+ @Function			void Inspect_Qmc5883l_SensitivityConfig(unsigned char Sensitivity)
+ @Description			Inspect_Qmc5883l_SensitivityConfig	: Qmc5883L灵敏度配置
+ @Input				Sensitivity
+ @Return				void
+**********************************************************************************************************/
+void Inspect_Qmc5883l_SensitivityConfig(unsigned char Sensitivity)
+{
+	if (Sensitivity == SENSE_HIGHEST) {
+		TCFG_SystemData.CarinThreshhold							= 72;
+		TCFG_SystemData.CaroutThreshhold							= 7;
+		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
+	}
+	else if (Sensitivity == SENSE_HIGH) {
+		TCFG_SystemData.CarinThreshhold							= 76;
+		TCFG_SystemData.CaroutThreshhold							= 10;
+		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
+	}
+	else if (Sensitivity == SENSE_MIDDLE) {
+		TCFG_SystemData.CarinThreshhold							= 80;
+		TCFG_SystemData.CaroutThreshhold							= 13;
+		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
+	}
+	else if (Sensitivity == SENSE_LOW) {
+		TCFG_SystemData.CarinThreshhold							= 84;
+		TCFG_SystemData.CaroutThreshhold							= 16;
+		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
+	}
+	else if (Sensitivity == SENSE_LOWEST) {
+		TCFG_SystemData.CarinThreshhold							= 88;
+		TCFG_SystemData.CaroutThreshhold							= 19;
+		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
+	}
+	else {
+		TCFG_SystemData.CarinThreshhold							= 80;
+		TCFG_SystemData.CaroutThreshhold							= 13;
+		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void Inspect_Qmc5883l_MagFreqConfig(unsigned char Freq)
+ @Description			Inspect_Qmc5883l_MagFreqConfig	: Qmc5883L地磁扫描频率配置
+ @Input				Freq
+ @Return				void
+**********************************************************************************************************/
+void Inspect_Qmc5883l_MagFreqConfig(unsigned char Freq)
+{
+	if (Freq == 0) {
+		TCFG_SystemData.MagFreq = 0;
+		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+		InspectQmc5883lHandler.Configuration.mag_measure_freq			= TCFG_SystemData.MagFreq;			//地磁扫描频率
+	}
+	else if (Freq == 1) {
+		TCFG_SystemData.MagFreq = 1;
+		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+		InspectQmc5883lHandler.Configuration.mag_measure_freq			= TCFG_SystemData.MagFreq;			//地磁扫描频率
+	}
+	else if (Freq == 2) {
+		TCFG_SystemData.MagFreq = 2;
+		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+		InspectQmc5883lHandler.Configuration.mag_measure_freq			= TCFG_SystemData.MagFreq;			//地磁扫描频率
+	}
+	else if (Freq == 3) {
+		TCFG_SystemData.MagFreq = 3;
+		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+		InspectQmc5883lHandler.Configuration.mag_measure_freq			= TCFG_SystemData.MagFreq;			//地磁扫描频率
+	}
+	else {
+		TCFG_SystemData.MagFreq = 1;
+		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+		InspectQmc5883lHandler.Configuration.mag_measure_freq			= TCFG_SystemData.MagFreq;			//地磁扫描频率
+	}
+	
+	if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 0) {									//10Hz
+		InspectQmc5883lHandler.Configuration.recalibration_overtime_cnt	= 600 * InspectQmc5883lHandler.Configuration.recalibration_overtime;
+	}
+	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 1) {								//50Hz
+		InspectQmc5883lHandler.Configuration.recalibration_overtime_cnt	= 3000 * InspectQmc5883lHandler.Configuration.recalibration_overtime;
+	}
+	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 2) {								//100Hz
+		InspectQmc5883lHandler.Configuration.recalibration_overtime_cnt	= 6000 * InspectQmc5883lHandler.Configuration.recalibration_overtime;
+	}
+	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 3) {								//200Hz
+		InspectQmc5883lHandler.Configuration.recalibration_overtime_cnt	= 12000 * InspectQmc5883lHandler.Configuration.recalibration_overtime;
+	}
+	else {
+		InspectQmc5883lHandler.Configuration.recalibration_overtime_cnt	= 3000 * InspectQmc5883lHandler.Configuration.recalibration_overtime;
+	}
+	
+	InspectQmc5883lHandler.DataReady								= INSPECT_QMC_DATAUNREADY;			//QMC5883L待读取标志位清空
+	
+	QMC5883L_Init();																			//QMC5883L初始化
+	QMC5883L_Rates_Selection_Freq(InspectQmc5883lHandler.Configuration.mag_measure_freq);					//QMC5883L扫描频率设置
+	QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);														//QMC5883L数据读取开启
+}
+
+/**********************************************************************************************************
  @Function			void Inspect_Qmc5883l_ISR(void)
  @Description			Inspect_Qmc5883l_ISR		: Qmc5883L中断处理函数
  @Input				void
@@ -77,7 +193,7 @@ void Inspect_Qmc5883l_Init(void)
 **********************************************************************************************************/
 void Inspect_Qmc5883l_ISR(void)
 {
-	InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAREADY;											//标记QMC数据准备完毕
+	InspectQmc5883lHandler.DataReady 								= INSPECT_QMC_DATAREADY;				//标记QMC数据准备完毕
 }
 
 /********************************************** END OF FLEE **********************************************/

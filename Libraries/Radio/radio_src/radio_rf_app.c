@@ -21,7 +21,9 @@
 #include "platform_map.h"
 #include "platform_config.h"
 #include "hal_beep.h"
+#include "hal_qmc5883l.h"
 #include "inspectconfig.h"
+#include "inspectqmc5883l.h"
 #include "delay.h"
 #include "string.h"
 #include <stdarg.h>
@@ -183,6 +185,7 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 	
 	unsigned int mac_sn = 0;
 	unsigned int uval32 = 0;
+	unsigned short int uval16 = 0;
 	
 	mac_sn = TCFG_EEPROM_Get_MAC_SN();
 	
@@ -223,6 +226,12 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				if ((TCFG_SystemData.Sensitivity > SENSE_LOWEST) || (TCFG_SystemData.Sensitivity < SENSE_HIGHEST)) {
 					TCFG_SystemData.Sensitivity = SENSE_MIDDLE;
 					TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
+					Inspect_Qmc5883l_SensitivityConfig(TCFG_SystemData.Sensitivity);
+					__NOP();
+				}
+				else {
+					TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
+					Inspect_Qmc5883l_SensitivityConfig(TCFG_SystemData.Sensitivity);
 					__NOP();
 				}
 			}
@@ -231,6 +240,10 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				TCFG_SystemData.WorkMode = ((tmote_work_mode_s*)CFG_P_FRAME_PAYLOAD(inmsg))->mode;
 				if ((TCFG_SystemData.WorkMode != DEBUG_WORK) && (TCFG_SystemData.WorkMode != NORMAL_WORK)) {
 					TCFG_SystemData.WorkMode = NORMAL_WORK;
+					TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
+					__NOP();
+				}
+				else {
 					TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
 					__NOP();
 				}
@@ -243,28 +256,38 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 					TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
 					__NOP();
 				}
+				else {
+					TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
+					__NOP();
+				}
 			}
 			/* 初始化传感器指令 */
 			else if (pPayload->head.type == TRF_MSG_INITBACKGROUND) {
-				
-				
+				Inspect_Qmc5883l_BackgroundDoCalculate();
+				__NOP();
 			}
 			/* 其他下行指令 */
 			else if (pPayload->head.type == TRF_MSG_GENERAL_CMD) {
 				((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf[15] = 0;
-				/* reboot */
+				/* Reboot */
 				if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "reboot")) {
 					BEEP_CtrlRepeat_Extend(2, 500, 250);
 					Stm32_System_Software_Reboot();
 					__NOP();
 				}
-				/* newsn */
+				/* NewSn */
 				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "newsn")) {
 					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "newsn:%08x", &uval32);
 					TCFG_EEPROM_Set_MAC_SN(uval32);
 					__NOP();
 				}
-				/* netinfo */
+				/* MagFreq */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "magfreq")) {
+					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "magfreq:%hu", &uval16);
+					Inspect_Qmc5883l_MagFreqConfig(uval16);
+					__NOP();
+				}
+				/* NetInfo */
 				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "netinfo")) {
 				#if NETPROTOCAL == NETCOAP
 					Radio_Trf_Printf("Manufacturer:%s", NbiotClientHandler.Parameter.manufacturer);
@@ -290,6 +313,15 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 					Radio_Trf_Printf("SNR:%d", MqttSNClientHandler.SocketStack->NBIotStack->Parameter.statisticsCELL.snr);
 				#endif
 					__NOP();
+				}
+				/* QmcInspInfo */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "qmcinspinfo")) {
+					Radio_Trf_Printf("MagFreq : %d", TCFG_EEPROM_GetMagFreq());
+					Radio_Trf_Printf("Sensitivity : %d", TCFG_EEPROM_GetSavedSensitivity());
+					Radio_Trf_Printf("CarinThreshhold : %d", TCFG_EEPROM_GetCarinThreshhold());
+					Radio_Trf_Printf("CaroutThreshhold : %d", TCFG_EEPROM_GetCaroutThreshhold());
+					Radio_Trf_Printf("RecalibrationNum : %d", TCFG_EEPROM_GetRecalibrationNum());
+					Radio_Trf_Printf("RecalibrationOvertime : %d", TCFG_EEPROM_GetRecalibrationOverTime());
 				}
 				/* ...... */
 			}

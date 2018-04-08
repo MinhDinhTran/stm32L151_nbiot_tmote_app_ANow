@@ -132,6 +132,7 @@ int main(void)
 		Radio_Trf_App_Task();															//小无线处理
 		
 		if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {							//QMC5883L有数据待读取
+			InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAUNREADY;							//QMC5883L待读取标志位清空
 			QMC5883L_ReadData_Simplify();													//QMC5883L读取数据
 			InspectQmc5883lHandler.CarStatus = InspectQmc5883lHandler.PassDetect(Qmc5883lData.X_Now, Qmc5883lData.Y_Now, Qmc5883lData.Z_Now);
 			if (InspectQmc5883lHandler.CarStatus == INSPECT_CAR_COME) {							//车检入
@@ -206,8 +207,8 @@ int main(void)
 		}
 		
 		/* QMC5883L异常由WAKE UP唤醒MCU */
-		if (InspectQmc5883lHandler.Qmc5883lFile == INSPECT_QMC_ERROR_IS) {						//QMC5883L异常状态
-			InspectQmc5883lHandler.Qmc5883lFile = INSPECT_QMC_ERROR_NONE;
+		if (InspectQmc5883lHandler.Qmc5883lFail == INSPECT_QMC_ERROR_IS) {						//QMC5883L异常状态
+			InspectQmc5883lHandler.Qmc5883lFail = INSPECT_QMC_ERROR_NONE;
 			
 			
 			
@@ -234,6 +235,7 @@ void MainMajorCycle(void)
 		Radio_Trf_App_Task();															//小无线处理
 		
 		if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {							//QMC5883L有数据待读取
+			InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAUNREADY;							//QMC5883L待读取标志位清空
 			QMC5883L_ReadData_Simplify();													//QMC5883L读取数据
 			InspectQmc5883lHandler.CarStatus = InspectQmc5883lHandler.PassDetect(Qmc5883lData.X_Now, Qmc5883lData.Y_Now, Qmc5883lData.Z_Now);
 			if (InspectQmc5883lHandler.CarStatus == INSPECT_CAR_COME) {							//车检入
