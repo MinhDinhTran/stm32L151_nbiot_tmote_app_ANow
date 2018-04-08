@@ -7,6 +7,18 @@
 #define INSPECT_QMC_DISTANCE_HIGH			20												//启动分类算法上限值
 #define INSPECT_QMC_CNT_1_MIN				3  												//检测为有车状态的最少次数
 
+enum
+{
+	INSPECT_QMC_DATAUNREADY				= 0x00,
+	INSPECT_QMC_DATAREADY				= 0x01
+};
+
+enum
+{
+	INSPECT_QMC_ERROR_NONE				= 0x00,
+	INSPECT_QMC_ERROR_IS				= 0x01
+};
+
 typedef enum
 {
 	INSPECT_CAR_NONE       				= 0x00,											//空状态
@@ -89,6 +101,10 @@ typedef struct
 	unsigned short						detect_nS0;										//连续状态0个数
 	unsigned short						detect_nS1;										//连续状态1个数
 	
+	unsigned char						DataReady;										//数据准备标志位
+	unsigned char						Qmc5883lFile;										//QMC5883L异常标志位
+	Inspect_Qmc5883l_StatusTypeDef		CarStatus;										//检测状态
+	
 	Inspect_Qmc5883l_StatusTypeDef		(*PassDetect)(int16_t x_mag, int16_t y_mag, int16_t z_mag);	//车辆检测
 	Inspect_Qmc5883l_StatusTypeDef		(*CheckStatus)(unsigned char index);					//检测状态
 	unsigned char						(*KmeansAllocate)(void);								//质心分配
@@ -99,12 +115,5 @@ extern Inspect_Qmc5883lTypeDef			InspectQmc5883lHandler;								//Inspect QMC588
 
 void Inspect_Qmc5883l_Init(void);															//Qmc5883L车辆检测初始化
 void Inspect_Qmc5883l_ISR(void);															//Qmc5883L中断处理函数
-
-
-
-
-
-
-
 
 #endif

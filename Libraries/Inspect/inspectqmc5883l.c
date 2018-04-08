@@ -18,7 +18,7 @@
 
 /**********************************************************************************************************
  @Function			Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_Pass_Detect(int16_t x_mag, int16_t y_mag, int16_t z_mag)
- @Description			Inspect_Qmc5883l_Pass_Detect		: 车辆检测
+ @Description			Inspect_Qmc5883l_Pass_Detect		: 车辆检测(6~7MS)
  @Input				x_mag						: X轴磁场值
 					y_mag						: Y轴磁场值
 					z_mag						: Z轴磁场值

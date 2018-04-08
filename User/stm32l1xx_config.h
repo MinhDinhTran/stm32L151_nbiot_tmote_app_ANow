@@ -61,6 +61,7 @@ typedef enum
 RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void);							//获取复位标志位
 
 void LowPowerCtrlIO_Init(void);											//低功耗控制IO初始化
+void LowPowerEnterStop(void);												//进入低功耗stop模式
 void ModulePowerReset_Init(void);											//模块复位电源控制
 void PowerCtrlIO_Init(void);												//电源控制IO初始化
 

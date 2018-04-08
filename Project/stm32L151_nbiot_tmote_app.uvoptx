@@ -117,7 +117,6 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>/</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -167,57 +166,47 @@
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>SendTimes,0x10</ItemText>
+          <ItemText>USART1_RX_BUF</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>2</WinNumber>
-          <ItemText>radarDataPack</ItemText>
+          <ItemText>USART2_RX_BUF</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>2</WinNumber>
-          <ItemText>radarDataStruct</ItemText>
+          <ItemText>USART1_RX_STA</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>2</WinNumber>
-          <ItemText>USART1_RX_BUF</ItemText>
+          <ItemText>USART2_RX_STA</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>2</WinNumber>
-          <ItemText>USART2_RX_BUF</ItemText>
+          <ItemText>NBIOT_ATSendBuf</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>2</WinNumber>
-          <ItemText>USART1_RX_STA</ItemText>
+          <ItemText>NBIOT_ATRecvBuf</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>2</WinNumber>
-          <ItemText>USART2_RX_STA</ItemText>
+          <ItemText>InspectQmc5883lHandler,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>2</WinNumber>
-          <ItemText>NBIOT_ATSendBuf</ItemText>
+          <ItemText>TCFG_SystemData,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>2</WinNumber>
-          <ItemText>NBIOT_ATRecvBuf</ItemText>
-        </Ww>
-        <Ww>
-          <count>11</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>InspectQmc5883lHandler,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>12</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>TCFG_SystemData,0x10</ItemText>
+          <ItemText>Qmc5883lData,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>
@@ -1364,7 +1353,7 @@
 
   <Group>
     <GroupName>Inspect</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

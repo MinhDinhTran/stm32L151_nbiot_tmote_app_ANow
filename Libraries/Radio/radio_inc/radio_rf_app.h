@@ -142,6 +142,7 @@ typedef __packed struct _tmote_general_cmd
 	char								buf[16];
 }tmote_general_cmd_s;
 
+void Radio_Rf_BeforeSleep(void);
 void Radio_Rf_Data_Handle_Isr(mrfiPacket_t* rfpacket);
 char Radio_Rf_Receive(uint8_t *outmsg, uint8_t *len);
 char Radio_Rf_Send(uint8_t *inmsg, uint8_t len);

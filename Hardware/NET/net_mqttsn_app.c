@@ -1241,6 +1241,19 @@ MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTT
 	return MQTTSN_OK;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**********************************************************************************************************
  @Function			MQTTSN_StatusTypeDef NET_MQTTSN_SendPayloadPacket(MQTTSN_ClientsTypeDef* pClient, NET_MQTTSN_ObjectPacketTypeDef ObjectPacket)
  @Description			NET_MQTTSN_SendPayloadPacket	: MQTTSN发送负载包

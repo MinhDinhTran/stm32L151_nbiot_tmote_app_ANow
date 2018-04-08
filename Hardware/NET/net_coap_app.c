@@ -1348,6 +1348,16 @@ void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
 	}
 }
 
+
+
+
+
+
+
+
+
+
+
 /**********************************************************************************************************
  @Function			void NET_COAP_NBIOT_Event_ExecutDownlinkData(NBIOT_ClientsTypeDef* pClient)
  @Description			NET_COAP_NBIOT_Event_ExecutDownlinkData	: 下行数据处理

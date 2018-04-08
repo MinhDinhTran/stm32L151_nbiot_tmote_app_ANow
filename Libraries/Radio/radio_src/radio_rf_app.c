@@ -21,6 +21,7 @@
 #include "platform_map.h"
 #include "platform_config.h"
 #include "hal_beep.h"
+#include "inspectconfig.h"
 #include "delay.h"
 #include "string.h"
 #include <stdarg.h>
@@ -88,6 +89,22 @@ mrfiPacket_t* Radio_Rf_QPop(void)
 	}
 	
 	return NULL;
+}
+
+/**********************************************************************************************************
+ @Function			char Radio_Rf_is_Sleep(void)
+ @Description			Radio_Rf_is_Sleep			: set the radio to sleep mode
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void Radio_Rf_BeforeSleep(void)
+{
+#ifdef	RADIO_SI4438
+	if (Radio_Rf_is_Sleep() == 0) {
+		Radio_Rf_Sleep();
+		Radio_Rf_Interface_Deinit();
+	}
+#endif
 }
 
 /**********************************************************************************************************
@@ -479,7 +496,8 @@ void Radio_Trf_Xmit_Heartbeat(void)
 	else {
 		pHeartBeat->workmode	= NOTACTIVE_WORK;
 	}
-	pHeartBeat->status			= 0;
+	/* 0=free, 1=occupy */
+	pHeartBeat->status			= InspectQmc5883lHandler.bInStatus;
 	
 	Radio_Trf_Cfg_Buildframe((uint8_t *)pHeartBeat, TMOTE_PLAIN_PUB, Radio_Trf_Xmit_Get_Pktnum(), TCFG_EEPROM_Get_MAC_SN(), TRF_SendBuf, sizeof(trf_heartbeat_s));
 	Radio_Rf_Send(TRF_SendBuf, TRF_SendBuf[0]);

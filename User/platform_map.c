@@ -59,8 +59,24 @@ void TCFG_EEPROM_WriteConfigData(void)
 	TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
 	
 	/* 地磁扫描频率 */
-	TCFG_SystemData.MagFreq = 0;
+	TCFG_SystemData.MagFreq = 1;
 	TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+	
+	/* 车辆进入参数 */
+	TCFG_SystemData.CarinThreshhold = 80;
+	TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+	
+	/* 车辆离开参数 */
+	TCFG_SystemData.CaroutThreshhold = 13;
+	TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+	
+	/* 微小变化重计算次数 */
+	TCFG_SystemData.RecalibrationNum = 10;
+	TCFG_EEPROM_SetRecalibrationNum(TCFG_SystemData.RecalibrationNum);
+	
+	/* 激烈变化重计算时间 */
+	TCFG_SystemData.RecalibrationOvertime = 1;
+	TCFG_EEPROM_SetRecalibrationOverTime(TCFG_SystemData.RecalibrationOvertime);
 	
 	/* 设备工作模式 */
 	TCFG_SystemData.WorkMode = NORMAL_WORK;
@@ -116,8 +132,28 @@ void TCFG_EEPROM_ReadConfigData(void)
 	/* 获取地磁扫描频率 */
 	TCFG_SystemData.MagFreq = TCFG_EEPROM_GetMagFreq();
 	if (TCFG_SystemData.MagFreq >= 4) {
-		TCFG_SystemData.MagFreq = 0;
+		TCFG_SystemData.MagFreq = 1;
 		TCFG_EEPROM_SetMagFreq(TCFG_SystemData.MagFreq);
+	}
+	
+	/* 获取车辆进入参数 */
+	TCFG_SystemData.CarinThreshhold = TCFG_EEPROM_GetCarinThreshhold();
+	
+	/* 获取车辆离开参数 */
+	TCFG_SystemData.CaroutThreshhold = TCFG_EEPROM_GetCaroutThreshhold();
+	
+	/* 获取微小变化重计算次数 */
+	TCFG_SystemData.RecalibrationNum = TCFG_EEPROM_GetRecalibrationNum();
+	if (TCFG_SystemData.RecalibrationNum > 15) {
+		TCFG_SystemData.RecalibrationNum = 15;
+		TCFG_EEPROM_SetRecalibrationNum(TCFG_SystemData.RecalibrationNum);
+	}
+	
+	/* 获取激烈变化重计算时间 */
+	TCFG_SystemData.RecalibrationOvertime = TCFG_EEPROM_GetRecalibrationOverTime();
+	if (TCFG_SystemData.RecalibrationOvertime > 15) {
+		TCFG_SystemData.RecalibrationOvertime = 15;
+		TCFG_EEPROM_SetRecalibrationOverTime(TCFG_SystemData.RecalibrationOvertime);
 	}
 	
 	/* 获取设备工作模式 */
@@ -1004,6 +1040,94 @@ void TCFG_EEPROM_SetVender(char* vender)
 void TCFG_EEPROM_GetVender(char* vender)
 {
 	FLASH_EEPROM_ReadBuffer(TCFG_FACTORY_VENDER_OFFSET, (unsigned char*)vender, TCFG_FACTORY_VENDER_LENGTH);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetCarinThreshhold(unsigned char val)
+ @Description			TCFG_EEPROM_SetCarinThreshhold				: 保存carin_threshhold
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetCarinThreshhold(unsigned char val)
+{
+	FLASH_EEPROM_WriteByte(TCFG_CARIN_THREHOLD_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned char TCFG_EEPROM_GetCarinThreshhold(void)
+ @Description			TCFG_EEPROM_GetCarinThreshhold				: 读取carin_threshhold
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned char TCFG_EEPROM_GetCarinThreshhold(void)
+{
+	return FLASH_EEPROM_ReadByte(TCFG_CARIN_THREHOLD_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetCaroutThreshhold(unsigned char val)
+ @Description			TCFG_EEPROM_SetCaroutThreshhold				: 保存carout_threshhold
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetCaroutThreshhold(unsigned char val)
+{
+	FLASH_EEPROM_WriteByte(TCFG_CAROUT_THREHOLD_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned char TCFG_EEPROM_GetCaroutThreshhold(void)
+ @Description			TCFG_EEPROM_GetCaroutThreshhold				: 读取carout_threshhold
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned char TCFG_EEPROM_GetCaroutThreshhold(void)
+{
+	return FLASH_EEPROM_ReadByte(TCFG_CAROUT_THREHOLD_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetRecalibrationNum(unsigned char val)
+ @Description			TCFG_EEPROM_SetRecalibrationNum				: 保存recalibration_num
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetRecalibrationNum(unsigned char val)
+{
+	FLASH_EEPROM_WriteByte(TCFG_RECALIBRA_NUM_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned char TCFG_EEPROM_GetRecalibrationNum(void)
+ @Description			TCFG_EEPROM_GetRecalibrationNum				: 读取recalibration_num
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned char TCFG_EEPROM_GetRecalibrationNum(void)
+{
+	return FLASH_EEPROM_ReadByte(TCFG_RECALIBRA_NUM_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetRecalibrationOverTime(unsigned char val)
+ @Description			TCFG_EEPROM_SetRecalibrationOverTime			: 保存recalibration_overtime
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetRecalibrationOverTime(unsigned char val)
+{
+	FLASH_EEPROM_WriteByte(TCFG_RECALIBRA_TIME_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned char TCFG_EEPROM_GetRecalibrationOverTime(void)
+ @Description			TCFG_EEPROM_GetRecalibrationOverTime			: 读取recalibration_overtime
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned char TCFG_EEPROM_GetRecalibrationOverTime(void)
+{
+	return FLASH_EEPROM_ReadByte(TCFG_RECALIBRA_TIME_OFFSET);
 }
 
 /**********************************************************************************************************

@@ -67,7 +67,7 @@
 #define TCFG_SECU_BRANCHKEY_LENGTH			32												//Reserved			未使用
 
 #define TCFG_RECORD_RUNTIME_OFFSET			TCFG_SECU_BRANCHKEY_OFFSET + TCFG_SECU_BRANCHKEY_LENGTH	//0x08080477
-#define TCFG_RECORD_RUNTIME_LENGTH			4												//Reserved
+#define TCFG_RECORD_RUNTIME_LENGTH			4												//Reserved			未使用
 
 #define TCFG_RECORD_BOOTCNT_OFFSET			TCFG_RECORD_RUNTIME_OFFSET + TCFG_RECORD_RUNTIME_LENGTH	//0x0808047B
 #define TCFG_RECORD_BOOTCNT_LENGTH			1												//BootCnt				正常运行标志
@@ -112,6 +112,19 @@
 #define TCFG_TEMP_BACKGROUND_OFFSET		TCFG_EVENT_TIME_OFFSET + TCFG_EVENT_TIME_LENGTH			//0x080804D9
 #define TCFG_TEMP_BACKGROUND_LENGTH		2												//BackgroundTemp
 
+#define TCFG_CARIN_THREHOLD_OFFSET			TCFG_TEMP_BACKGROUND_OFFSET + TCFG_TEMP_BACKGROUND_LENGTH	//0x080804DB
+#define TCFG_CARIN_THREHOLD_LENGTH			1												//carin_threshhold		车辆进入参数
+#define TCFG_CAROUT_THREHOLD_OFFSET		TCFG_CARIN_THREHOLD_OFFSET + TCFG_CARIN_THREHOLD_LENGTH	//0x080804DC
+#define TCFG_CAROUT_THREHOLD_LENGTH		1												//carout_threshhold		车辆离开参数
+#define TCFG_RECALIBRA_NUM_OFFSET			TCFG_CAROUT_THREHOLD_OFFSET + TCFG_CAROUT_THREHOLD_LENGTH	//0x080804DD
+#define TCFG_RECALIBRA_NUM_LENGTH			1												//recalibration_num		微小变化重计算次数
+#define TCFG_RECALIBRA_TIME_OFFSET			TCFG_RECALIBRA_NUM_OFFSET + TCFG_RECALIBRA_NUM_LENGTH		//0x080804DE
+#define TCFG_RECALIBRA_TIME_LENGTH			1												//recalibration_overtime	激烈变化重计算时间
+
+
+
+
+
 enum TCFG_SENSITIVITY																	//传感器灵敏度
 {
 	SENSE_HIGHEST 						= 0x01,
@@ -128,6 +141,10 @@ typedef struct
 	unsigned short						Heartinterval;										//心跳间隔
 	unsigned char						Sensitivity;										//灵敏度
 	unsigned char						MagFreq;											//地磁扫描频率
+	unsigned char						CarinThreshhold;									//车辆进入参数
+	unsigned char						CaroutThreshhold;									//车辆离开参数
+	unsigned char						RecalibrationNum;									//微小变化重计算次数
+	unsigned char						RecalibrationOvertime;								//激烈变化重计算时间
 	unsigned char						WorkMode;											//工作模式
 	unsigned char						RFChannel;										//无线通道
 	unsigned int						NBIotBootCount;									//NBIot重启次数
@@ -243,6 +260,18 @@ char* TCFG_EEPROM_Get_MAC_SN_String(void);													//读取MAC SN字符串
 
 void TCFG_EEPROM_SetVender(char* vender);													//保存Vender
 void TCFG_EEPROM_GetVender(char* vender);													//获取Verder
+
+void TCFG_EEPROM_SetCarinThreshhold(unsigned char val);										//保存carin_threshhold
+unsigned char TCFG_EEPROM_GetCarinThreshhold(void);											//读取carin_threshhold
+
+void TCFG_EEPROM_SetCaroutThreshhold(unsigned char val);										//保存carout_threshhold
+unsigned char TCFG_EEPROM_GetCaroutThreshhold(void);											//读取carout_threshhold
+
+void TCFG_EEPROM_SetRecalibrationNum(unsigned char val);										//保存recalibration_num
+unsigned char TCFG_EEPROM_GetRecalibrationNum(void);											//读取recalibration_num
+
+void TCFG_EEPROM_SetRecalibrationOverTime(unsigned char val);									//保存recalibration_overtime
+unsigned char TCFG_EEPROM_GetRecalibrationOverTime(void);										//读取recalibration_overtime
 
 unsigned char TCFG_Utility_Get_Major_Softnumber(void);											//读取Major_Softnumber
 unsigned char TCFG_Utility_Get_Sub_Softnumber(void);											//读取Sub_Softnumber

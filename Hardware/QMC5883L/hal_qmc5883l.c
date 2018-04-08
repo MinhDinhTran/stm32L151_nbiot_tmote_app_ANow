@@ -153,7 +153,11 @@ void QMC5883L_Init(void)
 	/* 引脚中断使能, 数据读取完指针自动偏转失能 */
 	QMC5883L_WriteByte(QMC5883L_CR2, QMC_INT_ENABLE | QMC_POINT_ROLL_DISABLE);
 	
-	QMC5883L_Drdy_Exti_Init();											//QMC5883L引脚配置PA11高电平读取
+#if QMC_DRDY_EXIT
+	QMC5883L_Drdy_Exti_Init();											//QMC5883L引脚配置PA11高电平读取(中断)
+#else
+	QMC5883L_Drdy_Init();												//QMC5883L引脚配置PA11高电平读取(非中断)
+#endif
 }
 
 /**********************************************************************************************************
@@ -332,6 +336,31 @@ void QMC5883L_Rates_Selection(u8 rates)
 	}
 	else if (rates == QMC_RATES_200HZ) {
 		QMC5883L_WriteByte(QMC5883L_CR1, (reg & 0xF3) | QMC_RATES_200HZ);
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void QMC5883L_Rates_Selection_Freq(u8 Freq)
+ @Description			QMC5883L数据输出速率选择
+ @Input				0, 1, 2, 3 : QMC_RATES_10HZ/QMC_RATES_50HZ/QMC_RATES_100HZ/QMC_RATES_200HZ
+ @Return				void
+**********************************************************************************************************/
+void QMC5883L_Rates_Selection_Freq(u8 Freq)
+{
+	if (Freq == 0) {
+		QMC5883L_Rates_Selection(QMC_RATES_10HZ);
+	}
+	else if (Freq == 1) {
+		QMC5883L_Rates_Selection(QMC_RATES_50HZ);
+	}
+	else if (Freq == 2) {
+		QMC5883L_Rates_Selection(QMC_RATES_100HZ);
+	}
+	else if (Freq == 3) {
+		QMC5883L_Rates_Selection(QMC_RATES_200HZ);
+	}
+	else {
+		QMC5883L_Rates_Selection(QMC_RATES_50HZ);
 	}
 }
 

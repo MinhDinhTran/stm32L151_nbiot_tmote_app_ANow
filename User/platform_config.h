@@ -23,7 +23,7 @@
 #define	RADIO_SI4438													//无线开启
 
 #define	SOFTWAREMAJOR					10								//主固件版本
-#define	SOFTWARESUB					10								//从固件版本
+#define	SOFTWARESUB					23								//从固件版本
 #define	HARDWAREMAJOR					2								//主硬件版本
 
 #define	IDLE_WORK						4								//休眠
@@ -31,6 +31,8 @@
 
 #define	DEBUG_WORK					1								//调试工作模式
 #define	NORMAL_WORK					0								//正常工作模式
+
+extern __IO unsigned int SecondTickTimes;									//SecondTick
 
 extern bool DeviceIdleMode;												//IDLE MODE
 extern bool DeviceActivedMode;											//ACTIVED MODE
