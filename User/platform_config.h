@@ -5,7 +5,7 @@
 #include "net_coap_app.h"
 #include "net_mqttsn_app.h"
 
-//#define	MVB_SUBSN						0x81010001						//设备号
+//#define	MVB_SUBSN						0x8101000B						//设备号
 //#define	MVB_BRAND						"mvb"							//厂牌
 
 #define	MVB_STATICMAGNETIC_MODEL			51

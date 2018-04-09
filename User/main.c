@@ -335,6 +335,11 @@ void MainHandleRoutine(void)
 	}
 	if ((Stm32_GetSecondTick() / (24*3600)) != SystemRunningTime.days) {
 		ModelError_Init();																//模块初始化
+#if NETPROTOCAL == NETCOAP
+		NbiotClientHandler.DictateRunCtl.dictateEvent = HARDWARE_REBOOT;							//COAP初始化
+#elif NETPROTOCAL == NETMQTTSN
+		MqttSNClientHandler.SocketStack->NBIotStack->DictateRunCtl.dictateEvent = HARDWARE_REBOOT;	//MQTTSN初始化
+#endif
 		SystemRunningTime.minutes = Stm32_GetSecondTick() / (24*3600);
 	}
 }

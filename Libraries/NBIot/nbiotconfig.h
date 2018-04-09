@@ -111,7 +111,7 @@ struct NBIOT_ParameterTypeDef
 	char								imei[20];
 	char								imeisv[20];
 	char								iccid[25];
-	char								imsi[15];
+	char								imsi[20];
 	char								cgpaddr[20];
 	char								cgdcont[30];
 	int								rssi;

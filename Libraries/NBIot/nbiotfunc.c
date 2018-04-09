@@ -891,7 +891,7 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_SetConfigUE(NBIOT_ClientsTypeDef* pClient, c
 
 /**********************************************************************************************************
  @Function			NBIOT_StatusTypeDef NBIOT_Neul_NBxx_CheckReadConfigUE(NBIOT_ClientsTypeDef* pClient)
- @Description			NBIOT_Neul_NBxx_CheckReadCDPServer			: 查询NCONFIG模式
+ @Description			NBIOT_Neul_NBxx_CheckReadConfigUE			: 查询NCONFIG模式
  @Input				pClient								: NBIOT客户端实例
  @Return				NBIOT_StatusTypeDef						: NBIOT处理状态
 **********************************************************************************************************/

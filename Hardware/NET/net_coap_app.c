@@ -661,7 +661,6 @@ void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CHECK;
 		}
-		return;
 	}
 	
 	if ((strcmp((const char*)pClient->Parameter.cdpserver.CDPServerHost, COAPCDPADDR) != 0) || (pClient->Parameter.cdpserver.CDPServerPort != COAPCDPPORT)) {
@@ -714,7 +713,6 @@ void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CONFIG;
 		}
-		return;
 	}
 	
 	if ((strcmp((const char*)pClient->Parameter.cdpserver.CDPServerHost, COAPCDPADDR) != 0) || (pClient->Parameter.cdpserver.CDPServerPort != COAPCDPPORT)) {
