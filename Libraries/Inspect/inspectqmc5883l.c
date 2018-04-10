@@ -14,6 +14,8 @@
   */
 
 #include "inspectqmc5883l.h"
+#include "platform_config.h"
+#include "platform_map.h"
 #include "stdlib.h"
 
 /**********************************************************************************************************
@@ -262,7 +264,11 @@ Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_CheckStatus(unsigned char index)
 		InspectQmc5883lHandler.detect_nS1++;
 		/* 如果超过最小有车状态时间则判断为有车进入 */
 		if (InspectQmc5883lHandler.detect_nS1 == INSPECT_QMC_CNT_1_MIN) {
+			/* 车辆数加1 */
 			InspectQmc5883lHandler.Parameter.carNumber++;
+			TCFG_SystemData.CarNumber = InspectQmc5883lHandler.Parameter.carNumber;
+			TCFG_EEPROM_SetCarNumber(TCFG_SystemData.CarNumber);
+			
 			InspectQmc5883lHandler.Parameter.diff_mag = 0;
 			status = INSPECT_CAR_COME;
 			InspectQmc5883lHandler.bInStatus = 1;

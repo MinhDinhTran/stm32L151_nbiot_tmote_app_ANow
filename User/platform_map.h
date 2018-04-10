@@ -76,7 +76,7 @@
 #define TCFG_APP_ENV0_ADDRESS				EEPROM_BASE_ADDRESS + TCFG_APP_ENV0_OFFSET				//0x0808047C	绝对地址
 #define TCFG_APP_ENV0_SIZE				24												//参数区域0
 #define TCFG_APP_ENV1_OFFSET				TCFG_APP_ENV0_OFFSET + TCFG_APP_ENV0_SIZE				//0x08080494	偏移地址
-#define TCFG_APP_ENV1_ADDRESS				EEPROM_BASE_ADDRESS + TCFG_APP_ENV1_OFFSET				//0x08080494	绝对地址	
+#define TCFG_APP_ENV1_ADDRESS				EEPROM_BASE_ADDRESS + TCFG_APP_ENV1_OFFSET				//0x08080494	绝对地址
 #define TCFG_APP_ENV1_SIZE				24												//参数区域1
 
 #define TCFG_RECORD_SERVER_OFFSET			TCFG_APP_ENV1_OFFSET + TCFG_APP_ENV1_SIZE				//0x080804AC
@@ -120,7 +120,8 @@
 #define TCFG_RECALIBRA_NUM_LENGTH			1												//recalibration_num		微小变化重计算次数
 #define TCFG_RECALIBRA_TIME_OFFSET			TCFG_RECALIBRA_NUM_OFFSET + TCFG_RECALIBRA_NUM_LENGTH		//0x080804DE
 #define TCFG_RECALIBRA_TIME_LENGTH			1												//recalibration_overtime	激烈变化重计算时间
-
+#define TCFG_CAR_NUMBER_OFFSET			TCFG_RECALIBRA_TIME_OFFSET + TCFG_RECALIBRA_TIME_LENGTH	//0x080804DF
+#define TCFG_CAR_NUMBER_LENGTH			2												//CarNumber			检测车辆数
 
 
 
@@ -145,6 +146,7 @@ typedef struct
 	unsigned char						CaroutThreshhold;									//车辆离开参数
 	unsigned char						RecalibrationNum;									//微小变化重计算次数
 	unsigned char						RecalibrationOvertime;								//激烈变化重计算时间
+	unsigned short						CarNumber;										//检测车辆数
 	unsigned char						WorkMode;											//工作模式
 	unsigned char						RFChannel;										//无线通道
 	unsigned int						NBIotBootCount;									//NBIot重启次数
@@ -272,6 +274,9 @@ unsigned char TCFG_EEPROM_GetRecalibrationNum(void);											//读取recalibra
 
 void TCFG_EEPROM_SetRecalibrationOverTime(unsigned char val);									//保存recalibration_overtime
 unsigned char TCFG_EEPROM_GetRecalibrationOverTime(void);										//读取recalibration_overtime
+
+void TCFG_EEPROM_SetCarNumber(unsigned short val);											//保存CarNumber
+unsigned short TCFG_EEPROM_GetCarNumber(void);												//读取CarNumber
 
 unsigned char TCFG_Utility_Get_Major_Softnumber(void);											//读取Major_Softnumber
 unsigned char TCFG_Utility_Get_Sub_Softnumber(void);											//读取Sub_Softnumber

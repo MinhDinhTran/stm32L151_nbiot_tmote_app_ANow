@@ -78,6 +78,10 @@ void TCFG_EEPROM_WriteConfigData(void)
 	TCFG_SystemData.RecalibrationOvertime = 1;
 	TCFG_EEPROM_SetRecalibrationOverTime(TCFG_SystemData.RecalibrationOvertime);
 	
+	/* 检测车辆数 */
+	TCFG_SystemData.CarNumber = 0;
+	TCFG_EEPROM_SetCarNumber(TCFG_SystemData.CarNumber);
+	
 	/* 设备工作模式 */
 	TCFG_SystemData.WorkMode = NORMAL_WORK;
 	TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
@@ -155,6 +159,9 @@ void TCFG_EEPROM_ReadConfigData(void)
 		TCFG_SystemData.RecalibrationOvertime = 15;
 		TCFG_EEPROM_SetRecalibrationOverTime(TCFG_SystemData.RecalibrationOvertime);
 	}
+	
+	/* 获取检测车辆数 */
+	TCFG_SystemData.CarNumber = TCFG_EEPROM_GetCarNumber();
 	
 	/* 获取设备工作模式 */
 	TCFG_SystemData.WorkMode = TCFG_EEPROM_GetWorkMode();
@@ -1128,6 +1135,28 @@ void TCFG_EEPROM_SetRecalibrationOverTime(unsigned char val)
 unsigned char TCFG_EEPROM_GetRecalibrationOverTime(void)
 {
 	return FLASH_EEPROM_ReadByte(TCFG_RECALIBRA_TIME_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			void TCFG_EEPROM_SetCarNumber(unsigned short val)
+ @Description			TCFG_EEPROM_SetCarNumber						: 保存CarNumber
+ @Input				val
+ @Return				void
+**********************************************************************************************************/
+void TCFG_EEPROM_SetCarNumber(unsigned short val)
+{
+	FLASH_EEPROM_WriteHalfWord(TCFG_CAR_NUMBER_OFFSET, val);
+}
+
+/**********************************************************************************************************
+ @Function			unsigned short TCFG_EEPROM_GetCarNumber(void)
+ @Description			TCFG_EEPROM_GetCarNumber						: 读取CarNumber
+ @Input				void
+ @Return				val
+**********************************************************************************************************/
+unsigned short TCFG_EEPROM_GetCarNumber(void)
+{
+	return FLASH_EEPROM_ReadHalfWord(TCFG_CAR_NUMBER_OFFSET);
 }
 
 /**********************************************************************************************************

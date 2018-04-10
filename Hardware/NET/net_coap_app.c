@@ -18,6 +18,10 @@
 #include "hal_beep.h"
 #include "string.h"
 
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+#include "radio_rf_app.h"
+#endif
+
 /**********************************************************************************************************
  @Function			void NET_COAP_APP_PollExecution(NBIOT_ClientsTypeDef* pClient)
  @Description			NET_COAP_APP_PollExecution			: COAP逻辑处理
@@ -166,6 +170,9 @@ void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = MODULE_CHECK;
 		pClient->DictateRunCtl.dictateRebootFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap HDReboot Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -183,6 +190,9 @@ void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = HARDWARE_REBOOT;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap HDReboot Fail");
+#endif
 	}
 }
 
@@ -210,6 +220,9 @@ void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 		pClient->DictateRunCtl.dictateModuleCheckFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap ModuleCheck Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -227,6 +240,9 @@ void NET_COAP_NBIOT_Event_ModuleCheck(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = MODULE_CHECK;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap ModuleCheck Fail");
+#endif
 	}
 }
 
@@ -253,6 +269,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 		pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap ConfigRead Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -270,6 +289,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap ConfigRead Fail");
+#endif
 		return;
 	}
 	
@@ -279,6 +301,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 			pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap AutoConnectSet %d Ok", NConfigTrue);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -296,6 +321,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap AutoConnectSet %d Fail", NConfigTrue);
+#endif
 			return;
 		}
 	}
@@ -306,6 +334,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 			pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CrScramblingSet %d Ok", NConfigTrue);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -323,6 +354,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CrScramblingSet %d Fail", NConfigTrue);
+#endif
 			return;
 		}
 	}
@@ -333,6 +367,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 			pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CrSiAvoidSet %d Ok", NConfigTrue);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -350,6 +387,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CrSiAvoidSet %d Fail", NConfigTrue);
+#endif
 			return;
 		}
 	}
@@ -360,6 +400,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 			pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CombineAttachSet %d Ok", NConfigFalse);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -377,6 +420,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CombineAttachSet %d Fail", NConfigFalse);
+#endif
 			return;
 		}
 	}
@@ -387,6 +433,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 			pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CellReselectionSet %d Ok", NConfigFalse);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -404,6 +453,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CellReselectionSet %d Fail", NConfigFalse);
+#endif
 			return;
 		}
 	}
@@ -414,6 +466,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 			pClient->DictateRunCtl.dictateParameterConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap EnableBipSet %d Ok", NConfigFalse);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -431,6 +486,9 @@ void NET_COAP_NBIOT_Event_ParameterConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = PARAMETER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap EnableBipSet %d Fail", NConfigFalse);
+#endif
 			return;
 		}
 	}
@@ -459,6 +517,9 @@ void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = FULL_FUNCTIONALITY;
 		pClient->DictateRunCtl.dictateSimICCIDCheckFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap ICCIDCheck Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -476,6 +537,9 @@ void NET_COAP_NBIOT_Event_SimICCIDCheck(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = ICCID_CHECK;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap ICCIDCheck Fail");
+#endif
 	}
 }
 
@@ -502,6 +566,9 @@ void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CHECK;
 		pClient->DictateRunCtl.dictateFullFunctionalityFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap FullFuncCheck Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -519,6 +586,9 @@ void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = FULL_FUNCTIONALITY;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap FullFuncCheck Fail");
+#endif
 		return;
 	}
 	
@@ -528,6 +598,9 @@ void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CHECK;
 			pClient->DictateRunCtl.dictateFullFunctionalityFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap FullFuncSet Ok");
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -545,6 +618,9 @@ void NET_COAP_NBIOT_Event_FullFunctionality(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = FULL_FUNCTIONALITY;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap FullFuncSet Fail");
+#endif
 			return;
 		}
 	}
@@ -573,6 +649,9 @@ void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CONFIG;
 		pClient->DictateRunCtl.dictateMinimumFunctionalityFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap MinFuncCheck Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -590,6 +669,9 @@ void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = MINIMUM_FUNCTIONALITY;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap MinFuncCheck Fail");
+#endif
 		return;
 	}
 	
@@ -599,6 +681,9 @@ void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CONFIG;
 			pClient->DictateRunCtl.dictateMinimumFunctionalityFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap MinFuncSet Ok");
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -616,6 +701,9 @@ void NET_COAP_NBIOT_Event_MinimumFunctionality(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = MINIMUM_FUNCTIONALITY;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap MinFuncSet Fail");
+#endif
 			return;
 		}
 	}
@@ -644,6 +732,9 @@ void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CHECK;
 		pClient->DictateRunCtl.dictateCDPServerCheckFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CDPRead Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -661,6 +752,9 @@ void NET_COAP_NBIOT_Event_CDPServerCheck(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CHECK;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CDPRead Fail");
+#endif
 	}
 	
 	if ((strcmp((const char*)pClient->Parameter.cdpserver.CDPServerHost, COAPCDPADDR) != 0) || (pClient->Parameter.cdpserver.CDPServerPort != COAPCDPPORT)) {
@@ -696,6 +790,9 @@ void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = FULL_FUNCTIONALITY;
 		pClient->DictateRunCtl.dictateCDPServerConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CDPRead Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -713,6 +810,9 @@ void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CONFIG;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CDPRead Fail");
+#endif
 	}
 	
 	if ((strcmp((const char*)pClient->Parameter.cdpserver.CDPServerHost, COAPCDPADDR) != 0) || (pClient->Parameter.cdpserver.CDPServerPort != COAPCDPPORT)) {
@@ -722,6 +822,9 @@ void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = FULL_FUNCTIONALITY;
 			pClient->DictateRunCtl.dictateCDPServerConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CDPSet Ok");
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -739,6 +842,9 @@ void NET_COAP_NBIOT_Event_CDPServerConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = CDP_SERVER_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CDPSet Fail");
+#endif
 			return;
 		}
 	}
@@ -773,6 +879,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;
 		pClient->DictateRunCtl.dictateMiscEquipConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap MiscRead Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -790,6 +899,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = MISC_EQUIP_CONFIG;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap MiscRead Fail");
+#endif
 		return;
 	}
 	
@@ -799,6 +911,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;
 			pClient->DictateRunCtl.dictateMiscEquipConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap BandSet %d Ok", COAP_NBIOT_BAND);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -816,6 +931,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = MISC_EQUIP_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap BandSet %d Fail", COAP_NBIOT_BAND);
+#endif
 			return;
 		}
 	}
@@ -826,6 +944,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;
 			pClient->DictateRunCtl.dictateMiscEquipConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap NNMISet %d Ok", CloseFunc);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -843,6 +964,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = MISC_EQUIP_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap NNMISet %d Fail", CloseFunc);
+#endif
 			return;
 		}
 	}
@@ -853,6 +977,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 			pClient->DictateRunCtl.dictateEnable = false;
 			pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;
 			pClient->DictateRunCtl.dictateMiscEquipConfigFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap NSMISet %d Ok", CloseFunc);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -870,6 +997,9 @@ void NET_COAP_NBIOT_Event_MiscEquipConfig(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = MISC_EQUIP_CONFIG;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap NSMISet %d Fail", CloseFunc);
+#endif
 			return;
 		}
 	}
@@ -898,6 +1028,9 @@ void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;
 		pClient->DictateRunCtl.dictateAttachCheckFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CGATT %d Ok", pClient->Parameter.netstate);
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -915,6 +1048,9 @@ void NET_COAP_NBIOT_Event_AttachCheck(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = ATTACH_CHECK;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CGATT %d Fail", pClient->Parameter.netstate);
+#endif
 		return;
 	}
 	
@@ -949,6 +1085,9 @@ void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = ATTACH_INQUIRE;
 		pClient->DictateRunCtl.dictateAttachExecuteFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap Set CGATT %d Ok", Attach);
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -966,6 +1105,9 @@ void NET_COAP_NBIOT_Event_AttachExecute(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = ATTACH_EXECUTE;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap Set CGATT %d Fail", Attach);
+#endif
 	}
 }
 
@@ -990,6 +1132,9 @@ void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient)
 	if (NBIOT_Neul_NBxx_CheckReadAttachOrDetach(pClient) == NBIOT_OK) {
 		/* Dictate execute is Success */
 		pClient->DictateRunCtl.dictateEvent = ATTACH_INQUIRE;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CGATT %d Ok", pClient->Parameter.netstate);
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -1007,6 +1152,9 @@ void NET_COAP_NBIOT_Event_AttachInquire(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = ATTACH_INQUIRE;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap CGATT %d Fail", pClient->Parameter.netstate);
+#endif
 		return;
 	}
 	
@@ -1061,6 +1209,9 @@ void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEnable = false;
 		pClient->DictateRunCtl.dictateEvent = SEND_DATA;
 		pClient->DictateRunCtl.dictatePatameterCheckOutFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap Patameter Check Ok");
+#endif
 	}
 	else {
 		/* Dictate execute is Fail */
@@ -1078,6 +1229,9 @@ void NET_COAP_NBIOT_Event_PatameterCheckOut(NBIOT_ClientsTypeDef* pClient)
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = PARAMETER_CHECKOUT;
 		}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+		Radio_Trf_Debug_Printf("Coap Patameter Check Fail");
+#endif
 		return;
 	}
 	
@@ -1110,6 +1264,9 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 		if (NBIOT_Neul_NBxx_CheckReadAttachOrDetach(pClient) == NBIOT_OK) {
 			/* Dictate execute is Success */
 			pClient->DictateRunCtl.dictateEvent = SEND_DATA;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CGATT %d Ok", pClient->Parameter.netstate);
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -1127,6 +1284,9 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = SEND_DATA;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap CGATT %d Fail", pClient->Parameter.netstate);
+#endif
 			return;
 		}
 		
@@ -1150,6 +1310,9 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 		    (NBIOT_Neul_NBxx_QueryReadMessageCOAPPayload(pClient) == NBIOT_OK)) {
 			/* Dictate execute is Success */
 			pClient->DictateRunCtl.dictateEvent = SEND_DATA;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap NQMGS NQMGR Ok");
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -1167,6 +1330,9 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = SEND_DATA;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap NQMGS NQMGR Fail");
+#endif
 			return;
 		}
 		
@@ -1176,6 +1342,9 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 		if (NBIOT_Neul_NBxx_SendCOAPPayload(pClient) == NBIOT_OK) {
 			/* Dictate execute is Success */
 			pClient->DictateRunCtl.dictateEvent = SEND_DATA;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap Send Payload Ok");
+#endif
 		}
 		else {
 			/* Dictate execute is Fail */
@@ -1193,6 +1362,9 @@ void NET_COAP_NBIOT_Event_SendData(NBIOT_ClientsTypeDef* pClient)
 				/* Dictate isn't TimeOut */
 				pClient->DictateRunCtl.dictateEvent = SEND_DATA;
 			}
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap Send Payload Fail");
+#endif
 			return;
 		}
 		

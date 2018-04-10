@@ -8,6 +8,8 @@
 #include "net_coap_message_operate.h"
 #include "platform_map.h"
 
+#define COAP_DEBUG_LOG_RF_PRINT											//定义开启RF输出DEBUG信息
+
 #define COAPCDPADDR_CHINA_TELECOM_FORMAL	"117.60.157.137"					//电信生产 : "117.60.157.137"
 #define COAPCDPADDR_CHINA_TELECOM_TEST		"180.101.147.115"					//电信测试 : "180.101.147.115"
 #define COAPCDPADDR						COAPCDPADDR_CHINA_TELECOM_FORMAL

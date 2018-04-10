@@ -116,6 +116,8 @@ extern Inspect_Qmc5883lTypeDef			InspectQmc5883lHandler;								//Inspect QMC588
 void Inspect_Qmc5883l_Init(void);															//Qmc5883L车辆检测初始化
 void Inspect_Qmc5883l_SensitivityConfig(unsigned char Sensitivity);								//Qmc5883L灵敏度配置
 void Inspect_Qmc5883l_MagFreqConfig(unsigned char Freq);										//Qmc5883L地磁扫描频率配置
+void Inspect_Qmc5883l_CarinThreshholdConfig(unsigned char CarinThreshhold);						//Qmc5883L车辆进入参数配置
+void Inspect_Qmc5883l_CaroutThreshholdConfig(unsigned char CaroutThreshhold);						//Qmc5883L车辆离开参数配置
 void Inspect_Qmc5883l_RecalibrationNumConfig(unsigned char RecalibrationNum);						//Qmc5883L微小变化重计算次数配置
 void Inspect_Qmc5883l_RecalibrationOvertimeConfig(unsigned char RecalibrationOvertime);				//Qmc5883L激烈变化重计算时间(min)配置
 void Inspect_Qmc5883l_ISR(void);															//Qmc5883L中断处理函数

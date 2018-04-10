@@ -229,13 +229,13 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 					TCFG_SystemData.Sensitivity = SENSE_MIDDLE;
 					TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
 					Inspect_Qmc5883l_SensitivityConfig(TCFG_SystemData.Sensitivity);
-					__NOP();
 				}
 				else {
 					TCFG_EEPROM_SetSavedSensitivity(TCFG_SystemData.Sensitivity);
 					Inspect_Qmc5883l_SensitivityConfig(TCFG_SystemData.Sensitivity);
-					__NOP();
 				}
+				Radio_Trf_Printf("Inspect Qmc5883l Sensitivity : %hu", TCFG_EEPROM_GetSavedSensitivity());
+				__NOP();
 			}
 			/* 工作模式配置指令 */
 			else if (pPayload->head.type == TRF_MSG_WORKMODE) {
@@ -243,12 +243,12 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				if ((TCFG_SystemData.WorkMode != DEBUG_WORK) && (TCFG_SystemData.WorkMode != NORMAL_WORK)) {
 					TCFG_SystemData.WorkMode = NORMAL_WORK;
 					TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
-					__NOP();
 				}
 				else {
 					TCFG_EEPROM_SetWorkMode(TCFG_SystemData.WorkMode);
-					__NOP();
 				}
+				Radio_Trf_Printf("Work Mode : %hu", TCFG_EEPROM_GetWorkMode());
+				__NOP();
 			}
 			/* 无线心跳间隔时间配置指令 */
 			else if (pPayload->head.type == TRF_MSG_RFHEART_INTERVAL) {
@@ -256,16 +256,17 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				if ((TCFG_SystemData.Heartinterval > 120) || (TCFG_SystemData.Heartinterval < 10)) {
 					TCFG_SystemData.Heartinterval = HEART_INTERVAL;
 					TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
-					__NOP();
 				}
 				else {
 					TCFG_EEPROM_SetHeartinterval(TCFG_SystemData.Heartinterval);
-					__NOP();
 				}
+				Radio_Trf_Printf("RF Heartinter val : %hu", TCFG_EEPROM_GetHeartinterval());
+				__NOP();
 			}
 			/* 初始化传感器指令 */
 			else if (pPayload->head.type == TRF_MSG_INITBACKGROUND) {
 				Inspect_Qmc5883l_BackgroundDoCalculate();
+				Radio_Trf_Printf("Inspect Qmc5883l Background Init");
 				__NOP();
 			}
 			/* 其他下行指令 */
@@ -274,6 +275,7 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 				/* Reboot */
 				if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "reboot")) {
 					BEEP_CtrlRepeat_Extend(2, 500, 250);
+					Radio_Trf_Printf("Reboot Success");
 					Stm32_System_Software_Reboot();
 					__NOP();
 				}
@@ -289,6 +291,20 @@ char Radio_Rf_Operate_Recvmsg(uint8_t *inmsg, uint8_t len)
 					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "magfreq:%hu", &uval16);
 					Inspect_Qmc5883l_MagFreqConfig(uval16);
 					Radio_Trf_Printf("Mag Freq : %hu", TCFG_EEPROM_GetMagFreq());
+					__NOP();
+				}
+				/* Carinhold */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "carinhold")) {
+					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "carinhold:%hu", &uval16);
+					Inspect_Qmc5883l_CarinThreshholdConfig(uval16);
+					Radio_Trf_Printf("CarinThreshhold Num : %hu", TCFG_EEPROM_GetCarinThreshhold());
+					__NOP();
+				}
+				/* Carouthold */
+				else if (strstr(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "carouthold")) {
+					sscanf(((tmote_general_cmd_s*)CFG_P_FRAME_PAYLOAD(inmsg))->buf, "carouthold:%hu", &uval16);
+					Inspect_Qmc5883l_CaroutThreshholdConfig(uval16);
+					Radio_Trf_Printf("CaroutThreshhold Num : %hu", TCFG_EEPROM_GetCaroutThreshhold());
 					__NOP();
 				}
 				/* RecaNum */

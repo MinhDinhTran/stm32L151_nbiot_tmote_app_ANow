@@ -117,7 +117,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>鄈?P?w鄈?</Name>
+          <Name>/</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -150,7 +150,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>readBuf[50]</ItemText>
+          <ItemText>\\stm32L151_nbiot_tmote_app\../HALLibraries/Src/stm32l1xx_hal.c\uwTick,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\stm32L151_nbiot_tmote_app\../System/Sys/sys.c\SystemRunningTimesSecond,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\stm32L151_nbiot_tmote_app\../System/Sys/sys.c\SystemRunningTime,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -208,11 +218,6 @@
           <count>10</count>
           <WinNumber>2</WinNumber>
           <ItemText>Qmc5883lData,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>11</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>SystemRunningTime,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

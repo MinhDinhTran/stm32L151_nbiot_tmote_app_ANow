@@ -42,6 +42,8 @@ void Inspect_Qmc5883l_Init(void)
 	InspectQmc5883lHandler.Configuration.carout_threshhold				= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
 	InspectQmc5883lHandler.Configuration.recalibration_num				= TCFG_SystemData.RecalibrationNum;	//微小变化重计算次数
 	InspectQmc5883lHandler.Configuration.recalibration_overtime			= TCFG_SystemData.RecalibrationOvertime;//激烈变化重计算时间(min)
+	InspectQmc5883lHandler.Parameter.carNumber						= TCFG_SystemData.CarNumber;			//检测车辆数
+	
 	if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 0) {									//10Hz
 		InspectQmc5883lHandler.Configuration.recalibration_overtime_cnt	= 600 * InspectQmc5883lHandler.Configuration.recalibration_overtime;
 	}
@@ -79,40 +81,40 @@ void Inspect_Qmc5883l_Init(void)
 void Inspect_Qmc5883l_SensitivityConfig(unsigned char Sensitivity)
 {
 	if (Sensitivity == SENSE_HIGHEST) {
-		TCFG_SystemData.CarinThreshhold							= 72;
-		TCFG_SystemData.CaroutThreshhold							= 7;
+		TCFG_SystemData.CarinThreshhold							= 120;
+		TCFG_SystemData.CaroutThreshhold							= 12;
 		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
 		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
 		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
 		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
 	}
 	else if (Sensitivity == SENSE_HIGH) {
-		TCFG_SystemData.CarinThreshhold							= 76;
-		TCFG_SystemData.CaroutThreshhold							= 10;
+		TCFG_SystemData.CarinThreshhold							= 150;
+		TCFG_SystemData.CaroutThreshhold							= 15;
 		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
 		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
 		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
 		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
 	}
 	else if (Sensitivity == SENSE_MIDDLE) {
-		TCFG_SystemData.CarinThreshhold							= 80;
-		TCFG_SystemData.CaroutThreshhold							= 13;
+		TCFG_SystemData.CarinThreshhold							= 180;
+		TCFG_SystemData.CaroutThreshhold							= 18;
 		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
 		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
 		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
 		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
 	}
 	else if (Sensitivity == SENSE_LOW) {
-		TCFG_SystemData.CarinThreshhold							= 84;
-		TCFG_SystemData.CaroutThreshhold							= 16;
+		TCFG_SystemData.CarinThreshhold							= 210;
+		TCFG_SystemData.CaroutThreshhold							= 21;
 		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
 		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
 		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
 		InspectQmc5883lHandler.Configuration.carout_threshhold			= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
 	}
 	else if (Sensitivity == SENSE_LOWEST) {
-		TCFG_SystemData.CarinThreshhold							= 88;
-		TCFG_SystemData.CaroutThreshhold							= 19;
+		TCFG_SystemData.CarinThreshhold							= 240;
+		TCFG_SystemData.CaroutThreshhold							= 24;
 		TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
 		TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
 		InspectQmc5883lHandler.Configuration.carin_threshhold			= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
@@ -183,6 +185,32 @@ void Inspect_Qmc5883l_MagFreqConfig(unsigned char Freq)
 	QMC5883L_Init();																			//QMC5883L初始化
 	QMC5883L_Rates_Selection_Freq(InspectQmc5883lHandler.Configuration.mag_measure_freq);					//QMC5883L扫描频率设置
 	QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);														//QMC5883L数据读取开启
+}
+
+/**********************************************************************************************************
+ @Function			void Inspect_Qmc5883l_CarinThreshholdConfig(unsigned char CarinThreshhold)
+ @Description			Inspect_Qmc5883l_CarinThreshholdConfig	: Qmc5883L车辆进入参数配置
+ @Input				CarinThreshhold
+ @Return				void
+**********************************************************************************************************/
+void Inspect_Qmc5883l_CarinThreshholdConfig(unsigned char CarinThreshhold)
+{
+	TCFG_SystemData.CarinThreshhold = CarinThreshhold;
+	TCFG_EEPROM_SetCarinThreshhold(TCFG_SystemData.CarinThreshhold);
+	InspectQmc5883lHandler.Configuration.carin_threshhold				= TCFG_SystemData.CarinThreshhold;		//车辆进入参数
+}
+
+/**********************************************************************************************************
+ @Function			void Inspect_Qmc5883l_CaroutThreshholdConfig(unsigned char CaroutThreshhold)
+ @Description			Inspect_Qmc5883l_CaroutThreshholdConfig	: Qmc5883L车辆离开参数配置
+ @Input				CaroutThreshhold
+ @Return				void
+**********************************************************************************************************/
+void Inspect_Qmc5883l_CaroutThreshholdConfig(unsigned char CaroutThreshhold)
+{
+	TCFG_SystemData.CaroutThreshhold = CaroutThreshhold;
+	TCFG_EEPROM_SetCaroutThreshhold(TCFG_SystemData.CaroutThreshhold);
+	InspectQmc5883lHandler.Configuration.carout_threshhold				= TCFG_SystemData.CaroutThreshhold;	//车辆离开参数
 }
 
 /**********************************************************************************************************
