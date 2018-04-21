@@ -69,8 +69,8 @@ typedef __packed struct
 	char								pData[1];
 }NET_Message_TcldMsgTypeDef;
 
-#define MQTTSN_STATUS_BASIC_PARK_NUM		5
-#define MQTTSN_STATUS_EXTEND_PARK_NUM		5
+#define MQTTSN_STATUS_BASIC_PARK_NUM		3
+#define MQTTSN_STATUS_EXTEND_PARK_NUM		3
 
 /* MqttSN Status Basic */
 typedef __packed struct

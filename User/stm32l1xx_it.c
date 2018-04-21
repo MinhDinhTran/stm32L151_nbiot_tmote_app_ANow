@@ -16,8 +16,6 @@
 #include "stm32l1xx_it.h"
 #include "usart.h"
 #include "hal_rtc.h"
-#include "hal_qmc5883l.h"
-#include "inspectconfig.h"
 #include "radar_api.h"
 #include "radar_adc.h"
 #include "radar_dac.h"
@@ -213,12 +211,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 **********************************************************************************************************/
 void EXTI15_10_IRQHandler(void)
 {
-	if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET) {							//查看是否STOP唤醒
-		__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-	}
-	
 	HAL_GPIO_EXTI_IRQHandler(RF_nIRQ_PIN);									//调用中断处理公共函数
-	HAL_GPIO_EXTI_IRQHandler(QMC_DRDY_PIN);									//调用中断处理公共函数
 }
 
 /**********************************************************************************************************
@@ -232,9 +225,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin == RF_nIRQ_PIN) {										//RF_nIRQ_PIN 中断
 		Radio_Rf_ISR();
-	}
-	else if (GPIO_Pin == QMC_DRDY_PIN) {									//QMC_DRDY_PIN 中断
-		Inspect_Qmc5883l_ISR();
 	}
 }
 
@@ -272,10 +262,6 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 **********************************************************************************************************/
 void RTC_WKUP_IRQHandler(void)
 {
-	if (__HAL_PWR_GET_FLAG(PWR_FLAG_WU) != RESET) {							//查看是否STOP唤醒
-		__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-	}
-	
 	HAL_RTCEx_WakeUpTimerIRQHandler(&RTC_Handler);							//调用RTC WAKE UP中断处理公共函数
 }
 
@@ -288,8 +274,7 @@ void RTC_WKUP_IRQHandler(void)
 void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
 {
 	if (hrtc == &RTC_Handler) {
-		/* QMC5883L异常没有唤醒MCU */
-		InspectQmc5883lHandler.Qmc5883lFail = INSPECT_QMC_ERROR_IS;
+		
 	}
 }
 

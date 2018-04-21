@@ -18,14 +18,10 @@
 #include "platform_map.h"
 #include "hal_rtc.h"
 #include "hal_iic.h"
-#include "hal_qmc5883l.h"
-#include "inspectconfig.h"
 #include "radio_hal_rf.h"
 #include "radio_rf_app.h"
 #include "tmesh_xtea.h"
 #include "delay.h"
-
-extern __IO uint32_t uwTick;
 
 /**********************************************************************************************************
  @Function			RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void)
@@ -253,56 +249,7 @@ void ModulePowerReset_Init(void)
 **********************************************************************************************************/
 void LowPowerEnterStop(void)
 {
-	__HAL_RCC_PWR_CLK_ENABLE();
-	SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
 	
-	/* WAKE UP 中断唤醒配置1S */
-	HAL_RTCEx_DeactivateWakeUpTimer(&RTC_Handler);
-	HAL_RTCEx_SetWakeUpTimer_IT(&RTC_Handler, 0x800, RTC_WAKEUPCLOCK_RTCCLK_DIV16);
-	
-	/* QMC5883L数据读取 */
-	if (InspectQmc5883lHandler.DataReady == INSPECT_QMC_DATAREADY) {							//QMC5883L有数据待读取
-		InspectQmc5883lHandler.DataReady = INSPECT_QMC_DATAUNREADY;
-		QMC5883L_ReadData_Simplify();
-	}
-	
-	/* 进入STOP模式 */
-	HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-	
-	/* 退出STOP继续运行 */
-	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
-	
-	/* 根据扫描频率补差休眠时间 */
-	if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 0) {						//地磁扫描频率, 即休眠时间 10Hz
-		uwTick += 100;
-	}
-	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 1) {					//地磁扫描频率, 即休眠时间 50Hz
-		uwTick += 20;
-	}
-	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 2) {					//地磁扫描频率, 即休眠时间 100Hz
-		uwTick += 10;
-	}
-	else if (InspectQmc5883lHandler.Configuration.mag_measure_freq == 3) {					//地磁扫描频率, 即休眠时间 200Hz
-		uwTick += 5;
-	}
-	else {																		//地磁扫描频率, 即休眠时间 50Hz
-		uwTick += 20;
-	}
-	
-	/* 系统时钟配置 */
-#ifndef SYSTEMCLOCK
-	#error No Define SYSTEMCLOCK!
-#else
-#if (SYSTEMCLOCK == SYSTEMCLOCKMSI)
-	Stm32_MSIClock_Init(RCC_MSIRANGE_6);												//设置时钟MSI->4.194MHz
-	Delay_Init(4194);																//延时初始化4.194MHz系统时钟
-#elif (SYSTEMCLOCK == SYSTEMCLOCKHSI)
-	Stm32_Clock_Init(RCC_PLLMUL_6, RCC_PLLDIV_3);										//设置时钟HSI->32MHz
-	Delay_Init(32000);																//延时初始化32MHz系统时钟
-#else
-	#error SYSTEMCLOCK Define Error
-#endif
-#endif
 }
 
 /**********************************************************************************************************
@@ -338,12 +285,6 @@ void ModelError_Init(void)
 	tmesh_securityInit();															//XTEA加密初始化
 	Radio_Rf_Init();																//SI4438初始化
 	Radio_Trf_Xmit_Heartbeat();														//SI4438发送心跳包
-	
-	Inspect_Qmc5883l_Init();															//QMC5883L检测算法初始化
-	QMC5883L_Init();																//QMC5883L初始化
-	
-	QMC5883L_Rates_Selection_Freq(InspectQmc5883lHandler.Configuration.mag_measure_freq);		//QMC5883L扫描频率设置
-	QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);											//QMC5883L数据读取开启
 }
 
 /**********************************************************************************************************

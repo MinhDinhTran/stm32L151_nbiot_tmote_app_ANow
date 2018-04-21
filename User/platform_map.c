@@ -75,7 +75,7 @@ void TCFG_EEPROM_WriteConfigData(void)
 	TCFG_EEPROM_SetRecalibrationNum(TCFG_SystemData.RecalibrationNum);
 	
 	/* 激烈变化重计算时间 */
-	TCFG_SystemData.RecalibrationOvertime = 1;
+	TCFG_SystemData.RecalibrationOvertime = 10;
 	TCFG_EEPROM_SetRecalibrationOverTime(TCFG_SystemData.RecalibrationOvertime);
 	
 	/* 检测车辆数 */

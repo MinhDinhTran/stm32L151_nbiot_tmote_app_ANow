@@ -15,8 +15,6 @@
 
 #include "platform_config.h"
 
-__IO unsigned int SecondTickTimes = 0;										//SecondTick
-
 /* Work Mode */
 bool DeviceIdleMode			= false;										//IDLE MODE
 bool DeviceActivedMode		= true;										//ACTIVED MODE

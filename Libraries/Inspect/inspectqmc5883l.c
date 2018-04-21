@@ -48,7 +48,7 @@ Inspect_Qmc5883l_StatusTypeDef Inspect_Qmc5883l_Pass_Detect(int16_t x_mag, int16
 				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.y_now - InspectQmc5883lHandler.MagValCalculate.y_back)) * 
 				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.y_now - InspectQmc5883lHandler.MagValCalculate.y_back)) + 
 				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.z_now - InspectQmc5883lHandler.MagValCalculate.z_back)) * 
-				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.z_now - InspectQmc5883lHandler.MagValCalculate.z_back))) >> 6;
+				   ((int32_t)(InspectQmc5883lHandler.MagValCalculate.z_now - InspectQmc5883lHandler.MagValCalculate.z_back))) >> 8;
 		
 		if (magSumS32 > 0xFFFF) {
 			magSumU16 = 0xFFFF;

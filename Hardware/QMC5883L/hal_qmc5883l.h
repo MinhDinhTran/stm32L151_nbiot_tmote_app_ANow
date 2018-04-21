@@ -10,7 +10,7 @@
 #define QMC_DRDY_READ()					HAL_GPIO_ReadPin(QMC_DRDY_GPIOx, QMC_DRDY_PIN)
 
 #define QMC_DRDY_IRQn					EXTI15_10_IRQn						//DRDY中断线
-#define QMC_DRDY_EXIT					1								//DRDY中断使能
+#define QMC_DRDY_EXIT					0								//DRDY中断使能
 
 #define QMC5883L_SLAVE_ADDRESS_W	0x1A										//I2C从机地址写
 #define QMC5883L_SLAVE_ADDRESS_R	0x1B										//I2C从机地址读
