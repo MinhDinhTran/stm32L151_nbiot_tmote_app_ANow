@@ -22,6 +22,8 @@ unsigned char NBIOT_SendBuf[NBIOT_BUFFER_SIZE];
 unsigned char NBIOT_RecvBuf[NBIOT_BUFFER_SIZE];
 unsigned char NBIOT_DataStack[NBIOT_DATASTACK_SIZE];
 
+NBIOT_BaudrateTypeDef NBIOTBaudRate;
+
 /**********************************************************************************************************
  @Function			void NBIOT_Client_Init(NBIOT_ClientsTypeDef* pClient, NBIOT_ATCmdTypeDef* ATCmdStack)
  @Description			NBIOT_Client_Init						: 初始化NBIOT客户端

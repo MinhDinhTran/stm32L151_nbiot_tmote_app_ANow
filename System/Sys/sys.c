@@ -16,7 +16,8 @@
 #include "sys.h"
 
 __IO u32 SystemRunningTimesSecond = 0;										//系统运行时间(S)
-Stm32_SystemRunningTime			SystemRunningTime;							//系统运行时间(结构体)
+__IO u32 SystemSoftResetTime = 0;											//系统运行超时软件复位时间(MS)
+Stm32_SystemRunningTime		SystemRunningTime;								//系统运行时间(结构体)
 
 /**********************************************************************************************************
  @Function			void Stm32_Clock_Init(u32 pllmul, u32 plldiv)
@@ -121,8 +122,8 @@ void Stm32_MSIClock_Init(u32 MsiClockRange)
 **********************************************************************************************************/
 void Stm32_System_Software_Reboot(void)
 {
-	HAL_NVIC_SystemReset();
-	
+	__set_FAULTMASK(1);													//关闭所有中断
+	HAL_NVIC_SystemReset();												//软件复位
 	__NOP();
 }
 

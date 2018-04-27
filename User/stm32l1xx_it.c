@@ -21,6 +21,7 @@
 #include "radar_dac.h"
 #include "radar_timer.h"
 #include "radio_hal_rf.h"
+#include "nbiotconfig.h"
 
 /**********************************************************************************************************
  @Function			void TIM2_IRQHandler(void)
@@ -150,6 +151,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 					USART1_RX_STA++;
 					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//接收数据错误, 重新开始接收
 					USART1_RX_STA |= 0x8000;
+					
+					/* NBIOT波特率计算 */
+					if (NBIOTBaudRate.EnBaudRateState != false) {
+						NBIOTBaudRate.NBIOTBaudRateNow.EndMs = HAL_GetTick();
+						if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U) {
+							NBIOTBaudRate.NBIOTBaudRateNow.EndMs++;
+						}
+						NBIOTBaudRate.NBIOTBaudRateNow.EndClock = SysTick->VAL;
+					}
 				}
 			}
 			else {													//还没收到0x0D
@@ -160,6 +170,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 					USART1_RX_STA |= 0x4000;
 				}
 				else {
+					/* NBIOT波特率计算 */
+					if (NBIOTBaudRate.EnBaudRateState != false) {
+						if ((USART1_RX_STA & 0X3FFF) == 0) {
+							NBIOTBaudRate.NBIOTBaudRateNow.StartMs = HAL_GetTick();
+							if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U) {
+								NBIOTBaudRate.NBIOTBaudRateNow.StartMs++;
+							}
+							NBIOTBaudRate.NBIOTBaudRateNow.StartClock = SysTick->VAL;
+						}
+						else if ((USART1_RX_STA & 0X3FFF) == BAUDRATE_CAL_MIDDLE_NUM) {
+							NBIOTBaudRate.NBIOTBaudRateNow.MiddleMs = HAL_GetTick();
+							if ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) != 0U) {
+								NBIOTBaudRate.NBIOTBaudRateNow.MiddleMs++;
+							}
+							NBIOTBaudRate.NBIOTBaudRateNow.MiddleClock = SysTick->VAL;
+							NBIOTBaudRate.NBIOTBaudRateNow.MiddleNum = BAUDRATE_CAL_MIDDLE_NUM;
+						}
+					}
+					
 					USART1_RX_BUF[USART1_RX_STA & 0X3FFF] = USART1_aRxBuffer[0];
 					USART1_RX_STA++;
 					if ((USART1_RX_STA & 0X3FFF) > (USART1_REC_LEN-1)) USART1_RX_STA = 0;		//接收数据错误, 重新开始接收
@@ -392,8 +421,16 @@ void SysTick_Handler(void)
 **********************************************************************************************************/
 void HAL_SYSTICK_Callback(void)
 {
+	__IO uint32_t SystickCtrlVal = SysTick->CTRL;							//清除COUNTFLAG
+	(void) SystickCtrlVal;												//丢弃SystickCtrlVal
+	
 	HAL_IncTick();
 	Stm32_IncSecondTick();
+	
+	SystemSoftResetTime++;												//软重启计数器累加
+	if (SystemSoftResetTime >= 100000) {									//100秒计数器溢出重启
+		Stm32_System_Software_Reboot();
+	}
 }
 
 /********************************************** END OF FLEE **********************************************/

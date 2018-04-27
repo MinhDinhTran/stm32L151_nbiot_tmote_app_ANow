@@ -10,6 +10,7 @@
 
 #define	MVB_STATICMAGNETIC_MODEL			51
 #define	MVB_FLOWMAGNETIC_MODEL			52
+#define	MVB_SPOT_LOCKER				53
 #define	MVB_MODEL_TYPE					MVB_STATICMAGNETIC_MODEL				//设备类型
 
 #define	SYSTEMCLOCKMSI					4194000
@@ -18,12 +19,12 @@
 
 #define	NETCOAP						0
 #define	NETMQTTSN						1
-#define	NETPROTOCAL					NETCOAP							//网络模式
+#define	NETPROTOCAL					NETMQTTSN							//网络模式
 
 #define	RADIO_SI4438													//无线开启
 
 #define	SOFTWAREMAJOR					2								//主固件版本
-#define	SOFTWARESUB					1								//从固件版本
+#define	SOFTWARESUB					16								//从固件版本
 #define	HARDWAREMAJOR					2								//主硬件版本
 
 #define	IDLE_WORK						4								//休眠
@@ -32,6 +33,7 @@
 #define	DEBUG_WORK					1								//调试工作模式
 #define	NORMAL_WORK					0								//正常工作模式
 
+extern bool BootUp;														//BootUp
 extern bool DeviceIdleMode;												//IDLE MODE
 extern bool DeviceActivedMode;											//ACTIVED MODE
 
@@ -41,6 +43,9 @@ extern COAP_PacketInfoTypeDef				CoapInfoStructure;					//Coap Info Packet
 
 extern MQTTSN_StatusBasicTypeDef			MqttSNStatusBasicStructure;			//MqttSN Basic Status Packet
 extern MQTTSN_StatusExtendTypeDef			MqttSNStatusExtendStructure;			//MqttSN Extend Status Packet
+extern MQTTSN_InfoWorkTypeDef				MqttSNInfoWorkStructure;				//MqttSN Work Info Packet
+extern MQTTSN_InfoBasicTypeDef			MqttSNInfoBasicStructure;			//MqttSN Basic Info Packet
+extern MQTTSN_InfoDynamicTypeDef			MqttSNInfoDynamicStructure;			//MqttSN Dynamic Info Packet
 
 extern NBIOT_ATCmdTypeDef				NbiotATCmdHandler;					//NBIOT AT Cmd Handler
 extern NBIOT_ClientsTypeDef				NbiotClientHandler;					//Coap Clinet Handler

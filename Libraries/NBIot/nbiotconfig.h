@@ -24,6 +24,9 @@
 #define CellReselection					"CELL_RESELECTION"
 #define EnableBip						"ENABLE_BIP"
 
+/* NBIOT 串口波特率计算中间值 */
+#define BAUDRATE_CAL_MIDDLE_NUM			16
+
 typedef struct NBIOT_CDPServerTypeDef		NBIOT_CDPServerTypeDef;
 typedef struct NBIOT_ParameterTypeDef		NBIOT_ParameterTypeDef;
 typedef struct NBIOT_ATCmdTypeDef			NBIOT_ATCmdTypeDef;
@@ -170,6 +173,29 @@ struct NBIOT_ParameterTypeDef
 	NBIOT_CDPServerTypeDef				cdpserver;
 };
 
+/* NBIOT BaudrateCal */
+typedef __packed struct
+{
+	unsigned int						StartMs;
+	unsigned int						StartClock;
+	unsigned int						EndMs;
+	unsigned int						EndClock;
+	unsigned int						OverFlow;
+	unsigned int						MiddleMs;
+	unsigned int						MiddleClock;
+	unsigned char						MiddleNum;
+	unsigned char						TotalNum;
+}NBIOT_BaudrateCalTypeDef;
+
+/* NBIOT Baudrate */
+typedef struct
+{
+	bool								EnBaudRateState;
+	unsigned int						Baud;
+	NBIOT_BaudrateCalTypeDef				NBIOTBaudRateNow;
+	NBIOT_BaudrateCalTypeDef				NBIOTBaudRateCal;
+}NBIOT_BaudrateTypeDef;
+
 /* NBIOT ATCmd */
 struct NBIOT_ATCmdTypeDef
 {
@@ -226,6 +252,8 @@ struct NBIOT_ClientsTypeDef
 	NBIOT_ParameterTypeDef				Parameter;
 	NBIOT_ATCmdTypeDef*					ATCmdStack;
 };
+
+extern NBIOT_BaudrateTypeDef NBIOTBaudRate;;													//NBIOT波特率计算
 
 void NBIOT_Client_Init(NBIOT_ClientsTypeDef* pClient, NBIOT_ATCmdTypeDef* ATCmdStack);				//NBIOT客户端初始化
 

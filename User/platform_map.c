@@ -16,6 +16,7 @@
 #include "platform_map.h"
 #include "platform_config.h"
 #include "hal_eeprom.h"
+#include "hal_vbat.h"
 #include "radio_hal_rf.h"
 #include "radio_rf_app.h"
 #include "string.h"
@@ -549,6 +550,38 @@ unsigned char TCFG_EEPROM_GetWorkMode(void)
 }
 
 /**********************************************************************************************************
+ @Function			char* TCFG_EEPROM_Get_WorkMode_String(void)
+ @Description			TCFG_EEPROM_Get_WorkMode_String				: 读取WorkMode字符串
+ @Input				void
+ @Return				workmode_string
+**********************************************************************************************************/
+char* TCFG_EEPROM_Get_WorkMode_String(void)
+{
+	if (DeviceIdleMode == true) {
+		memset((void*)&TCFG_SystemData.WorkModeStr, 0, sizeof(TCFG_SystemData.WorkModeStr));
+		strncpy((char *)TCFG_SystemData.WorkModeStr, "idle", strlen("idle"));
+	}
+	else if (DeviceActivedMode != true) {
+		memset((void*)&TCFG_SystemData.WorkModeStr, 0, sizeof(TCFG_SystemData.WorkModeStr));
+		strncpy((char *)TCFG_SystemData.WorkModeStr, "notact", strlen("notact"));
+	}
+	else if (TCFG_SystemData.WorkMode == NORMAL_WORK) {
+		memset((void*)&TCFG_SystemData.WorkModeStr, 0, sizeof(TCFG_SystemData.WorkModeStr));
+		strncpy((char *)TCFG_SystemData.WorkModeStr, "norm", strlen("norm"));
+	}
+	else if (TCFG_SystemData.WorkMode == DEBUG_WORK) {
+		memset((void*)&TCFG_SystemData.WorkModeStr, 0, sizeof(TCFG_SystemData.WorkModeStr));
+		strncpy((char *)TCFG_SystemData.WorkModeStr, "debug", strlen("debug"));
+	}
+	else {
+		memset((void*)&TCFG_SystemData.WorkModeStr, 0, sizeof(TCFG_SystemData.WorkModeStr));
+		strncpy((char *)TCFG_SystemData.WorkModeStr, "unknown", strlen("unknown"));
+	}
+	
+	return (char*)TCFG_SystemData.WorkModeStr;
+}
+
+/**********************************************************************************************************
  @Function			void TCFG_EEPROM_SetRadarCount(unsigned int val)
  @Description			TCFG_EEPROM_SetRadarCount					: 保存RadarCount
  @Input				val
@@ -1050,6 +1083,19 @@ void TCFG_EEPROM_GetVender(char* vender)
 }
 
 /**********************************************************************************************************
+ @Function			char* TCFG_EEPROM_Get_Vender_String(void)
+ @Description			TCFG_EEPROM_Get_Vender_String					: 读取vender字符串
+ @Input				void
+ @Return				vender_string
+**********************************************************************************************************/
+char* TCFG_EEPROM_Get_Vender_String(void)
+{
+	TCFG_EEPROM_GetVender((char *)&TCFG_SystemData.SubVender);
+	
+	return (char*)TCFG_SystemData.SubVender;
+}
+
+/**********************************************************************************************************
  @Function			void TCFG_EEPROM_SetCarinThreshhold(unsigned char val)
  @Description			TCFG_EEPROM_SetCarinThreshhold				: 保存carin_threshhold
  @Input				val
@@ -1157,6 +1203,145 @@ void TCFG_EEPROM_SetCarNumber(unsigned short val)
 unsigned short TCFG_EEPROM_GetCarNumber(void)
 {
 	return FLASH_EEPROM_ReadHalfWord(TCFG_CAR_NUMBER_OFFSET);
+}
+
+/**********************************************************************************************************
+ @Function			char* TCFG_Utility_Get_Nbiot_Iccid_String(void)
+ @Description			TCFG_Utility_Get_Nbiot_Iccid_String			: 读取Nbiot Iccid字符串
+ @Input				void
+ @Return				Nbiot_Iccid
+**********************************************************************************************************/
+char* TCFG_Utility_Get_Nbiot_Iccid_String(void)
+{
+#if NETPROTOCAL == NETCOAP
+	return (char*)NbiotClientHandler.Parameter.iccid;
+#elif NETPROTOCAL == NETMQTTSN
+	return (char*)MqttSNClientHandler.SocketStack->NBIotStack->Parameter.iccid;
+#endif
+}
+
+/**********************************************************************************************************
+ @Function			char* TCFG_Utility_Get_Nbiot_Imei_String(void)
+ @Description			TCFG_Utility_Get_Nbiot_Imei_String				: 读取Nbiot Imei字符串
+ @Input				void
+ @Return				Nbiot_Iccid
+**********************************************************************************************************/
+char* TCFG_Utility_Get_Nbiot_Imei_String(void)
+{
+#if NETPROTOCAL == NETCOAP
+	return (char*)NbiotClientHandler.Parameter.imei;
+#elif NETPROTOCAL == NETMQTTSN
+	return (char*)MqttSNClientHandler.SocketStack->NBIotStack->Parameter.imei;
+#endif
+}
+
+/**********************************************************************************************************
+ @Function			int TCFG_Utility_Get_Nbiot_Rssi_IntVal(void)
+ @Description			TCFG_Utility_Get_Nbiot_Rssi_IntVal				: 读取Nbiot Rssi值
+ @Input				void
+ @Return				Nbiot_Rssi
+**********************************************************************************************************/
+int TCFG_Utility_Get_Nbiot_Rssi_IntVal(void)
+{
+#if NETPROTOCAL == NETCOAP
+	return NbiotClientHandler.Parameter.rssi;
+#elif NETPROTOCAL == NETMQTTSN
+	return MqttSNClientHandler.SocketStack->NBIotStack->Parameter.rssi;
+#endif
+}
+
+/**********************************************************************************************************
+ @Function			unsigned short TCFG_Utility_Get_Device_Batt_ShortVal(void)
+ @Description			TCFG_Utility_Get_Device_Batt_ShortVal			: 读取Device Batt值
+ @Input				void
+ @Return				Device_Batt
+**********************************************************************************************************/
+unsigned short TCFG_Utility_Get_Device_Batt_ShortVal(void)
+{
+	return VBAT_ADC_Read(1000);
+}
+
+/**********************************************************************************************************
+ @Function			char* TCFG_Utility_Get_Build_Time_String(void)
+ @Description			TCFG_Utility_Get_Build_Time_String				: 读取Build Time字符串
+ @Input				void
+ @Return				buildtime_string
+**********************************************************************************************************/
+char* TCFG_Utility_Get_Build_Time_String(void)
+{
+	char bulidData[12];
+	
+	memset(bulidData, 0x0, sizeof(bulidData));
+	memset((void*)&TCFG_SystemData.BuildTime, 0, sizeof(TCFG_SystemData.BuildTime));
+	
+	memcpy(bulidData, __DATE__, 12);
+	if (!memcmp(&bulidData[0], "Jan", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '1';
+	}
+	else	if (!memcmp(&bulidData[0], "Feb", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '2';
+	}
+	else if (!memcmp(&bulidData[0], "Mar", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '3';
+	}
+	else if(!memcmp(&bulidData[0], "Apr", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '4';
+	}
+	else if (!memcmp(&bulidData[0], "May", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '5';
+	}
+	else if (!memcmp(&bulidData[0], "Jun", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '6';
+	}
+	else if (!memcmp(&bulidData[0], "Jul", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '7';
+	}
+	else if (!memcmp(&bulidData[0], "Aug", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '8';
+	}
+	else if (!memcmp(&bulidData[0], "Sep", 3)) {
+		TCFG_SystemData.BuildTime[5] = '0';
+		TCFG_SystemData.BuildTime[6] = '9';
+	}
+	else if (!memcmp(&bulidData[0], "Oct", 3)) {
+		TCFG_SystemData.BuildTime[5] = '1';
+		TCFG_SystemData.BuildTime[6] = '0';
+	}
+	else if (!memcmp(&bulidData[0], "Nov", 3)) {
+		TCFG_SystemData.BuildTime[5] = '1';
+		TCFG_SystemData.BuildTime[6] = '1';
+	}
+	else if (!memcmp(&bulidData[0], "Dec", 3)) {
+		TCFG_SystemData.BuildTime[5] = '1';
+		TCFG_SystemData.BuildTime[6] = '2';
+	}
+	
+	memcpy(TCFG_SystemData.BuildTime, &bulidData[7], 4);
+	memcpy(&TCFG_SystemData.BuildTime[8], &bulidData[4], 2);
+	TCFG_SystemData.BuildTime[4] = '-';
+	TCFG_SystemData.BuildTime[7] = '-';
+  	TCFG_SystemData.BuildTime[11] = '\0';
+	
+	return (char*)TCFG_SystemData.BuildTime;
+}
+
+/**********************************************************************************************************
+ @Function			unsigned int TCFG_Utility_Get_Run_Time(void)
+ @Description			TCFG_Utility_Get_Run_Time					: 读取系统运行时间
+ @Input				void
+ @Return				runtime
+**********************************************************************************************************/
+unsigned int TCFG_Utility_Get_Run_Time(void)
+{
+	return Stm32_GetSecondTick();
 }
 
 /**********************************************************************************************************

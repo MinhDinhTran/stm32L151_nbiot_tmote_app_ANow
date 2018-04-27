@@ -67,6 +67,9 @@ void MQTTSN_Client_Init(MQTTSN_ClientsTypeDef* pClient, MQTTSN_SocketNetTypeDef*
 	
 	pClient->MessageSendCtl.messageStatusBasic				= false;
 	pClient->MessageSendCtl.messageStatusExtend				= false;
+	pClient->MessageSendCtl.messageInfoWork					= false;
+	pClient->MessageSendCtl.messageInfoBasic				= false;
+	pClient->MessageSendCtl.messageInfoDynamic				= false;
 	
 	pClient->MsgId										= 1;
 	pClient->defaultMessageHandler						= NULL;

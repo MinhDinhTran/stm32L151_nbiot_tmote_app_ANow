@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L151xB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Core;..\HALLibraries\Inc;..\User;..\System\Delay;..\System\Sys;..\System\Usart;..\Libraries\Radar;..\Libraries\Inspect;..\Libraries\NBIot;..\Libraries\MQTTSNPacket\src;..\Libraries\MQTTSNPacket\mqttsn;..\Libraries\Radio;..\Libraries\Radio\radio_inc;..\Libraries\Radio\radio_src;..\Libraries\Radio\si446x_inc;..\Libraries\Radio\si446x_src;..\Libraries\Xtea;..\Hardware\RTC;..\Hardware\EEPROM;..\Hardware\IWDG;..\Hardware\IIC;..\Hardware\QMC5883L;..\Hardware\SWITCH;..\Hardware\VBAT;..\Hardware\VPTAT;..\Hardware\BEEP;..\Hardware\RADAR;..\Hardware\NET;..\Hardware\TEMPERATURE</IncludePath>
+              <IncludePath>..\Core;..\HALLibraries\Inc;..\User;..\System\Delay;..\System\Sys;..\System\Usart;..\Libraries\Radar;..\Libraries\Inspect;..\Libraries\NBIot;..\Libraries\MQTTSNPacket\src;..\Libraries\MQTTSNPacket\mqttsn;..\Libraries\Radio;..\Libraries\Radio\radio_inc;..\Libraries\Radio\radio_src;..\Libraries\Radio\si446x_inc;..\Libraries\Radio\si446x_src;..\Libraries\Xtea;..\Libraries\RollingOver;..\Hardware\RTC;..\Hardware\EEPROM;..\Hardware\IWDG;..\Hardware\IIC;..\Hardware\QMC5883L;..\Hardware\SWITCH;..\Hardware\VBAT;..\Hardware\VPTAT;..\Hardware\BEEP;..\Hardware\RADAR;..\Hardware\NET;..\Hardware\TEMPERATURE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -844,6 +844,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>RollingOver</GroupName>
+          <Files>
+            <File>
+              <FileName>rollingover.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\RollingOver\rollingover.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Inspect</GroupName>
           <Files>
             <File>
@@ -890,11 +900,6 @@
               <FileName>radar_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Libraries\Radar\radar_timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32_dsp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Libraries\Radar\stm32_dsp.h</FilePath>
             </File>
             <File>
               <FileName>tmesh_radar_algorithm.h</FileName>
@@ -1030,6 +1035,11 @@
               <FileName>net_mqttsn_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\NET\net_mqttsn_app.c</FilePath>
+            </File>
+            <File>
+              <FileName>net_nbiot_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\NET\net_nbiot_app.c</FilePath>
             </File>
           </Files>
         </Group>

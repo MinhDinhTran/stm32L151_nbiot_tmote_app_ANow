@@ -45,6 +45,11 @@
 #define NBIOTPOWER(n)	(n?HAL_GPIO_WritePin(NBIOT_POWER_GPIOx, NBIOT_POWER_PIN, GPIO_PIN_SET):HAL_GPIO_WritePin(NBIOT_POWER_GPIOx, NBIOT_POWER_PIN, GPIO_PIN_RESET))
 #define VBATPOWER(n)	(n?HAL_GPIO_WritePin(VBAT_POWER_GPIOx, VBAT_POWER_PIN, GPIO_PIN_RESET):HAL_GPIO_WritePin(VBAT_POWER_GPIOx, VBAT_POWER_PIN, GPIO_PIN_SET))
 
+#define MODELPOWER_IO_READ()	HAL_GPIO_ReadPin(MODEL_POWER_GPIOx, MODEL_POWER_PIN)
+#define RADARPOWER_IO_READ()	HAL_GPIO_ReadPin(RADAR_POWER_GPIOx, RADAR_POWER_PIN)
+#define NBIOTPOWER_IO_READ()	HAL_GPIO_ReadPin(NBIOT_POWER_GPIOx, NBIOT_POWER_PIN)
+#define VBATPOWER_IO_READ()	HAL_GPIO_ReadPin(VBAT_POWER_GPIOx, VBAT_POWER_PIN)
+
 /* Reset Flag Status */
 typedef enum
 {
@@ -57,6 +62,8 @@ typedef enum
 	RCC_RESET_FLAG_OBLRST				= 0x06,							/*!< Options Bytes Loading Reset Flag	*/
 	RCC_RESET_FLAG_WWDGRST				= 0x07							/*!< Window Watchdog Reset Flag		*/
 }RCC_RESET_FLAG_TypeDef;
+
+extern RCC_RESET_FLAG_TypeDef SoftResetFlag;									//系统复位标志
 
 RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void);							//获取复位标志位
 

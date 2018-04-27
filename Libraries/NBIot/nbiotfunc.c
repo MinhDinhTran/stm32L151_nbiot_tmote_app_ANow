@@ -61,6 +61,10 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwareReboot(NBIOT_ClientsTypeDef* pClient
 	GPIO_Initure.Speed = GPIO_SPEED_HIGH;
 	HAL_GPIO_Init(NBIOT_RESET_GPIOx, &GPIO_Initure);
 	
+	memset((void*)&NBIOTBaudRate.NBIOTBaudRateNow, 0, sizeof(NBIOTBaudRate.NBIOTBaudRateNow));
+	memset((void*)&NBIOTBaudRate.NBIOTBaudRateCal, 0, sizeof(NBIOTBaudRate.NBIOTBaudRateCal));
+	NBIOTBaudRate.EnBaudRateState = true;
+	
 	NBIOTPOWER(OFF);
 	Delay_MS(2000);
 	NBIOTPOWER(ON);
@@ -76,6 +80,16 @@ NBIOT_StatusTypeDef NBIOT_Neul_NBxx_HardwareReboot(NBIOT_ClientsTypeDef* pClient
 	pClient->ATCmdStack->ATack = "OK";
 	pClient->ATCmdStack->ATNack = "ERROR";
 	NBStatus = pClient->ATCmdStack->Read(pClient->ATCmdStack);
+	/* NBIOT串口波特率计算 */
+	if (NBStatus == NBIOT_OK) {
+		NBIOTBaudRate.Baud = 10 * ((NBIOTBaudRate.NBIOTBaudRateCal.TotalNum * 10000) / 
+							 ((NBIOTBaudRate.NBIOTBaudRateCal.EndMs - NBIOTBaudRate.NBIOTBaudRateCal.StartMs - 1) * 10 + 
+							 ((SysTick->LOAD - NBIOTBaudRate.NBIOTBaudRateCal.EndClock + NBIOTBaudRate.NBIOTBaudRateCal.StartClock) * 10) / SysTick->LOAD));
+		if ((NBIOTBaudRate.Baud > 8600) && (NBIOTBaudRate.Baud < 10600)) {
+			Uart1_Init(NBIOTBaudRate.Baud);
+		}
+	}
+	NBIOTBaudRate.EnBaudRateState = false;
 	
 	return NBStatus;
 }

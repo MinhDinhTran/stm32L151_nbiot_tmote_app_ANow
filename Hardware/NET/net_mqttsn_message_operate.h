@@ -69,8 +69,11 @@ typedef __packed struct
 	char								pData[1];
 }NET_Message_TcldMsgTypeDef;
 
-#define MQTTSN_STATUS_BASIC_PARK_NUM		3
-#define MQTTSN_STATUS_EXTEND_PARK_NUM		3
+#define MQTTSN_STATUS_BASIC_PARK_NUM		2
+#define MQTTSN_STATUS_EXTEND_PARK_NUM		2
+#define MQTTSN_INFO_WORK_PARK_NUM			2
+#define MQTTSN_INFO_BASIC_PARK_NUM			2
+#define MQTTSN_INFO_DYNAMIC_PARK_NUM		2
 
 /* MqttSN Status Basic */
 typedef __packed struct
@@ -112,26 +115,93 @@ typedef struct
 	MQTTSN_StatusExtendTypeDef			StatusExtend[MQTTSN_STATUS_EXTEND_PARK_NUM];
 }MQTTSN_SwapStatusExtendTypeDef;
 
+/* MqttSN Info Work */
+typedef __packed struct
+{
+	unsigned int						DeviceSN;
+	unsigned char						Sensitivity;
+	unsigned char						WorkMode;
+	unsigned char						RfChannel;
+}MQTTSN_InfoWorkTypeDef;
+
+typedef struct
+{
+	unsigned char						Front;
+	unsigned char						Rear;
+	MQTTSN_InfoWorkTypeDef				InfoWork[MQTTSN_INFO_WORK_PARK_NUM];
+}MQTTSN_SwapInfoWorkTypeDef;
+
+/* MqttSN Info Basic */
+typedef __packed struct
+{
+	unsigned int						DeviceSN;
+	unsigned char						DeviceType;
+}MQTTSN_InfoBasicTypeDef;
+
+typedef struct
+{
+	unsigned char						Front;
+	unsigned char						Rear;
+	MQTTSN_InfoBasicTypeDef				InfoBasic[MQTTSN_INFO_BASIC_PARK_NUM];
+}MQTTSN_SwapInfoBasicTypeDef;
+
+/* MqttSN Info Dynamic */
+typedef __packed struct
+{
+	unsigned int						DeviceSN;
+	unsigned int						Runtime;
+	int								NBIotRssi;
+	unsigned short						DeviceBatt;
+}MQTTSN_InfoDynamicTypeDef;
+
+typedef struct
+{
+	unsigned char						Front;
+	unsigned char						Rear;
+	MQTTSN_InfoDynamicTypeDef			InfoDynamic[MQTTSN_INFO_DYNAMIC_PARK_NUM];
+}MQTTSN_SwapInfoDynamicTypeDef;
+
 
 int NET_Message_Operate_Creat_Json_MoteStatus_Basic(char* outBuffer);
 int NET_Message_Operate_Creat_Json_MoteStatus_Extend(char* outBuffer);
+int NET_Message_Operate_Creat_Json_MoteInfo_Work(char* outBuffer);
+int NET_Message_Operate_Creat_Json_MoteInfo_Basic(char* outBuffer);
+int NET_Message_Operate_Creat_Json_MoteInfo_Dynamic(char* outBuffer);
+
+bool NET_MqttSN_Message_StatusBasicisFull(void);
+bool NET_MqttSN_Message_StatusExtendisFull(void);
+bool NET_MqttSN_Message_InfoWorkisFull(void);
+bool NET_MqttSN_Message_InfoBasicisFull(void);
+bool NET_MqttSN_Message_InfoDynamicisFull(void);
 
 bool NET_MqttSN_Message_StatusBasicisEmpty(void);
 bool NET_MqttSN_Message_StatusExtendisEmpty(void);
+bool NET_MqttSN_Message_InfoWorkisEmpty(void);
+bool NET_MqttSN_Message_InfoBasicisEmpty(void);
+bool NET_MqttSN_Message_InfoDynamicisEmpty(void);
 
 void NET_MqttSN_Message_StatusBasicEnqueue(MQTTSN_StatusBasicTypeDef dataBuf);
 void NET_MqttSN_Message_StatusExtendEnqueue(MQTTSN_StatusExtendTypeDef dataBuf);
+void NET_MqttSN_Message_InfoWorkEnqueue(MQTTSN_InfoWorkTypeDef dataBuf);
+void NET_MqttSN_Message_InfoBasicEnqueue(MQTTSN_InfoBasicTypeDef dataBuf);
+void NET_MqttSN_Message_InfoDynamicEnqueue(MQTTSN_InfoDynamicTypeDef dataBuf);
 
 bool NET_MqttSN_Message_StatusBasicDequeue(MQTTSN_StatusBasicTypeDef* dataBuf);
 bool NET_MqttSN_Message_StatusExtendDequeue(MQTTSN_StatusExtendTypeDef* dataBuf);
+bool NET_MqttSN_Message_InfoWorkDequeue(MQTTSN_InfoWorkTypeDef* dataBuf);
+bool NET_MqttSN_Message_InfoBasicDequeue(MQTTSN_InfoBasicTypeDef* dataBuf);
+bool NET_MqttSN_Message_InfoDynamicDequeue(MQTTSN_InfoDynamicTypeDef* dataBuf);
 
 bool NET_MqttSN_Message_StatusBasicOffSet(void);
 bool NET_MqttSN_Message_StatusExtendOffSet(void);
+bool NET_MqttSN_Message_InfoWorkOffSet(void);
+bool NET_MqttSN_Message_InfoBasicOffSet(void);
+bool NET_MqttSN_Message_InfoDynamicOffSet(void);
 
 unsigned char NET_MqttSN_Message_StatusBasicRear(void);
 unsigned char NET_MqttSN_Message_StatusExtendRear(void);
-
-
-
+unsigned char NET_MqttSN_Message_InfoWorkRear(void);
+unsigned char NET_MqttSN_Message_InfoBasicRear(void);
+unsigned char NET_MqttSN_Message_InfoDynamicRear(void);
 
 #endif

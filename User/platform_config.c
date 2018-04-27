@@ -15,6 +15,8 @@
 
 #include "platform_config.h"
 
+bool BootUp				= true;										//BootUp
+
 /* Work Mode */
 bool DeviceIdleMode			= false;										//IDLE MODE
 bool DeviceActivedMode		= true;										//ACTIVED MODE
@@ -27,6 +29,9 @@ COAP_PacketInfoTypeDef		CoapInfoStructure;								//Coap Info Packet
 /* MqttSN Packet */
 MQTTSN_StatusBasicTypeDef	MqttSNStatusBasicStructure;						//MqttSN Basic Status Packet
 MQTTSN_StatusExtendTypeDef	MqttSNStatusExtendStructure;						//MqttSN Extend Status Packet
+MQTTSN_InfoWorkTypeDef		MqttSNInfoWorkStructure;							//MqttSN Work Info Packet
+MQTTSN_InfoBasicTypeDef		MqttSNInfoBasicStructure;						//MqttSN Basic Info Packet
+MQTTSN_InfoDynamicTypeDef	MqttSNInfoDynamicStructure;						//MqttSN Dynamic Info Packet
 
 /* NET Handler */
 NBIOT_ATCmdTypeDef			NbiotATCmdHandler;								//NBIOT AT Cmd Handler

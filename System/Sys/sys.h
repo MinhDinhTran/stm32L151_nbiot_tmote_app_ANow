@@ -53,10 +53,15 @@ typedef struct
 {
 	unsigned int	seconds;													//秒
 	unsigned int	minutes;													//分
+	unsigned int	fifteenMinutes;											//15分钟
+	unsigned int	fortyMinutes;												//40分钟
 	unsigned int	hours;													//时
+	unsigned int	twoHours;													//2小时
 	unsigned int	days;													//天
 }Stm32_SystemRunningTime;													//系统运行时间
 
+extern __IO u32 SystemRunningTimesSecond;										//系统运行时间(S)
+extern __IO u32 SystemSoftResetTime;											//系统运行超时软件复位时间(MS)
 extern Stm32_SystemRunningTime	SystemRunningTime;								//系统运行时间(结构体)
 
 void Stm32_Clock_Init(u32 pllmul, u32 plldiv);									//配置系统时钟HSI

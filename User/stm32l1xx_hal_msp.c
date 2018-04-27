@@ -57,7 +57,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
 {
 	if (htim->Instance == TIM2) {
 		__HAL_RCC_TIM2_CLK_ENABLE();										//使能TIM2时钟
-		HAL_NVIC_SetPriority(TIM2_IRQn, 2, 1);								//设置中断优先级, 强占优先级2, 次优先级1
+		HAL_NVIC_SetPriority(TIM2_IRQn, 1, 0);								//设置中断优先级, 强占优先级1, 次优先级0
 		HAL_NVIC_EnableIRQ(TIM2_IRQn);									//开启TIM2中断
 	}
 }
@@ -106,14 +106,14 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 		HAL_GPIO_Init(RADAR_ADCx_CHANNEL_GPIO_PORT, &GPIO_Initure);
 		
 		/* Peripheral DMA init*/
-		RADAR_ADC_DMA_Handler.Instance = DMA1_Channel1;
-		RADAR_ADC_DMA_Handler.Init.Direction = DMA_PERIPH_TO_MEMORY;
-		RADAR_ADC_DMA_Handler.Init.PeriphInc = DMA_PINC_DISABLE;
-		RADAR_ADC_DMA_Handler.Init.MemInc = DMA_MINC_ENABLE;
-		RADAR_ADC_DMA_Handler.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-		RADAR_ADC_DMA_Handler.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-		RADAR_ADC_DMA_Handler.Init.Mode = DMA_CIRCULAR;
-		RADAR_ADC_DMA_Handler.Init.Priority = DMA_PRIORITY_LOW;
+		RADAR_ADC_DMA_Handler.Instance					= DMA1_Channel1;
+		RADAR_ADC_DMA_Handler.Init.Direction				= DMA_PERIPH_TO_MEMORY;
+		RADAR_ADC_DMA_Handler.Init.PeriphInc				= DMA_PINC_DISABLE;
+		RADAR_ADC_DMA_Handler.Init.MemInc					= DMA_MINC_ENABLE;
+		RADAR_ADC_DMA_Handler.Init.PeriphDataAlignment		= DMA_PDATAALIGN_HALFWORD;
+		RADAR_ADC_DMA_Handler.Init.MemDataAlignment			= DMA_MDATAALIGN_HALFWORD;
+		RADAR_ADC_DMA_Handler.Init.Mode					= DMA_CIRCULAR;
+		RADAR_ADC_DMA_Handler.Init.Priority				= DMA_PRIORITY_LOW;
 		HAL_DMA_Init(&RADAR_ADC_DMA_Handler);
 		
 		__HAL_LINKDMA(hadc, DMA_Handle, RADAR_ADC_DMA_Handler);

@@ -21,31 +21,25 @@
 #include "platform_config.h"
 #include "platform_map.h"
 #include "hal_rtc.h"
+#include "hal_eeprom.h"
 #include "hal_iwdg.h"
 #include "hal_beep.h"
 #include "hal_switch.h"
 #include "hal_vbat.h"
 #include "hal_vptat.h"
 #include "hal_temperature.h"
-#include "hal_eeprom.h"
 #include "hal_qmc5883l.h"
 #include "hal_radar.h"
 #include "net_coap_app.h"
 #include "net_mqttsn_app.h"
+#include "net_nbiot_app.h"
 #include "radio_hal_rf.h"
 #include "radio_rf_app.h"
 #include "tmesh_xtea.h"
+#include "rollingover.h"
 
 /********************************************* DEBUG *****************************************************/
-/* Debug Include File */
-/* Debug Define */
-#define NBIOTDEBUG		0
-#define OTDEBUG		0
-#define UARTDEBUG		0
-/* Debug Variable */
-unsigned int SendTimes = 0;
-/* Debug Function */
-int DebugMain(void);
+
 /****************************************** Debug Ending *************************************************/
 
 /**********************************************************************************************************
@@ -72,6 +66,8 @@ int main(void)
 #endif
 #endif
 	
+	SoftResetFlag = RCC_ResetFlag_GetStatus();												//获取复位标志位
+	
 	IWDG_Init(IWDG_PRESCALER_256, 0x0FFF);													//看门狗初始化,溢出时间28s
 	RTC_Init();																		//RTC初始化
 	
@@ -86,182 +82,52 @@ int main(void)
 	TCFG_EEPROM_SystemInfo_Init();														//系统运行信息初始化
 	
 	BEEP_CtrlRepeat_Extend(5, 50, 25);														//蜂鸣器
+	IWDG_Feed();																		//喂狗
 	
 	LowPowerCtrlIO_Init();																//低功耗控制IO初始化
 	ModulePowerReset_Init();																//模块电源复位
 	PowerCtrlIO_Init();																	//电源控制IO初始化
 	
-	Uart1_Init(9600);																	//串口1初始化
+	Uart1_Init(9700);																	//串口1初始化
 	Uart2_Init(9600);																	//串口2初始化
 	
+#ifdef RADIO_SI4438
 	tmesh_securityInit();																//XTEA加密初始化
 	Radio_Rf_Init();																	//SI4438初始化
 	Radio_Trf_Xmit_Heartbeat();															//SI4438发送心跳包
-	
-#if OTDEBUG
-	QMC5883L_Init();																	//QMC初始化
-	Radar_Init();																		//雷达初始化
-	Radar_InitBackGround();																//雷达背景初始化
 #endif
 	
-#if NBIOTDEBUG
-	NBIOT_Transport_Init(&NbiotATCmdHandler);												//NBIOT数据传输接口初始化
-	NBIOT_Client_Init(&NbiotClientHandler, &NbiotATCmdHandler);									//NBIOT客户端初始化
+	QMC5883L_Init();																	//地磁初始化
+	//Todo																			//雷达初始化
 	
-	MQTTSN_Transport_Init(&MqttSNSocketNetHandler, &NbiotClientHandler, 4000, "106.14.142.169", 1884);	//MqttSN数据传输接口初始化
-	MQTTSN_Client_Init(&MqttSNClientHandler, &MqttSNSocketNetHandler);							//MQTTSN客户端初始化
+	NET_NBIOT_Initialization();															//NBIOT初始化
 	
-	CoapLongStructure.HeadPacket.DeviceSN = TCFG_EEPROM_Get_MAC_SN();
-	CoapLongStructure.HeadPacket.DataLen = 0x00;
-	CoapLongStructure.HeadPacket.ProtocolType = 0x00;
-	CoapLongStructure.HeadPacket.Reserved1 = 0x00;
-	CoapLongStructure.HeadPacket.ProtocolVersion = 0x00;
-	CoapLongStructure.HeadPacket.Reserved2 = 0x00;
-	CoapLongStructure.HeadPacket.PacketType = 0x05;
-	CoapLongStructure.HeadPacket.PacketNumber = 0x00;
-	CoapLongStructure.MsgPacket.DestSN = 0x00;
-	CoapLongStructure.MsgPacket.Version = 0x01;
-	CoapLongStructure.MsgPacket.Type = 0x3A;
-	CoapLongStructure.MagneticX =  100;
-	CoapLongStructure.MagneticY =  100;
-	CoapLongStructure.MagneticZ =  100;
-	CoapLongStructure.MagneticDiff = 300;
-	CoapLongStructure.RadarDistance = 0;
-	CoapLongStructure.RadarStrength = 0;
-	CoapLongStructure.RadarCoverCount = 0;
-	CoapLongStructure.RadarDiff = 0;
-	
-	MqttSNStatusExtendStructure.DeviceSN = TCFG_EEPROM_Get_MAC_SN();
-	MqttSNStatusExtendStructure.MagX = 100;
-	MqttSNStatusExtendStructure.MagY = 100;
-	MqttSNStatusExtendStructure.MagZ = 100;
-	MqttSNStatusExtendStructure.MagDiff = 300;
-	MqttSNStatusExtendStructure.Distance = 0;
-	MqttSNStatusExtendStructure.Strength = 0;
-	MqttSNStatusExtendStructure.CoverCount = 0;
-	MqttSNStatusExtendStructure.RadarDiff = 0;
-#endif
-	
-	TCFG_EEPROM_SetBootCount(0);															//运行正常BootCount清0
 	BEEP_CtrlRepeat_Extend(10, 50, 25);													//蜂鸣器
-	Radio_Trf_Printf("Device Start MVBKK Reboot : %d ^_^", TCFG_SystemData.DeviceBootCount);			//启动信息
+	IWDG_Feed();																		//喂狗
+	
+	Radio_Trf_Printf(" Device Reboot: %d Cause: %d", TCFG_SystemData.DeviceBootCount, SoftResetFlag);	//启动信息
+	Radio_Trf_Printf(" (C) 2018 Movebroad Version:%d.%d", TCFG_Utility_Get_Major_Softnumber(), TCFG_Utility_Get_Sub_Softnumber());
 	
 	while (1) {
 		
 		
 		
-		/* NBIot处理 */
-#if NBIOTDEBUG
-#if NETPROTOCAL == NETCOAP
-		NET_COAP_APP_PollExecution(&NbiotClientHandler);
-#elif NETPROTOCAL == NETMQTTSN
-		NET_MQTTSN_APP_PollExecution(&MqttSNClientHandler);
-#endif
-#endif
-		/* NBIot数据包写入 */
-#if NBIOTDEBUG
-		Uart2_PortSerialEnable(DISABLE, DISABLE);
-		if (USART2_RX_STA & 0x8000) {
-			USART2_RX_STA = 0;
-			HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
-			BEEP_CtrlRepeat(1, 500);
-			BEEP_CtrlRepeat(1, 50);
-			/* COAP DATA ENQUEUE */
-			CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
-			CoapLongStructure.SpotCount += 1;
-			CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
-			/* MQTTSN DATA ENQUEUE */
-			MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
-			MqttSNStatusExtendStructure.Count += 1;
-			MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
-		}
-		Uart2_PortSerialEnable(ENABLE, DISABLE);
-		
-		SendTimes++;
-		if ((SendTimes % 600) == 0) {
-			HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
-			BEEP_CtrlRepeat(1, 500);
-			BEEP_CtrlRepeat(1, 50);
-			/* COAP DATA ENQUEUE */
-			CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
-			CoapLongStructure.SpotCount += 1;
-			CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
-			/* MQTTSN DATA ENQUEUE */
-			MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
-			MqttSNStatusExtendStructure.Count += 1;
-			MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
-			NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
-		}
-#endif
-		/* 模块测试 */
-#if OTDEBUG
-		if (Radar_GetDataPack(10) != TRADAR_OK) {									//获取雷达数据包
-			printf("No Radar!!\n");
-		}
-		Radar_DataPackToDataStruct();												//将雷达数据提取到雷达结构体
-		printf("NotargetNum : %d\n", radarDataStruct.NotargetNum);
-		printf("CoverNum : %d\n", radarDataStruct.CoverNum);
-		printf("DismagNum : %d\n", radarDataStruct.DismagNum);
-		printf("DisVal : %d\n", radarDataStruct.DisVal);
-		printf("MagVal : %d\n", radarDataStruct.MagVal);
-		printf("Diff : %d\n\n", radarDataStruct.Diff);
-		
-		printf("%s\n", radarDataPack.RADARData[0]);
-		printf("%s\n", radarDataPack.RADARData[1]);
-		printf("%s\n", radarDataPack.RADARData[2]);
-		printf("%s\n", radarDataPack.RADARData[3]);
-		printf("%s\n", radarDataPack.RADARData[4]);
-		printf("%s\n", radarDataPack.RADARData[5]);
-		printf("%s\n", radarDataPack.RADARData[6]);
-		printf("%s\n", radarDataPack.RADARData[7]);
-		printf("%s\n", radarDataPack.RADARData[8]);
-		printf("%s\n", radarDataPack.RADARData[9]);
-		printf("\n");
-		
-		QMC5883L_Mode_Selection(QMC_MODE_CONTINOUS);
-		QMC5883L_ReadData_Extend();
-		QMC5883L_Mode_Selection(QMC_MODE_STANDBY);
-		printf("X : %d\n", Qmc5883lData.X_Now);
-		printf("Y : %d\n", Qmc5883lData.Y_Now);
-		printf("Z : %d\n", Qmc5883lData.Z_Now);
-		printf("\n");
-		
-		printf("VBAT : %d\n\n", VBAT_ADC_Read(1000));
-		printf("TEMPERATURE : %d\n\n", TEMPERATURE_ADC_Read(1000));
-		printf("Mercury : %d\n\n", Mercury_Read());
-#endif
-		/* 串口测试 */
-#if UARTDEBUG
-		Uart1_PortSerialEnable(DISABLE, DISABLE);
-		Uart2_PortSerialEnable(DISABLE, DISABLE);
-		
-		if (USART1_RX_STA & 0x8000) {
-			BEEP_CtrlRepeat(1, 50);
-			HAL_UART_Transmit(&UART1_Handler, USART1_RX_BUF, USART1_RX_STA & 0X3FFF, 0xFFFF);
-			USART1_RX_STA = 0;
-		}
-		if (USART2_RX_STA & 0x8000) {
-			BEEP_CtrlRepeat(1, 50);
-			HAL_UART_Transmit(&UART2_Handler, USART2_RX_BUF, USART2_RX_STA & 0X3FFF, 0xFFFF);
-			USART2_RX_STA = 0;
-		}
-		
-		Uart1_PortSerialEnable(ENABLE, DISABLE);
-		Uart2_PortSerialEnable(ENABLE, DISABLE);
-#endif
-		/* 日常处理 */
-		MainHandleRoutine();
-		
-		/* 小无线处理 */
-		Radio_Trf_App_Task();
+		/* 翻转检测处理 */
+		RollingOverPollExecution();
 		
 		/* 喂狗 */
 		IWDG_Feed();
 		
 		Delay_MS(1000);
+		
+		/* 软重启计数器清0 */
+		SystemSoftResetTime = 0;
+		
+		/* 运行正常BootCount清0 */
+		if ((BootUp == true) && (Stm32_GetSecondTick() > 90)) {
+			TCFG_EEPROM_SetBootCount(0);
+			BootUp = false;
+		}
 	}
 }
 
@@ -270,50 +136,12 @@ int main(void)
  @Description			MainMajorCycle
  @Input				void
  @Return				void
+ @attention			MqttSN等待数据接收中需处理程序
 **********************************************************************************************************/
 void MainMajorCycle(void)
 {
-	/* NBIot数据包写入 */
-#if NBIOTDEBUG
-	Uart2_PortSerialEnable(DISABLE, DISABLE);
-	if (USART2_RX_STA & 0x8000) {
-		USART2_RX_STA = 0;
-		HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
-		BEEP_CtrlRepeat(1, 500);
-		BEEP_CtrlRepeat(1, 50);
-		/* COAP DATA ENQUEUE */
-		CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
-		CoapLongStructure.SpotCount += 1;
-		CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
-		NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
-		/* MQTTSN DATA ENQUEUE */
-		MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
-		MqttSNStatusExtendStructure.Count += 1;
-		MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
-		NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
-	}
-	Uart2_PortSerialEnable(ENABLE, DISABLE);
 	
-	SendTimes++;
-	if ((SendTimes % 600) == 0) {
-		HAL_UART_Transmit(&UART2_Handler, (u8 *)"\r\nOK Data Enqueue Pack!\r\n", sizeof("\r\nOK Data Enqueue Pack!\r\n"), 0xFFFF);
-		BEEP_CtrlRepeat(1, 500);
-		BEEP_CtrlRepeat(1, 50);
-		/* COAP DATA ENQUEUE */
-		CoapLongStructure.SpotStatus = CoapLongStructure.SpotStatus ? 0 : 1;
-		CoapLongStructure.SpotCount += 1;
-		CoapLongStructure.DateTime = RTC_GetUnixTimeToStamp();
-		NET_Coap_Message_SendDataEnqueue((unsigned char *)&CoapLongStructure, sizeof(CoapLongStructure));
-		/* MQTTSN DATA ENQUEUE */
-		MqttSNStatusExtendStructure.Status = MqttSNStatusExtendStructure.Status ? 0 : 1;
-		MqttSNStatusExtendStructure.Count += 1;
-		MqttSNStatusExtendStructure.DateTime = RTC_GetUnixTimeToStamp();
-		NET_MqttSN_Message_StatusExtendEnqueue(MqttSNStatusExtendStructure);
-	}
-#endif
 	
-	/* 日常处理 */
-	MainHandleRoutine();
 	
 	/* 小无线处理 */
 	Radio_Trf_App_Task();
@@ -322,7 +150,166 @@ void MainMajorCycle(void)
 	IWDG_Feed();
 	
 	Delay_MS(1000);
+	
+	/* 软重启计数器清0 */
+	SystemSoftResetTime = 0;
+	
+	/* 运行正常BootCount清0 */
+	if ((BootUp == true) && (Stm32_GetSecondTick() > 90)) {
+		TCFG_EEPROM_SetBootCount(0);
+		BootUp = false;
+	}
 }
+
+/* ============================================ 正放处理 =============================================== */
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteredUpWork(void)
+ @Description			MainRollingEnteredUpWork					: 已进入正放工作状态
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingEnteredUpWork(void)
+{
+	Radio_Trf_Printf("Entered Up Work");
+	BEEP_CtrlRepeat_Extend(3, 30, 70);
+	NETCoapNeedSendCode.WorkInfo = 1;
+	NETMqttSNNeedSendCode.InfoWork = 1;
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteringUpWork(void)
+ @Description			MainRollingEnteringUpWork				: 将进入正放工作状态
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingEnteringUpWork(void)
+{
+	Radio_Trf_Printf("Entering Up Work");
+	BEEP_CtrlRepeat_Extend(1, 500, 0);
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingUpwardsActived(void)
+ @Description			MainRollingUpwardsActived				: 正放工作中
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingUpwardsActived(void)
+{
+	/* 日常处理 */
+	MainHandleRoutine();
+	
+	/* NBIOT APP Task */
+	NET_NBIOT_App_Task();
+	
+	/* NBIOT PollExecution */
+#if NETPROTOCAL == NETCOAP
+	NET_COAP_APP_PollExecution(&NbiotClientHandler);
+#elif NETPROTOCAL == NETMQTTSN
+	NET_MQTTSN_APP_PollExecution(&MqttSNClientHandler);
+#endif
+	
+	/* 小无线处理 */
+	Radio_Trf_App_Task();
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteringUpWork(void)
+ @Description			MainRollingEnteringUpWork				: 正放休眠中
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingUpwardsSleep(void)
+{
+	/* NBIOT Power OFF */
+	if (NBIOTPOWER_IO_READ()) {
+		NET_NBIOT_Initialization();
+		NBIOTPOWER(OFF);
+	}
+	
+	/* 小无线处理 */
+	Radio_Trf_App_Task();
+}
+
+/* ============================================ 倒放处理 =============================================== */
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteredDownSleep(void)
+ @Description			MainRollingEnteredDownSleep				: 已进入倒放休眠状态
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingEnteredDownSleep(void)
+{
+	BEEP_CtrlRepeat_Extend(1, 500, 0);
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteredDownWork(void)
+ @Description			MainRollingEnteredDownWork				: 已进入倒放工作状态
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingEnteredDownWork(void)
+{
+	NETCoapNeedSendCode.WorkInfo = 1;
+	NETMqttSNNeedSendCode.InfoWork = 1;
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteredDownSleepKeepActived(void)
+ @Description			MainRollingEnteredDownSleepKeepActived		: 将进入倒放休眠状态前保持工作
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingEnteredDownSleepKeepActived(void)
+{
+	/* 日常处理 */
+	MainHandleRoutine();
+	
+	/* NBIOT APP Task */
+	NET_NBIOT_App_Task();
+	
+	/* NBIOT PollExecution */
+#if NETPROTOCAL == NETCOAP
+	NET_COAP_APP_PollExecution(&NbiotClientHandler);
+#elif NETPROTOCAL == NETMQTTSN
+	NET_MQTTSN_APP_PollExecution(&MqttSNClientHandler);
+#endif
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingEnteringDownSleep(void)
+ @Description			MainRollingEnteringDownSleep				: 将进入倒放休眠
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingEnteringDownSleep(void)
+{
+	/* NBIOT Power OFF */
+	if (NBIOTPOWER_IO_READ()) {
+		NET_NBIOT_Initialization();
+		NBIOTPOWER(OFF);
+	}
+}
+
+/**********************************************************************************************************
+ @Function			void MainRollingDownSleep(void)
+ @Description			MainRollingDownSleep					: 倒放休眠中
+ @Input				void
+ @Return				void
+**********************************************************************************************************/
+void MainRollingDownSleep(void)
+{
+	/* NBIOT Power OFF */
+	if (NBIOTPOWER_IO_READ()) {
+		NET_NBIOT_Initialization();
+		NBIOTPOWER(OFF);
+	}
+}
+
+/* ============================================ 日常处理 =============================================== */
 
 /**********************************************************************************************************
  @Function			void MainHandleRoutine(void)
@@ -332,25 +319,50 @@ void MainMajorCycle(void)
 **********************************************************************************************************/
 void MainHandleRoutine(void)
 {
+	/* Every Second Running */
 	if (Stm32_GetSecondTick() != SystemRunningTime.seconds) {
 		
 		
 		SystemRunningTime.seconds = Stm32_GetSecondTick();
 	}
+	/* Every Minutes Running */
 	if ((Stm32_GetSecondTick() / 60) != SystemRunningTime.minutes) {
 		
 		
 		SystemRunningTime.minutes = Stm32_GetSecondTick() / 60;
 	}
+	/* Every FifteenMinutes Running */
+	if ((Stm32_GetSecondTick() / 900) != SystemRunningTime.fifteenMinutes) {
+		
+		
+		SystemRunningTime.fifteenMinutes = Stm32_GetSecondTick() / 900;
+	}
+	/* Every FortyMinutes Running */
+	if ((Stm32_GetSecondTick() / 2400) != SystemRunningTime.fortyMinutes) {
+		if (RTC_Time_GetCurrentHour() == 0) {
+			
+		}
+		SystemRunningTime.fortyMinutes = Stm32_GetSecondTick() / 2400;
+	}
+	/* Every Hours Running */
 	if ((Stm32_GetSecondTick() / 3600) != SystemRunningTime.hours) {
 		
 		
-		SystemRunningTime.minutes = Stm32_GetSecondTick() / 3600;
+		SystemRunningTime.hours = Stm32_GetSecondTick() / 3600;
 	}
+	/* Every TwoHours Running */
+	if ((Stm32_GetSecondTick() / 7200) != SystemRunningTime.twoHours) {
+		
+		
+		SystemRunningTime.twoHours = Stm32_GetSecondTick() / 7200;
+	}
+	/* Every Day Running */
 	if ((Stm32_GetSecondTick() / (24*3600)) != SystemRunningTime.days) {
-		
-		
-		SystemRunningTime.minutes = Stm32_GetSecondTick() / (24*3600);
+		NETCoapNeedSendCode.WorkInfo = 1;
+		NETCoapNeedSendCode.DynamicInfo = 1;
+		NETMqttSNNeedSendCode.InfoWork = 1;
+		NETMqttSNNeedSendCode.InfoDynamic = 1;
+		SystemRunningTime.days = Stm32_GetSecondTick() / (24*3600);
 	}
 }
 

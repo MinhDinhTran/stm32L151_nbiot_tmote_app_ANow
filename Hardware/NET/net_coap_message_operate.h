@@ -3,6 +3,10 @@
 
 #include "sys.h"
 
+#define COAP_MSGTYPE_TYPE_SHORT_STATUS		0x37
+#define COAP_MSGTYPE_TYPE_LONG_STATUS		0x3A
+#define COAP_MSGTYPE_TYPE_INFO			0x35
+
 typedef __packed struct
 {
 	u8	DataLen;
@@ -52,10 +56,10 @@ typedef __packed struct
 {
 	COAP_PacketHeadTypeDef HeadPacket;
 	COAP_PacketMsgTypeDef MsgPacket;
-	u8	InfoData[100];
-}COAP_PacketInfoTypeDef;													//Info包114Byte
+	u8	InfoData[240];
+}COAP_PacketInfoTypeDef;													//Info包254Byte
 
-#define COAP_SEND_BUFFER_SIZE				128
+#define COAP_SEND_BUFFER_SIZE				256
 #define COAP_RECV_BUFFER_SIZE				64
 #define COAP_SEND_PARK_NUM				5
 #define COAP_RECV_PARK_NUM				2
@@ -85,6 +89,11 @@ typedef struct
 		unsigned short					Length;
 	}Park[COAP_RECV_PARK_NUM];
 }COAP_SwapRecvDataTypeDef;
+
+
+int NET_COAP_Message_Operate_Creat_Json_Work_Info(char* outBuffer);
+int NET_COAP_Message_Operate_Creat_Json_Basic_Info(char* outBuffer);
+int NET_COAP_Message_Operate_Creat_Json_Dynamic_Info(char* outBuffer);
 
 void NET_Coap_Message_SendDataEnqueue(unsigned char* dataBuf, unsigned short dataLength);							//发送数据写入队列
 void NET_Coap_Message_RecvDataEnqueue(unsigned char* dataBuf, unsigned short dataLength);							//接收数据写入队列

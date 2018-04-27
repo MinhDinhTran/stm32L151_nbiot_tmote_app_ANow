@@ -11,6 +11,8 @@
 #include "net_mqttsn_message_operate.h"
 #include "platform_map.h"
 
+#define MQTTSN_DEBUG_LOG_RF_PRINT											//定义开启RF输出DEBUG信息
+
 #define MQTTSN_CLIENT_ID					TCFG_EEPROM_Get_MAC_SN_String()
 #define MQTTSN_SUBSCRIBE_ID				TCFG_EEPROM_Get_MAC_SN_String()
 
@@ -20,7 +22,7 @@
 #define MQTTSN_NBIOT_BAND				MQTTSN_NBIOT_BAND_CHINA_MOBILE
 
 #define TOPICID_MOTESTATUS				27921							//27921 -->mvb/51/1/status
-#define TOPICID_MOTEINFO					27922							//27922 -->mvb/51/1info
+#define TOPICID_MOTEINFO					27922							//27922 -->mvb/51/1/info
 
 #define TOPICID_PARKINGDEVICEMVB_A_STATUS	28921							//28921 -->ParkingDeviceMvb/A/status
 #define TOPICID_PARKINGDEVICEMVB_A_MOTEINFO	28922							//28921 -->ParkingDeviceMvb/A/moteinfo
@@ -38,7 +40,10 @@
 typedef enum
 {
 	OBJECT_TYPE_TMOTES_STATUS_BASIC_PUT	= 0x00,							//BASIC		STATUS
-	OBJECT_TYPE_TMOTES_STATUS_EXTEND_PUT	= 0x01							//EXTEND		STATUS
+	OBJECT_TYPE_TMOTES_STATUS_EXTEND_PUT	= 0x01,							//EXTEND		STATUS
+	OBJECT_TYPE_TMOTES_INFO_WORK_PUT		= 0x02,							//WORK		INFO
+	OBJECT_TYPE_TMOTES_INFO_BASIC_PUT		= 0x03,							//BASIC		INFO
+	OBJECT_TYPE_TMOTES_INFO_DYNAMIC_PUT	= 0x04							//DYNAMIC		INFO
 }NET_MQTTSN_ObjectPacketTypeDef;
 
 MQTTSN_StatusTypeDef messageHandlerFunction(MQTTSN_ClientsTypeDef* pClient, MQTTSN_MessageDataTypeDef* messageHandler);			//MQTTSN接收处理

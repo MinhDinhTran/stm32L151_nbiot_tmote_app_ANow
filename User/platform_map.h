@@ -94,7 +94,7 @@
 #define TCFG_ENABLE_NBIOTPSM_OFFSET		TCFG_RFCHANNEL_OFFSET + TCFG_RFCHANNEL_LENGTH			//0x080804BD
 #define TCFG_ENABLE_NBIOTPSM_LENGTH		1												//NBIOTPSM
 #define TCFG_ACTIVE_DEVICE_OFFSET			TCFG_ENABLE_NBIOTPSM_OFFSET + TCFG_ENABLE_NBIOTPSM_LENGTH	//0x080804BE
-#define TCFG_ACTIVE_DEVICE_LENGTH			1												//ActiveDevice
+#define TCFG_ACTIVE_DEVICE_LENGTH			1												//ActiveDevice			设备工作模式
 #define TCFG_NBIOT_BOOTCNT_OFFSET			TCFG_ACTIVE_DEVICE_OFFSET + TCFG_ACTIVE_DEVICE_LENGTH		//0x080804BF
 #define TCFG_NBIOT_BOOTCNT_LENGTH			4												//NBIOTBootCnt			NB重启次数
 #define TCFG_COAP_SENTCNT_OFFSET			TCFG_NBIOT_BOOTCNT_OFFSET + TCFG_NBIOT_BOOTCNT_LENGTH		//0x080804C3
@@ -139,6 +139,8 @@ typedef struct
 {
 	unsigned int						SubSn;											//设备号
 	unsigned char						SubMacSN[9];										//设备标识号
+	unsigned char						SubVender[4];										//设备厂商号
+	unsigned char						BuildTime[16];										//编译日期
 	unsigned short						Heartinterval;										//心跳间隔
 	unsigned char						Sensitivity;										//灵敏度
 	unsigned char						MagFreq;											//地磁扫描频率
@@ -148,6 +150,7 @@ typedef struct
 	unsigned char						RecalibrationOvertime;								//激烈变化重计算时间
 	unsigned short						CarNumber;										//检测车辆数
 	unsigned char						WorkMode;											//工作模式
+	unsigned char						WorkModeStr[10];									//工作模式名
 	unsigned char						RFChannel;										//无线通道
 	unsigned int						NBIotBootCount;									//NBIot重启次数
 	unsigned int						CoapSentCount;										//Coap发送包数
@@ -203,6 +206,7 @@ unsigned short TCFG_EEPROM_GetServerPort(void);												//读取ServerPort
 
 void TCFG_EEPROM_SetWorkMode(unsigned char val);												//保存WorkMode
 unsigned char TCFG_EEPROM_GetWorkMode(void);													//读取WorkMode
+char* TCFG_EEPROM_Get_WorkMode_String(void);													//读取WorkMode字符串
 
 void TCFG_EEPROM_SetRadarCount(unsigned int val);												//保存RadarCount
 unsigned int TCFG_EEPROM_GetRadarCount(void);												//读取RadarCount
@@ -262,6 +266,7 @@ char* TCFG_EEPROM_Get_MAC_SN_String(void);													//读取MAC SN字符串
 
 void TCFG_EEPROM_SetVender(char* vender);													//保存Vender
 void TCFG_EEPROM_GetVender(char* vender);													//获取Verder
+char* TCFG_EEPROM_Get_Vender_String(void);													//读取vender字符串
 
 void TCFG_EEPROM_SetCarinThreshhold(unsigned char val);										//保存carin_threshhold
 unsigned char TCFG_EEPROM_GetCarinThreshhold(void);											//读取carin_threshhold
@@ -277,6 +282,13 @@ unsigned char TCFG_EEPROM_GetRecalibrationOverTime(void);										//读取recal
 
 void TCFG_EEPROM_SetCarNumber(unsigned short val);											//保存CarNumber
 unsigned short TCFG_EEPROM_GetCarNumber(void);												//读取CarNumber
+
+char* TCFG_Utility_Get_Nbiot_Iccid_String(void);												//读取Nbiot Iccid字符串
+char* TCFG_Utility_Get_Nbiot_Imei_String(void);												//读取Nbiot Imei字符串
+int TCFG_Utility_Get_Nbiot_Rssi_IntVal(void);												//读取Nbiot Rssi值
+unsigned short TCFG_Utility_Get_Device_Batt_ShortVal(void);										//读取Device Batt值
+char* TCFG_Utility_Get_Build_Time_String(void);												//读取Build Time字符串
+unsigned int TCFG_Utility_Get_Run_Time(void);												//读取系统运行时间
 
 unsigned char TCFG_Utility_Get_Major_Softnumber(void);											//读取Major_Softnumber
 unsigned char TCFG_Utility_Get_Sub_Softnumber(void);											//读取Sub_Softnumber

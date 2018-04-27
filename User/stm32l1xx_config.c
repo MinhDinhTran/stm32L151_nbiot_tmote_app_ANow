@@ -23,6 +23,8 @@
 #include "tmesh_xtea.h"
 #include "delay.h"
 
+RCC_RESET_FLAG_TypeDef SoftResetFlag = RCC_RESET_FLAG_NONE;
+
 /**********************************************************************************************************
  @Function			RCC_RESET_FLAG_TypeDef RCC_ResetFlag_GetStatus(void)
  @Description			RCC_ResetFlag_GetStatus	: 获取复位标志位
@@ -140,7 +142,7 @@ static void ModelPower_Init(void)
 
 /**********************************************************************************************************
  @Function			static void RadarPower_Init(void)
- @Description			Rader Power 初始化 PB3 : 1 导通 0 : 截止
+ @Description			Radar Power 初始化 PB3 : 1 导通 0 : 截止
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -182,7 +184,7 @@ static void NBIOTPower_Init(void)
 
 /**********************************************************************************************************
  @Function			static void VbatPower_Init(void)
- @Description			VBAT VOLTAGE Power 初始化 PA12 : 0 导通 1 : 截止
+ @Description			VBAT Power 初始化 PA12 : 0 导通 1 : 截止
  @Input				void
  @Return				void
 **********************************************************************************************************/
@@ -223,6 +225,12 @@ void ModulePowerReset_Init(void)
 	
 	IIC_SCL_RCC_GPIO_CLK_ENABLE();
 	IIC_SDA_RCC_GPIO_CLK_ENABLE();
+	SPIx_NSS_GPIO_CLK_ENABLE();
+	SPIx_SCK_GPIO_CLK_ENABLE();
+	SPIx_MOSI_GPIO_CLK_ENABLE();
+	SPIx_MISO_GPIO_CLK_ENABLE();
+	RF_SDN_GPIO_CLK_ENABLE();
+	RF_nIRQ_GPIO_CLK_ENABLE();
 	
 	GPIO_Initure.Pin = IIC_SCL_PIN;													//IIC_SCL
 	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
@@ -234,11 +242,45 @@ void ModulePowerReset_Init(void)
 	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
 	HAL_GPIO_Init(IIC_SDA_GPIOx, &GPIO_Initure);
 	
-	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_RESET);
+	GPIO_Initure.Pin = SPIx_NSS_PIN;													//SPI_NSS
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
+	HAL_GPIO_Init(SPIx_NSS_GPIO_PORT, &GPIO_Initure);
+	
+	GPIO_Initure.Pin = SPIx_SCK_PIN;													//SPI_SCK
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
+	HAL_GPIO_Init(SPIx_SCK_GPIO_PORT, &GPIO_Initure);
+	
+	GPIO_Initure.Pin = SPIx_MOSI_PIN;													//SPI_MOSI
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
+	HAL_GPIO_Init(SPIx_MOSI_GPIO_PORT, &GPIO_Initure);
+	
+	GPIO_Initure.Pin = SPIx_MISO_PIN;													//SPI_MISO
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
+	HAL_GPIO_Init(SPIx_MISO_GPIO_PORT, &GPIO_Initure);
+	
+	GPIO_Initure.Pin = RF_SDN_PIN;													//RF_SDN
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
+	HAL_GPIO_Init(RF_SDN_GPIO_PORT, &GPIO_Initure);
+	
+	GPIO_Initure.Pin = RF_nIRQ_PIN;													//RF_nIRQ
+	GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;											//OUTPUT
+	GPIO_Initure.Speed = GPIO_SPEED_HIGH;												//HIGH
+	HAL_GPIO_Init(RF_nIRQ_GPIO_PORT, &GPIO_Initure);
+	
+	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_RESET);							//IIC_SCL
+	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_RESET);							//IIC_SDA
+	HAL_GPIO_WritePin(SPIx_NSS_GPIO_PORT, SPIx_NSS_PIN, GPIO_PIN_RESET);						//SPI_NSS
+	HAL_GPIO_WritePin(SPIx_SCK_GPIO_PORT, SPIx_SCK_PIN, GPIO_PIN_RESET);						//SPI_SCK
+	HAL_GPIO_WritePin(SPIx_MOSI_GPIO_PORT, SPIx_MOSI_PIN, GPIO_PIN_RESET);					//SPI_MOSI
+	HAL_GPIO_WritePin(SPIx_MISO_GPIO_PORT, SPIx_MISO_PIN, GPIO_PIN_RESET);					//SPI_MISO
+	HAL_GPIO_WritePin(RF_SDN_GPIO_PORT, RF_SDN_PIN, GPIO_PIN_RESET);							//RF_SDN
+	HAL_GPIO_WritePin(RF_nIRQ_GPIO_PORT, RF_nIRQ_PIN, GPIO_PIN_RESET);						//RF_nIRQ
 	Delay_MS(3000);																//断电3秒
-	HAL_GPIO_WritePin(IIC_SCL_GPIOx, IIC_SCL_PIN, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(IIC_SDA_GPIOx, IIC_SDA_PIN, GPIO_PIN_SET);
 }
 
 /**********************************************************************************************************

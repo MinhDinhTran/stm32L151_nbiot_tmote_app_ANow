@@ -13,7 +13,7 @@
 
 /* MQTTSN 协议栈开辟缓存大小 */
 #define MQTTSN_BUFFER_SIZE				256
-#define MQTTSN_DATASTACK_SIZE				512
+#define MQTTSN_DATASTACK_SIZE				256
 
 typedef struct MQTTSN_SocketNetTypeDef		MQTTSN_SocketNetTypeDef;
 typedef struct MQTTSN_MessageTypeDef		MQTTSN_MessageTypeDef;
@@ -115,6 +115,9 @@ struct MQTTSN_ClientsTypeDef
 	{
 		bool							messageStatusBasic;
 		bool							messageStatusExtend;
+		bool							messageInfoWork;
+		bool							messageInfoBasic;
+		bool							messageInfoDynamic;
 	}MessageSendCtl;
 	
 	struct MessageHandlersTypeDef

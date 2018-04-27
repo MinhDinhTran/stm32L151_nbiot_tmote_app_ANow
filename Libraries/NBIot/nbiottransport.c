@@ -122,6 +122,26 @@ NBIOT_StatusTypeDef NBIOT_Transport_RecvATCmd(NBIOT_ATCmdTypeDef* ATCmd)
 	if ((ATCmd->ATack && ATCmd->CmdWaitTime.xTicksToWait) || (ATCmd->ATNack && ATCmd->CmdWaitTime.xTicksToWait)) {	//需要等待应答
 		while (Stm32_Calculagraph_IsExpiredMS(&ATCmd->CmdWaitTime) != true) {									//等待倒计时
 			if (USART1_RX_STA & 0x8000) {																//接收到期待的应答结果
+				
+				/* NBIOT波特率计算 */
+				if (NBIOTBaudRate.EnBaudRateState != false) {
+					if ((USART1_RX_STA & 0x3FFF) > 30) {
+						NBIOTBaudRate.NBIOTBaudRateCal.StartMs = NBIOTBaudRate.NBIOTBaudRateNow.MiddleMs;
+						NBIOTBaudRate.NBIOTBaudRateCal.StartClock = NBIOTBaudRate.NBIOTBaudRateNow.MiddleClock;
+						NBIOTBaudRate.NBIOTBaudRateCal.EndMs = NBIOTBaudRate.NBIOTBaudRateNow.EndMs;
+						NBIOTBaudRate.NBIOTBaudRateCal.EndClock = NBIOTBaudRate.NBIOTBaudRateNow.EndClock;
+						NBIOTBaudRate.NBIOTBaudRateCal.TotalNum = (USART1_RX_STA & 0x3FFF) - NBIOTBaudRate.NBIOTBaudRateNow.MiddleNum - 1;
+					}
+					else if ((USART1_RX_STA & 0x3FFF) > 15) {
+						NBIOTBaudRate.NBIOTBaudRateCal.StartMs = NBIOTBaudRate.NBIOTBaudRateNow.StartMs;
+						NBIOTBaudRate.NBIOTBaudRateCal.StartClock = NBIOTBaudRate.NBIOTBaudRateNow.StartClock;
+						NBIOTBaudRate.NBIOTBaudRateCal.EndMs = NBIOTBaudRate.NBIOTBaudRateNow.EndMs;
+						NBIOTBaudRate.NBIOTBaudRateCal.EndClock = NBIOTBaudRate.NBIOTBaudRateNow.EndClock;
+						NBIOTBaudRate.NBIOTBaudRateCal.TotalNum = (USART1_RX_STA & 0x3FFF) - 1;
+					}
+					memset((void*)&NBIOTBaudRate.NBIOTBaudRateNow, 0, sizeof(NBIOTBaudRate.NBIOTBaudRateNow));
+				}
+				
 				USART1_RX_BUF[USART1_RX_STA & 0x3FFF] = 0;												//添加结束符
 				if (ATCmd->ATack && ((str = strstr((const char*)USART1_RX_BUF, (const char*)ATCmd->ATack)) != NULL)) {			//Found! OK
 					if (ATCmd->ATRecvbuf) {															//获取应答数据

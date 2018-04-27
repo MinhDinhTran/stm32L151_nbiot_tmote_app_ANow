@@ -14,10 +14,133 @@
   */
 
 #include "net_coap_message_operate.h"
+#include "platform_config.h"
+#include "platform_map.h"
+#include "stm32l1xx_config.h"
 #include "string.h"
 
 COAP_SwapSendDataTypeDef		NETCoapMessageSendPark;
 COAP_SwapRecvDataTypeDef		NETCoapMessageRecvPark;
+
+/**********************************************************************************************************
+ @Function			int NET_COAP_Message_Operate_Creat_Json_Work_Info(char* outBuffer)
+ @Description			NET_COAP_Message_Operate_Creat_Json_Work_Info
+ @Input				outBuffer
+ @Return				Length
+ @attention			!!<<< MaxLength 240Byte >>>!!
+**********************************************************************************************************/
+int NET_COAP_Message_Operate_Creat_Json_Work_Info(char* outBuffer)
+{
+	sprintf(outBuffer, 
+		"{"
+			"\"SN\":\"%08x\","
+			"\"WorkInfo\":"
+			"{"
+				"\"Sense\":%d,"
+				"\"Mode\":\"%s\","
+				"\"Channel\":%d,"
+			"}"
+		"}",
+		
+		TCFG_EEPROM_Get_MAC_SN(),
+		TCFG_EEPROM_GetSavedSensitivity(),
+		TCFG_EEPROM_Get_WorkMode_String(),
+		TCFG_EEPROM_GetRfChannel()
+	);
+	
+	return strlen(outBuffer);
+}
+
+/**********************************************************************************************************
+ @Function			int NET_COAP_Message_Operate_Creat_Json_Basic_Info(char* outBuffer)
+ @Description			NET_COAP_Message_Operate_Creat_Json_Basic_Info
+ @Input				outBuffer
+ @Return				Length
+ @attention			!!<<< MaxLength 240Byte >>>!!
+**********************************************************************************************************/
+int NET_COAP_Message_Operate_Creat_Json_Basic_Info(char* outBuffer)
+{
+	sprintf(outBuffer, 
+		"{"
+			"\"SN\":\"%08x\","
+			"\"TMoteInfo\":"
+			"{"
+				"\"Type\":\"%d.1\","
+				"\"Vender\":\"%s\","
+				"\"Hard\":\"%d\","
+				"\"Soft\":\"%d.%d\","
+				"\"Build\":\"%s\","
+				"\"Sim\":\"%s\","
+				"\"Imei\":\"%s\","
+				"\"Boot\":\"%d.%d\","
+			"}"
+		"}",
+		
+		TCFG_EEPROM_Get_MAC_SN(),
+		MVB_MODEL_TYPE,
+		TCFG_EEPROM_Get_Vender_String(),
+		TCFG_Utility_Get_Major_Hardnumber(),
+		TCFG_Utility_Get_Major_Softnumber(), TCFG_Utility_Get_Sub_Softnumber(),
+		TCFG_Utility_Get_Build_Time_String(),
+		TCFG_Utility_Get_Nbiot_Iccid_String(),
+		TCFG_Utility_Get_Nbiot_Imei_String(),
+		SoftResetFlag,
+		TCFG_SystemData.DeviceBootCount
+	);
+	
+	return strlen(outBuffer);
+}
+
+/**********************************************************************************************************
+ @Function			int NET_COAP_Message_Operate_Creat_Json_Dynamic_Info(char* outBuffer)
+ @Description			NET_COAP_Message_Operate_Creat_Json_Dynamic_Info
+ @Input				outBuffer
+ @Return				Length
+ @attention			!!<<< MaxLength 240Byte >>>!!
+**********************************************************************************************************/
+int NET_COAP_Message_Operate_Creat_Json_Dynamic_Info(char* outBuffer)
+{
+	sprintf(outBuffer, 
+		"{"
+			"\"SN\":\"%08x\","
+			"\"TMoteInfo\":"
+			"{"
+				"\"Runtime\":%d,"
+				"\"Rssi\":%d,"
+				"\"Batt\":%d,"
+				"\"rlib\":\"%d\","
+				"\"rcnt\":%d,"
+				"\"temp\":%d,"
+				"\"rdgb\":%d,"
+				"\"psm\":%d,"
+				"\"algo\":%d,"
+				"\"qmcrbt\":%d,"
+				"\"nbboot\":%d,"
+				"\"nbsent\":%d,"
+				"\"magmod\":%d,"
+				"\"nbheart\":%d,"
+			"}"
+		"}",
+		
+		TCFG_EEPROM_Get_MAC_SN(),
+		TCFG_Utility_Get_Run_Time(),
+		TCFG_Utility_Get_Nbiot_Rssi_IntVal(),
+		TCFG_Utility_Get_Device_Batt_ShortVal(),
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0
+	);
+	
+	return strlen(outBuffer);
+}
 
 /**********************************************************************************************************
  @Function			static bool NET_Coap_Message_SendDataisFull(void)

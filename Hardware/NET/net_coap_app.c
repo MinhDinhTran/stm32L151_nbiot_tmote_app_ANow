@@ -171,7 +171,7 @@ void NET_COAP_NBIOT_Event_HardwareReboot(NBIOT_ClientsTypeDef* pClient)
 		pClient->DictateRunCtl.dictateEvent = MODULE_CHECK;
 		pClient->DictateRunCtl.dictateRebootFailureCnt = 0;
 #ifdef COAP_DEBUG_LOG_RF_PRINT
-		Radio_Trf_Debug_Printf("Coap HDReboot Ok");
+		Radio_Trf_Debug_Printf("Coap HDReboot Ok, Baud : %d", NBIOTBaudRate.Baud);
 #endif
 	}
 	else {
@@ -1492,10 +1492,16 @@ void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
 				pClient->DictateRunCtl.dictateEnable = false;
 				pClient->DictateRunCtl.dictateEvent = SEND_DATA;
 				pClient->DictateRunCtl.dictateRecvDataFailureCnt = 0;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+				Radio_Trf_Debug_Printf("Coap Recv Feedback Ok");
+#endif
 			}
 			else {
 				/* Not Feedback */
 				NET_Coap_Message_RecvDataEnqueue(pClient->Recvbuf, pClient->Recvlen);
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+				Radio_Trf_Debug_Printf("Coap Recv Data Ok");
+#endif
 			}
 		}
 	}
@@ -1514,6 +1520,9 @@ void NET_COAP_NBIOT_Event_RecvData(NBIOT_ClientsTypeDef* pClient)
 		else {
 			/* Dictate isn't TimeOut */
 			pClient->DictateRunCtl.dictateEvent = RECV_DATA;
+#ifdef COAP_DEBUG_LOG_RF_PRINT
+			Radio_Trf_Debug_Printf("Coap Wait Recv Feedback");
+#endif
 		}
 	}
 }
